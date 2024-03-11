@@ -5,6 +5,19 @@
     
     <entry>
       <title></title>
+      <link href="/project/2024/03/11/jie-jue-java-shu-chu-shi-luan-ma-wen-ti/"/>
+      <url>/project/2024/03/11/jie-jue-java-shu-chu-shi-luan-ma-wen-ti/</url>
+      
+        <content type="html"><![CDATA[<h1 id="解决Java输出时乱码问题"><a href="#解决Java输出时乱码问题" class="headerlink" title="解决Java输出时乱码问题"></a>解决Java输出时乱码问题</h1><p>原图所示：</p><p><img src="https://basis-4317.oss-cn-beijing.aliyuncs.com/2024%E5%B9%B41%E6%9C%8822%E6%97%A5-test/202403112128876.png" alt="525ec4cdd8b354f9fb855dbb25f4421"></p><p>结果输出前存在乱码</p><p>解决方法</p><p><img src="https://basis-4317.oss-cn-beijing.aliyuncs.com/2024%E5%B9%B41%E6%9C%8822%E6%97%A5-test/202403112129369.png" alt="c230b50c5237a0ddae0133cc686cc1b"></p><p><img src="https://basis-4317.oss-cn-beijing.aliyuncs.com/2024%E5%B9%B41%E6%9C%8822%E6%97%A5-test/202403112130367.png" alt="12905df34ea03dc59ba970aec9c63ba"></p><p><img src="https://basis-4317.oss-cn-beijing.aliyuncs.com/2024%E5%B9%B41%E6%9C%8822%E6%97%A5-test/202403112131263.png" alt="cb7d9543757021761217e2f59d976ae"></p><p><img src="https://basis-4317.oss-cn-beijing.aliyuncs.com/2024%E5%B9%B41%E6%9C%8822%E6%97%A5-test/202403112131393.png" alt="c49fd28416c201d755c07a893853fac"></p><p>可见输出结果已无乱码。</p>]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title></title>
       <link href="/project/2024/03/11/sui-xie/"/>
       <url>/project/2024/03/11/sui-xie/</url>
       
