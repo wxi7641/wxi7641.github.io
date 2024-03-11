@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://wxi7641.github.io/project/2024/03/11/sui-xie/</loc>
+    
+    <lastmod>2024-03-11</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://wxi7641.github.io/project/2024/01/19/test-my-site/</loc>
     
     <lastmod>2024-01-22</lastmod>
@@ -103,7 +112,7 @@
 
   <url>
     <loc>https://wxi7641.github.io/project</loc>
-    <lastmod>2024-03-06</lastmod>
+    <lastmod>2024-03-11</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
