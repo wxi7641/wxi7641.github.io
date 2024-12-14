@@ -1,0 +1,624 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.27.0" theme-name="Stellar" theme-version="1.27.0">
+  
+  <meta name="generator" content="Hexo 7.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>Python实现通讯录系统设计 - Wxi's Blog</title>
+
+  
+    <meta name="description" content="演示代码：代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python实现通讯录系统设计">
+<meta property="og:url" content="https://wxi7641.github.io/2024/12/14/Python%20%E5%AE%9E%E7%8E%B0%E9%80%9A%E8%AE%AF%E5%BD%95%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/index.html">
+<meta property="og:site_name" content="Wxi&#39;s Blog">
+<meta property="og:description" content="演示代码：代码1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495969798991001">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141645297.png">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141645444.png">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141645056.png">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646491.png">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646203.png">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646721.png">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646425.png">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646897.png">
+<meta property="article:published_time" content="2024-12-13T16:00:00.000Z">
+<meta property="article:modified_time" content="2024-12-14T10:26:54.458Z">
+<meta property="article:author" content="Wxi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141645297.png">
+  
+  
+  
+  
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.27.0">
+
+  
+
+  
+
+  
+</head>
+<body>
+
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Wxi's Blog</div><div class="sub normal cap">大梦三千如幻</div><div class="sub hover cap" style="opacity:0"> 醒时一枕黄粱</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/12/14/Python%20%E5%AE%9E%E7%8E%B0%E9%80%9A%E8%AE%AF%E5%BD%95%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"><span class="title">Python实现通讯录系统设计</span></a><a class="item title" href="/2024/03/31/hello-world/"><span class="title">Hello World</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-12-13T16:00:00.000Z">2024-12-14</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2024-12-14T10:26:54.458Z">2024-12-14</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>Python实现通讯录系统设计</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h2 id="演示代码："><a href="#演示代码：" class="headerlink" title="演示代码："></a>演示代码：</h2><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tkinter <span class="keyword">as</span> tk</span><br><span class="line"><span class="keyword">from</span> tkinter <span class="keyword">import</span> ttk, messagebox, filedialog</span><br><span class="line"><span class="keyword">import</span> json</span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Contact</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, name, phone, email</span>):</span><br><span class="line">        self.name = name</span><br><span class="line">        self.phone = phone</span><br><span class="line">        self.email = email</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">to_dict</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> &#123;<span class="string">&quot;name&quot;</span>: self.name, <span class="string">&quot;phone&quot;</span>: self.phone, <span class="string">&quot;email&quot;</span>: self.email&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AddressBook</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.contacts = []  <span class="comment"># 存储Contact对象列表</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">add_contact</span>(<span class="params">self, contact: Contact</span>):</span><br><span class="line">        self.contacts.append(contact)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">delete_contact</span>(<span class="params">self, name</span>):</span><br><span class="line">        self.contacts = [c <span class="keyword">for</span> c <span class="keyword">in</span> self.contacts <span class="keyword">if</span> c.name != name]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">search_contact</span>(<span class="params">self, keyword</span>):</span><br><span class="line">        <span class="comment"># 按姓名或电话搜索</span></span><br><span class="line">        keyword = keyword.strip().lower()</span><br><span class="line">        <span class="keyword">return</span> [c <span class="keyword">for</span> c <span class="keyword">in</span> self.contacts <span class="keyword">if</span> keyword <span class="keyword">in</span> c.name.lower() <span class="keyword">or</span> keyword <span class="keyword">in</span> c.phone.lower()]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">edit_contact</span>(<span class="params">self, old_name, new_contact: Contact</span>):</span><br><span class="line">        <span class="keyword">for</span> i, c <span class="keyword">in</span> <span class="built_in">enumerate</span>(self.contacts):</span><br><span class="line">            <span class="keyword">if</span> c.name == old_name:</span><br><span class="line">                self.contacts[i] = new_contact</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">load_from_file</span>(<span class="params">self, filename</span>):</span><br><span class="line">        <span class="keyword">if</span> os.path.exists(filename):</span><br><span class="line">            <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;r&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">                data = json.load(f)</span><br><span class="line">                self.contacts = [Contact(**item) <span class="keyword">for</span> item <span class="keyword">in</span> data]</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.contacts = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">save_to_file</span>(<span class="params">self, filename</span>):</span><br><span class="line">        data = [c.to_dict() <span class="keyword">for</span> c <span class="keyword">in</span> self.contacts]</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(filename, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            json.dump(data, f, ensure_ascii=<span class="literal">False</span>, indent=<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AddressBookGUI</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, master</span>):</span><br><span class="line">        self.master = master</span><br><span class="line">        self.master.title(<span class="string">&quot;通讯录管理系统&quot;</span>)</span><br><span class="line">        self.address_book = AddressBook()</span><br><span class="line">        self.filename = <span class="string">&quot;address_book.json&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="comment"># 初始化界面</span></span><br><span class="line">        self.create_widgets()</span><br><span class="line">        <span class="comment"># 加载数据</span></span><br><span class="line">        self.address_book.load_from_file(self.filename)</span><br><span class="line">        self.refresh_contact_list()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">create_widgets</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="comment"># 搜索框</span></span><br><span class="line">        top_frame = tk.Frame(self.master)</span><br><span class="line">        top_frame.pack(pady=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        tk.Label(top_frame, text=<span class="string">&quot;搜索（姓名或电话）：&quot;</span>).pack(side=tk.LEFT)</span><br><span class="line">        self.search_var = tk.StringVar()</span><br><span class="line">        self.search_entry = tk.Entry(top_frame, textvariable=self.search_var)</span><br><span class="line">        self.search_entry.pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Button(top_frame, text=<span class="string">&quot;搜索&quot;</span>, command=self.on_search).pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Button(top_frame, text=<span class="string">&quot;显示全部&quot;</span>, command=self.on_show_all).pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 通讯录列表</span></span><br><span class="line">        self.tree = ttk.Treeview(self.master, columns=(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;phone&quot;</span>, <span class="string">&quot;email&quot;</span>), show=<span class="string">&#x27;headings&#x27;</span>, height=<span class="number">10</span>)</span><br><span class="line">        self.tree.heading(<span class="string">&quot;name&quot;</span>, text=<span class="string">&quot;姓名&quot;</span>)</span><br><span class="line">        self.tree.heading(<span class="string">&quot;phone&quot;</span>, text=<span class="string">&quot;电话&quot;</span>)</span><br><span class="line">        self.tree.heading(<span class="string">&quot;email&quot;</span>, text=<span class="string">&quot;电子邮件&quot;</span>)</span><br><span class="line">        self.tree.column(<span class="string">&quot;name&quot;</span>, width=<span class="number">100</span>)</span><br><span class="line">        self.tree.column(<span class="string">&quot;phone&quot;</span>, width=<span class="number">100</span>)</span><br><span class="line">        self.tree.column(<span class="string">&quot;email&quot;</span>, width=<span class="number">150</span>)</span><br><span class="line">        self.tree.pack(pady=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 按钮区域</span></span><br><span class="line">        btn_frame = tk.Frame(self.master)</span><br><span class="line">        btn_frame.pack()</span><br><span class="line"></span><br><span class="line">        tk.Button(btn_frame, text=<span class="string">&quot;添加联系人&quot;</span>, command=self.on_add_contact).pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Button(btn_frame, text=<span class="string">&quot;编辑联系人&quot;</span>, command=self.on_edit_contact).pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Button(btn_frame, text=<span class="string">&quot;删除联系人&quot;</span>, command=self.on_delete_contact).pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Button(btn_frame, text=<span class="string">&quot;保存到文件&quot;</span>, command=self.on_save).pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Button(btn_frame, text=<span class="string">&quot;从文件加载&quot;</span>, command=self.on_load).pack(side=tk.LEFT, padx=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">refresh_contact_list</span>(<span class="params">self, contacts=<span class="literal">None</span></span>):</span><br><span class="line">        <span class="comment"># 清空列表</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> self.tree.get_children():</span><br><span class="line">            self.tree.delete(i)</span><br><span class="line">        <span class="comment"># 显示所有或指定的联系人</span></span><br><span class="line">        <span class="keyword">if</span> contacts <span class="keyword">is</span> <span class="literal">None</span>:</span><br><span class="line">            contacts = self.address_book.contacts</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> contacts:</span><br><span class="line">            self.tree.insert(<span class="string">&quot;&quot;</span>, tk.END, values=(c.name, c.phone, c.email))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_search</span>(<span class="params">self</span>):</span><br><span class="line">        keyword = self.search_var.get().strip()</span><br><span class="line">        <span class="keyword">if</span> keyword:</span><br><span class="line">            result = self.address_book.search_contact(keyword)</span><br><span class="line">            self.refresh_contact_list(result)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            messagebox.showinfo(<span class="string">&quot;提示&quot;</span>, <span class="string">&quot;请输入搜索关键词！&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_show_all</span>(<span class="params">self</span>):</span><br><span class="line">        self.refresh_contact_list()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_add_contact</span>(<span class="params">self</span>):</span><br><span class="line">        AddEditDialog(self.master, self, mode=<span class="string">&quot;add&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_edit_contact</span>(<span class="params">self</span>):</span><br><span class="line">        selected = self.tree.selection()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> selected:</span><br><span class="line">            messagebox.showwarning(<span class="string">&quot;警告&quot;</span>, <span class="string">&quot;请先选择要编辑的联系人！&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        item = self.tree.item(selected[<span class="number">0</span>])</span><br><span class="line">        old_name, old_phone, old_email = item[<span class="string">&#x27;values&#x27;</span>]</span><br><span class="line">        AddEditDialog(self.master, self, mode=<span class="string">&quot;edit&quot;</span>, old_name=old_name, old_phone=old_phone, old_email=old_email)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_delete_contact</span>(<span class="params">self</span>):</span><br><span class="line">        selected = self.tree.selection()</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> selected:</span><br><span class="line">            messagebox.showwarning(<span class="string">&quot;警告&quot;</span>, <span class="string">&quot;请先选择要删除的联系人！&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line">        item = self.tree.item(selected[<span class="number">0</span>])</span><br><span class="line">        name = item[<span class="string">&#x27;values&#x27;</span>][<span class="number">0</span>]</span><br><span class="line">        <span class="keyword">if</span> messagebox.askokcancel(<span class="string">&quot;确认&quot;</span>, <span class="string">f&quot;确定删除联系人 <span class="subst">&#123;name&#125;</span> 吗？&quot;</span>):</span><br><span class="line">            self.address_book.delete_contact(name)</span><br><span class="line">            self.refresh_contact_list()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_save</span>(<span class="params">self</span>):</span><br><span class="line">        self.address_book.save_to_file(self.filename)</span><br><span class="line">        messagebox.showinfo(<span class="string">&quot;提示&quot;</span>, <span class="string">f&quot;通讯录已保存到文件 <span class="subst">&#123;self.filename&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_load</span>(<span class="params">self</span>):</span><br><span class="line">        file_path = filedialog.askopenfilename(title=<span class="string">&quot;选择通讯录文件&quot;</span>, filetypes=[(<span class="string">&quot;JSON Files&quot;</span>, <span class="string">&quot;*.json&quot;</span>)])</span><br><span class="line">        <span class="keyword">if</span> file_path:</span><br><span class="line">            self.address_book.load_from_file(file_path)</span><br><span class="line">            self.refresh_contact_list()</span><br><span class="line">            messagebox.showinfo(<span class="string">&quot;提示&quot;</span>, <span class="string">&quot;已从文件加载通讯录！&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AddEditDialog</span>(tk.Toplevel):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self, master, parent_gui, mode=<span class="string">&quot;add&quot;</span>, old_name=<span class="string">&quot;&quot;</span>, old_phone=<span class="string">&quot;&quot;</span>, old_email=<span class="string">&quot;&quot;</span></span>):</span><br><span class="line">        <span class="built_in">super</span>().__init__(master)</span><br><span class="line">        self.parent_gui = parent_gui</span><br><span class="line">        self.mode = mode</span><br><span class="line">        self.old_name = old_name</span><br><span class="line">        self.old_phone = old_phone</span><br><span class="line">        self.old_email = old_email</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.mode == <span class="string">&quot;add&quot;</span>:</span><br><span class="line">            self.title(<span class="string">&quot;添加联系人&quot;</span>)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.title(<span class="string">&quot;编辑联系人&quot;</span>)</span><br><span class="line"></span><br><span class="line">        tk.Label(self, text=<span class="string">&quot;姓名：&quot;</span>).grid(row=<span class="number">0</span>, column=<span class="number">0</span>, pady=<span class="number">5</span>, padx=<span class="number">5</span>, sticky=tk.E)</span><br><span class="line">        tk.Label(self, text=<span class="string">&quot;电话：&quot;</span>).grid(row=<span class="number">1</span>, column=<span class="number">0</span>, pady=<span class="number">5</span>, padx=<span class="number">5</span>, sticky=tk.E)</span><br><span class="line">        tk.Label(self, text=<span class="string">&quot;电子邮件：&quot;</span>).grid(row=<span class="number">2</span>, column=<span class="number">0</span>, pady=<span class="number">5</span>, padx=<span class="number">5</span>, sticky=tk.E)</span><br><span class="line"></span><br><span class="line">        self.name_var = tk.StringVar(value=self.old_name)</span><br><span class="line">        self.phone_var = tk.StringVar(value=self.old_phone)</span><br><span class="line">        self.email_var = tk.StringVar(value=self.old_email)</span><br><span class="line"></span><br><span class="line">        tk.Entry(self, textvariable=self.name_var).grid(row=<span class="number">0</span>, column=<span class="number">1</span>, pady=<span class="number">5</span>, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Entry(self, textvariable=self.phone_var).grid(row=<span class="number">1</span>, column=<span class="number">1</span>, pady=<span class="number">5</span>, padx=<span class="number">5</span>)</span><br><span class="line">        tk.Entry(self, textvariable=self.email_var).grid(row=<span class="number">2</span>, column=<span class="number">1</span>, pady=<span class="number">5</span>, padx=<span class="number">5</span>)</span><br><span class="line"></span><br><span class="line">        btn_frame = tk.Frame(self)</span><br><span class="line">        btn_frame.grid(row=<span class="number">3</span>, column=<span class="number">0</span>, columnspan=<span class="number">2</span>, pady=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">        tk.Button(btn_frame, text=<span class="string">&quot;确定&quot;</span>, command=self.on_ok).pack(side=tk.LEFT, padx=<span class="number">10</span>)</span><br><span class="line">        tk.Button(btn_frame, text=<span class="string">&quot;取消&quot;</span>, command=self.destroy).pack(side=tk.LEFT, padx=<span class="number">10</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">on_ok</span>(<span class="params">self</span>):</span><br><span class="line">        name = self.name_var.get().strip()</span><br><span class="line">        phone = self.phone_var.get().strip()</span><br><span class="line">        email = self.email_var.get().strip()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> name <span class="keyword">or</span> <span class="keyword">not</span> phone:</span><br><span class="line">            messagebox.showwarning(<span class="string">&quot;警告&quot;</span>, <span class="string">&quot;姓名和电话为必填项！&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        new_contact = Contact(name, phone, email)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> self.mode == <span class="string">&quot;add&quot;</span>:</span><br><span class="line">            <span class="comment"># 添加新联系人</span></span><br><span class="line">            self.parent_gui.address_book.add_contact(new_contact)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="comment"># 编辑联系人</span></span><br><span class="line">            success = self.parent_gui.address_book.edit_contact(self.old_name, new_contact)</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> success:</span><br><span class="line">                messagebox.showerror(<span class="string">&quot;错误&quot;</span>, <span class="string">&quot;编辑联系人失败！&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        self.parent_gui.refresh_contact_list()</span><br><span class="line">        self.destroy()</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    root = tk.Tk()</span><br><span class="line">    app = AddressBookGUI(root)</span><br><span class="line">    root.mainloop()</span><br></pre></td></tr></table></figure>
+
+<p>地址json文件：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;张三&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;123456789&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;zhangsan@example.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;李四&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;987654321&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lisi@example.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;王五&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;111111111&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;wangwu@example.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;赵六&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;222222222&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;zhaoliu@example.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;钱七&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;333333333&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;qianqi@example.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;乙&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;234567890&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;jia@example.com&quot;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="一、流程图（过程设计图）"><a href="#一、流程图（过程设计图）" class="headerlink" title="一、流程图（过程设计图）"></a>一、流程图（过程设计图）</h2><p>下面的流程图示意了程序的核心交互与各功能模块之间的关系，可以把它理解成用户使用该通讯录程序时的“操作-响应”流程。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────┐</span><br><span class="line">│        启动程序          │</span><br><span class="line">│   (创建主窗口 + 初始化    │</span><br><span class="line">│    AddressBookGUI实例)   │</span><br><span class="line">└────────────┬────────────┘</span><br><span class="line">             │</span><br><span class="line">             │ (1)加载数据</span><br><span class="line">             ▼</span><br><span class="line">┌─────────────────────────┐</span><br><span class="line">│ load_from_file(filename) │</span><br><span class="line">│ 如果文件存在 -&gt; 加载联系人 │</span><br><span class="line">│ 否则contacts为空列表      │</span><br><span class="line">└────────────┬────────────┘</span><br><span class="line">             │</span><br><span class="line">             │ (2)主界面</span><br><span class="line">             ▼</span><br><span class="line">┌─────────────────────────┐</span><br><span class="line">│   主界面显示联系人列表   │</span><br><span class="line">│   提供以下功能按钮：     │</span><br><span class="line">│   1) 搜索联系人         │</span><br><span class="line">│   2) 显示全部           │</span><br><span class="line">│   3) 添加联系人         │</span><br><span class="line">│   4) 编辑联系人         │</span><br><span class="line">│   5) 删除联系人         │</span><br><span class="line">│   6) 保存到文件         │</span><br><span class="line">│   7) 从文件加载         │</span><br><span class="line">└────────────┬────────────┘</span><br><span class="line">             │</span><br><span class="line">             ├───────── [搜索联系人] ──────────┐</span><br><span class="line">             │                                │</span><br><span class="line">             │  (3a) 用户输入搜索关键词         │</span><br><span class="line">             │       -&gt; 调用search_contact    │</span><br><span class="line">             │       -&gt; 刷新列表只显示匹配结果 │</span><br><span class="line">             │                                │</span><br><span class="line">             ├───────── [添加联系人] ──────────┐</span><br><span class="line">             │                                │</span><br><span class="line">             │  (3b) 弹出对话框AddEditDialog   │</span><br><span class="line">             │       -&gt; 用户输入姓名/电话等信息│</span><br><span class="line">             │       -&gt; AddressBook.add_contact</span><br><span class="line">             │       -&gt; 刷新联系人列表         │</span><br><span class="line">             │                                │</span><br><span class="line">             ├───────── [编辑联系人] ──────────┐</span><br><span class="line">             │                                │</span><br><span class="line">             │  (3c) 选中某联系人，弹出AddEditDialog</span><br><span class="line">             │       -&gt; 编辑并更新到AddressBook</span><br><span class="line">             │       -&gt; 刷新联系人列表</span><br><span class="line">             │                                │</span><br><span class="line">             ├───────── [删除联系人] ──────────┐</span><br><span class="line">             │                                │</span><br><span class="line">             │  (3d) 选中某联系人 -&gt; delete_contact</span><br><span class="line">             │       -&gt; 刷新联系人列表</span><br><span class="line">             │                                │</span><br><span class="line">             ├───────── [保存到文件] ──────────┐</span><br><span class="line">             │                                │</span><br><span class="line">             │  (3e) save_to_file(filename)    │</span><br><span class="line">             │       -&gt; JSON格式写入          │</span><br><span class="line">             │                                │</span><br><span class="line">             └───────── [从文件加载] ──────────┘</span><br><span class="line">                                          │</span><br><span class="line">                                          ▼</span><br><span class="line">                              load_from_file(用户选择的文件)</span><br><span class="line">                              -&gt; 刷新联系人列表</span><br></pre></td></tr></table></figure>
+
+<p>收起</p>
+<p><strong>流程图解释：</strong></p>
+<ol>
+<li><strong>启动程序</strong>：运行 <code>address_book.py</code> 或 <code>tongxunlu.py</code> 时，会创建 <code>Tk</code> 主窗口，并实例化 <code>AddressBookGUI</code>。</li>
+<li><strong>加载数据</strong>：在 <code>AddressBookGUI.__init__</code> 里，通过 <code>load_from_file</code> 尝试加载保存的 JSON 文件。如果文件存在且数据正确，就把读取的列表转成 <code>Contact</code> 对象存进 <code>contacts</code> 列表；若不存在则为空。</li>
+<li><strong>主界面</strong>：Tkinter GUI界面呈现在用户面前，显示联系人列表 + 功能按钮。</li>
+<li>用户在主界面可执行以下操作：<ul>
+<li><strong>搜索联系人</strong>：在搜索框里输入姓名或电话的关键词，调用 <code>AddressBook.search_contact</code> 返回匹配结果，并刷新列表。</li>
+<li><strong>添加联系人</strong>：弹出对话框输入姓名、电话、Email，确认后将新 <code>Contact</code> 对象加入通讯录并刷新列表。</li>
+<li><strong>编辑联系人</strong>：选中一行并点击编辑，弹出对话框修改信息；调用 <code>AddressBook.edit_contact</code> 更新后刷新。</li>
+<li><strong>删除联系人</strong>：选中一行并点击删除，调用 <code>AddressBook.delete_contact</code> 删掉匹配的对象。</li>
+<li><strong>保存到文件</strong>：调用 <code>save_to_file(filename)</code>，将当前联系人列表序列化为JSON并写到本地。</li>
+<li><strong>从文件加载</strong>：打开文件选择对话框，加载选定的 JSON 文件。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="二、功能与模块分析"><a href="#二、功能与模块分析" class="headerlink" title="二、功能与模块分析"></a>二、功能与模块分析</h2><p>下面列出该项目的<strong>主要功能模块</strong>及其实现思路、关键步骤。与前述流程图对应，这些步骤有助于理解代码的逻辑结构与数据流向。</p>
+<h3 id="1-数据结构模块"><a href="#1-数据结构模块" class="headerlink" title="1. 数据结构模块"></a>1. 数据结构模块</h3><ol>
+<li><strong>Contact类</strong><ul>
+<li>用于封装单个联系人的信息：<code>name</code>, <code>phone</code>, <code>email</code>。</li>
+<li><code>to_dict()</code>方法可把对象转成字典，以便JSON序列化存储。</li>
+</ul>
+</li>
+<li><strong>AddressBook类</strong><ul>
+<li>内含一个列表 <code>self.contacts</code>，每个元素都是 <code>Contact</code> 对象。</li>
+<li>提供对联系人增删改查的方法：<ul>
+<li><code>add_contact(contact)</code></li>
+<li><code>delete_contact(name)</code></li>
+<li><code>search_contact(keyword)</code></li>
+<li><code>edit_contact(old_name, new_contact)</code></li>
+</ul>
+</li>
+<li>提供文件读写方法：<ul>
+<li><code>load_from_file(filename)</code>: 读取JSON文件并转成 <code>Contact</code> 对象列表</li>
+<li><code>save_to_file(filename)</code>: 将 <code>contacts</code> 列表序列化写入JSON文件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-GUI界面（Tkinter）模块"><a href="#2-GUI界面（Tkinter）模块" class="headerlink" title="2. GUI界面（Tkinter）模块"></a>2. GUI界面（Tkinter）模块</h3><ol>
+<li><p><strong>主窗口 <code>AddressBookGUI</code></strong></p>
+<ul>
+<li><p>初始化</p>
+<p>：</p>
+<ul>
+<li>创建 <code>AddressBook</code> 实例</li>
+<li>定义存储文件名（如 <code>address_book.json</code>）</li>
+<li>调用 <code>load_from_file</code> 加载通讯录数据</li>
+<li>构建并摆放各种UI组件（搜索框、按钮、TreeView列表等）</li>
+</ul>
+</li>
+<li><p>核心功能按钮</p>
+<p>：</p>
+<ul>
+<li><strong>搜索</strong>：读取搜索框内容 -&gt; 调 <code>search_contact</code> -&gt; 刷新列表</li>
+<li><strong>显示全部</strong>：直接显示所有 <code>contacts</code></li>
+<li><strong>添加联系人</strong>：弹出对话框 <code>AddEditDialog(mode=&quot;add&quot;)</code>；成功后刷新列表</li>
+<li><strong>编辑联系人</strong>：选中联系人，带着旧信息进入对话框；成功编辑后刷新列表</li>
+<li><strong>删除联系人</strong>：选中联系人 -&gt; <code>delete_contact</code> -&gt; 刷新列表</li>
+<li><strong>保存到文件</strong>：<code>save_to_file</code> -&gt; 序列化到 JSON</li>
+<li><strong>从文件加载</strong>：打开文件对话框选择文件 -&gt; <code>load_from_file</code> -&gt; 刷新列表</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong><code>TreeView</code> 组件</strong></p>
+<ul>
+<li>用于在主窗口中央显示联系人信息的表格。</li>
+<li>每行对应一个 <code>Contact</code>，包含姓名、电话、电子邮件三列。</li>
+<li>通过 <code>refresh_contact_list(contacts=None)</code> 方法刷新表格显示数据。</li>
+</ul>
+</li>
+<li><p><strong>添加&#x2F;编辑联系人对话框 <code>AddEditDialog</code></strong></p>
+<ul>
+<li>当点击“添加联系人”或“编辑联系人”时弹出。</li>
+<li>包含姓名、电话、电子邮件三个 <code>Entry</code> 输入框和“确定&#x2F;取消”按钮。</li>
+<li>如果是<strong>添加模式</strong>(<code>mode=&quot;add&quot;</code>)：填完信息后调用 <code>address_book.add_contact()</code>。</li>
+<li>如果是<strong>编辑模式</strong>(<code>mode=&quot;edit&quot;</code>)：带入旧的信息；用户修改完点击确定后，调用 <code>address_book.edit_contact(old_name, new_contact)</code>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-文件读写与JSON格式"><a href="#3-文件读写与JSON格式" class="headerlink" title="3. 文件读写与JSON格式"></a>3. 文件读写与JSON格式</h3><ol>
+<li><p><strong>保存文件 (<code>save_to_file</code>)</strong></p>
+<ul>
+<li><p>将 <code>contacts</code> 列表里的 <code>Contact</code> 对象转成字典 <code>[c.to_dict() for c in self.contacts]</code>。</p>
+</li>
+<li><p>调用 <code>json.dump(data, f, ensure_ascii=False, indent=4)</code> 写入本地JSON文件。</p>
+</li>
+<li><p>JSON大致格式:</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;张三&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;123456&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;zhangsan@example.com&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;李四&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;phone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;987654&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;email&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lisi@example.com&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">]</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p><strong>加载文件 (<code>load_from_file</code>)</strong></p>
+<ul>
+<li><code>json.load(f)</code> 解析JSON文件，得到一个列表。</li>
+<li>列表内每个元素是一个<code>dict</code>，包含<code>&quot;name&quot;</code>, <code>&quot;phone&quot;</code>, <code>&quot;email&quot;</code>等字段。</li>
+<li>循环创建 <code>Contact(**item)</code> 并加入 <code>contacts</code>。</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-异常处理与扩展"><a href="#4-异常处理与扩展" class="headerlink" title="4. 异常处理与扩展"></a>4. 异常处理与扩展</h3><ul>
+<li>如果JSON文件不存在或格式不对，会抛异常或导致读取失败。</li>
+<li>可以在加载阶段做额外的防护，如捕获 <code>JSONDecodeError</code>，在界面弹出友好提示；或自动初始化空列表。</li>
+<li>界面美化可使用 <code>ttk.Style</code> 或改进布局管理。</li>
+<li>实际项目中往往需要数据库持久化或更多字段（地址、备注、生日等），原理与本示例相同，但需要额外的数据结构和表单输入。</li>
+</ul>
+<p>测试截图：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141645297.png" alt="5a08f4b4b0dc111446322a879b8de63"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141645444.png" alt="8cdf84f2d92461befc5e5b6d73b5c14"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141645056.png" alt="321ab4ed2e7d6e61809e0c09da88bd8"></p>
+<p>![cd47201c6a77b0e0a9c4bdaa8d28c76](C:\Users\wxi7641\Documents\WeChat Files\wxid_pyp924ky216w22\FileStorage\Temp\cd47201c6a77b0e0a9c4bdaa8d28c76.png)</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646491.png" alt="5eb35fdeb540f8e9a79c6a3c058a7f6"></p>
+<p>![aca466039d05b9a2b0a4f2942352305](C:\Users\wxi7641\Documents\WeChat Files\wxid_pyp924ky216w22\FileStorage\Temp\aca466039d05b9a2b0a4f2942352305.png)</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646203.png" alt="eaefc2f806afea0214d378c95ac7b18"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646721.png" alt="79550082d5969d4d0ff8695454584c7"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646425.png" alt="91b589f5a2140e3a88e4941dc47f806"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/202412141646897.png" alt="cf6d708856f68962dccff25e4daa208"></p>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/07/24/Markdown%E8%AF%AD%E6%B3%95%E7%BB%BC%E8%BF%B0/">2024-07-24</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Wxi</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.27.0">Stellar 1.27.0</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%BC%94%E7%A4%BA%E4%BB%A3%E7%A0%81%EF%BC%9A"><span class="toc-text">演示代码：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%88%E8%BF%87%E7%A8%8B%E8%AE%BE%E8%AE%A1%E5%9B%BE%EF%BC%89"><span class="toc-text">一、流程图（过程设计图）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%8A%9F%E8%83%BD%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%88%86%E6%9E%90"><span class="toc-text">二、功能与模块分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E6%A8%A1%E5%9D%97"><span class="toc-text">1. 数据结构模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-GUI%E7%95%8C%E9%9D%A2%EF%BC%88Tkinter%EF%BC%89%E6%A8%A1%E5%9D%97"><span class="toc-text">2. GUI界面（Tkinter）模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E4%B8%8EJSON%E6%A0%BC%E5%BC%8F"><span class="toc-text">3. 文件读写与JSON格式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E4%B8%8E%E6%89%A9%E5%B1%95"><span class="toc-text">4. 异常处理与扩展</span></a></li></ol></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+<script type="text/javascript">
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"codeblock":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js`,
+    marked: `https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };
+</script>
+
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.27.0" async></script>
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.bootcdn.net/ajax/libs/flying-pages/2.1.2/flying-pages.min.js"></script><script defer src="https://cdn.bootcdn.net/ajax/libs/vanilla-lazyload/17.8.4/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+</script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.min.css`,
+    js: `https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.umd.min.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || null
+        }
+      });
+    })
+  }
+</script><script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
