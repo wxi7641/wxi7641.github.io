@@ -16,18 +16,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" content="#f8f8f8">
   
-  <title>Java笔记03 - Wxi's Blog</title>
+  <title>Java笔记15 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记03 标识符用法，各种关键字的具体实例 运算符用法   标识符和关键字 标识符 ​	标识符的本质就是一个名  关键字​	是一种特殊的标识符：呗官方赋予了特殊的含义     分类 关键字          访问控制 private protected public defalut      类、方法和变量修饰符 abstract class extends final implement">
+    <meta name="description" content="Java笔记15分析HashSet第二次添加【不同数据】12345678910&#x2F;&#x2F;现有如下代码public class testtttt &#123;    public static void main(String[] args) &#123;        HashSet hashSet &#x3D; new HashSet();        hashSet.add(&quot;java&quot;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java笔记03">
-<meta property="og:url" content="https://wxi7641.github.io/2024/05/06/Java%E7%AC%94%E8%AE%B003/index.html">
+<meta property="og:title" content="Java笔记15">
+<meta property="og:url" content="https://wxi7641.github.io/2024/05/16/Java%E7%AC%94%E8%AE%B015/index.html">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记03 标识符用法，各种关键字的具体实例 运算符用法   标识符和关键字 标识符 ​	标识符的本质就是一个名  关键字​	是一种特殊的标识符：呗官方赋予了特殊的含义     分类 关键字          访问控制 private protected public defalut      类、方法和变量修饰符 abstract class extends final implement">
+<meta property="og:description" content="Java笔记15分析HashSet第二次添加【不同数据】12345678910&#x2F;&#x2F;现有如下代码public class testtttt &#123;    public static void main(String[] args) &#123;        HashSet hashSet &#x3D; new HashSet();        hashSet.add(&quot;java&quot;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-05-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2025-05-07T00:49:42.252Z">
+<meta property="article:published_time" content="2024-05-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-05-14T06:51:48.152Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="基础语法">
 <meta property="article:tag" content="JAVA">
@@ -77,164 +77,24 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-05T16:00:00.000Z">2024-05-06</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-05-07T00:49:42.252Z">2025-05-07</time></span></div></div></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-15T16:00:00.000Z">2024-05-16</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-05-14T06:51:48.152Z">2025-05-14</time></span></div></div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>Java笔记03</span></h1>
+        <h1 class="text title"><span>Java笔记15</span></h1>
         
       </div>
     </div>
     
   </div>
-  </div><article class="md-text content"><h1 id="Java笔记03"><a href="#Java笔记03" class="headerlink" title="Java笔记03"></a>Java笔记03</h1><ul>
-<li>标识符用法，各种关键字的具体实例</li>
-<li>运算符用法</li>
-</ul>
-<hr>
-<h2 id="标识符和关键字"><a href="#标识符和关键字" class="headerlink" title="标识符和关键字"></a>标识符和关键字</h2><blockquote>
-<h4 id="标识符"><a href="#标识符" class="headerlink" title="标识符"></a>标识符</h4></blockquote>
-<p>​	标识符的本质就是一个名</p>
-<blockquote>
-<h4 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h4><p>​	是一种特殊的标识符：呗官方赋予了特殊的含义</p>
-</blockquote>
-<table>
-<thead>
-<tr>
-<th>分类</th>
-<th>关键字</th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-<th></th>
-</tr>
-</thead>
-<tbody><tr>
-<td>访问控制</td>
-<td><strong>private</strong></td>
-<td><strong>protected</strong></td>
-<td><strong>public</strong></td>
-<td><strong>defalut</strong></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>类、方法和变量修饰符</td>
-<td><strong>abstract</strong></td>
-<td><strong>class</strong></td>
-<td><strong>extends</strong></td>
-<td><strong>final</strong></td>
-<td><strong>implement</strong></td>
-<td><strong>interface</strong></td>
-<td><strong>native</strong></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>new</strong></td>
-<td><strong>static</strong></td>
-<td><strong>strictfp</strong></td>
-<td><strong>synchronized</strong></td>
-<td><strong>transient</strong></td>
-<td><strong>volatile</strong></td>
-<td><strong>enum</strong></td>
-</tr>
-<tr>
-<td>程序控制</td>
-<td><strong>break</strong></td>
-<td><strong>continue</strong></td>
-<td><strong>return</strong></td>
-<td><strong>do</strong></td>
-<td><strong>while</strong></td>
-<td><strong>if</strong></td>
-<td><strong>else</strong></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>for</strong></td>
-<td><strong>instanceof</strong></td>
-<td><strong>switch</strong></td>
-<td><strong>case</strong></td>
-<td><strong>default</strong></td>
-<td><strong>assert</strong></td>
-<td></td>
-</tr>
-<tr>
-<td>错误处理</td>
-<td><strong>try</strong></td>
-<td><strong>catch</strong></td>
-<td><strong>throw</strong></td>
-<td><strong>throws</strong></td>
-<td><strong>finally</strong></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>包相关</td>
-<td><strong>import</strong></td>
-<td><strong>package</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>基本类型</td>
-<td><strong>byte</strong></td>
-<td><strong>shot</strong></td>
-<td><strong>int</strong></td>
-<td><strong>long</strong></td>
-<td><strong>float</strong></td>
-<td><strong>double</strong></td>
-<td><strong>boolean</strong></td>
-</tr>
-<tr>
-<td></td>
-<td><strong>char</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>变量引用</td>
-<td><strong>super</strong></td>
-<td><strong>this</strong></td>
-<td><strong>void</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>保留字</td>
-<td><strong>goto</strong></td>
-<td><strong>const</strong></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody></table>
-<h2 id="运算符"><a href="#运算符" class="headerlink" title="运算符"></a>运算符</h2><blockquote>
-<p>整型运算</p>
-<ol>
-<li>四则运算：+ - * &#x2F; % （除法分母不能为0）</li>
-<li>自增：++ （++i 先加1，后执行；i++先执行，后加1） </li>
-<li>自减：– （–i 先减1，后执行；i–先执行，后减1） </li>
-<li>+&#x3D;：a +&#x3D; b</li>
-<li>移位运算：&lt;&lt;、&gt;&gt; 、&gt;&gt;&gt;</li>
-<li>溢出：整数存在范围，会导致溢出；解决办法：long</li>
-</ol>
-</blockquote>
+  </div><article class="md-text content"><h1 id="Java笔记15"><a href="#Java笔记15" class="headerlink" title="Java笔记15"></a>Java笔记15</h1><h4 id="分析HashSet第二次添加【不同数据】"><a href="#分析HashSet第二次添加【不同数据】" class="headerlink" title="分析HashSet第二次添加【不同数据】"></a>分析HashSet第二次添加【不同数据】</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//现有如下代码</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">testtttt</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">HashSet</span> <span class="variable">hashSet</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashSet</span>();</span><br><span class="line">        hashSet.add(<span class="string">&quot;java&quot;</span>);</span><br><span class="line">*       hashSet.add(<span class="string">&quot;php&quot;</span>);<span class="comment">//在这打断点，分析第二次添加；</span></span><br><span class="line">        hashSet.add(<span class="string">&quot;java&quot;</span>);</span><br><span class="line">        System.out.println(<span class="string">&quot;set=&quot;</span> + hashSet);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<p>对程序进行DeBug，下列皆为源码</p>
+<p>第二次添加直接从putVal方法开始分析，此时会返回一个<strong>hash</strong>值为<strong>110969</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> V <span class="title function_">putVal</span><span class="params">(<span class="type">int</span> hash, K key, V value, <span class="type">boolean</span> onlyIfAbsent,<span class="type">boolean</span> evict)</span> &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="type">int</span> n, i;</span><br><span class="line">    <span class="comment">//1.此时table不为空，所以跳过</span></span><br><span class="line">    <span class="keyword">if</span> ((tab = table) == <span class="literal">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    <span class="comment">//2.(n - 1) &amp; hash计算后等于9，此时tab[9]为空</span></span><br><span class="line">    <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="literal">null</span>)</span><br><span class="line">        <span class="comment">//直接将节点放入</span></span><br><span class="line">        tab[i] = newNode(hash, key, value, <span class="literal">null</span>);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">         ……其他代码……</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    <span class="keyword">if</span> (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id=""><a href="#" class="headerlink" title=""></a></h5>
 <div class="article-footer fs14">
     <section id="license">
       <div class="header"><span>许可协议</span></div>
@@ -243,14 +103,14 @@
     </section>
     </div>
 </article>
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/05/06/Java%E7%AC%94%E8%AE%B001/">Java笔记01</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/06/Java%E7%AC%94%E8%AE%B004/">Java笔记04</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/06/16/%E9%9A%8F%E7%AC%946.17/">随笔</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/06/Java%E7%AC%94%E8%AE%B002/">Java笔记02</a></div></section></div>
 
 <div class="related-wrap" id="related-posts">
     <section class='header'>
       <div class='title cap theme'>您可能感兴趣的文章</div>
     </section>
     <section class='body'>
-    <div class="related-posts"><a class="item" href="\2024\05\06\Java笔记02\" title="Java笔记02"><span class="title">Java笔记02</span></a><a class="item" href="\2024\05\06\Java笔记01\" title="Java笔记01"><span class="title">Java笔记01</span></a><a class="item" href="\2024\05\06\Java笔记04\" title="Java笔记04"><span class="title">Java笔记04</span></a><a class="item" href="\2024\05\06\Java笔记05\" title="Java笔记05"><span class="title">Java笔记05</span></a><a class="item" href="\2025\01\06\24-25随笔\" title="随笔"><span class="title">随笔</span><span class="excerpt">Here's something encrypted, password is required to continue reading.</span></a></div></section></div>
+    <div class="related-posts"><a class="item" href="\2024\05\06\Java笔记02\" title="Java笔记02"><span class="title">Java笔记02</span></a><a class="item" href="\2024\05\06\Java笔记01\" title="Java笔记01"><span class="title">Java笔记01</span></a><a class="item" href="\2024\05\06\Java笔记03\" title="Java笔记03"><span class="title">Java笔记03</span></a><a class="item" href="\2024\05\06\Java笔记04\" title="Java笔记04"><span class="title">Java笔记04</span></a><a class="item" href="\2025\01\06\24-25随笔\" title="随笔"><span class="title">随笔</span><span class="excerpt">Here's something encrypted, password is required to continue reading.</span></a></div></section></div>
 
 
 
@@ -262,7 +122,7 @@
 
 
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B003"><span class="toc-text">Java笔记03</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6%E5%92%8C%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">标识符和关键字</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6"><span class="toc-text">标识符</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">关键字</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">运算符</span></a></li></ol></li></ol></div><div class="widget-footer">
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B015"><span class="toc-text">Java笔记15</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E6%9E%90HashSet%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%B7%BB%E5%8A%A0%E3%80%90%E4%B8%8D%E5%90%8C%E6%95%B0%E6%8D%AE%E3%80%91"><span class="toc-text">分析HashSet第二次添加【不同数据】</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link"><span class="toc-text"></span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div><div class="widget-footer">
 
 <a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
 </div></aside><div class='float-panel blur'>
