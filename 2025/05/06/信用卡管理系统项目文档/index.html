@@ -1,0 +1,906 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.27.0" theme-name="Stellar" theme-version="1.27.0">
+  
+  <meta name="generator" content="Hexo 7.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#f8f8f8">
+  
+  <title>信用卡管理系统项目文档 - Wxi's Blog</title>
+
+  
+    <meta name="description" content="信用卡管理系统项目文档 摘要：本项目是一个基于C#开发的信用卡管理系统，旨在为银行提供一个信息化管理平台，实现用户申请信用卡、激活信用卡、查看交易记录等功能。系统采用Windows Forms构建界面，MySQL作为数据库，采用三层架构设计。项目实现了用户和管理员两种角色的功能分离，具有良好的可扩展性和用户友好的界面。  第1章 项目分析1.1 项目开发的目的1.1.1 研究目的本项目开发目的是为">
+<meta property="og:type" content="article">
+<meta property="og:title" content="信用卡管理系统项目文档">
+<meta property="og:url" content="https://wxi7641.github.io/2025/05/06/%E4%BF%A1%E7%94%A8%E5%8D%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3/index.html">
+<meta property="og:site_name" content="Wxi&#39;s Blog">
+<meta property="og:description" content="信用卡管理系统项目文档 摘要：本项目是一个基于C#开发的信用卡管理系统，旨在为银行提供一个信息化管理平台，实现用户申请信用卡、激活信用卡、查看交易记录等功能。系统采用Windows Forms构建界面，MySQL作为数据库，采用三层架构设计。项目实现了用户和管理员两种角色的功能分离，具有良好的可扩展性和用户友好的界面。  第1章 项目分析1.1 项目开发的目的1.1.1 研究目的本项目开发目的是为">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-06T05:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-09T14:00:22.102Z">
+<meta property="article:author" content="Wxi">
+<meta property="article:tag" content="项目实践">
+<meta name="twitter:card" content="summary">
+  
+  
+  
+  <meta name="keywords" content="项目实践">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.27.0">
+
+  
+
+  
+
+  
+</head>
+<body>
+
+<div class="l_body s:aa content tech" id="start" layout="post" ><aside class="l_left"><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main" ff="title">Wxi's Blog</div><div class="sub normal cap">大梦三千如幻</div><div class="sub hover cap" style="opacity:0"> 醒时一枕黄粱</div></a></div></header>
+
+<div class="nav-area">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+<nav class="menu dis-select"></nav>
+</div>
+<div class="widgets">
+
+
+<widget class="widget-wrapper post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2024/12/14/Python%20%E5%AE%9E%E7%8E%B0%E9%80%9A%E8%AE%AF%E5%BD%95%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"><span class="title">Python实现通讯录系统设计</span></a><a class="item title" href="/2024/03/31/hello-world/"><span class="title">Hello World</span></a><a class="item title" href="/2025/05/06/%E4%BF%A1%E7%94%A8%E5%8D%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3/"><span class="title">信用卡管理系统项目文档</span></a><a class="item title" href="/2024/07/23/%E5%9F%BA%E4%BA%8Ejava+mvc%E6%A1%86%E6%9E%B6%E7%9A%84%E9%93%81%E8%B7%AF%E8%AE%A2%E7%A5%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"><span class="title">基于java+mvc框架的铁路订票系统设计</span></a><a class="item title" href="/2025/09/09/%E5%8F%8C%E6%8B%BC%E5%AD%A6%E4%B9%A0%EF%BC%88%E5%B0%8F%E9%B9%A4%E5%8F%8C%E6%8B%BC%EF%BC%89/"><span class="title">双拼学习（小鹤双拼）</span></a><a class="item title" href="/2025/07/06/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/"><span class="title">接口文档</span></a><a class="item title" href="/2024/05/17/%E9%A1%BF%E6%84%9F%E5%8A%9B-%E6%B8%A1%E8%BE%B9%E6%B7%B3%E4%B8%80/"><span class="title">顿感力</span></a><a class="item title" href="/2024/06/17/MySQL%E7%AC%94%E8%AE%B0/"><span class="title">MySQL笔记</span></a><a class="item title" href="/2024/05/17/Java%E7%AC%94%E8%AE%B017/"><span class="title">Java笔记17</span></a><a class="item title" href="/2024/05/17/Java%E7%AC%94%E8%AE%B016/"><span class="title">Java笔记16</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2025-05-06T05:00:00.000Z">2025-05-06</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2025-09-09T14:00:22.102Z">2025-09-09</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>信用卡管理系统项目文档</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><h1 id="信用卡管理系统项目文档"><a href="#信用卡管理系统项目文档" class="headerlink" title="信用卡管理系统项目文档"></a>信用卡管理系统项目文档</h1><blockquote>
+<p><strong>摘要</strong>：本项目是一个基于C#开发的信用卡管理系统，旨在为银行提供一个信息化管理平台，实现用户申请信用卡、激活信用卡、查看交易记录等功能。系统采用Windows Forms构建界面，MySQL作为数据库，采用三层架构设计。项目实现了用户和管理员两种角色的功能分离，具有良好的可扩展性和用户友好的界面。</p>
+</blockquote>
+<h2 id="第1章-项目分析"><a href="#第1章-项目分析" class="headerlink" title="第1章 项目分析"></a>第1章 项目分析</h2><h3 id="1-1-项目开发的目的"><a href="#1-1-项目开发的目的" class="headerlink" title="1.1 项目开发的目的"></a>1.1 项目开发的目的</h3><h4 id="1-1-1-研究目的"><a href="#1-1-1-研究目的" class="headerlink" title="1.1.1 研究目的"></a>1.1.1 研究目的</h4><p>本项目开发目的是为银行提供一个高效的信用卡业务信息化管理平台，简化信用卡申请和审批流程，提高信用卡业务处理效率，同时为用户提供便捷的信用卡申请和管理体验。研究目的在于探索如何通过信息化手段优化传统信用卡业务流程，提高业务处理效率和用户满意度。</p>
+<h3 id="1-2-技术选型"><a href="#1-2-技术选型" class="headerlink" title="1.2 技术选型"></a>1.2 技术选型</h3><h4 id="1-2-1-相关技术介绍"><a href="#1-2-1-相关技术介绍" class="headerlink" title="1.2.1 相关技术介绍"></a>1.2.1 相关技术介绍</h4><p><strong>开发语言：C# (.NET Framework)</strong></p>
+<ul>
+<li>选择理由：强类型语言，面向对象设计，丰富的类库支持</li>
+<li>应用方式：实现业务逻辑和界面交互</li>
+</ul>
+<p><strong>界面框架：Windows Forms</strong></p>
+<ul>
+<li>选择理由：成熟稳定，丰富的控件，易于快速开发桌面应用</li>
+<li>应用方式：构建用户界面，实现MDI多文档界面设计</li>
+</ul>
+<p><strong>数据库：MySQL</strong></p>
+<ul>
+<li>选择理由：开源免费，性能稳定，易于部署和维护</li>
+<li>应用方式：存储用户、卡片、交易和消息等核心数据</li>
+</ul>
+<p><strong>数据访问技术：ADO.NET与MySQL Connector&#x2F;NET</strong></p>
+<ul>
+<li>选择理由：与.NET框架无缝集成，提供高效的数据访问能力</li>
+<li>应用方式：实现数据的增删改查操作</li>
+</ul>
+<p><strong>开发工具：Visual Studio</strong></p>
+<ul>
+<li>选择理由：集成开发环境，提供丰富的调试和设计工具</li>
+<li>应用方式：代码编写、界面设计和项目管理</li>
+</ul>
+<h3 id="1-3-数据库分析"><a href="#1-3-数据库分析" class="headerlink" title="1.3 数据库分析"></a>1.3 数据库分析</h3><h4 id="1-3-1-数据库概念模型分析-E-R模型"><a href="#1-3-1-数据库概念模型分析-E-R模型" class="headerlink" title="1.3.1 数据库概念模型分析(E-R模型)"></a>1.3.1 数据库概念模型分析(E-R模型)</h4><p><strong>核心实体：</strong></p>
+<ol>
+<li><p><strong>User(用户)</strong></p>
+<ul>
+<li>属性：u_id, u_name, u_tel, u_pass, u_type</li>
+<li>描述：存储系统用户信息，包括用户ID、姓名、电话、密码和用户类型</li>
+</ul>
+</li>
+<li><p><strong>Admin(管理员)</strong></p>
+<ul>
+<li>属性：a_id, a_pass</li>
+<li>描述：存储系统管理员信息，包括管理员ID和密码</li>
+</ul>
+</li>
+<li><p><strong>Card(信用卡)</strong></p>
+<ul>
+<li>属性：c_id, b_id, u_id, c_pass, c_state, c_time</li>
+<li>描述：存储信用卡信息，包括卡号、卡类型ID、持卡人ID、密码、状态和开卡时间</li>
+</ul>
+</li>
+<li><p><strong>BaseCard(信用卡类型)</strong></p>
+<ul>
+<li>属性：b_id, b_type, b_term, b_limit</li>
+<li>描述：存储信用卡基础类型信息，包括类型ID、类型名称、有效期和额度</li>
+</ul>
+</li>
+<li><p><strong>Transfer(交易记录)</strong></p>
+<ul>
+<li>属性：t_id, c_id, t_amount, t_time</li>
+<li>描述：存储交易记录，包括交易ID、卡号、交易金额和交易时间</li>
+</ul>
+</li>
+<li><p><strong>Message(系统消息)</strong></p>
+<ul>
+<li>属性：m_id, u_id, m_msg, m_time, m_state</li>
+<li>描述：存储系统消息，包括消息ID、用户ID、消息内容、发送时间和消息状态</li>
+</ul>
+</li>
+</ol>
+<p><strong>实体关系：</strong></p>
+<ul>
+<li><strong>User与Card</strong>: 一对多关系，一个用户可拥有多张信用卡</li>
+<li><strong>BaseCard与Card</strong>: 一对多关系，一种卡类型可对应多张实际信用卡</li>
+<li><strong>Card与Transfer</strong>: 一对多关系，一张信用卡可有多条交易记录</li>
+<li><strong>User与Message</strong>: 一对多关系，一个用户可收到多条系统消息</li>
+<li><strong>Admin与Card</strong>: 管理员负责审核卡片申请和激活请求</li>
+</ul>
+<hr>
+<h2 id="第2章-项目设计"><a href="#第2章-项目设计" class="headerlink" title="第2章 项目设计"></a>第2章 项目设计</h2><h3 id="2-1-总体介绍"><a href="#2-1-总体介绍" class="headerlink" title="2.1 总体介绍"></a>2.1 总体介绍</h3><h4 id="2-1-1-项目的设计思路"><a href="#2-1-1-项目的设计思路" class="headerlink" title="2.1.1 项目的设计思路"></a>2.1.1 项目的设计思路</h4><p>本项目采用三层架构进行设计，将系统划分为表示层、业务逻辑层和数据访问层：</p>
+<ol>
+<li><p>**表示层(UI层)**：基于Windows Forms实现用户界面，负责与用户交互，展示数据和接收用户输入。</p>
+</li>
+<li><p>**业务逻辑层(BLL)**：封装核心业务规则和数据处理逻辑，处理表示层传递的请求，调用数据访问层完成数据操作。</p>
+</li>
+<li><p>**数据访问层(DAL)**：通过MySqlDao类实现对MySQL数据库的访问操作，封装SQL语句和数据库连接管理。</p>
+</li>
+</ol>
+<p>设计思路主要遵循以下原则：</p>
+<ul>
+<li><strong>模块化设计</strong>：将系统划分为多个功能模块，便于开发和维护</li>
+<li><strong>权限分离</strong>：实现用户和管理员两种角色，权限严格区分</li>
+<li><strong>数据一致性</strong>：保证数据的完整性和一致性</li>
+<li><strong>用户友好</strong>：提供直观、易用的操作界面</li>
+</ul>
+<h3 id="2-2-结构设计"><a href="#2-2-结构设计" class="headerlink" title="2.2 结构设计"></a>2.2 结构设计</h3><h4 id="2-2-1-结构设计的目的以及功能结构图"><a href="#2-2-1-结构设计的目的以及功能结构图" class="headerlink" title="2.2.1 结构设计的目的以及功能结构图"></a>2.2.1 结构设计的目的以及功能结构图</h4><p><strong>结构设计目的</strong>：</p>
+<ul>
+<li>实现系统功能的模块化和组件化</li>
+<li>降低系统各部分之间的耦合度</li>
+<li>提高系统的可维护性和可扩展性</li>
+<li>便于多人协作开发和系统维护</li>
+</ul>
+<p><strong>功能结构图</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">信用卡管理系统</span><br><span class="line">├── 用户子系统</span><br><span class="line">│   ├── 用户注册/登录</span><br><span class="line">│   ├── 信用卡申请</span><br><span class="line">│   ├── 信用卡激活</span><br><span class="line">│   ├── 交易记录查询</span><br><span class="line">│   ├── 个人信息管理</span><br><span class="line">│   └── 系统消息查看</span><br><span class="line">└── 管理员子系统</span><br><span class="line">    ├── 管理员登录</span><br><span class="line">    ├── 信用卡申请审核</span><br><span class="line">    ├── 信用卡激活审核</span><br><span class="line">    ├── 用户信息管理</span><br><span class="line">    ├── 交易记录管理</span><br><span class="line">    └── 系统消息发送</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-功能模块设计"><a href="#2-3-功能模块设计" class="headerlink" title="2.3 功能模块设计"></a>2.3 功能模块设计</h3><p>系统主要包含以下核心功能模块：</p>
+<ol>
+<li><p><strong>用户管理模块</strong></p>
+<ul>
+<li>功能：用户注册、登录、个人信息管理</li>
+<li>核心类：User类</li>
+<li>主要方法：registerUser()、userLogin()、updateUser()</li>
+</ul>
+</li>
+<li><p><strong>管理员管理模块</strong></p>
+<ul>
+<li>功能：管理员登录、权限管理</li>
+<li>核心类：Admin类</li>
+<li>主要方法：adminLogin()、verifyAdmin()</li>
+</ul>
+</li>
+<li><p><strong>信用卡管理模块</strong></p>
+<ul>
+<li>功能：信用卡申请、激活、状态查询</li>
+<li>核心类：Card类、BaseCard类</li>
+<li>主要方法：applyCard()、activateCard()、updateCardState()</li>
+</ul>
+</li>
+<li><p><strong>交易管理模块</strong></p>
+<ul>
+<li>功能：交易记录创建、查询</li>
+<li>核心类：Transfer类</li>
+<li>主要方法：createTransfer()、queryTransfer()</li>
+</ul>
+</li>
+<li><p><strong>消息管理模块</strong></p>
+<ul>
+<li>功能：系统消息发送、接收、查看</li>
+<li>核心类：Msg类</li>
+<li>主要方法：sendMsg()、readMsg()、updateMsgState()</li>
+</ul>
+</li>
+</ol>
+<h3 id="2-4-数据库表设计"><a href="#2-4-数据库表设计" class="headerlink" title="2.4 数据库表设计"></a>2.4 数据库表设计</h3><p>系统数据库由以下表组成：</p>
+<ol>
+<li><p><strong>users表</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE users (</span><br><span class="line">  u_id VARCHAR(20) PRIMARY KEY,</span><br><span class="line">  u_name VARCHAR(50) NOT NULL,</span><br><span class="line">  u_tel VARCHAR(20) NOT NULL,</span><br><span class="line">  u_pass VARCHAR(50) NOT NULL,</span><br><span class="line">  u_type INT DEFAULT 0</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>admin表</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE admin (</span><br><span class="line">  a_id VARCHAR(20) PRIMARY KEY,</span><br><span class="line">  a_pass VARCHAR(50) NOT NULL</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>base_card表</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE base_card (</span><br><span class="line">  b_id VARCHAR(20) PRIMARY KEY,</span><br><span class="line">  b_type VARCHAR(50) NOT NULL,</span><br><span class="line">  b_term INT NOT NULL,</span><br><span class="line">  b_limit DECIMAL(10,2) NOT NULL</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>card表</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE card (</span><br><span class="line">  c_id VARCHAR(20) PRIMARY KEY,</span><br><span class="line">  b_id VARCHAR(20) NOT NULL,</span><br><span class="line">  u_id VARCHAR(20) NOT NULL,</span><br><span class="line">  c_pass VARCHAR(50) NOT NULL,</span><br><span class="line">  c_state INT DEFAULT 0,</span><br><span class="line">  c_time VARCHAR(20),</span><br><span class="line">  FOREIGN KEY (b_id) REFERENCES base_card(b_id),</span><br><span class="line">  FOREIGN KEY (u_id) REFERENCES users(u_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>transfer表</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE transfer (</span><br><span class="line">  t_id VARCHAR(20) PRIMARY KEY,</span><br><span class="line">  c_id VARCHAR(20) NOT NULL,</span><br><span class="line">  t_amount DECIMAL(10,2) NOT NULL,</span><br><span class="line">  t_time VARCHAR(20) NOT NULL,</span><br><span class="line">  FOREIGN KEY (c_id) REFERENCES card(c_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>message表</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE message (</span><br><span class="line">  m_id VARCHAR(20) PRIMARY KEY,</span><br><span class="line">  u_id VARCHAR(20) NOT NULL,</span><br><span class="line">  m_msg TEXT NOT NULL,</span><br><span class="line">  m_time VARCHAR(20) NOT NULL,</span><br><span class="line">  m_state INT DEFAULT 0,</span><br><span class="line">  FOREIGN KEY (u_id) REFERENCES users(u_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<hr>
+<h2 id="第3章-项目实现"><a href="#第3章-项目实现" class="headerlink" title="第3章 项目实现"></a>第3章 项目实现</h2><h3 id="3-1-项目资源结构"><a href="#3-1-项目资源结构" class="headerlink" title="3.1 项目资源结构"></a>3.1 项目资源结构</h3><h4 id="3-1-1-项目的开发资源"><a href="#3-1-1-项目的开发资源" class="headerlink" title="3.1.1 项目的开发资源"></a>3.1.1 项目的开发资源</h4><p>项目资源结构如下：</p>
+<ol>
+<li><p><strong>UI层文件</strong></p>
+<ul>
+<li>Home.cs&#x2F;.resx - 主登录界面</li>
+<li>UserHome.cs&#x2F;.resx - 用户主界面</li>
+<li>AdminHome.cs&#x2F;.resx - 管理员主界面</li>
+<li>Register.cs&#x2F;.resx - 用户注册界面</li>
+</ul>
+</li>
+<li><p><strong>业务实体类文件</strong></p>
+<ul>
+<li>Admin.cs - 管理员实体类</li>
+<li>User.cs - 用户实体类</li>
+<li>Card.cs - 信用卡实体类</li>
+<li>BaseCard.cs - 基础卡类型实体类</li>
+<li>Transfer.cs - 交易记录实体类</li>
+<li>Msg.cs - 消息实体类</li>
+</ul>
+</li>
+<li><p><strong>数据访问层文件</strong></p>
+<ul>
+<li>MySqlDao.cs - MySQL数据库访问类</li>
+</ul>
+</li>
+<li><p><strong>工具类文件</strong></p>
+<ul>
+<li>Utils.cs - 工具方法类</li>
+</ul>
+</li>
+<li><p><strong>程序入口</strong></p>
+<ul>
+<li>Program.cs - 程序入口类</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-2-整体界面实现"><a href="#3-2-整体界面实现" class="headerlink" title="3.2 整体界面实现"></a>3.2 整体界面实现</h3><h4 id="3-2-1-MDI主窗体文档介绍"><a href="#3-2-1-MDI主窗体文档介绍" class="headerlink" title="3.2.1 MDI主窗体文档介绍"></a>3.2.1 MDI主窗体文档介绍</h4><p>系统采用MDI(多文档界面)设计模式，主要界面包括：</p>
+<ol>
+<li><p><strong>登录界面(Home.cs)</strong></p>
+<ul>
+<li>功能：提供用户和管理员登录入口</li>
+<li>主要控件：<ul>
+<li>RadioButton：选择用户类型（普通用户&#x2F;管理员）</li>
+<li>TextBox：输入用户名和密码</li>
+<li>Button：登录和注册按钮</li>
+</ul>
+</li>
+<li>实现逻辑：根据选择的用户类型调用不同的登录方法，验证成功后打开相应的主界面</li>
+</ul>
+</li>
+<li><p><strong>用户主界面(UserHome.cs)</strong></p>
+<ul>
+<li>采用TabControl控件实现多功能页面管理</li>
+<li>主要Tab页面：<ul>
+<li>个人信息页：显示和更新用户信息</li>
+<li>信用卡申请页：提供信用卡申请功能</li>
+<li>信用卡激活页：提供信用卡激活功能</li>
+<li>交易记录页：显示交易历史记录</li>
+<li>系统消息页：显示系统通知消息</li>
+</ul>
+</li>
+<li>使用DataGridView控件展示列表数据</li>
+<li>实现自适应布局，提高用户体验</li>
+</ul>
+</li>
+<li><p><strong>管理员主界面(AdminHome.cs)</strong></p>
+<ul>
+<li>同样采用TabControl实现功能分区</li>
+<li>主要Tab页面：<ul>
+<li>信用卡申请管理页：处理用户的卡片申请</li>
+<li>信用卡激活管理页：处理用户的卡片激活请求</li>
+<li>用户管理页：管理系统用户</li>
+<li>消息管理页：发送系统消息</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="3-3-关键模块的实现"><a href="#3-3-关键模块的实现" class="headerlink" title="3.3 关键模块的实现"></a>3.3 关键模块的实现</h3><h4 id="3-3-1-用户登录模块的界面以及实现代码"><a href="#3-3-1-用户登录模块的界面以及实现代码" class="headerlink" title="3.3.1 用户登录模块的界面以及实现代码"></a>3.3.1 用户登录模块的界面以及实现代码</h4><p><strong>登录界面设计</strong>：</p>
+<ul>
+<li>界面包含用户名输入框、密码输入框</li>
+<li>用户类型选择（单选按钮）</li>
+<li>登录和注册按钮</li>
+</ul>
+<p><strong>关键代码实现</strong>：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">loginButton_Click</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 获取用户输入</span></span><br><span class="line">    <span class="built_in">string</span> userId = idTextBox.Text.Trim();</span><br><span class="line">    <span class="built_in">string</span> password = passwordTextBox.Text.Trim();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 输入验证</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrEmpty(userId) || <span class="built_in">string</span>.IsNullOrEmpty(password))</span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox.Show(<span class="string">&quot;用户名和密码不能为空！&quot;</span>, <span class="string">&quot;提示&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Warning);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 根据选择的用户类型调用不同的登录方法</span></span><br><span class="line">    <span class="keyword">if</span> (userRadioButton.Checked)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 用户登录</span></span><br><span class="line">        User user = MySqlDao.userLogin(userId, password);</span><br><span class="line">        <span class="keyword">if</span> (user != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 登录成功，打开用户主界面</span></span><br><span class="line">            UserHome userHome = <span class="keyword">new</span> UserHome(user);</span><br><span class="line">            <span class="keyword">this</span>.Hide();</span><br><span class="line">            userHome.ShowDialog();</span><br><span class="line">            <span class="keyword">this</span>.Show();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            MessageBox.Show(<span class="string">&quot;用户名或密码错误！&quot;</span>, <span class="string">&quot;登录失败&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (adminRadioButton.Checked)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 管理员登录</span></span><br><span class="line">        Admin admin = MySqlDao.adminLogin(userId, password);</span><br><span class="line">        <span class="keyword">if</span> (admin != <span class="literal">null</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">// 登录成功，打开管理员主界面</span></span><br><span class="line">            AdminHome adminHome = <span class="keyword">new</span> AdminHome(admin);</span><br><span class="line">            <span class="keyword">this</span>.Hide();</span><br><span class="line">            adminHome.ShowDialog();</span><br><span class="line">            <span class="keyword">this</span>.Show();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            MessageBox.Show(<span class="string">&quot;管理员ID或密码错误！&quot;</span>, <span class="string">&quot;登录失败&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Error);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-2-信用卡申请模块的界面以及实现代码"><a href="#3-3-2-信用卡申请模块的界面以及实现代码" class="headerlink" title="3.3.2 信用卡申请模块的界面以及实现代码"></a>3.3.2 信用卡申请模块的界面以及实现代码</h4><p><strong>信用卡申请界面设计</strong>：</p>
+<ul>
+<li>下拉列表选择卡片类型</li>
+<li>显示卡片类型详情（额度、有效期）</li>
+<li>密码输入框及确认密码输入框</li>
+<li>申请提交按钮</li>
+</ul>
+<p><strong>关键代码实现</strong>：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">submit_Click</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 获取用户选择的卡片类型</span></span><br><span class="line">    <span class="built_in">string</span> selectedCardTypeId = ((BaseCard)type.SelectedItem).b_id;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 获取密码输入</span></span><br><span class="line">    <span class="built_in">string</span> cardPassword = pass.Text.Trim();</span><br><span class="line">    <span class="built_in">string</span> confirmPassword = c_pass.Text.Trim();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 输入验证</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">string</span>.IsNullOrEmpty(cardPassword))</span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox.Show(<span class="string">&quot;密码不能为空！&quot;</span>, <span class="string">&quot;提示&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Warning);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!cardPassword.Equals(confirmPassword))</span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox.Show(<span class="string">&quot;两次密码输入不一致！&quot;</span>, <span class="string">&quot;提示&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Warning);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 生成卡号</span></span><br><span class="line">    <span class="built_in">string</span> cardId = GenerateCardId();</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 创建卡片对象</span></span><br><span class="line">    Card card = <span class="keyword">new</span> Card();</span><br><span class="line">    card.c_id = cardId;</span><br><span class="line">    card.b_id = selectedCardTypeId;</span><br><span class="line">    card.u_id = currentUser.u_id;</span><br><span class="line">    card.c_pass = cardPassword;</span><br><span class="line">    card.c_state = <span class="number">0</span>;  <span class="comment">// 初始状态为申请中</span></span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 提交申请</span></span><br><span class="line">    <span class="built_in">bool</span> success = MySqlDao.insertCard(card);</span><br><span class="line">    <span class="keyword">if</span> (success)</span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox.Show(<span class="string">&quot;信用卡申请已提交，请等待审核！&quot;</span>, <span class="string">&quot;申请成功&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Information);</span><br><span class="line">        <span class="comment">// 刷新卡片列表</span></span><br><span class="line">        RefreshCardList();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox.Show(<span class="string">&quot;申请提交失败，请稍后重试！&quot;</span>, <span class="string">&quot;申请失败&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Error);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-3-3-交易记录查询模块的界面以及实现代码"><a href="#3-3-3-交易记录查询模块的界面以及实现代码" class="headerlink" title="3.3.3 交易记录查询模块的界面以及实现代码"></a>3.3.3 交易记录查询模块的界面以及实现代码</h4><p><strong>交易记录查询界面设计</strong>：</p>
+<ul>
+<li>卡片选择下拉列表</li>
+<li>交易记录数据网格视图</li>
+<li>查询按钮</li>
+</ul>
+<p><strong>关键代码实现</strong>：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">queryTransfer_Click</span>(<span class="params"><span class="built_in">object</span> sender, EventArgs e</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 获取选中的卡片</span></span><br><span class="line">    <span class="keyword">if</span> (cardComboBox.SelectedItem == <span class="literal">null</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox.Show(<span class="string">&quot;请选择要查询的卡片！&quot;</span>, <span class="string">&quot;提示&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Warning);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">string</span> selectedCardId = ((Card)cardComboBox.SelectedItem).c_id;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 查询交易记录</span></span><br><span class="line">    List&lt;Transfer&gt; transfers = MySqlDao.selectTransfer(selectedCardId);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 显示查询结果</span></span><br><span class="line">    transferDataGridView.DataSource = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (transfers != <span class="literal">null</span> &amp;&amp; transfers.Count &gt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        transferDataGridView.DataSource = transfers;</span><br><span class="line">        <span class="comment">// 格式化显示</span></span><br><span class="line">        transferDataGridView.Columns[<span class="string">&quot;t_id&quot;</span>].HeaderText = <span class="string">&quot;交易ID&quot;</span>;</span><br><span class="line">        transferDataGridView.Columns[<span class="string">&quot;c_id&quot;</span>].HeaderText = <span class="string">&quot;卡号&quot;</span>;</span><br><span class="line">        transferDataGridView.Columns[<span class="string">&quot;t_amount&quot;</span>].HeaderText = <span class="string">&quot;交易金额&quot;</span>;</span><br><span class="line">        transferDataGridView.Columns[<span class="string">&quot;t_time&quot;</span>].HeaderText = <span class="string">&quot;交易时间&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        MessageBox.Show(<span class="string">&quot;未查询到交易记录！&quot;</span>, <span class="string">&quot;提示&quot;</span>, MessageBoxButtons.OK, MessageBoxIcon.Information);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="第4章-项目测试"><a href="#第4章-项目测试" class="headerlink" title="第4章 项目测试"></a>第4章 项目测试</h2><h3 id="4-1-系统测试"><a href="#4-1-系统测试" class="headerlink" title="4.1 系统测试"></a>4.1 系统测试</h3><h4 id="4-1-1-测试目的"><a href="#4-1-1-测试目的" class="headerlink" title="4.1.1 测试目的"></a>4.1.1 测试目的</h4><p>系统测试的目的是验证信用卡管理系统的功能完整性、可靠性和易用性，确保系统能够满足预期的业务需求，发现并修复潜在的问题，提高系统的整体质量。</p>
+<h4 id="4-1-2-测试原则及方法"><a href="#4-1-2-测试原则及方法" class="headerlink" title="4.1.2 测试原则及方法"></a>4.1.2 测试原则及方法</h4><p><strong>测试原则</strong>：</p>
+<ol>
+<li><strong>全面性</strong>：测试应覆盖所有功能模块和业务流程</li>
+<li><strong>系统性</strong>：按照系统架构层次和模块关系进行系统化测试</li>
+<li><strong>重点性</strong>：重点测试核心功能和高风险区域</li>
+<li><strong>可重复性</strong>：测试过程可重复执行，结果可验证</li>
+</ol>
+<p><strong>测试方法</strong>：</p>
+<ol>
+<li><strong>单元测试</strong>：验证各个功能模块的正确性</li>
+<li><strong>集成测试</strong>：验证模块间接口和交互</li>
+<li><strong>功能测试</strong>：验证系统功能是否符合需求规格</li>
+<li><strong>性能测试</strong>：测试系统在不同负载下的响应性能</li>
+<li><strong>用户界面测试</strong>：测试界面的可用性和友好性</li>
+</ol>
+<h4 id="4-1-3-测试内容"><a href="#4-1-3-测试内容" class="headerlink" title="4.1.3 测试内容"></a>4.1.3 测试内容</h4><ol>
+<li><p><strong>用户登录测试</strong></p>
+<ul>
+<li>测试内容：验证用户名和密码的验证逻辑</li>
+<li>测试用例：<ul>
+<li>正确的用户名和密码 -&gt; 预期结果：登录成功</li>
+<li>错误的用户名或密码 -&gt; 预期结果：显示错误提示</li>
+<li>空白用户名或密码 -&gt; 预期结果：显示输入提示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>信用卡申请测试</strong></p>
+<ul>
+<li>测试内容：验证信用卡申请流程</li>
+<li>测试用例：<ul>
+<li>正常申请信用卡 -&gt; 预期结果：申请成功，状态为待审核</li>
+<li>密码不一致 -&gt; 预期结果：显示错误提示</li>
+<li>不选择卡类型 -&gt; 预期结果：显示选择提示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>信用卡激活测试</strong></p>
+<ul>
+<li>测试内容：验证信用卡激活流程</li>
+<li>测试用例：<ul>
+<li>正常激活已审批的信用卡 -&gt; 预期结果：提交激活申请成功</li>
+<li>卡密码错误 -&gt; 预期结果：显示密码错误提示</li>
+<li>已激活的卡再次激活 -&gt; 预期结果：显示已激活提示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>交易记录查询测试</strong></p>
+<ul>
+<li>测试内容：验证交易记录查询功能</li>
+<li>测试用例：<ul>
+<li>查询有交易记录的卡 -&gt; 预期结果：显示交易记录列表</li>
+<li>查询无交易记录的卡 -&gt; 预期结果：显示无记录提示</li>
+<li>不选择卡片直接查询 -&gt; 预期结果：显示选择提示</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>管理员审核测试</strong></p>
+<ul>
+<li>测试内容：验证管理员审核功能</li>
+<li>测试用例：<ul>
+<li>审批通过信用卡申请 -&gt; 预期结果：申请状态更新为已通过</li>
+<li>审批拒绝信用卡申请 -&gt; 预期结果：申请状态更新为已拒绝</li>
+<li>审批通过激活请求 -&gt; 预期结果：卡状态更新为已激活</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>消息系统测试</strong></p>
+<ul>
+<li>测试内容：验证系统消息功能</li>
+<li>测试用例：<ul>
+<li>管理员发送消息 -&gt; 预期结果：消息成功保存并对目标用户可见</li>
+<li>用户查看消息 -&gt; 预期结果：消息状态更新为已读</li>
+<li>用户删除消息 -&gt; 预期结果：消息从列表中移除</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h3 id="4-2-系统调试"><a href="#4-2-系统调试" class="headerlink" title="4.2 系统调试"></a>4.2 系统调试</h3><p>系统调试主要包括以下内容：</p>
+<ol>
+<li><p><strong>界面功能调试</strong></p>
+<ul>
+<li>调试目标：确保所有界面控件功能正常，包括按钮点击、列表选择、数据展示等</li>
+<li>调试方法：手动操作各界面控件，验证响应是否符合预期</li>
+<li>发现的问题：部分界面响应迟缓，优化了数据加载方式</li>
+</ul>
+</li>
+<li><p><strong>数据库连接测试</strong></p>
+<ul>
+<li>调试目标：验证系统与MySQL数据库的连接稳定性</li>
+<li>调试方法：模拟高频率数据库操作，监控连接状态</li>
+<li>解决措施：实现数据库连接池，优化连接管理</li>
+</ul>
+</li>
+<li><p><strong>异常处理测试</strong></p>
+<ul>
+<li>调试目标：确保系统对各种异常情况有适当处理</li>
+<li>调试方法：模拟各种异常场景，如数据库连接中断、非法输入等</li>
+<li>改进措施：完善异常捕获机制，增加用户友好的错误提示</li>
+</ul>
+</li>
+<li><p><strong>并发操作测试</strong></p>
+<ul>
+<li>调试目标：验证系统在多用户同时操作下的稳定性</li>
+<li>调试方法：模拟多用户同时登录和操作</li>
+<li>优化措施：增加数据库锁机制，避免并发冲突</li>
+</ul>
+</li>
+<li><p><strong>性能优化</strong></p>
+<ul>
+<li>调试目标：提高系统响应速度和资源利用效率</li>
+<li>调试方法：使用性能分析工具监测系统性能瓶颈</li>
+<li>优化措施：优化SQL查询语句，实现数据缓存机制</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>本项目成功开发了一个功能完整的信用卡管理系统，实现了用户申请信用卡、激活信用卡、查看交易记录等核心功能，以及管理员审核信用卡申请、激活请求等管理功能。系统采用C#语言和Windows Forms开发，使用MySQL作为数据库，遵循三层架构设计原则。</p>
+<p>系统具有以下特点：</p>
+<ol>
+<li><strong>功能完整</strong>：覆盖信用卡业务的主要流程，包括申请、审核、激活和使用管理</li>
+<li><strong>架构清晰</strong>：采用三层架构，模块划分合理，耦合度低</li>
+<li><strong>界面友好</strong>：提供直观易用的用户界面，操作简单明确</li>
+<li><strong>安全可靠</strong>：实现用户身份验证，数据访问控制等安全机制</li>
+<li><strong>可扩展性</strong>：良好的架构设计为未来功能扩展提供了基础</li>
+</ol>
+<p>在项目开发过程中，团队积累了Windows Forms应用程序开发、数据库设计与优化、多角色权限管理等方面的经验。系统测试结果表明，开发的信用卡管理系统能够稳定运行，满足预期的业务需求。</p>
+<p>未来可考虑的改进方向包括：</p>
+<ol>
+<li>增加更多类型的信用卡产品支持</li>
+<li>实现更复杂的交易分析和统计功能</li>
+<li>增强系统安全性，如增加双因素认证</li>
+<li>提供移动端应用，实现跨平台访问</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li>李刚. C#高级编程. 北京: 电子工业出版社, 2020.</li>
+<li>杨中科. Windows程序设计. 北京: 清华大学出版社, 2019.</li>
+<li>马丁·福勒(Martin Fowler). 企业应用架构模式. 北京: 机械工业出版社, 2018.</li>
+<li>MySQL 8.0 参考手册. MySQL AB公司, 2021.</li>
+<li>Microsoft. .NET Framework 4.8 开发指南. Microsoft Developer Network, 2020.</li>
+<li>郑阿奇. 软件工程方法与实践. 北京: 人民邮电出版社, 2021.</li>
+<li>张海藩. 软件测试方法. 北京: 机械工业出版社, 2019.</li>
+<li>Guy Hart-Davis. Windows Forms编程. 北京: 人民邮电出版社, 2018.</li>
+</ol>
+
+<div class="article-footer fs14">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    </div>
+</article>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2025/07/06/%E6%8E%A5%E5%8F%A3%E6%96%87%E6%A1%A3/">接口文档</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2025/01/05/24-25%E9%9A%8F%E7%AC%94/">随笔</a></div></section></div>
+
+
+
+
+
+
+<footer class="page-footer footnote"><hr><div class="sitemap"><div class="sitemap-group"><span class="fs15">博客</span><a href="/">近期</a><a href="/">分类</a><a href="/">标签</a><a href="/">归档</a></div><div class="sitemap-group"><span class="fs15">项目</span><a href="/">开源库</a></div><div class="sitemap-group"><span class="fs15">社交</span><a href="/">友链</a><a href="/">留言板</a></div><div class="sitemap-group"><span class="fs15">更多</span><a href="/">关于本站</a><a href="/">GitHub</a></div></div><div class="text"><p>本站由 <a href="/">Wxi</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.27.0">Stellar 1.27.0</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BF%A1%E7%94%A8%E5%8D%A1%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%E9%A1%B9%E7%9B%AE%E6%96%87%E6%A1%A3"><span class="toc-text">信用卡管理系统项目文档</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC1%E7%AB%A0-%E9%A1%B9%E7%9B%AE%E5%88%86%E6%9E%90"><span class="toc-text">第1章 项目分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%A1%B9%E7%9B%AE%E5%BC%80%E5%8F%91%E7%9A%84%E7%9B%AE%E7%9A%84"><span class="toc-text">1.1 项目开发的目的</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E7%A0%94%E7%A9%B6%E7%9B%AE%E7%9A%84"><span class="toc-text">1.1.1 研究目的</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="toc-text">1.2 技术选型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E7%9B%B8%E5%85%B3%E6%8A%80%E6%9C%AF%E4%BB%8B%E7%BB%8D"><span class="toc-text">1.2.1 相关技术介绍</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E6%95%B0%E6%8D%AE%E5%BA%93%E5%88%86%E6%9E%90"><span class="toc-text">1.3 数据库分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-%E6%95%B0%E6%8D%AE%E5%BA%93%E6%A6%82%E5%BF%B5%E6%A8%A1%E5%9E%8B%E5%88%86%E6%9E%90-E-R%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.3.1 数据库概念模型分析(E-R模型)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0-%E9%A1%B9%E7%9B%AE%E8%AE%BE%E8%AE%A1"><span class="toc-text">第2章 项目设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%80%BB%E4%BD%93%E4%BB%8B%E7%BB%8D"><span class="toc-text">2.1 总体介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%80%9D%E8%B7%AF"><span class="toc-text">2.1.1 项目的设计思路</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1"><span class="toc-text">2.2 结构设计</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1%E7%9A%84%E7%9B%AE%E7%9A%84%E4%BB%A5%E5%8F%8A%E5%8A%9F%E8%83%BD%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-text">2.2.1 结构设计的目的以及功能结构图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%8A%9F%E8%83%BD%E6%A8%A1%E5%9D%97%E8%AE%BE%E8%AE%A1"><span class="toc-text">2.3 功能模块设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E8%AE%BE%E8%AE%A1"><span class="toc-text">2.4 数据库表设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC3%E7%AB%A0-%E9%A1%B9%E7%9B%AE%E5%AE%9E%E7%8E%B0"><span class="toc-text">第3章 项目实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E9%A1%B9%E7%9B%AE%E8%B5%84%E6%BA%90%E7%BB%93%E6%9E%84"><span class="toc-text">3.1 项目资源结构</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%BC%80%E5%8F%91%E8%B5%84%E6%BA%90"><span class="toc-text">3.1.1 项目的开发资源</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%95%B4%E4%BD%93%E7%95%8C%E9%9D%A2%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.2 整体界面实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-1-MDI%E4%B8%BB%E7%AA%97%E4%BD%93%E6%96%87%E6%A1%A3%E4%BB%8B%E7%BB%8D"><span class="toc-text">3.2.1 MDI主窗体文档介绍</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%85%B3%E9%94%AE%E6%A8%A1%E5%9D%97%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.3 关键模块的实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-1-%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E6%A8%A1%E5%9D%97%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81"><span class="toc-text">3.3.1 用户登录模块的界面以及实现代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-2-%E4%BF%A1%E7%94%A8%E5%8D%A1%E7%94%B3%E8%AF%B7%E6%A8%A1%E5%9D%97%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81"><span class="toc-text">3.3.2 信用卡申请模块的界面以及实现代码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-3-%E4%BA%A4%E6%98%93%E8%AE%B0%E5%BD%95%E6%9F%A5%E8%AF%A2%E6%A8%A1%E5%9D%97%E7%9A%84%E7%95%8C%E9%9D%A2%E4%BB%A5%E5%8F%8A%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81"><span class="toc-text">3.3.3 交易记录查询模块的界面以及实现代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC4%E7%AB%A0-%E9%A1%B9%E7%9B%AE%E6%B5%8B%E8%AF%95"><span class="toc-text">第4章 项目测试</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%B3%BB%E7%BB%9F%E6%B5%8B%E8%AF%95"><span class="toc-text">4.1 系统测试</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-1-%E6%B5%8B%E8%AF%95%E7%9B%AE%E7%9A%84"><span class="toc-text">4.1.1 测试目的</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-2-%E6%B5%8B%E8%AF%95%E5%8E%9F%E5%88%99%E5%8F%8A%E6%96%B9%E6%B3%95"><span class="toc-text">4.1.2 测试原则及方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-3-%E6%B5%8B%E8%AF%95%E5%86%85%E5%AE%B9"><span class="toc-text">4.1.3 测试内容</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E7%B3%BB%E7%BB%9F%E8%B0%83%E8%AF%95"><span class="toc-text">4.2 系统调试</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-text">结论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%8C%AE"><span class="toc-text">参考文献</span></a></li></ol></li></ol></div><div class="widget-footer">
+
+<a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"/><path stroke-linecap="round" stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel blur'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+<script type="text/javascript">
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"codeblock":true,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+  };
+  const deps = {
+    jquery: `https://cdn.bootcdn.net/ajax/libs/jquery/3.7.1/jquery.min.js`,
+    marked: `https://cdn.bootcdn.net/ajax/libs/marked/4.0.18/marked.min.js`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')){
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+    
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      let retryTimes = 3;
+      utils.onLoading(el);
+      function req() {
+        return new Promise((resolve, reject) => {
+          let status = 0; // 0 等待 1 完成 2 超时
+          let timer = setTimeout(() => {
+            if (status === 0) {
+              status = 2;
+              timer = null;
+              reject('请求超时');
+              if (retryTimes == 0) {
+                onFailure();
+              }
+            }
+          }, 5000);
+          fetch(url).then(function(response) {
+            if (status !== 2) {
+              clearTimeout(timer);
+              resolve(response);
+              timer = null;
+              status = 1;
+            }
+            if (response.ok) {
+              return response.json();
+            }
+            throw new Error('Network response was not ok.');
+          }).then(function(data) {
+            retryTimes = 0;
+            utils.onLoadSuccess(el);
+            callback(data);
+          }).catch(function(error) {
+            if (retryTimes > 0) {
+              retryTimes -= 1;
+              setTimeout(() => {
+                req();
+              }, 5000);
+            } else {
+              utils.onLoadFailure(el);
+              onFailure();
+            }
+          });
+        });
+      }
+      req();
+    },
+  };
+</script>
+
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.27.0" async></script>
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://cdn.bootcdn.net/ajax/libs/flying-pages/2.1.2/flying-pages.min.js"></script><script defer src="https://cdn.bootcdn.net/ajax/libs/vanilla-lazyload/17.8.4/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+</script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.min.css`,
+    js: `https://cdn.bootcdn.net/ajax/libs/fancyapps-ui/5.0.22/fancybox/fancybox.umd.min.js`
+  };
+  var selector = '[data-fancybox]:not(.error)';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const els = document.getElementsByClassName('ds-memos');
+    if (els != undefined && els.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || null
+        }
+      });
+    })
+  }
+</script><script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3.1/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          loop: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script><script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
