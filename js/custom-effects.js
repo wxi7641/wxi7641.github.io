@@ -85,29 +85,35 @@
     function palette() {
       if (currentMode() === 'dark') {
         glow.style.background =
-          'radial-gradient(circle, rgba(238,205,136,0.36), rgba(181,151,244,0.3) 42%, rgba(18,12,28,0) 78%)';
+          'radial-gradient(circle, rgba(241,213,146,0.48), rgba(183,154,245,0.38) 40%, rgba(18,12,28,0) 80%)';
         return {
-          nodeFill: 'rgba(244, 231, 255, 0.95)',
-          nodeGlow: 'rgba(185, 154, 246, 0.96)',
-          haloInner: 'rgba(244, 210, 146, 0.34)',
+          nodeFill: 'rgba(252, 244, 255, 0.98)',
+          nodeCore: 'rgba(236, 211, 255, 1)',
+          nodeGlow: 'rgba(192, 159, 248, 1)',
+          nodeAura: 'rgba(212, 176, 250, 0.34)',
+          haloInner: 'rgba(244, 214, 154, 0.42)',
+          haloMid: 'rgba(192, 159, 248, 0.2)',
           haloOuter: 'rgba(181, 151, 244, 0)'
         };
       }
 
       glow.style.background =
-        'radial-gradient(circle, rgba(188,255,210,0.38), rgba(92,203,123,0.3) 44%, rgba(255,255,255,0) 76%)';
+        'radial-gradient(circle, rgba(214,255,226,0.56), rgba(78,221,145,0.42) 38%, rgba(28,175,118,0.2) 58%, rgba(255,255,255,0) 82%)';
       return {
-        nodeFill: 'rgba(230, 255, 237, 0.98)',
-        nodeGlow: 'rgba(89, 202, 120, 0.94)',
-        haloInner: 'rgba(165, 247, 189, 0.34)',
-        haloOuter: 'rgba(104, 192, 131, 0)'
+        nodeFill: 'rgba(248, 255, 250, 0.98)',
+        nodeCore: 'rgba(201, 255, 224, 1)',
+        nodeGlow: 'rgba(47, 210, 135, 1)',
+        nodeAura: 'rgba(110, 245, 181, 0.38)',
+        haloInner: 'rgba(196, 255, 221, 0.44)',
+        haloMid: 'rgba(82, 224, 151, 0.22)',
+        haloOuter: 'rgba(92, 211, 158, 0)'
       };
     }
 
     function createNodes() {
-      const areaPerDot = prefersCoarse ? 90000 : 52000;
-      const minCount = prefersCoarse ? 10 : 18;
-      const maxCount = prefersCoarse ? 24 : 46;
+      const areaPerDot = prefersCoarse ? 42000 : 24000;
+      const minCount = prefersCoarse ? 16 : 30;
+      const maxCount = prefersCoarse ? 48 : 88;
       const count = Math.max(minCount, Math.min(maxCount, Math.round((width * height) / areaPerDot)));
 
       nodes.length = 0;
@@ -115,12 +121,12 @@
         nodes.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * (prefersCoarse ? 0.16 : 0.24),
-          vy: (Math.random() - 0.5) * (prefersCoarse ? 0.12 : 0.2),
-          r: Math.random() * 1.8 + 1.1,
+          vx: (Math.random() - 0.5) * (prefersCoarse ? 0.14 : 0.22),
+          vy: (Math.random() - 0.5) * (prefersCoarse ? 0.1 : 0.18),
+          r: Math.random() * 1.9 + 1.2,
           pulse: Math.random() * Math.PI * 2,
           sway: Math.random() * Math.PI * 2,
-          strength: Math.random() * 0.7 + 0.7
+          strength: Math.random() * 0.85 + 0.9
         });
       }
     }
@@ -139,37 +145,52 @@
 
     function pointerStrength() {
       const elapsed = performance.now() - pointer.lastActiveAt;
-      if (!pointer.active && elapsed > 900) {
+      if (!pointer.active && elapsed > 1200) {
         return 0;
       }
-      return Math.max(0, 1 - elapsed / 900);
+      return Math.max(0, 1 - elapsed / 1200);
     }
 
-    function drawHalo(colors, strength) {
-      if (strength <= 0) {
+    function drawHalo(colors, strength, clusterBoost) {
+      const combined = strength + clusterBoost * 0.3;
+      if (combined <= 0) {
         return;
       }
-      const radius = prefersCoarse ? 180 : 220;
+      const radius = (prefersCoarse ? 210 : 260) + clusterBoost * 10;
       const gradient = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, radius);
       gradient.addColorStop(0, colors.haloInner);
+      gradient.addColorStop(0.42, colors.haloMid);
       gradient.addColorStop(1, colors.haloOuter);
       context.beginPath();
       context.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
       context.fillStyle = gradient;
-      context.globalAlpha = Math.min(1, 0.68 + strength * 0.22);
+      context.globalAlpha = Math.min(1, 0.34 + combined * 0.34);
       context.fill();
       context.globalAlpha = 1;
     }
 
-    function drawParticle(node, colors, glowBoost) {
-      const radius = node.r + glowBoost * 0.7;
+    function drawParticle(node, colors, glowBoost, densityBoost) {
+      const auraRadius = node.r * 2.15 + glowBoost * 1.75 + densityBoost * 0.7;
       context.beginPath();
-      context.arc(node.x, node.y, radius, 0, Math.PI * 2);
-      context.fillStyle = colors.nodeFill;
-      context.shadowBlur = 10 + glowBoost * 22;
+      context.arc(node.x, node.y, auraRadius, 0, Math.PI * 2);
+      context.fillStyle = colors.nodeAura;
+      context.globalAlpha = Math.min(1, 0.18 + glowBoost * 0.16 + densityBoost * 0.08);
+      context.shadowBlur = 16 + glowBoost * 24 + densityBoost * 8;
       context.shadowColor = colors.nodeGlow;
       context.fill();
+      context.globalAlpha = 1;
       context.shadowBlur = 0;
+
+      const coreRadius = node.r + glowBoost * 0.82 + densityBoost * 0.14;
+      context.beginPath();
+      context.arc(node.x, node.y, coreRadius, 0, Math.PI * 2);
+      context.fillStyle = colors.nodeCore;
+      context.fill();
+
+      context.beginPath();
+      context.arc(node.x, node.y, Math.max(0.95, coreRadius * 0.38), 0, Math.PI * 2);
+      context.fillStyle = colors.nodeFill;
+      context.fill();
     }
 
     function activatePointer(x, y) {
@@ -184,8 +205,10 @@
     function step(now) {
       const colors = palette();
       const strength = pointerStrength();
+      const influenceRadius = prefersCoarse ? 210 : 260;
       context.clearRect(0, 0, width, height);
-      drawHalo(colors, strength);
+      let clusterLight = 0;
+      let attractedCount = 0;
 
       for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
@@ -198,23 +221,46 @@
         if (node.x < -40 || node.x > width + 40) node.vx *= -1;
         if (node.y < -40 || node.y > height + 40) node.vy *= -1;
 
-        let glowBoost = pulse * 0.55;
+        let attraction = 0;
         if (strength > 0) {
           const dx = pointer.x - node.x;
           const dy = pointer.y - node.y;
           const distance = Math.hypot(dx, dy);
-          const radius = prefersCoarse ? 180 : 220;
-          if (distance < radius) {
-            const force = (1 - distance / radius) * node.strength * strength;
-            node.vx += (dx / Math.max(distance, 1)) * force * 0.012;
-            node.vy += (dy / Math.max(distance, 1)) * force * 0.012;
-            glowBoost += force * 2.6;
+          if (distance < influenceRadius) {
+            const force = (1 - distance / influenceRadius) * node.strength * strength;
+            const pull = force * (prefersCoarse ? 0.015 : 0.022);
+            node.x += dx * pull;
+            node.y += dy * pull;
+            node.vx += (dx / Math.max(distance, 1)) * force * 0.022;
+            node.vy += (dy / Math.max(distance, 1)) * force * 0.022;
+            attraction = force;
+            clusterLight += force;
+            attractedCount += 1;
           }
         }
 
-        node.vx = Math.max(-0.5, Math.min(0.5, node.vx * 0.995));
-        node.vy = Math.max(-0.5, Math.min(0.5, node.vy * 0.995));
-        drawParticle(node, colors, glowBoost);
+        node.vx = Math.max(-0.62, Math.min(0.62, node.vx * (strength > 0 ? 0.992 : 0.996)));
+        node.vy = Math.max(-0.62, Math.min(0.62, node.vy * (strength > 0 ? 0.992 : 0.996)));
+        node._pulse = pulse;
+        node._attraction = attraction;
+      }
+
+      const densityBoost = Math.min(
+        prefersCoarse ? 1.15 : 1.7,
+        clusterLight * 0.14 + attractedCount / (prefersCoarse ? 10 : 14)
+      );
+
+      drawHalo(colors, strength, densityBoost);
+      if (strength > 0) {
+        glow.style.opacity = String(Math.min(1, 0.34 + strength * 0.34 + densityBoost * 0.16));
+      } else if (!pointer.active) {
+        glow.style.opacity = '0';
+      }
+
+      for (let i = 0; i < nodes.length; i += 1) {
+        const node = nodes[i];
+        const glowBoost = node._pulse * 0.82 + node._attraction * 4.8 + densityBoost * 0.24;
+        drawParticle(node, colors, glowBoost, densityBoost);
       }
 
       animationId = window.requestAnimationFrame(step);

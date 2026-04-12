@@ -1,9 +1,9 @@
 body {
   position: relative;
   background:
-    radial-gradient(circle at 12% 8%, rgba(192, 247, 209, 0.68), rgba(192, 247, 209, 0) 28%),
-    radial-gradient(circle at 88% 10%, rgba(188, 233, 246, 0.48), rgba(188, 233, 246, 0) 26%),
-    linear-gradient(135deg, hsl(146, 58%, 94%), hsl(151, 50%, 92%), hsl(197, 58%, 95%));
+    radial-gradient(circle at 14% 10%, rgba(196, 244, 205, 0.72), rgba(196, 244, 205, 0) 28%),
+    radial-gradient(circle at 86% 12%, rgba(223, 233, 249, 0.42), rgba(223, 233, 249, 0) 28%),
+    linear-gradient(100deg, hsl(90, 55%, 97%), hsl(150, 50%, 96%) 38%, hsl(220, 60%, 98%) 74%, hsl(280, 50%, 97%));
 }
 
 body > .sitebg {
@@ -12,17 +12,17 @@ body > .sitebg {
   background-position: center;
   background-repeat: no-repeat;
   background-image:
-    radial-gradient(circle at 12% 8%, rgba(192, 247, 209, 0.62), rgba(192, 247, 209, 0) 30%),
-    radial-gradient(circle at 88% 12%, rgba(188, 233, 246, 0.42), rgba(188, 233, 246, 0) 26%),
-    linear-gradient(135deg, hsl(146, 58%, 94%), hsl(151, 50%, 92%), hsl(197, 58%, 95%)) !important;
+    radial-gradient(circle at 14% 10%, rgba(196, 244, 205, 0.66), rgba(196, 244, 205, 0) 30%),
+    radial-gradient(circle at 86% 12%, rgba(223, 233, 249, 0.38), rgba(223, 233, 249, 0) 28%),
+    linear-gradient(100deg, hsl(90, 55%, 97%), hsl(150, 50%, 96%) 38%, hsl(220, 60%, 98%) 74%, hsl(280, 50%, 97%)) !important;
 }
 
 body > .sitebg .siteblur {
   --blur-px: 100px;
   --blur-sat: 300%;
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0) 70%),
-    linear-gradient(180deg, rgba(244, 251, 247, 0.2), rgba(236, 247, 241, 0.14));
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06) 42%, rgba(255, 255, 255, 0) 72%),
+    linear-gradient(180deg, rgba(247, 252, 249, 0.1), rgba(242, 248, 245, 0.08));
 }
 
 #codex-visual-effects {
@@ -37,19 +37,19 @@ body > .sitebg .siteblur {
   width: 100%;
   height: 100%;
   display: block;
-  opacity: 0.98;
+  opacity: 1;
 }
 
 #codex-cursor-glow {
   position: absolute;
   left: 0;
   top: 0;
-  width: 28rem;
-  height: 28rem;
-  margin-left: -14rem;
-  margin-top: -14rem;
+  width: 32rem;
+  height: 32rem;
+  margin-left: -16rem;
+  margin-top: -16rem;
   border-radius: 50%;
-  filter: blur(28px);
+  filter: blur(34px);
   opacity: 0;
   transform: translate3d(0, 0, 0);
   transition: opacity 180ms ease-out;
@@ -484,10 +484,10 @@ body > .sitebg .siteblur {
 
 @media (max-width: 768px) {
   #codex-cursor-glow {
-    width: 18rem;
-    height: 18rem;
-    margin-left: -9rem;
-    margin-top: -9rem;
+    width: 20rem;
+    height: 20rem;
+    margin-left: -10rem;
+    margin-top: -10rem;
   }
 
   .l_left .leftbar-container,
