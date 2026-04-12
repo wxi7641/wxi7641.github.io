@@ -68,7 +68,11 @@
 </div>
 <button class="theme-switch-card" type="button" onclick="window.codexToggleTheme && window.codexToggleTheme()"><span class="theme-switch-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></span><span class="theme-switch-copy"><strong>主题切换</strong><small id="theme-switch-label">日间 · 绿意</small></span></button>
 <div class="widgets" style="margin-top:auto;">
-<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">免责声明</span></div><div class="widget-body fs14"><p>本站内容以个人学习记录、阅读摘记与项目实践为主，仅供学习交流与公开整理参考。<br>涉及网络安全、渗透测试、逆向工程等主题时，仅讨论合法、授权、隔离环境下的研究与实验，不鼓励任何未授权行为。<br>文中观点会随学习进度持续修订，不构成商业、医疗、法律或投资建议。</p>
+<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">免责声明</span></div><div class="widget-body fs14"><div class="sidebar-legal">
+  <p>本站内容以个人学习记录、阅读摘记与项目实践为主，仅供学习交流与公开整理参考。</p>
+  <p>涉及网络安全、渗透测试、逆向工程等主题时，仅讨论合法、授权、隔离环境下的研究与实验。</p>
+  <p>若内容存在疏漏、过时或环境差异，请以官方文档、产品公告与实际运行结果为准。</p>
+</div>
 </div></widget>
 </div>
 
@@ -117,7 +121,24 @@ Spring Boot 不是弱化 Spring，而是把 Spring 项目最常...</p></div><div
 </a></div>
 
 
-<footer class="page-footer footnote"><hr><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">运营天数</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">810</div><div class="cap" style="opacity:.7;margin-top:6px;">始于 2024-01-24</div></div><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">文章数量</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">82</div><div class="cap" style="opacity:.7;margin-top:6px;">按已发布文章统计</div></div><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">累计字数</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">60,350</div><div class="cap" style="opacity:.7;margin-top:6px;">按正文内容估算</div></div></div><div class="text"><p>这座博客持续记录技术学习、项目实践、阅读与随笔，首页与搜索均按发布日期组织内容，页面统一按北京时间展示日期；涉及安全实验时仅讨论合法、授权场景。</p></div></footer>
+<footer class="page-footer site-public-stats footnote">
+  <hr>
+  <div class="site-public-stats__inner">
+    <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
+    <p class="meta-line meta-line--accent">
+      运营 <strong>810</strong> 天
+      
+        <span class="sep">·</span>
+        始于 2024-01-24
+      
+    </p>
+    <p class="meta-line">
+      共发布 <strong>82</strong> 篇文章
+      <span class="sep">·</span>
+      累计 <strong>60,350</strong> 字
+    </p>
+  </div>
+</footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 <widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 14px;" class="tag -3">IO</a> <a href="/tags/JAVA/" style="font-size: 20px;" class="tag -10">JAVA</a> <a href="/tags/JDBC/" style="font-size: 16px;" class="tag -5">JDBC</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 15px;" class="tag -4">MySQL</a> <a href="/tags/Network-Fundamentals-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 15px;" class="tag -4">Network Fundamentals  网络基础</a> <a href="/tags/Python/" style="font-size: 12px;" class="tag -0">Python</a> <a href="/tags/SQL/" style="font-size: 14px;" class="tag -3">SQL</a> <a href="/tags/SSM/" style="font-size: 18px;" class="tag -8">SSM</a> <a href="/tags/Spring/" style="font-size: 16px;" class="tag -5">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;" class="tag -8">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 12px;" class="tag -0">SpringMVC</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 19px;" class="tag -9">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 15px;" class="tag -4">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 13px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E6%97%A5%E5%B8%B8%E7%82%B9%E6%BB%B4/" style="font-size: 12px;" class="tag -0">日常点滴</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 13px;" class="tag -1">生活点滴</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 16px;" class="tag -5">网络安全</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%98%85%E8%AF%BB%E6%84%9F%E6%82%9F/" style="font-size: 12px;" class="tag -0">阅读感悟</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 13px;" class="tag -1">阅读随笔</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 17px;" class="tag -6">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 14px;" class="tag -3">项目实践</a></div></widget>

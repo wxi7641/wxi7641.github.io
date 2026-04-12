@@ -103,6 +103,231 @@ body {
   color: var(--text-p3);
 }
 
+.l_left .widget-wrapper.markdown {
+  background: rgba(255, 255, 255, 0.58);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  box-shadow: 0 14px 32px rgba(69, 110, 81, 0.08);
+}
+
+.l_left .widget-wrapper.markdown .widget-header {
+  justify-content: center;
+  padding-bottom: 4px;
+}
+
+.l_left .widget-wrapper.markdown .widget-header .name {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.sidebar-legal {
+  display: grid;
+  gap: 12px;
+  text-align: center;
+  line-height: 1.8;
+  color: var(--text-p2);
+}
+
+.sidebar-legal p {
+  margin: 0;
+}
+
+.site-public-stats {
+  text-align: center;
+}
+
+.site-public-stats__inner {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+}
+
+.site-public-stats .meta-line {
+  margin: 0;
+  color: var(--text-p2);
+  line-height: 1.8;
+}
+
+.site-public-stats .meta-line strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.site-public-stats .meta-line--accent {
+  color: var(--theme);
+}
+
+.site-public-stats .sep {
+  margin: 0 0.45rem;
+  color: var(--text-p4);
+}
+
+.explore-hub {
+  display: grid;
+  gap: 18px;
+}
+
+.explore-toolbar {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.explore-tab {
+  width: fit-content;
+  min-width: 88px;
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--block-border);
+  box-shadow: 0 8px 24px rgba(53, 92, 67, 0.06);
+  font-weight: 700;
+}
+
+.explore-tab.is-active {
+  color: var(--text);
+  box-shadow: inset 0 -2px 0 var(--theme), 0 8px 24px rgba(53, 92, 67, 0.08);
+}
+
+.explore-toolbar p {
+  margin: 0;
+  color: var(--text-p2);
+  line-height: 1.8;
+}
+
+.explore-list {
+  display: grid;
+  gap: 16px;
+}
+
+.explore-card {
+  display: grid;
+  grid-template-columns: 88px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 22px;
+  padding: 24px 28px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(214, 229, 221, 0.9);
+  box-shadow: 0 14px 34px rgba(66, 101, 79, 0.06);
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.explore-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--theme-a30);
+  box-shadow: 0 20px 42px rgba(66, 101, 79, 0.1);
+}
+
+.explore-badge {
+  width: 88px;
+  height: 88px;
+  border-radius: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.05rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.badge-netsec {
+  background: linear-gradient(135deg, rgba(123, 202, 154, 0.24), rgba(82, 173, 126, 0.16));
+}
+
+.badge-pentest {
+  background: linear-gradient(135deg, rgba(117, 197, 210, 0.24), rgba(74, 157, 176, 0.16));
+}
+
+.badge-reverse {
+  background: linear-gradient(135deg, rgba(109, 147, 214, 0.2), rgba(84, 118, 188, 0.15));
+}
+
+.badge-java {
+  background: linear-gradient(135deg, rgba(162, 122, 205, 0.18), rgba(122, 91, 180, 0.12));
+}
+
+.badge-db {
+  background: linear-gradient(135deg, rgba(124, 196, 162, 0.22), rgba(91, 163, 130, 0.15));
+}
+
+.badge-structure {
+  background: linear-gradient(135deg, rgba(94, 181, 205, 0.2), rgba(70, 144, 173, 0.14));
+}
+
+.badge-reading {
+  background: linear-gradient(135deg, rgba(110, 149, 210, 0.18), rgba(79, 119, 186, 0.14));
+}
+
+.badge-life {
+  background: linear-gradient(135deg, rgba(155, 196, 118, 0.22), rgba(118, 160, 85, 0.15));
+}
+
+.explore-copy {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.explore-copy strong {
+  font-size: clamp(1.18rem, 1.9vw, 1.7rem);
+  line-height: 1.25;
+}
+
+.explore-copy small {
+  display: block;
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: var(--text-p2);
+}
+
+.explore-state {
+  padding: 0.42rem 0.78rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.explore-meta {
+  display: grid;
+  justify-items: end;
+  align-self: stretch;
+  align-content: space-between;
+  gap: 12px;
+}
+
+.explore-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 6.5rem;
+  padding: 0.68rem 1rem;
+  border-radius: 999px;
+  background: var(--theme);
+  color: #fff;
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 700;
+  box-shadow: 0 10px 20px rgba(58, 116, 79, 0.18);
+}
+
+.explore-link:hover {
+  background: var(--hover);
+}
+
+.state-live {
+  background: rgba(83, 176, 118, 0.14);
+  color: hsl(145, 45%, 36%);
+}
+
+.state-build {
+  background: rgba(95, 152, 176, 0.14);
+  color: hsl(193, 42%, 34%);
+}
+
 :root[data-theme="dark"] {
   --theme: hsl(282 52% 66%);
   --theme-a10: hsla(282 52% 66% / 0.1);
@@ -148,6 +373,53 @@ body {
   filter: saturate(180%) blur(var(--blur-px)) opacity(0.88) !important;
 }
 
+:root[data-theme="dark"] .l_left .widget-wrapper.markdown {
+  background: rgba(41, 26, 52, 0.54);
+  border-color: rgba(214, 181, 126, 0.12);
+  box-shadow: 0 14px 32px rgba(9, 4, 16, 0.28);
+}
+
+:root[data-theme="dark"] .site-public-stats .meta-line--accent {
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .explore-tab {
+  background: rgba(42, 28, 57, 0.76);
+  border-color: rgba(214, 181, 126, 0.12);
+  box-shadow: 0 12px 30px rgba(9, 4, 16, 0.22);
+}
+
+:root[data-theme="dark"] .explore-card {
+  background: rgba(39, 26, 52, 0.72);
+  border-color: rgba(214, 181, 126, 0.12);
+  box-shadow: 0 18px 40px rgba(9, 4, 16, 0.24);
+}
+
+:root[data-theme="dark"] .explore-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 20px 46px rgba(9, 4, 16, 0.34);
+}
+
+:root[data-theme="dark"] .explore-link {
+  background: var(--accent);
+  color: hsl(274 22% 12%);
+  box-shadow: 0 12px 24px rgba(9, 4, 16, 0.28);
+}
+
+:root[data-theme="dark"] .explore-link:hover {
+  background: var(--link);
+}
+
+:root[data-theme="dark"] .state-live {
+  background: rgba(255, 215, 138, 0.16);
+  color: var(--accent);
+}
+
+:root[data-theme="dark"] .state-build {
+  background: rgba(183, 136, 255, 0.14);
+  color: var(--theme);
+}
+
 @media (max-width: 768px) {
   #codex-visual-effects,
   #codex-cursor-glow {
@@ -157,5 +429,29 @@ body {
   .theme-switch-card {
     margin-top: 12px;
     padding: 11px 12px;
+  }
+
+  .explore-card {
+    grid-template-columns: 72px 1fr;
+    gap: 16px;
+    padding: 18px 18px 16px;
+  }
+
+  .explore-badge {
+    width: 72px;
+    height: 72px;
+    border-radius: 20px;
+    font-size: 1.68rem;
+  }
+
+  .explore-state {
+    grid-column: 2;
+    justify-self: start;
+  }
+
+  .explore-meta {
+    grid-column: 2;
+    justify-items: start;
+    align-content: start;
   }
 }
