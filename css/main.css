@@ -9076,7 +9076,7 @@ body>.sitebg {
   right: 0;
   bottom: 0;
   background-size: cover;
-  background-image: linear-gradient(135deg, #f0faf5, #f3f9fc);
+  background-image: linear-gradient(135deg, #e7f9ef, #e0f5eb, #ebf5fa);
 }
 body>.sitebg .siteblur {
   width: 100%;

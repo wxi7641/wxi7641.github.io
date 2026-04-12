@@ -80,7 +80,7 @@
 </div></widget>
 </div>
 
-<button class="theme-switch-card" type="button" aria-label="鍒囨崲鏃ラ棿鎴栧闂翠富棰? title="鍒囨崲鏃ラ棿鎴栧闂翠富棰? onclick="window.codexToggleTheme && window.codexToggleTheme()"><span class="theme-switch-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></span><span class="theme-switch-copy"><strong>涓婚</strong><small id="theme-switch-label">鏃ラ棿 路 缁挎剰</small></span></button>
+<button class="theme-switch-card" type="button" aria-label="切换日间或夜间主题" title="切换日间或夜间主题" onclick="window.codexToggleTheme && window.codexToggleTheme()"><span class="theme-switch-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></span><span class="theme-switch-copy"><strong>主题</strong><small id="theme-switch-label">日间 · 绿意</small></span></button>
 
 </div></aside><div class="l_main" id="main">
 
@@ -104,14 +104,14 @@ Spri...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg sty
 <article class="md-text"><h2 class="post-title">Java笔记46</h2><div class="excerpt"><p>Java笔记46SSM 整合阶段真正要解决的，不是某个框架单独怎么写，而是 Spring、Spring MVC、MyBatis 三层能力怎样在同一个 Web 工程里稳定协作。到了这里，重点已经从单点语法变成整套架构的分工与配合。
 
 SSM 的核心不在...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-29">2024-07-29</time></span></div></article>
-</a><a class="post-card post" href="/2024/07/29/Java%E7%AC%94%E8%AE%B055-SSM%E6%95%B4%E5%90%88%E9%85%8D%E7%BD%AE%E6%80%BB%E8%A7%88/">
-<article class="md-text"><h2 class="post-title">Java笔记55</h2><div class="excerpt"><p>Java笔记55SSM 最容易让人混乱的地方，不是某个框架单独怎么写，而是三套配置怎样拼成一条完整运行链。把整合配置单独拎出来看，很多原本分散的知识点才会真正连起来。
-
-SSM 的配置文件不是重复劳动，而是在描述容器分工、请求入口、数据接入和事务边界...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-29">2024-07-29</time></span></div></article>
 </a><a class="post-card post" href="/2024/07/29/Java%E7%AC%94%E8%AE%B056-SSM%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E4%B8%8E%E6%9D%83%E9%99%90%E6%8B%A6%E6%88%AA/">
 <article class="md-text"><h2 class="post-title">Java笔记56</h2><div class="excerpt"><p>Java笔记56登录与拦截器这一块，是 SSM 体系里最能把“请求进入系统之后到底发生了什么”讲清楚的地方。它把控制层、服务层、Session、拦截器和页面跳转全都串在了一起。
 登录流程真正做了两件事最典型的控制层写法通常像这样：
 123456789...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-29">2024-07-29</time></span></div></article>
+</a><a class="post-card post" href="/2024/07/29/Java%E7%AC%94%E8%AE%B055-SSM%E6%95%B4%E5%90%88%E9%85%8D%E7%BD%AE%E6%80%BB%E8%A7%88/">
+<article class="md-text"><h2 class="post-title">Java笔记55</h2><div class="excerpt"><p>Java笔记55SSM 最容易让人混乱的地方，不是某个框架单独怎么写，而是三套配置怎样拼成一条完整运行链。把整合配置单独拎出来看，很多原本分散的知识点才会真正连起来。
+
+SSM 的配置文件不是重复劳动，而是在描述容器分工、请求入口、数据接入和事务边界...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-29">2024-07-29</time></span></div></article>
 </a><a class="post-card post" href="/2024/07/29/Java%E7%AC%94%E8%AE%B058-SSM%E8%AE%A2%E5%8D%95%E6%A8%A1%E5%9D%97%E4%B8%8E%E4%BA%8B%E5%8A%A1/">
 <article class="md-text"><h2 class="post-title">Java笔记58</h2><div class="excerpt"><p>Java笔记58带有状态变化的业务动作，最适合拿来理解事务。订单场景只是一个很常见的载体，真正值得学习的重点不是“这个项目的订单怎么写”，而是 Service 层怎样形成事务边界，状态更新又怎样保持一致性。
 为什么事务最适合放在 Service 层理...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-29">2024-07-29</time></span></div></article>
@@ -136,16 +136,19 @@ Spring MVC 的主线其实非常稳定：DispatcherServlet 接请求，Co...</p>
 <footer class="page-footer site-public-stats footnote">
   <hr>
   <div class="site-public-stats__inner">
-    <p class="meta-line">漏 2026 Wxi 路 浣跨敤 Stellar 鏋勫缓</p>
+    <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      杩愯惀 <strong>810</strong> 澶?      
-        <span class="sep">路</span>
-        濮嬩簬 2024-01-24
+      运营 <strong>810</strong> 天
+      
+        <span class="sep">·</span>
+        始于 2024-01-24
       
     </p>
     <p class="meta-line">
-      鍏卞彂甯?<strong>82</strong> 绡囨枃绔?      <span class="sep">路</span>
-      绱 <strong>60,350</strong> 瀛?    </p>
+      共发布 <strong>82</strong> 篇文章
+      <span class="sep">·</span>
+      累计 <strong>60,350</strong> 字
+    </p>
   </div>
 </footer>
 

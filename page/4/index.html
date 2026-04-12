@@ -80,7 +80,7 @@
 </div></widget>
 </div>
 
-<button class="theme-switch-card" type="button" aria-label="鍒囨崲鏃ラ棿鎴栧闂翠富棰? title="鍒囨崲鏃ラ棿鎴栧闂翠富棰? onclick="window.codexToggleTheme && window.codexToggleTheme()"><span class="theme-switch-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></span><span class="theme-switch-copy"><strong>涓婚</strong><small id="theme-switch-label">鏃ラ棿 路 缁挎剰</small></span></button>
+<button class="theme-switch-card" type="button" aria-label="切换日间或夜间主题" title="切换日间或夜间主题" onclick="window.codexToggleTheme && window.codexToggleTheme()"><span class="theme-switch-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></span><span class="theme-switch-copy"><strong>主题</strong><small id="theme-switch-label">日间 · 绿意</small></span></button>
 
 </div></aside><div class="l_main" id="main">
 
@@ -99,10 +99,6 @@ Spring MVC 的主线其实非常稳定：DispatcherServlet 接请求，Co...</p>
 <article class="md-text"><h2 class="post-title">Java笔记43</h2><div class="excerpt"><p>Java笔记43Spring 最核心的价值，不是 XML 写法，也不是注解数量，而是它把 Java 开发中最麻烦的两件事统一处理了：对象该由谁创建，以及 公共逻辑该放在哪里。前者对应 IOC &#x2F; DI，后者对应 AOP。
 
 Spring 真...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-12">2024-07-12</time></span></div></article>
-</a><a class="post-card post" href="/2024/07/12/Java%E7%AC%94%E8%AE%B053-Spring%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E4%B8%8EAOP%E9%80%9A%E7%9F%A5/">
-<article class="md-text"><h2 class="post-title">Java笔记53</h2><div class="excerpt"><p>Java笔记53动态代理解决了静态代理“代理类写太多”的问题，而 AOP 则是在这个思想上继续做抽象，让增强逻辑配置化。
-
-动态代理为什么是理解 AOP 的关键台阶你导入的 AOP 文档和项目中的 ProxyIH、BeforeAdvice、After...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-12">2024-07-12</time></span></div></article>
 </a><a class="post-card post" href="/2024/07/12/Java%E7%AC%94%E8%AE%B051-SpringIOC%E4%B8%8EDI/">
 <article class="md-text"><h2 class="post-title">Java笔记51</h2><div class="excerpt"><p>Java笔记51IOC 和 DI 是 Spring 体系的基本盘。前者解决对象由谁创建，后者解决对象之间如何建立关系。
 
@@ -111,6 +107,10 @@ Spring IOC与DI你导入的 Spring IOC.docx 对这部分解释得很清楚：自
 <article class="md-text"><h2 class="post-title">Java笔记52</h2><div class="excerpt"><p>Java笔记52静态代理不是 Spring 专属概念，但它是理解 AOP 的最好铺垫。它说明了如何在不改业务类代码的前提下增强行为。
 
 为什么很多老师都先从静态代理讲起你导入的 SpringAOP、静态代理、动态代理 文档里用了秘书和董事长的例子，项...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-12">2024-07-12</time></span></div></article>
+</a><a class="post-card post" href="/2024/07/12/Java%E7%AC%94%E8%AE%B053-Spring%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E4%B8%8EAOP%E9%80%9A%E7%9F%A5/">
+<article class="md-text"><h2 class="post-title">Java笔记53</h2><div class="excerpt"><p>Java笔记53动态代理解决了静态代理“代理类写太多”的问题，而 AOP 则是在这个思想上继续做抽象，让增强逻辑配置化。
+
+动态代理为什么是理解 AOP 的关键台阶你导入的 AOP 文档和项目中的 ProxyIH、BeforeAdvice、After...</p></div><div class="meta cap"><span class="cap" id="post-meta"><svg style="margin-bottom:2px" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M6.94 2c.416 0 .753.324.753.724v1.46c.668-.012 1.417-.012 2.26-.012h4.015c.842 0 1.591 0 2.259.013v-1.46c0-.4.337-.725.753-.725s.753.324.753.724V4.25c1.445.111 2.394.384 3.09 1.055c.698.67.982 1.582 1.097 2.972L22 9H2v-.724c.116-1.39.4-2.302 1.097-2.972c.697-.67 1.645-.944 3.09-1.055V2.724c0-.4.337-.724.753-.724"/><path fill="currentColor" d="M22 14v-2c0-.839-.004-2.335-.017-3H2.01c-.013.665-.01 2.161-.01 3v2c0 3.771 0 5.657 1.172 6.828C4.343 22 6.228 22 10 22h4c3.77 0 5.656 0 6.828-1.172C22 19.658 22 17.772 22 14" opacity=".5"/><path fill="currentColor" d="M18 17a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m-5 4a1 1 0 1 1-2 0a1 1 0 0 1 2 0m0-4a1 1 0 1 1-2 0a1 1 0 0 1 2 0"/></svg><time datetime="2024-07-12">2024-07-12</time></span></div></article>
 </a><a class="post-card post" href="/2024/07/12/Java%E7%AC%94%E8%AE%B054-Spring%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E4%B8%8E%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F/">
 <article class="md-text"><h2 class="post-title">Java笔记54</h2><div class="excerpt"><p>Java笔记54Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。
 
@@ -139,16 +139,19 @@ Maven 的价值，在于把 ...</p></div><div class="meta cap"><span class="cap"
 <footer class="page-footer site-public-stats footnote">
   <hr>
   <div class="site-public-stats__inner">
-    <p class="meta-line">漏 2026 Wxi 路 浣跨敤 Stellar 鏋勫缓</p>
+    <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      杩愯惀 <strong>810</strong> 澶?      
-        <span class="sep">路</span>
-        濮嬩簬 2024-01-24
+      运营 <strong>810</strong> 天
+      
+        <span class="sep">·</span>
+        始于 2024-01-24
       
     </p>
     <p class="meta-line">
-      鍏卞彂甯?<strong>82</strong> 绡囨枃绔?      <span class="sep">路</span>
-      绱 <strong>60,350</strong> 瀛?    </p>
+      共发布 <strong>82</strong> 篇文章
+      <span class="sep">·</span>
+      累计 <strong>60,350</strong> 字
+    </p>
   </div>
 </footer>
 

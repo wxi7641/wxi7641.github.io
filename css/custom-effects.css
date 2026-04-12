@@ -1,6 +1,9 @@
 body {
   position: relative;
-  background: var(--background);
+  background:
+    radial-gradient(circle at 12% 8%, rgba(192, 247, 209, 0.68), rgba(192, 247, 209, 0) 28%),
+    radial-gradient(circle at 88% 10%, rgba(188, 233, 246, 0.48), rgba(188, 233, 246, 0) 26%),
+    linear-gradient(135deg, hsl(146, 58%, 94%), hsl(151, 50%, 92%), hsl(197, 58%, 95%));
 }
 
 body > .sitebg {
@@ -8,14 +11,18 @@ body > .sitebg {
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(192, 247, 209, 0.62), rgba(192, 247, 209, 0) 30%),
+    radial-gradient(circle at 88% 12%, rgba(188, 233, 246, 0.42), rgba(188, 233, 246, 0) 26%),
+    linear-gradient(135deg, hsl(146, 58%, 94%), hsl(151, 50%, 92%), hsl(197, 58%, 95%)) !important;
 }
 
 body > .sitebg .siteblur {
   --blur-px: 100px;
   --blur-sat: 300%;
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.18) 40%, rgba(255, 255, 255, 0) 70%),
-    linear-gradient(180deg, rgba(247, 252, 249, 0.56), rgba(239, 248, 244, 0.42));
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0.08) 40%, rgba(255, 255, 255, 0) 70%),
+    linear-gradient(180deg, rgba(244, 251, 247, 0.2), rgba(236, 247, 241, 0.14));
 }
 
 #codex-visual-effects {
@@ -30,7 +37,7 @@ body > .sitebg .siteblur {
   width: 100%;
   height: 100%;
   display: block;
-  opacity: 0.9;
+  opacity: 0.98;
 }
 
 #codex-cursor-glow {
@@ -46,7 +53,7 @@ body > .sitebg .siteblur {
   opacity: 0;
   transform: translate3d(0, 0, 0);
   transition: opacity 180ms ease-out;
-  mix-blend-mode: screen;
+  mix-blend-mode: normal;
 }
 
 .cover-wrapper,
@@ -383,17 +390,24 @@ body > .sitebg .siteblur {
   --block-border: hsla(35 28% 78% / 0.14);
 }
 
+:root[data-theme='dark'] body {
+  background:
+    radial-gradient(circle at 88% 10%, rgba(209, 180, 126, 0.18), rgba(209, 180, 126, 0) 28%),
+    radial-gradient(circle at 14% 10%, rgba(170, 145, 214, 0.22), rgba(170, 145, 214, 0) 30%),
+    linear-gradient(140deg, hsl(266 20% 11%), hsl(251 18% 12%), hsl(230 16% 13%));
+}
+
 :root[data-theme='dark'] body > .sitebg {
   background-image:
-    radial-gradient(circle at top right, rgba(193, 166, 117, 0.1), transparent 28%),
-    radial-gradient(circle at top left, rgba(158, 136, 196, 0.12), transparent 30%),
+    radial-gradient(circle at 88% 10%, rgba(209, 180, 126, 0.16), transparent 28%),
+    radial-gradient(circle at 14% 10%, rgba(170, 145, 214, 0.2), transparent 30%),
     linear-gradient(140deg, hsl(266 20% 11%), hsl(251 18% 12%), hsl(230 16% 13%)) !important;
 }
 
 :root[data-theme='dark'] body > .sitebg .siteblur {
   background:
-    linear-gradient(180deg, rgba(16, 14, 22, 0.18), rgba(8, 8, 12, 0.28)),
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 52%);
+    linear-gradient(180deg, rgba(18, 16, 24, 0.14), rgba(8, 8, 12, 0.22)),
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0) 52%);
 }
 
 :root[data-theme='dark'] .theme-switch-card {
@@ -469,9 +483,11 @@ body > .sitebg .siteblur {
 }
 
 @media (max-width: 768px) {
-  #codex-visual-effects,
   #codex-cursor-glow {
-    display: none;
+    width: 18rem;
+    height: 18rem;
+    margin-left: -9rem;
+    margin-top: -9rem;
   }
 
   .l_left .leftbar-container,
@@ -514,4 +530,3 @@ body > .sitebg .siteblur {
     align-content: start;
   }
 }
-
