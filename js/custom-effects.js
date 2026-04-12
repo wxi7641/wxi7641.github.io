@@ -18,7 +18,7 @@
   function updateThemeLabel() {
     const label = document.getElementById('theme-switch-label');
     if (label) {
-      label.textContent = currentMode() === 'dark' ? '夜间 · 暗金紫' : '日间 · 绿意';
+      label.textContent = currentMode() === 'dark' ? '澶滈棿 路 鏌斿拰绱噾' : '鏃ラ棿 路 缁挎剰';
     }
   }
 
@@ -83,11 +83,11 @@
     function palette() {
       if (currentMode() === 'dark') {
         glow.style.background =
-          'radial-gradient(circle, rgba(255,216,143,0.24), rgba(178,126,255,0.14) 44%, rgba(20,10,34,0) 74%)';
+          'radial-gradient(circle, rgba(214,192,152,0.18), rgba(164,146,203,0.14) 42%, rgba(18,12,28,0) 76%)';
         return {
-          node: 'rgba(190, 148, 255, 0.72)',
-          line: 'rgba(244, 196, 112, 0.14)',
-          cursor: 'rgba(255, 220, 156, 0.18)'
+          node: 'rgba(190, 176, 214, 0.58)',
+          line: 'rgba(201, 183, 146, 0.10)',
+          cursor: 'rgba(211, 197, 168, 0.14)'
         };
       }
 
@@ -206,9 +206,11 @@
     document.addEventListener('visibilitychange', function () {
       if (document.hidden) {
         window.cancelAnimationFrame(animationId);
-      } else {
+        animationId = 0;
+      } else if (!animationId) {
         step();
       }
     });
   });
 })();
+
