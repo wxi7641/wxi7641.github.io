@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /search.json
+Disallow: /404.html
