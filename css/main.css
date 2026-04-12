@@ -1122,7 +1122,7 @@ a.button.start.gradient {
 :root[data-theme="dark"] a.button.start.gradient {
   transition: 0.38s ease-out;
   z-index: 0;
-  background: linear-gradient(135deg, #f4fbf5, #ecf8f2, #f1f9f8);
+  background: linear-gradient(100deg, #f7fcf3, #f7f9fd, #f9f4fb);
   background-size: 1000%;
   color: #fff;
   text-shadow: 0 0 1px rgba(0,0,0,0.12);
@@ -1182,7 +1182,7 @@ a.button.start.gradient {
   :root:not([data-theme]) a.button.start.gradient {
     transition: 0.38s ease-out;
     z-index: 0;
-    background: linear-gradient(135deg, #f4fbf5, #ecf8f2, #f1f9f8);
+    background: linear-gradient(100deg, #f7fcf3, #f7f9fd, #f9f4fb);
     background-size: 1000%;
     color: #fff;
     text-shadow: 0 0 1px rgba(0,0,0,0.12);

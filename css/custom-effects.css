@@ -34,10 +34,10 @@ body {
 }
 
 .l_left .sidebg {
-  background-color: rgba(235, 248, 239, 0.92) !important;
+  background-color: transparent !important;
   background-image:
-    linear-gradient(180deg, rgba(236, 249, 240, 0.96), rgba(227, 244, 234, 0.92), rgba(220, 239, 229, 0.88)) !important;
-  filter: saturate(240%) blur(var(--blur-px)) opacity(0.92) !important;
+    linear-gradient(to bottom, rgba(225, 245, 235, 0.8), rgba(220, 240, 250, 0.8)) !important;
+  filter: saturate(400%) blur(var(--blur-px)) opacity(0.8) !important;
 }
 
 .cover-wrapper,
