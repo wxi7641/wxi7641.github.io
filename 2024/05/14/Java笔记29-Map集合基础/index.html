@@ -1,5 +1,5 @@
 
-<!DOCTYPE html><html lang="zh-CN">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light">
 
 <head>
   <meta charset="utf-8">
@@ -28,8 +28,8 @@
 <meta property="og:description" content="Java笔记29Map 和 Collection 最大的区别，不在于方法名多少，而在于它保存的不是单个元素，而是 键值对。只要开始处理编号、用户名、学号、配置项、缓存项，Map 就会比普通列表更自然。  一句话先记住：Map 的核心不是“能 put”，而是“能通过键快速找到值”。   增删改查在 MapDemo01 里已经很完整了123456789101112Map map &#x3D; new HashM">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
-<meta property="article:published_time" content="2024-05-15T00:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-15T00:00:00.000Z">
+<meta property="article:published_time" content="2024-05-14T11:00:00.000Z">
+<meta property="article:modified_time" content="2024-05-14T11:00:00.000Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="JAVA">
 <meta property="article:tag" content="集合">
@@ -52,8 +52,8 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-05-15T08:00:00+08:00","dateModified":"2024-05-14T19:00:00-05:00","datePublished":"2024-05-15T08:00:00+08:00","description":"","headline":"Java笔记29","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/05/14/Java%E7%AC%94%E8%AE%B029-Map%E9%9B%86%E5%90%88%E5%9F%BA%E7%A1%80/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/05/14/Java%E7%AC%94%E8%AE%B029-Map%E9%9B%86%E5%90%88%E5%9F%BA%E7%A1%80/","keywords":"JAVA, 集合","image":[]}</script>
-  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-05-14T19:00:00+08:00","dateModified":"2024-05-14T06:00:00-05:00","datePublished":"2024-05-14T19:00:00+08:00","description":"","headline":"Java笔记29","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/05/14/Java%E7%AC%94%E8%AE%B029-Map%E9%9B%86%E5%90%88%E5%9F%BA%E7%A1%80/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/05/14/Java%E7%AC%94%E8%AE%B029-Map%E9%9B%86%E5%90%88%E5%9F%BA%E7%A1%80/","keywords":"JAVA, 集合","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body>
 
@@ -67,10 +67,11 @@
 
 <div class="nav-area">
 
-<nav class="menu dis-select"><a class="nav-item active" title="主页" href="/" style="color:hsl(145, 45%, 48%)">solar:home-2-bold-duotone</a><a class="nav-item" title="探索" href="/explore/" style="color:hsl(190, 42%, 42%)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a></nav>
+<nav class="menu dis-select"><a class="nav-item active" title="主页" href="/" style="color:hsl(145, 45%, 48%)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item" title="探索" href="/explore/" style="color:hsl(190, 42%, 42%)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a></nav>
 </div>
+<button class="theme-switch-card" type="button" onclick="window.codexToggleTheme && window.codexToggleTheme()"><span class="theme-switch-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></span><span class="theme-switch-copy"><strong>主题切换</strong><small id="theme-switch-label">日间 · 绿意</small></span></button>
 <div class="widgets" style="margin-top:auto;">
-<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">免责声明</span></div><div class="widget-body fs14"><p>本站内容以个人学习记录、阅读摘记与项目实践为主，仅作公开整理与交流参考。<br>文中观点与结论会随学习进度持续修订，不构成任何商业、医疗、法律或投资建议。<br>页面时间统一按北京时间展示，列表与搜索默认按发布日期组织内容。</p>
+<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">免责声明</span></div><div class="widget-body fs14"><p>本站内容以个人学习记录、阅读摘记与项目实践为主，仅供学习交流与公开整理参考。<br>涉及网络安全、渗透测试、逆向工程等主题时，仅讨论合法、授权、隔离环境下的研究与实验，不鼓励任何未授权行为。<br>文中观点会随学习进度持续修订，不构成商业、医疗、法律或投资建议。</p>
 </div></widget>
 </div>
 
@@ -84,7 +85,7 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-15">2024-05-15</time></span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-14">2024-05-14</time></span></div>
 </div></div>
     
     <div class="bottom only-title">
@@ -188,7 +189,7 @@
 
 
 
-<footer class="page-footer footnote"><hr><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">运营天数</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">809</div><div class="cap" style="opacity:.7;margin-top:6px;">始于 2024-01-24</div></div><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">文章数量</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">82</div><div class="cap" style="opacity:.7;margin-top:6px;">按已发布文章统计</div></div><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">累计字数</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">60,350</div><div class="cap" style="opacity:.7;margin-top:6px;">按正文内容估算</div></div></div><div class="text"><p>这座博客持续记录技术学习、项目实践、阅读与随笔，首页与搜索均按发布日期组织内容，页面统一按北京时间展示日期。</p></div></footer>
+<footer class="page-footer footnote"><hr><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;"><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">运营天数</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">810</div><div class="cap" style="opacity:.7;margin-top:6px;">始于 2024-01-24</div></div><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">文章数量</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">82</div><div class="cap" style="opacity:.7;margin-top:6px;">按已发布文章统计</div></div><div style="background:var(--block);border-radius:16px;padding:16px 18px;"><div class="cap" style="opacity:.7;">累计字数</div><div style="font-size:1.6rem;font-weight:700;line-height:1.2;margin-top:6px;">60,350</div><div class="cap" style="opacity:.7;margin-top:6px;">按正文内容估算</div></div></div><div class="text"><p>这座博客持续记录技术学习、项目实践、阅读与随笔，首页与搜索均按发布日期组织内容，页面统一按北京时间展示日期；涉及安全实验时仅讨论合法、授权场景。</p></div></footer>
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
@@ -906,5 +907,5 @@
 
 
 <!-- inject -->
-
+<script src="/js/custom-effects.js" defer></script>
 </div></body></html>
