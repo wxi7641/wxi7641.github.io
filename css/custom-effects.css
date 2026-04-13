@@ -44,12 +44,12 @@ body > .sitebg .siteblur {
   position: absolute;
   left: 0;
   top: 0;
-  width: 32rem;
-  height: 32rem;
-  margin-left: -16rem;
-  margin-top: -16rem;
+  width: var(--codex-glow-size, 23rem);
+  height: var(--codex-glow-size, 23rem);
+  margin-left: calc(var(--codex-glow-size, 23rem) * -0.5);
+  margin-top: calc(var(--codex-glow-size, 23rem) * -0.5);
   border-radius: 50%;
-  filter: blur(34px);
+  filter: blur(var(--codex-glow-blur, 26px));
   opacity: 0;
   transform: translate3d(0, 0, 0);
   transition: opacity 180ms ease-out;
@@ -484,10 +484,10 @@ body > .sitebg .siteblur {
 
 @media (max-width: 768px) {
   #codex-cursor-glow {
-    width: 20rem;
-    height: 20rem;
-    margin-left: -10rem;
-    margin-top: -10rem;
+    width: var(--codex-glow-size-mobile, 15rem);
+    height: var(--codex-glow-size-mobile, 15rem);
+    margin-left: calc(var(--codex-glow-size-mobile, 15rem) * -0.5);
+    margin-top: calc(var(--codex-glow-size-mobile, 15rem) * -0.5);
   }
 
   .l_left .leftbar-container,

@@ -71,6 +71,8 @@
 
     const context = canvas.getContext('2d');
     const prefersCoarse = window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0;
+    const runtimeUrl = new URL(window.location.href);
+    const previewMode = runtimeUrl.searchParams.get('fxPreview') === '1';
     const pointer = {
       x: window.innerWidth / 2,
       y: window.innerHeight / 2,
@@ -81,6 +83,189 @@
     let width = 0;
     let height = 0;
     let animationId = 0;
+
+    function resolveEffectPreset(name) {
+      const presets = {
+        drift: {
+          id: 'drift',
+          glowSize: '21rem',
+          glowSizeMobile: '14rem',
+          glowBlur: '24px',
+          areaPerDotCoarse: 30000,
+          areaPerDotFine: 20000,
+          minCountCoarse: 18,
+          minCountFine: 34,
+          maxCountCoarse: 52,
+          maxCountFine: 92,
+          velocityXCoarse: 0.24,
+          velocityXFine: 0.38,
+          velocityYCoarse: 0.18,
+          velocityYFine: 0.3,
+          driftAmplitude: 0.16,
+          radiusMin: 0.78,
+          radiusRange: 1.05,
+          strengthMin: 0.76,
+          strengthRange: 0.7,
+          influenceRadiusCoarse: 186,
+          influenceRadiusFine: 222,
+          pullScaleCoarse: 0.01,
+          pullScaleFine: 0.013,
+          velocityPull: 0.016,
+          maxVelocity: 0.88,
+          activeFriction: 0.993,
+          idleFriction: 0.997,
+          auraScale: 1.08,
+          auraGlowScale: 1.05,
+          auraDensityScale: 0.34,
+          auraAlphaBase: 0.06,
+          auraAlphaGlow: 0.06,
+          auraAlphaDensity: 0.04,
+          shadowBase: 8,
+          shadowGlow: 12,
+          shadowDensity: 5,
+          coreGlowScale: 0.48,
+          coreDensityScale: 0.06,
+          sparkScale: 0.22,
+          pulseWeight: 0.66,
+          attractionWeight: 3.55,
+          densityWeight: 0.14,
+          densityCapCoarse: 0.98,
+          densityCapFine: 1.3,
+          clusterLightWeight: 0.11,
+          countDivisorCoarse: 11,
+          countDivisorFine: 16,
+          haloRadiusCoarse: 176,
+          haloRadiusFine: 214,
+          haloClusterScale: 7,
+          haloOpacityBase: 0.2,
+          haloOpacityScale: 0.24,
+          glowOpacityBase: 0.22,
+          glowOpacityStrength: 0.22,
+          glowOpacityDensity: 0.12
+        },
+        sharp: {
+          id: 'sharp',
+          glowSize: '23rem',
+          glowSizeMobile: '15rem',
+          glowBlur: '26px',
+          areaPerDotCoarse: 28000,
+          areaPerDotFine: 18500,
+          minCountCoarse: 20,
+          minCountFine: 38,
+          maxCountCoarse: 56,
+          maxCountFine: 98,
+          velocityXCoarse: 0.22,
+          velocityXFine: 0.34,
+          velocityYCoarse: 0.17,
+          velocityYFine: 0.28,
+          driftAmplitude: 0.14,
+          radiusMin: 0.84,
+          radiusRange: 1.08,
+          strengthMin: 0.9,
+          strengthRange: 0.82,
+          influenceRadiusCoarse: 198,
+          influenceRadiusFine: 236,
+          pullScaleCoarse: 0.013,
+          pullScaleFine: 0.017,
+          velocityPull: 0.019,
+          maxVelocity: 0.84,
+          activeFriction: 0.992,
+          idleFriction: 0.996,
+          auraScale: 1.16,
+          auraGlowScale: 1.2,
+          auraDensityScale: 0.4,
+          auraAlphaBase: 0.07,
+          auraAlphaGlow: 0.072,
+          auraAlphaDensity: 0.048,
+          shadowBase: 9,
+          shadowGlow: 13,
+          shadowDensity: 5.5,
+          coreGlowScale: 0.52,
+          coreDensityScale: 0.08,
+          sparkScale: 0.24,
+          pulseWeight: 0.72,
+          attractionWeight: 4.1,
+          densityWeight: 0.18,
+          densityCapCoarse: 1.08,
+          densityCapFine: 1.46,
+          clusterLightWeight: 0.12,
+          countDivisorCoarse: 10,
+          countDivisorFine: 14,
+          haloRadiusCoarse: 186,
+          haloRadiusFine: 228,
+          haloClusterScale: 8,
+          haloOpacityBase: 0.22,
+          haloOpacityScale: 0.26,
+          glowOpacityBase: 0.24,
+          glowOpacityStrength: 0.24,
+          glowOpacityDensity: 0.13
+        },
+        focus: {
+          id: 'focus',
+          glowSize: '25rem',
+          glowSizeMobile: '16rem',
+          glowBlur: '28px',
+          areaPerDotCoarse: 25000,
+          areaPerDotFine: 17000,
+          minCountCoarse: 22,
+          minCountFine: 42,
+          maxCountCoarse: 62,
+          maxCountFine: 108,
+          velocityXCoarse: 0.2,
+          velocityXFine: 0.31,
+          velocityYCoarse: 0.16,
+          velocityYFine: 0.25,
+          driftAmplitude: 0.12,
+          radiusMin: 0.88,
+          radiusRange: 1.16,
+          strengthMin: 1.02,
+          strengthRange: 0.94,
+          influenceRadiusCoarse: 210,
+          influenceRadiusFine: 248,
+          pullScaleCoarse: 0.016,
+          pullScaleFine: 0.02,
+          velocityPull: 0.023,
+          maxVelocity: 0.8,
+          activeFriction: 0.991,
+          idleFriction: 0.995,
+          auraScale: 1.22,
+          auraGlowScale: 1.26,
+          auraDensityScale: 0.46,
+          auraAlphaBase: 0.08,
+          auraAlphaGlow: 0.078,
+          auraAlphaDensity: 0.055,
+          shadowBase: 10,
+          shadowGlow: 14,
+          shadowDensity: 6,
+          coreGlowScale: 0.56,
+          coreDensityScale: 0.1,
+          sparkScale: 0.26,
+          pulseWeight: 0.78,
+          attractionWeight: 4.6,
+          densityWeight: 0.22,
+          densityCapCoarse: 1.15,
+          densityCapFine: 1.6,
+          clusterLightWeight: 0.14,
+          countDivisorCoarse: 9,
+          countDivisorFine: 13,
+          haloRadiusCoarse: 198,
+          haloRadiusFine: 240,
+          haloClusterScale: 9,
+          haloOpacityBase: 0.24,
+          haloOpacityScale: 0.28,
+          glowOpacityBase: 0.26,
+          glowOpacityStrength: 0.26,
+          glowOpacityDensity: 0.15
+        }
+      };
+      return presets[name] || presets.sharp;
+    }
+
+    const effectPreset = resolveEffectPreset(runtimeUrl.searchParams.get('fx'));
+    document.documentElement.dataset.codexFx = effectPreset.id;
+    document.documentElement.style.setProperty('--codex-glow-size', effectPreset.glowSize);
+    document.documentElement.style.setProperty('--codex-glow-size-mobile', effectPreset.glowSizeMobile);
+    document.documentElement.style.setProperty('--codex-glow-blur', effectPreset.glowBlur);
 
     function palette() {
       if (currentMode() === 'dark') {
@@ -111,9 +296,9 @@
     }
 
     function createNodes() {
-      const areaPerDot = prefersCoarse ? 42000 : 24000;
-      const minCount = prefersCoarse ? 16 : 30;
-      const maxCount = prefersCoarse ? 48 : 88;
+      const areaPerDot = prefersCoarse ? effectPreset.areaPerDotCoarse : effectPreset.areaPerDotFine;
+      const minCount = prefersCoarse ? effectPreset.minCountCoarse : effectPreset.minCountFine;
+      const maxCount = prefersCoarse ? effectPreset.maxCountCoarse : effectPreset.maxCountFine;
       const count = Math.max(minCount, Math.min(maxCount, Math.round((width * height) / areaPerDot)));
 
       nodes.length = 0;
@@ -121,12 +306,12 @@
         nodes.push({
           x: Math.random() * width,
           y: Math.random() * height,
-          vx: (Math.random() - 0.5) * (prefersCoarse ? 0.14 : 0.22),
-          vy: (Math.random() - 0.5) * (prefersCoarse ? 0.1 : 0.18),
-          r: Math.random() * 1.9 + 1.2,
+          vx: (Math.random() - 0.5) * (prefersCoarse ? effectPreset.velocityXCoarse : effectPreset.velocityXFine),
+          vy: (Math.random() - 0.5) * (prefersCoarse ? effectPreset.velocityYCoarse : effectPreset.velocityYFine),
+          r: Math.random() * effectPreset.radiusRange + effectPreset.radiusMin,
           pulse: Math.random() * Math.PI * 2,
           sway: Math.random() * Math.PI * 2,
-          strength: Math.random() * 0.85 + 0.9
+          strength: Math.random() * effectPreset.strengthRange + effectPreset.strengthMin
         });
       }
     }
@@ -156,7 +341,9 @@
       if (combined <= 0) {
         return;
       }
-      const radius = (prefersCoarse ? 210 : 260) + clusterBoost * 10;
+      const radius =
+        (prefersCoarse ? effectPreset.haloRadiusCoarse : effectPreset.haloRadiusFine) +
+        clusterBoost * effectPreset.haloClusterScale;
       const gradient = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, radius);
       gradient.addColorStop(0, colors.haloInner);
       gradient.addColorStop(0.42, colors.haloMid);
@@ -164,31 +351,45 @@
       context.beginPath();
       context.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
       context.fillStyle = gradient;
-      context.globalAlpha = Math.min(1, 0.34 + combined * 0.34);
+      context.globalAlpha = Math.min(1, effectPreset.haloOpacityBase + combined * effectPreset.haloOpacityScale);
       context.fill();
       context.globalAlpha = 1;
     }
 
     function drawParticle(node, colors, glowBoost, densityBoost) {
-      const auraRadius = node.r * 2.15 + glowBoost * 1.75 + densityBoost * 0.7;
+      const auraRadius =
+        node.r * effectPreset.auraScale +
+        glowBoost * effectPreset.auraGlowScale +
+        densityBoost * effectPreset.auraDensityScale;
       context.beginPath();
       context.arc(node.x, node.y, auraRadius, 0, Math.PI * 2);
       context.fillStyle = colors.nodeAura;
-      context.globalAlpha = Math.min(1, 0.18 + glowBoost * 0.16 + densityBoost * 0.08);
-      context.shadowBlur = 16 + glowBoost * 24 + densityBoost * 8;
+      context.globalAlpha = Math.min(
+        1,
+        effectPreset.auraAlphaBase +
+          glowBoost * effectPreset.auraAlphaGlow +
+          densityBoost * effectPreset.auraAlphaDensity
+      );
+      context.shadowBlur =
+        effectPreset.shadowBase +
+        glowBoost * effectPreset.shadowGlow +
+        densityBoost * effectPreset.shadowDensity;
       context.shadowColor = colors.nodeGlow;
       context.fill();
       context.globalAlpha = 1;
       context.shadowBlur = 0;
 
-      const coreRadius = node.r + glowBoost * 0.82 + densityBoost * 0.14;
+      const coreRadius =
+        node.r +
+        glowBoost * effectPreset.coreGlowScale +
+        densityBoost * effectPreset.coreDensityScale;
       context.beginPath();
       context.arc(node.x, node.y, coreRadius, 0, Math.PI * 2);
       context.fillStyle = colors.nodeCore;
       context.fill();
 
       context.beginPath();
-      context.arc(node.x, node.y, Math.max(0.95, coreRadius * 0.38), 0, Math.PI * 2);
+      context.arc(node.x, node.y, Math.max(0.72, coreRadius * effectPreset.sparkScale), 0, Math.PI * 2);
       context.fillStyle = colors.nodeFill;
       context.fill();
     }
@@ -203,9 +404,15 @@
     }
 
     function step(now) {
+      if (previewMode) {
+        activatePointer(
+          width * 0.66 + Math.cos(now * 0.00042) * width * 0.1,
+          Math.min(height * 0.56, height * 0.28 + Math.sin(now * 0.00068) * height * 0.08)
+        );
+      }
       const colors = palette();
       const strength = pointerStrength();
-      const influenceRadius = prefersCoarse ? 210 : 260;
+      const influenceRadius = prefersCoarse ? effectPreset.influenceRadiusCoarse : effectPreset.influenceRadiusFine;
       context.clearRect(0, 0, width, height);
       let clusterLight = 0;
       let attractedCount = 0;
@@ -213,7 +420,12 @@
       for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
         const pulse = (Math.sin(now * 0.0012 + node.pulse) + 1) / 2;
-        const drift = Math.sin(now * 0.0007 + node.sway) * 0.08;
+        const drift = Math.sin(now * 0.0007 + node.sway) * effectPreset.driftAmplitude;
+
+        if (strength === 0) {
+          node.vx += Math.sin(now * 0.00031 + node.sway) * 0.0016;
+          node.vy += Math.cos(now * 0.00027 + node.pulse) * 0.0012;
+        }
 
         node.x += node.vx;
         node.y += node.vy + drift;
@@ -228,38 +440,55 @@
           const distance = Math.hypot(dx, dy);
           if (distance < influenceRadius) {
             const force = (1 - distance / influenceRadius) * node.strength * strength;
-            const pull = force * (prefersCoarse ? 0.015 : 0.022);
+            const pull = force * (prefersCoarse ? effectPreset.pullScaleCoarse : effectPreset.pullScaleFine);
             node.x += dx * pull;
             node.y += dy * pull;
-            node.vx += (dx / Math.max(distance, 1)) * force * 0.022;
-            node.vy += (dy / Math.max(distance, 1)) * force * 0.022;
+            node.vx += (dx / Math.max(distance, 1)) * force * effectPreset.velocityPull;
+            node.vy += (dy / Math.max(distance, 1)) * force * effectPreset.velocityPull;
             attraction = force;
             clusterLight += force;
             attractedCount += 1;
           }
         }
 
-        node.vx = Math.max(-0.62, Math.min(0.62, node.vx * (strength > 0 ? 0.992 : 0.996)));
-        node.vy = Math.max(-0.62, Math.min(0.62, node.vy * (strength > 0 ? 0.992 : 0.996)));
+        node.vx = Math.max(
+          -effectPreset.maxVelocity,
+          Math.min(effectPreset.maxVelocity, node.vx * (strength > 0 ? effectPreset.activeFriction : effectPreset.idleFriction))
+        );
+        node.vy = Math.max(
+          -effectPreset.maxVelocity,
+          Math.min(effectPreset.maxVelocity, node.vy * (strength > 0 ? effectPreset.activeFriction : effectPreset.idleFriction))
+        );
         node._pulse = pulse;
         node._attraction = attraction;
       }
 
       const densityBoost = Math.min(
-        prefersCoarse ? 1.15 : 1.7,
-        clusterLight * 0.14 + attractedCount / (prefersCoarse ? 10 : 14)
+        prefersCoarse ? effectPreset.densityCapCoarse : effectPreset.densityCapFine,
+        clusterLight * effectPreset.clusterLightWeight +
+          attractedCount / (prefersCoarse ? effectPreset.countDivisorCoarse : effectPreset.countDivisorFine)
       );
 
       drawHalo(colors, strength, densityBoost);
       if (strength > 0) {
-        glow.style.opacity = String(Math.min(1, 0.34 + strength * 0.34 + densityBoost * 0.16));
+        glow.style.opacity = String(
+          Math.min(
+            1,
+            effectPreset.glowOpacityBase +
+              strength * effectPreset.glowOpacityStrength +
+              densityBoost * effectPreset.glowOpacityDensity
+          )
+        );
       } else if (!pointer.active) {
         glow.style.opacity = '0';
       }
 
       for (let i = 0; i < nodes.length; i += 1) {
         const node = nodes[i];
-        const glowBoost = node._pulse * 0.82 + node._attraction * 4.8 + densityBoost * 0.24;
+        const glowBoost =
+          node._pulse * effectPreset.pulseWeight +
+          node._attraction * effectPreset.attractionWeight +
+          densityBoost * effectPreset.densityWeight;
         drawParticle(node, colors, glowBoost, densityBoost);
       }
 
