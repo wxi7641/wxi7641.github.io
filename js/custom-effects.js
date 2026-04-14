@@ -88,20 +88,20 @@
       const presets = {
         drift: {
           id: 'drift',
-          glowSize: '21rem',
-          glowSizeMobile: '14rem',
-          glowBlur: '24px',
+          glowSize: '18rem',
+          glowSizeMobile: '12rem',
+          glowBlur: '18px',
           areaPerDotCoarse: 30000,
           areaPerDotFine: 20000,
           minCountCoarse: 18,
           minCountFine: 34,
           maxCountCoarse: 52,
           maxCountFine: 92,
-          velocityXCoarse: 0.24,
-          velocityXFine: 0.38,
-          velocityYCoarse: 0.18,
-          velocityYFine: 0.3,
-          driftAmplitude: 0.16,
+          velocityXCoarse: 0.28,
+          velocityXFine: 0.46,
+          velocityYCoarse: 0.22,
+          velocityYFine: 0.36,
+          driftAmplitude: 0.24,
           radiusMin: 0.78,
           radiusRange: 1.05,
           strengthMin: 0.76,
@@ -111,21 +111,15 @@
           pullScaleCoarse: 0.01,
           pullScaleFine: 0.013,
           velocityPull: 0.016,
-          maxVelocity: 0.88,
-          activeFriction: 0.993,
-          idleFriction: 0.997,
-          auraScale: 1.08,
-          auraGlowScale: 1.05,
-          auraDensityScale: 0.34,
-          auraAlphaBase: 0.06,
-          auraAlphaGlow: 0.06,
-          auraAlphaDensity: 0.04,
-          shadowBase: 8,
-          shadowGlow: 12,
-          shadowDensity: 5,
-          coreGlowScale: 0.48,
-          coreDensityScale: 0.06,
-          sparkScale: 0.22,
+          maxVelocity: 1.04,
+          activeFriction: 0.992,
+          idleFriction: 0.998,
+          pointGlowScale: 0.12,
+          pointDensityScale: 0.04,
+          pointAlphaBase: 0.82,
+          pointAlphaGlow: 0.06,
+          pointAlphaDensity: 0.04,
+          sparkScale: 0.28,
           pulseWeight: 0.66,
           attractionWeight: 3.55,
           densityWeight: 0.14,
@@ -134,9 +128,9 @@
           clusterLightWeight: 0.11,
           countDivisorCoarse: 11,
           countDivisorFine: 16,
-          haloRadiusCoarse: 176,
-          haloRadiusFine: 214,
-          haloClusterScale: 7,
+          haloRadiusCoarse: 158,
+          haloRadiusFine: 186,
+          haloClusterScale: 6,
           haloOpacityBase: 0.2,
           haloOpacityScale: 0.24,
           glowOpacityBase: 0.22,
@@ -145,20 +139,20 @@
         },
         sharp: {
           id: 'sharp',
-          glowSize: '23rem',
-          glowSizeMobile: '15rem',
-          glowBlur: '26px',
+          glowSize: '19rem',
+          glowSizeMobile: '12.5rem',
+          glowBlur: '19px',
           areaPerDotCoarse: 28000,
           areaPerDotFine: 18500,
           minCountCoarse: 20,
           minCountFine: 38,
           maxCountCoarse: 56,
           maxCountFine: 98,
-          velocityXCoarse: 0.22,
-          velocityXFine: 0.34,
-          velocityYCoarse: 0.17,
-          velocityYFine: 0.28,
-          driftAmplitude: 0.14,
+          velocityXCoarse: 0.3,
+          velocityXFine: 0.5,
+          velocityYCoarse: 0.24,
+          velocityYFine: 0.4,
+          driftAmplitude: 0.22,
           radiusMin: 0.84,
           radiusRange: 1.08,
           strengthMin: 0.9,
@@ -168,21 +162,15 @@
           pullScaleCoarse: 0.013,
           pullScaleFine: 0.017,
           velocityPull: 0.019,
-          maxVelocity: 0.84,
-          activeFriction: 0.992,
-          idleFriction: 0.996,
-          auraScale: 1.16,
-          auraGlowScale: 1.2,
-          auraDensityScale: 0.4,
-          auraAlphaBase: 0.07,
-          auraAlphaGlow: 0.072,
-          auraAlphaDensity: 0.048,
-          shadowBase: 9,
-          shadowGlow: 13,
-          shadowDensity: 5.5,
-          coreGlowScale: 0.52,
-          coreDensityScale: 0.08,
-          sparkScale: 0.24,
+          maxVelocity: 1.08,
+          activeFriction: 0.991,
+          idleFriction: 0.998,
+          pointGlowScale: 0.14,
+          pointDensityScale: 0.045,
+          pointAlphaBase: 0.84,
+          pointAlphaGlow: 0.065,
+          pointAlphaDensity: 0.042,
+          sparkScale: 0.3,
           pulseWeight: 0.72,
           attractionWeight: 4.1,
           densityWeight: 0.18,
@@ -191,9 +179,9 @@
           clusterLightWeight: 0.12,
           countDivisorCoarse: 10,
           countDivisorFine: 14,
-          haloRadiusCoarse: 186,
-          haloRadiusFine: 228,
-          haloClusterScale: 8,
+          haloRadiusCoarse: 164,
+          haloRadiusFine: 194,
+          haloClusterScale: 6,
           haloOpacityBase: 0.22,
           haloOpacityScale: 0.26,
           glowOpacityBase: 0.24,
@@ -202,20 +190,20 @@
         },
         focus: {
           id: 'focus',
-          glowSize: '25rem',
-          glowSizeMobile: '16rem',
-          glowBlur: '28px',
+          glowSize: '21rem',
+          glowSizeMobile: '13.5rem',
+          glowBlur: '20px',
           areaPerDotCoarse: 25000,
           areaPerDotFine: 17000,
           minCountCoarse: 22,
           minCountFine: 42,
           maxCountCoarse: 62,
           maxCountFine: 108,
-          velocityXCoarse: 0.2,
-          velocityXFine: 0.31,
-          velocityYCoarse: 0.16,
-          velocityYFine: 0.25,
-          driftAmplitude: 0.12,
+          velocityXCoarse: 0.28,
+          velocityXFine: 0.44,
+          velocityYCoarse: 0.22,
+          velocityYFine: 0.34,
+          driftAmplitude: 0.18,
           radiusMin: 0.88,
           radiusRange: 1.16,
           strengthMin: 1.02,
@@ -225,21 +213,15 @@
           pullScaleCoarse: 0.016,
           pullScaleFine: 0.02,
           velocityPull: 0.023,
-          maxVelocity: 0.8,
-          activeFriction: 0.991,
-          idleFriction: 0.995,
-          auraScale: 1.22,
-          auraGlowScale: 1.26,
-          auraDensityScale: 0.46,
-          auraAlphaBase: 0.08,
-          auraAlphaGlow: 0.078,
-          auraAlphaDensity: 0.055,
-          shadowBase: 10,
-          shadowGlow: 14,
-          shadowDensity: 6,
-          coreGlowScale: 0.56,
-          coreDensityScale: 0.1,
-          sparkScale: 0.26,
+          maxVelocity: 1.02,
+          activeFriction: 0.99,
+          idleFriction: 0.9975,
+          pointGlowScale: 0.16,
+          pointDensityScale: 0.05,
+          pointAlphaBase: 0.86,
+          pointAlphaGlow: 0.072,
+          pointAlphaDensity: 0.046,
+          sparkScale: 0.32,
           pulseWeight: 0.78,
           attractionWeight: 4.6,
           densityWeight: 0.22,
@@ -248,9 +230,9 @@
           clusterLightWeight: 0.14,
           countDivisorCoarse: 9,
           countDivisorFine: 13,
-          haloRadiusCoarse: 198,
-          haloRadiusFine: 240,
-          haloClusterScale: 9,
+          haloRadiusCoarse: 172,
+          haloRadiusFine: 202,
+          haloClusterScale: 7,
           haloOpacityBase: 0.24,
           haloOpacityScale: 0.28,
           glowOpacityBase: 0.26,
@@ -274,8 +256,6 @@
         return {
           nodeFill: 'rgba(252, 244, 255, 0.98)',
           nodeCore: 'rgba(236, 211, 255, 1)',
-          nodeGlow: 'rgba(192, 159, 248, 1)',
-          nodeAura: 'rgba(212, 176, 250, 0.34)',
           haloInner: 'rgba(244, 214, 154, 0.42)',
           haloMid: 'rgba(192, 159, 248, 0.2)',
           haloOuter: 'rgba(181, 151, 244, 0)'
@@ -287,8 +267,6 @@
       return {
         nodeFill: 'rgba(248, 255, 250, 0.98)',
         nodeCore: 'rgba(201, 255, 224, 1)',
-        nodeGlow: 'rgba(47, 210, 135, 1)',
-        nodeAura: 'rgba(110, 245, 181, 0.38)',
         haloInner: 'rgba(196, 255, 221, 0.44)',
         haloMid: 'rgba(82, 224, 151, 0.22)',
         haloOuter: 'rgba(92, 211, 158, 0)'
@@ -357,36 +335,21 @@
     }
 
     function drawParticle(node, colors, glowBoost, densityBoost) {
-      const auraRadius =
-        node.r * effectPreset.auraScale +
-        glowBoost * effectPreset.auraGlowScale +
-        densityBoost * effectPreset.auraDensityScale;
-      context.beginPath();
-      context.arc(node.x, node.y, auraRadius, 0, Math.PI * 2);
-      context.fillStyle = colors.nodeAura;
-      context.globalAlpha = Math.min(
-        1,
-        effectPreset.auraAlphaBase +
-          glowBoost * effectPreset.auraAlphaGlow +
-          densityBoost * effectPreset.auraAlphaDensity
-      );
-      context.shadowBlur =
-        effectPreset.shadowBase +
-        glowBoost * effectPreset.shadowGlow +
-        densityBoost * effectPreset.shadowDensity;
-      context.shadowColor = colors.nodeGlow;
-      context.fill();
-      context.globalAlpha = 1;
-      context.shadowBlur = 0;
-
       const coreRadius =
         node.r +
-        glowBoost * effectPreset.coreGlowScale +
-        densityBoost * effectPreset.coreDensityScale;
+        glowBoost * effectPreset.pointGlowScale +
+        densityBoost * effectPreset.pointDensityScale;
       context.beginPath();
       context.arc(node.x, node.y, coreRadius, 0, Math.PI * 2);
       context.fillStyle = colors.nodeCore;
+      context.globalAlpha = Math.min(
+        1,
+        effectPreset.pointAlphaBase +
+          glowBoost * effectPreset.pointAlphaGlow +
+          densityBoost * effectPreset.pointAlphaDensity
+      );
       context.fill();
+      context.globalAlpha = 1;
 
       context.beginPath();
       context.arc(node.x, node.y, Math.max(0.72, coreRadius * effectPreset.sparkScale), 0, Math.PI * 2);
@@ -423,8 +386,8 @@
         const drift = Math.sin(now * 0.0007 + node.sway) * effectPreset.driftAmplitude;
 
         if (strength === 0) {
-          node.vx += Math.sin(now * 0.00031 + node.sway) * 0.0016;
-          node.vy += Math.cos(now * 0.00027 + node.pulse) * 0.0012;
+          node.vx += Math.sin(now * 0.00031 + node.sway) * 0.0044;
+          node.vy += Math.cos(now * 0.00027 + node.pulse) * 0.0036;
         }
 
         node.x += node.vx;
