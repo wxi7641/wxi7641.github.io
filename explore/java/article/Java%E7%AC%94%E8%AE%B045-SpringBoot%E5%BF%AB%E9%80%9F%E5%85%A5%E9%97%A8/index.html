@@ -1,0 +1,1962 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  <link rel="canonical" href="https://wxi7641.github.io/2024/07/22/Java笔记45-SpringBoot快速入门/">
+  <meta name="robots" content="noindex,follow">
+  <meta name="generator" content="Hexo 7.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin><link rel="preconnect" href="https://basis-4317.oss-cn-beijing.aliyuncs.com" crossorigin><link rel="preconnect" href="https://api.iconify.design" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>Java笔记45 - Wxi's Blog</title>
+
+  
+    <meta name="description" content="Java笔记45 的 Java学习 知识库视角页面">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Java笔记45">
+<meta property="og:url" content="https://wxi7641.github.io/explore/java/article/Java%E7%AC%94%E8%AE%B045-SpringBoot%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
+<meta property="og:site_name" content="Wxi&#39;s Blog">
+<meta property="og:description" content="Java笔记45 的 Java学习 知识库视角页面">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
+<meta property="article:published_time" content="2024-07-22T11:00:00.000Z">
+<meta property="article:modified_time" content="2024-07-22T11:00:00.000Z">
+<meta property="article:author" content="Wxi">
+<meta property="article:tag" content="技术笔记">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="Networking">
+<meta property="article:tag" content="网络安全">
+<meta property="article:tag" content="阅读随笔">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
+  
+  
+  
+  <meta name="keywords" content="技术笔记,Java,MySQL,Networking,网络安全,阅读随笔">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"Wxi's Blog","description":"Wxi 的个人博客，记录技术学习、项目实践、阅读随笔与生活点滴。","url":"https://wxi7641.github.io"}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css"><link rel="stylesheet" href="/css/module-pages.css">
+</head>
+<body><div class="sitebg"><div class="siteblur"></div></div>
+
+<div class="l_body index" id="start" layout="undefined" type="undefined" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Wxi's Blog</div><div class="sub normal cap">大梦三千如梦幻</div><div class="sub hover cap" style="opacity:0"> 醒时一枕黄粱</div></a></div></header>
+
+
+<div class="search-wrapper module-search-wrapper" id="module-search-wrapper"><form class="search-form module-search-form" onsubmit="return false;"><a class="search-button" onclick="document.getElementById(&quot;module-search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="search" class="search-input module-search-input" id="module-search-input" placeholder="在 Java 学习库中筛选文章..." autocomplete="off"></form><div class="module-search-meta fs12" id="module-search-meta">输入关键词，实时筛选模块目录、快速开始和知识节点。</div></div>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item" title="主页" href="/" style="color:hsl(145, 45%, 48%)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item active" title="探索" href="/explore/" style="color:hsl(190, 42%, 42%)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a></nav>
+</div>
+<div class="widgets module-widgets">
+
+  <widget class="widget-wrapper module-tree-widget post-list">
+    <div class="widget-header dis-select">
+      <span class="name">模块目录</span>
+      
+        <span class="cap">已整理</span>
+      
+    </div>
+    <div class="widget-body fs14 module-tree" data-module-tree>
+      <a class="module-tree-home" href="/explore/java/">
+        <span class="module-tree-home__copy">
+          <strong>Java学习</strong>
+          <small>首页适合看最近公开了什么；这个模块页适合看 Java 这一条线已经积累了什么、下一步该从哪里接着学。</small>
+        </span>
+        <span class="module-tree-home__badge">Java 首页</span>
+      </a>
+      
+        
+        <div class="module-tree-section" data-module-search-group data-module-group="java-prelude">
+          <button class="module-tree-toggle" type="button" data-module-tree-toggle aria-expanded="true">
+            <span class="module-tree-toggle__copy">
+              <strong>旧笔记与前置热身</strong>
+              
+                <small>这是最早一批 Java 笔记和开发环境热身内容，适合回看最初的学习起点。</small>
+              
+            </span>
+            <span class="module-tree-toggle__meta">8 篇</span>
+          </button>
+          <div class="module-tree-links" data-module-tree-links>
+            
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B001/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记01"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记01</span>
+                    <time>2024-05-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B002/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记02"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记02</span>
+                    <time>2024-05-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B003/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记03"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记03</span>
+                    <time>2024-05-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B004/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记04"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记04</span>
+                    <time>2024-05-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B005/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记05"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记05</span>
+                    <time>2024-05-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B015/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记15"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记15</span>
+                    <time>2024-05-15</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B016/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记16"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记16</span>
+                    <time>2024-05-16</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B017/"
+                  data-module-search-target="article"
+                  data-module-search-text="旧笔记与前置热身 Java笔记17"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记17</span>
+                    <time>2024-05-16</time>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+        
+        <div class="module-tree-section" data-module-search-group data-module-group="java-basics">
+          <button class="module-tree-toggle" type="button" data-module-tree-toggle aria-expanded="true">
+            <span class="module-tree-toggle__copy">
+              <strong>起步与语法</strong>
+              
+                <small>先把程序结构、流程控制、数组、字符串和常用工具类打牢。</small>
+              
+            </span>
+            <span class="module-tree-toggle__meta">6 篇</span>
+          </button>
+          <div class="module-tree-links" data-module-tree-links>
+            
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B018-%E7%AC%AC%E4%B8%80%E4%B8%AAJava%E7%A8%8B%E5%BA%8F/"
+                  data-module-search-target="article"
+                  data-module-search-text="起步与语法 Java笔记18"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记18</span>
+                    <time>2024-04-16</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B019-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%85%A5%E9%97%A8/"
+                  data-module-search-target="article"
+                  data-module-search-text="起步与语法 Java笔记19"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记19</span>
+                    <time>2024-04-20</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B020-%E6%95%B0%E7%BB%84%E4%B8%8E%E6%8E%92%E5%BA%8F/"
+                  data-module-search-target="article"
+                  data-module-search-text="起步与语法 Java笔记20"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记20</span>
+                    <time>2024-04-21</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B021-%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%9F%BA%E7%A1%80/"
+                  data-module-search-target="article"
+                  data-module-search-text="起步与语法 Java笔记21"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记21</span>
+                    <time>2024-04-22</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B022-String%E4%B8%8EStringBuffer/"
+                  data-module-search-target="article"
+                  data-module-search-text="起步与语法 Java笔记22"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记22</span>
+                    <time>2024-04-26</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B023-DateCalendarMath/"
+                  data-module-search-target="article"
+                  data-module-search-text="起步与语法 Java笔记23"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记23</span>
+                    <time>2024-04-27</time>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+        
+        <div class="module-tree-section" data-module-search-group data-module-group="java-collections">
+          <button class="module-tree-toggle" type="button" data-module-tree-toggle aria-expanded="true">
+            <span class="module-tree-toggle__copy">
+              <strong>集合、IO 与泛型</strong>
+              
+                <small>这部分让 Java 真正从语法练习进入“处理真实数据”的阶段。</small>
+              
+            </span>
+            <span class="module-tree-toggle__meta">11 篇</span>
+          </button>
+          <div class="module-tree-links" data-module-tree-links>
+            
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B024-Collection%E4%B8%8EList%E5%85%A5%E9%97%A8/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记24"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记24</span>
+                    <time>2024-05-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B025-Vector%E4%B8%8ELinkedList%E8%A1%A5%E5%85%85/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记25"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记25</span>
+                    <time>2024-05-07</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B026-%E4%B8%89%E7%A7%8DList%E5%AE%9E%E7%8E%B0%E5%AF%B9%E6%AF%94/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记26"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记26</span>
+                    <time>2024-05-08</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B027-HashSet%E5%8E%BB%E9%87%8D%E5%8E%9F%E7%90%86/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记27"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记27</span>
+                    <time>2024-05-11</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B028-HashSet%E4%B8%8EHashtable%E8%A1%A5%E5%85%85/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记28"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记28</span>
+                    <time>2024-05-12</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B029-Map%E9%9B%86%E5%90%88%E5%9F%BA%E7%A1%80/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记29"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记29</span>
+                    <time>2024-05-14</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B030-%E6%9E%9A%E4%B8%BEenum/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记30"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记30</span>
+                    <time>2024-05-15</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B031-File%E7%B1%BB%E5%9F%BA%E7%A1%80/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记31"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记31</span>
+                    <time>2024-05-18</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B032-%E5%AD%97%E8%8A%82%E6%B5%81%E4%B8%8E%E7%BC%93%E5%86%B2%E6%B5%81/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记32"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记32</span>
+                    <time>2024-05-19</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B033-%E5%AD%97%E7%AC%A6%E6%B5%81%E8%AF%BB%E5%86%99%E6%96%87%E4%BB%B6/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记33"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记33</span>
+                    <time>2024-05-20</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B034-%E6%B3%9B%E5%9E%8B%E5%85%A5%E9%97%A8/"
+                  data-module-search-target="article"
+                  data-module-search-text="集合、IO 与泛型 Java笔记34"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记34</span>
+                    <time>2024-05-22</time>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+        
+        <div class="module-tree-section" data-module-search-group data-module-group="java-concurrency">
+          <button class="module-tree-toggle" type="button" data-module-tree-toggle aria-expanded="true">
+            <span class="module-tree-toggle__copy">
+              <strong>并发与线程</strong>
+              
+                <small>线程创建、同步、等待唤醒和线程池，是后续理解服务端并发的基础。</small>
+              
+            </span>
+            <span class="module-tree-toggle__meta">4 篇</span>
+          </button>
+          <div class="module-tree-links" data-module-tree-links>
+            
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B035-%E7%BA%BF%E7%A8%8B%E5%88%9B%E5%BB%BA%E6%96%B9%E5%BC%8F/"
+                  data-module-search-target="article"
+                  data-module-search-text="并发与线程 Java笔记35"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记35</span>
+                    <time>2024-06-15</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B036-%E7%BA%BF%E7%A8%8B%E5%B8%B8%E7%94%A8%E6%96%B9%E6%B3%95%E4%B8%8E%E5%90%8C%E6%AD%A5/"
+                  data-module-search-target="article"
+                  data-module-search-text="并发与线程 Java笔记36"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记36</span>
+                    <time>2024-06-16</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B037-wait%E4%B8%8Enotify/"
+                  data-module-search-target="article"
+                  data-module-search-text="并发与线程 Java笔记37"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记37</span>
+                    <time>2024-06-17</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B038-Lock%E4%B8%8E%E7%BA%BF%E7%A8%8B%E6%B1%A0/"
+                  data-module-search-target="article"
+                  data-module-search-text="并发与线程 Java笔记38"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记38</span>
+                    <time>2024-06-18</time>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+        
+        <div class="module-tree-section" data-module-search-group data-module-group="java-web-data">
+          <button class="module-tree-toggle" type="button" data-module-tree-toggle aria-expanded="true">
+            <span class="module-tree-toggle__copy">
+              <strong>Web、JDBC 与数据访问</strong>
+              
+                <small>这条线把 Java 从本地程序带进 Web、数据库和工程化开发。</small>
+              
+            </span>
+            <span class="module-tree-toggle__meta">8 篇</span>
+          </button>
+          <div class="module-tree-links" data-module-tree-links>
+            
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B039-Bootstrap%E5%89%8D%E7%AB%AF%E8%B5%84%E6%BA%90%E5%87%86%E5%A4%87/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记39"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记39</span>
+                    <time>2024-06-25</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B040-Servlet%E4%B8%8EJDBC%E5%B0%8F%E9%A1%B9%E7%9B%AE/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记40"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记40</span>
+                    <time>2024-07-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B041-MavenWeb%E5%B7%A5%E7%A8%8B/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记41"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记41</span>
+                    <time>2024-07-07</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B042-MyBatis%E5%8A%A8%E6%80%81SQL/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记42"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记42</span>
+                    <time>2024-07-08</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B047-JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%81%E8%A3%85/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记47"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记47</span>
+                    <time>2024-07-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B048-JDBC%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86CRUD/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记48"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记48</span>
+                    <time>2024-07-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B049-JDBC%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记49"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记49</span>
+                    <time>2024-07-06</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B050-JDBC%E5%88%86%E9%A1%B5%E4%B8%8EJSP%E5%B1%95%E7%A4%BA/"
+                  data-module-search-target="article"
+                  data-module-search-text="Web、JDBC 与数据访问 Java笔记50"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记50</span>
+                    <time>2024-07-02</time>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+        
+        <div class="module-tree-section" data-module-search-group data-module-group="java-spring-stack">
+          <button class="module-tree-toggle" type="button" data-module-tree-toggle aria-expanded="true">
+            <span class="module-tree-toggle__copy">
+              <strong>Spring、Spring Boot 与 SSM</strong>
+              
+                <small>这里是你现在最像“长期主线”的一层，从框架思想一路过渡到整套项目栈。</small>
+              
+            </span>
+            <span class="module-tree-toggle__meta">26 篇</span>
+          </button>
+          <div class="module-tree-links" data-module-tree-links>
+            
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B043-Spring%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记43"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记43</span>
+                    <time>2024-07-12</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B044-SpringMVC%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记44"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记44</span>
+                    <time>2024-07-15</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link active"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B045-SpringBoot%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记45"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记45</span>
+                    <time>2024-07-22</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B046-SSM%E6%95%B4%E5%90%88%E9%A1%B9%E7%9B%AE/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记46"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记46</span>
+                    <time>2024-07-29</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B051-SpringIOC%E4%B8%8EDI/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记51"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记51</span>
+                    <time>2024-07-12</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B052-Spring%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记52"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记52</span>
+                    <time>2024-07-12</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B053-Spring%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E4%B8%8EAOP%E9%80%9A%E7%9F%A5/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记53"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记53</span>
+                    <time>2024-07-12</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B054-Spring%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E4%B8%8E%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记54"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记54</span>
+                    <time>2024-07-12</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B055-SSM%E6%95%B4%E5%90%88%E9%85%8D%E7%BD%AE%E6%80%BB%E8%A7%88/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记55"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记55</span>
+                    <time>2024-07-29</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B056-SSM%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E4%B8%8E%E6%9D%83%E9%99%90%E6%8B%A6%E6%88%AA/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记56"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记56</span>
+                    <time>2024-07-29</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B057-SSM%E5%93%81%E7%89%8C%E6%A8%A1%E5%9D%97/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记57"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记57</span>
+                    <time>2024-07-29</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B058-SSM%E8%AE%A2%E5%8D%95%E6%A8%A1%E5%9D%97%E4%B8%8E%E4%BA%8B%E5%8A%A1/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记58"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记58</span>
+                    <time>2024-07-29</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B059-IntelliJIDEA%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记59"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记59</span>
+                    <time>2024-06-26</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B060-SpringBoot%E5%90%AF%E5%8A%A8%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记60"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记60</span>
+                    <time>2024-07-31</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B061-SpringBoot%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E%E5%A4%9A%E7%8E%AF%E5%A2%83%E6%80%9D%E8%B7%AF/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记61"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记61</span>
+                    <time>2024-08-01</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B062-SpringBoot%E6%95%B4%E5%90%88MyBatis%E4%B8%8E%E5%88%86%E5%B1%82%E8%B0%83%E7%94%A8/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记62"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记62</span>
+                    <time>2024-08-02</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B063-SpringBoot%E8%BF%94%E5%9B%9EJSON%E4%B8%8E%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记63"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记63</span>
+                    <time>2024-08-03</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B064-SpringBoot%E5%88%86%E9%A1%B5%E3%80%81%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2%E4%B8%8EPageHelper/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记64"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记64</span>
+                    <time>2024-08-04</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B065-SpringBoot%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记65"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记65</span>
+                    <time>2024-08-05</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B066-SpringBoot%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8EJWT/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记66"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记66</span>
+                    <time>2024-08-06</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B067-SpringBoot%E6%95%B4%E5%90%88MyBatis-Plus/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记67"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记67</span>
+                    <time>2024-08-07</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B068-SSM%E5%AE%B9%E5%99%A8%E5%90%AF%E5%8A%A8%E4%B8%8E%E8%AF%B7%E6%B1%82%E5%85%A5%E5%8F%A3/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记68"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记68</span>
+                    <time>2024-08-08</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B069-SSM%E6%95%B0%E6%8D%AE%E6%BA%90%E3%80%81MyBatis%E4%B8%8EMapper%E6%89%AB%E6%8F%8F/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记69"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记69</span>
+                    <time>2024-08-09</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B070-SSM%E4%BA%8B%E5%8A%A1%E7%AE%A1%E7%90%86%E4%B8%8E%E5%88%86%E9%A1%B5%E6%9F%A5%E8%AF%A2/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记70"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记70</span>
+                    <time>2024-08-10</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/Java%E7%AC%94%E8%AE%B071-SSM%E7%99%BB%E5%BD%95%E6%8B%A6%E6%88%AA%E4%B8%8ESession%E6%A0%A1%E9%AA%8C/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM Java笔记71"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">Java笔记71</span>
+                    <time>2024-08-11</time>
+                  </span>
+                </a>
+              
+                <a
+                  class="module-tree-link"
+                  href="/explore/java/article/%E5%9F%BA%E4%BA%8Ejava%2Bmvc%E6%A1%86%E6%9E%B6%E7%9A%84%E9%93%81%E8%B7%AF%E8%AE%A2%E7%A5%A8%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/"
+                  data-module-search-target="article"
+                  data-module-search-text="Spring、Spring Boot 与 SSM 基于java+mvc框架的铁路订票系统设计"
+                >
+                  <span class="module-tree-link__copy">
+                    <span class="title">基于java+mvc框架的铁路订票系统设计</span>
+                    <time>2024-07-22</time>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+  </widget>
+
+
+<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">免责声明</span></div><div class="widget-body fs14"><div class="sidebar-legal">
+  <p>本站内容以个人学习记录、阅读摘记与项目实践为主，仅作公开整理与交流参考。</p>
+  <p>涉及网络安全、渗透测试、逆向工程等主题时，仅讨论合法、授权、隔离环境下的研究与实验。</p>
+  <p>如内容存在过时、环境差异或理解偏差，请以官方文档、产品公告与实际运行结果为准。</p>
+</div>
+</div></widget>
+</div>
+
+<button class="theme-switch-card" type="button" aria-label="切换日间或夜间主题" title="切换日间或夜间主题" onclick="window.codexToggleTheme && window.codexToggleTheme()"><span class="theme-switch-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></span><span class="theme-switch-copy"><strong>主题</strong><small id="theme-switch-label">日间 · 绿意</small></span></button>
+</div></aside><div class="l_main" id="main">
+
+<header class="header mobile-only"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">Wxi's Blog</div><div class="sub normal cap">大梦三千如梦幻</div><div class="sub hover cap" style="opacity:0"> 醒时一枕黄粱</div></a></div></header>
+
+
+
+<section class="module-article-shell" data-module-page data-module-id="java" data-module-article>
+  <header class="module-article-hero">
+    <div class="module-article-hero__copy">
+      <span class="module-eyebrow">Backend / Java / Spring</span>
+      <h1>Java笔记45</h1>
+      <p class="module-summary">这是从“探索 / Java学习”进入的知识库视角文章页，会保留模块目录和结构化上下文。</p>
+      
+        <p class="module-distinction">这里不再按发布日期看文章，而是把 Java、JDBC、Spring、Spring Boot、SSM 和项目实践按知识结构串起来。</p>
+      
+      <div class="module-actions">
+        <a class="module-action" href="/explore/java/">返回模块首页</a>
+        <a class="module-action is-subtle" href="/2024/07/22/Java笔记45-SpringBoot快速入门/">切回博客视角</a>
+      </div>
+    </div>
+    <div class="module-article-hero__aside">
+      <div class="module-stage">
+        <strong>Java学习</strong>
+        <span>Spring、Spring Boot 与 SSM</span>
+      </div>
+      <dl class="module-stats">
+        <div>
+          <dt>发布日期</dt>
+          <dd>2024-07-22</dd>
+        </div>
+        <div>
+          <dt>所在分区</dt>
+          <dd>1 个</dd>
+        </div>
+        <div>
+          <dt>知识节点</dt>
+          <dd>1 个</dd>
+        </div>
+      </dl>
+    </div>
+  </header>
+
+  <section class="module-panel module-article-context">
+    <div class="module-panel__header">
+      <span class="module-panel__eyebrow">上下文</span>
+      <h2>这篇文章在分库里的位置</h2>
+      <p>首页点进来看到的是博客文章；从探索点进来，你会看到它在整个模块中的结构位置。</p>
+    </div>
+    <div class="module-article-context-grid">
+      <article class="module-view-card">
+        <strong>所属分区</strong>
+        
+          <div class="module-chip-list">
+            
+              <a class="module-chip" href="/explore/java/#module-section-java-spring-stack">Spring、Spring Boot 与 SSM</a>
+            
+          </div>
+        
+      </article>
+      <article class="module-view-card">
+        <strong>快速开始命中</strong>
+        
+          <p>它暂时不属于“快速开始”主线入口，但仍然在模块目录中可追踪。</p>
+        
+      </article>
+      <article class="module-view-card">
+        <strong>关联知识节点</strong>
+        
+          <div class="module-chip-list">
+            
+              <span class="module-chip">Spring / SSM / Boot</span>
+            
+          </div>
+        
+      </article>
+    </div>
+  </section>
+
+  <article class="md-text content">
+    <h1 id="Java笔记45"><a href="#Java笔记45" class="headerlink" title="Java笔记45"></a>Java笔记45</h1><p>Spring Boot 真正让人觉得轻，不是因为它“变简单了”，而是因为很多以前必须手工拼起来的 Spring 配置，现在都被默认约定和自动配置接住了。</p>
+<blockquote>
+<p><mark>Spring Boot 不是弱化 Spring，而是把 Spring 项目最常见的初始化工作提前封装好。</mark></p>
+</blockquote>
+<hr>
+<h2 id="一、启动类非常短，但信息量非常大"><a href="#一、启动类非常短，但信息量非常大" class="headerlink" title="一、启动类非常短，但信息量非常大"></a>一、启动类非常短，但信息量非常大</h2><p>Spring Boot 项目最经典的入口通常就是这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@MapperScan(&quot;com.java.springboot.mapper&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这段代码短得几乎不像传统 Spring 项目，但它把几个很重要的动作收起来了：</p>
+<table>
+<thead>
+<tr>
+<th>注解 &#x2F; 方法</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@SpringBootApplication</code></td>
+<td>组合了配置类、自动配置、组件扫描等能力</td>
+</tr>
+<tr>
+<td><code>@MapperScan</code></td>
+<td>扫描 MyBatis Mapper 接口</td>
+</tr>
+<tr>
+<td><code>SpringApplication.run(...)</code></td>
+<td>启动 Spring Boot 应用</td>
+</tr>
+</tbody></table>
+<p>传统配置方式里很多在 XML 中完成的事情，从这里开始都被逐渐转移到注解和自动配置里了。</p>
+<h2 id="二、配置文件统一收口，是-Spring-Boot-最直观的变化之一"><a href="#二、配置文件统一收口，是-Spring-Boot-最直观的变化之一" class="headerlink" title="二、配置文件统一收口，是 Spring Boot 最直观的变化之一"></a>二、配置文件统一收口，是 Spring Boot 最直观的变化之一</h2><p>配置文件中的关键项通常会集中在 <code>application.properties</code> 或 <code>application.yml</code>：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">SpringBoot</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8081</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.datasource.driverClassName</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://&lt;db-host&gt;:&lt;db-port&gt;/&lt;db-name&gt;?useSSL=false&amp;characterEncoding=utf8</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">&lt;db-username&gt;</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">&lt;db-password&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis.type-aliases-package</span>=<span class="string">com.java.springboot.pojo</span></span><br><span class="line"><span class="attr">mybatis.mapper-locations</span>=<span class="string">classpath:mapper/*Mapper.xml</span></span><br><span class="line"><span class="attr">mybatis.configuration.map-underscore-to-camel-case</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+
+<p>这类配置最适合分块理解：</p>
+<table>
+<thead>
+<tr>
+<th>配置分组</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>server.*</code></td>
+<td>Web 服务端口等运行参数</td>
+</tr>
+<tr>
+<td><code>spring.datasource.*</code></td>
+<td>数据源配置</td>
+</tr>
+<tr>
+<td><code>mybatis.*</code></td>
+<td>MyBatis 集成配置</td>
+</tr>
+</tbody></table>
+<p>公开笔记里更适合使用这种占位写法，真实数据库地址、账号密码应放进本地配置、环境变量或密钥管理方案里，而不是直接出现在对外文章中。</p>
+<h2 id="三、Spring-Boot-依然是分层结构，只是搭环境的动作少了很多"><a href="#三、Spring-Boot-依然是分层结构，只是搭环境的动作少了很多" class="headerlink" title="三、Spring Boot 依然是分层结构，只是搭环境的动作少了很多"></a>三、Spring Boot 依然是分层结构，只是搭环境的动作少了很多</h2><p>控制层：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/brand&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BrandController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BrandService brandService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/selectAll&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> brandService.selectAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Service 层：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BrandServiceImp</span> <span class="keyword">implements</span> <span class="title class_">BrandService</span>&#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BrandMapper brandMapper;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> brandMapper.selectAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Mapper 接口：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">BrandMapper</span> &#123;</span><br><span class="line">    List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Mapper XML：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.java.springboot.mapper.BrandMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Brand&quot;</span>&gt;</span></span><br><span class="line">        SELECT * FROM tb_brand</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>把这几段放在一起看，会发现一件很重要的事：</p>
+<p><mark>Spring Boot 并没有取消 Controller &#x2F; Service &#x2F; Mapper 这种经典分层，它只是把项目启动、组件装配和框架整合变得更自然了。</mark></p>
+<h2 id="四、自动配置到底替开发者省掉了什么"><a href="#四、自动配置到底替开发者省掉了什么" class="headerlink" title="四、自动配置到底替开发者省掉了什么"></a>四、自动配置到底替开发者省掉了什么</h2><p>如果把传统 Spring + Spring MVC + MyBatis 项目和 Spring Boot 放在一起比较，最明显的差别通常有这些：</p>
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>传统配置项目</th>
+<th>Spring Boot</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动方式</td>
+<td>容器 + XML 配置较多</td>
+<td><code>main</code> 方法直接启动</td>
+</tr>
+<tr>
+<td>组件扫描</td>
+<td>常常手工声明较多</td>
+<td>自动扫描更集中</td>
+</tr>
+<tr>
+<td>数据源配置</td>
+<td>XML 或多处配置</td>
+<td>统一进 <code>application.properties</code></td>
+</tr>
+<tr>
+<td>MyBatis 整合</td>
+<td>需要更多显式配置</td>
+<td>约定式配置更集中</td>
+</tr>
+</tbody></table>
+<p>自动配置的本质并不是“神秘地帮你做事”，而是框架根据依赖和配置项，提前把最常见的组合情况准备好了。</p>
+<h2 id="五、为什么-Starter-这么重要"><a href="#五、为什么-Starter-这么重要" class="headerlink" title="五、为什么 Starter 这么重要"></a>五、为什么 Starter 这么重要</h2><p>Spring Boot 学习时经常会听到“起步依赖”这个词。它的真正意义不是一个新概念，而是把一类功能常用的依赖组合先打包好。</p>
+<p>这样做有两个直接效果：</p>
+<ol>
+<li>少写很多零散依赖</li>
+<li>让自动配置有条件可判断</li>
+</ol>
+<p>也就是说，<strong>Starter 负责把“需要哪些依赖”这件事先整理好，自动配置再负责决定“这些依赖该怎么配起来”。</strong></p>
+<h2 id="六、-ResponseBody-在-Spring-Boot-里几乎成了默认思维的一部分"><a href="#六、-ResponseBody-在-Spring-Boot-里几乎成了默认思维的一部分" class="headerlink" title="六、@ResponseBody 在 Spring Boot 里几乎成了默认思维的一部分"></a>六、<code>@ResponseBody</code> 在 Spring Boot 里几乎成了默认思维的一部分</h2><p>这一段控制器代码特别有代表性：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/selectAll&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> brandService.selectAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这说明在 Spring Boot 里，接口返回 JSON 已经变成非常自然的写法。很多时候如果整个类都以接口返回为主，还会直接写成：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是说，Spring Boot 常常和“接口式开发”“前后端分离”“JSON 响应”这些开发习惯一起出现。</p>
+<h2 id="七、配置文件除了集中，还开始承担“环境切换入口”的角色"><a href="#七、配置文件除了集中，还开始承担“环境切换入口”的角色" class="headerlink" title="七、配置文件除了集中，还开始承担“环境切换入口”的角色"></a>七、配置文件除了集中，还开始承担“环境切换入口”的角色</h2><p>Spring Boot 把配置收拢之后，后续最容易继续扩展的方向也就清晰了：</p>
+<ul>
+<li>多环境配置</li>
+<li>端口切换</li>
+<li>日志级别</li>
+<li>数据源切换</li>
+<li>文件上传限制</li>
+</ul>
+<p>所以 <code>application.properties</code> 不只是“一个配置文件”，而是应用运行参数的主入口之一。</p>
+<h2 id="八、为什么-Spring-Boot-让人有“从工程搭建回到业务开发”的感觉"><a href="#八、为什么-Spring-Boot-让人有“从工程搭建回到业务开发”的感觉" class="headerlink" title="八、为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉"></a>八、为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉</h2><p>以前做 Spring 项目时，很多精力会消耗在：</p>
+<ul>
+<li>XML 配置</li>
+<li>组件注册</li>
+<li>数据源整合</li>
+<li>Web 层基础装配</li>
+</ul>
+<p>Spring Boot 出现之后，这部分重复劳动被压缩了很多，于是开发者就能更快把注意力放回：</p>
+<ul>
+<li>业务接口</li>
+<li>数据处理</li>
+<li>页面或接口输出</li>
+</ul>
+<p>这也是为什么很多人第一次上手 Spring Boot，会直接感受到“项目终于没那么重了”。</p>
+<h2 id="九、Spring-Boot-真正要建立的是“约定优于配置”的直觉"><a href="#九、Spring-Boot-真正要建立的是“约定优于配置”的直觉" class="headerlink" title="九、Spring Boot 真正要建立的是“约定优于配置”的直觉"></a>九、Spring Boot 真正要建立的是“约定优于配置”的直觉</h2><p>这一节最重要的不是记住多少属性，而是建立下面这层理解：</p>
+<ul>
+<li>依赖选得对，自动配置就能接上</li>
+<li>配置项放到规定位置，框架就知道去哪里找</li>
+<li>大多数默认行为已经足够覆盖常见项目</li>
+<li>需要个性化时，再去覆盖默认配置</li>
+</ul>
+<p>只要这层直觉建立起来，后面继续往下学分页、文件上传、模板引擎、接口鉴权、多环境部署时，都会更顺。</p>
+
+  </article>
+
+  
+    <section class="module-panel module-article-nav">
+      <div class="module-panel__header">
+        <span class="module-panel__eyebrow">继续探索</span>
+        <h2>沿着这个模块继续读下去</h2>
+      </div>
+      <div class="module-article-nav__grid">
+        
+          <a class="module-topic-link" href="/explore/java/article/Java%E7%AC%94%E8%AE%B042-MyBatis%E5%8A%A8%E6%80%81SQL/">
+            <span class="module-topic-link__copy">
+              <strong>上一篇</strong>
+              <span>Java笔记42</span>
+            </span>
+          </a>
+        
+        
+          <a class="module-topic-link" href="/explore/java/article/Java%E7%AC%94%E8%AE%B056-SSM%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E4%B8%8E%E6%9D%83%E9%99%90%E6%8B%A6%E6%88%AA/">
+            <span class="module-topic-link__copy">
+              <strong>下一篇</strong>
+              <span>Java笔记56</span>
+            </span>
+          </a>
+        
+      </div>
+    </section>
+  
+</section>
+
+
+<footer class="page-footer site-public-stats footnote">
+  <hr>
+  <div class="site-public-stats__inner">
+    <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
+    <p class="meta-line meta-line--accent">
+      运营 <strong>813</strong> 天
+      
+        <span class="sep">·</span>
+        始于 2024-01-24
+      
+    </p>
+    <p class="meta-line">
+      共发布 <strong>89</strong> 篇文章
+      <span class="sep">·</span>
+      累计 <strong>63,758</strong> 字
+    </p>
+  </div>
+</footer>
+
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B045"><span class="toc-text">Java笔记45</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%90%AF%E5%8A%A8%E7%B1%BB%E9%9D%9E%E5%B8%B8%E7%9F%AD%EF%BC%8C%E4%BD%86%E4%BF%A1%E6%81%AF%E9%87%8F%E9%9D%9E%E5%B8%B8%E5%A4%A7"><span class="toc-text">一、启动类非常短，但信息量非常大</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%BB%9F%E4%B8%80%E6%94%B6%E5%8F%A3%EF%BC%8C%E6%98%AF-Spring-Boot-%E6%9C%80%E7%9B%B4%E8%A7%82%E7%9A%84%E5%8F%98%E5%8C%96%E4%B9%8B%E4%B8%80"><span class="toc-text">二、配置文件统一收口，是 Spring Boot 最直观的变化之一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Spring-Boot-%E4%BE%9D%E7%84%B6%E6%98%AF%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8F%AA%E6%98%AF%E6%90%AD%E7%8E%AF%E5%A2%83%E7%9A%84%E5%8A%A8%E4%BD%9C%E5%B0%91%E4%BA%86%E5%BE%88%E5%A4%9A"><span class="toc-text">三、Spring Boot 依然是分层结构，只是搭环境的动作少了很多</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%88%B0%E5%BA%95%E6%9B%BF%E5%BC%80%E5%8F%91%E8%80%85%E7%9C%81%E6%8E%89%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">四、自动配置到底替开发者省掉了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Starter-%E8%BF%99%E4%B9%88%E9%87%8D%E8%A6%81"><span class="toc-text">五、为什么 Starter 这么重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81-ResponseBody-%E5%9C%A8-Spring-Boot-%E9%87%8C%E5%87%A0%E4%B9%8E%E6%88%90%E4%BA%86%E9%BB%98%E8%AE%A4%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">六、@ResponseBody 在 Spring Boot 里几乎成了默认思维的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E9%99%A4%E4%BA%86%E9%9B%86%E4%B8%AD%EF%BC%8C%E8%BF%98%E5%BC%80%E5%A7%8B%E6%89%BF%E6%8B%85%E2%80%9C%E7%8E%AF%E5%A2%83%E5%88%87%E6%8D%A2%E5%85%A5%E5%8F%A3%E2%80%9D%E7%9A%84%E8%A7%92%E8%89%B2"><span class="toc-text">七、配置文件除了集中，还开始承担“环境切换入口”的角色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Spring-Boot-%E8%AE%A9%E4%BA%BA%E6%9C%89%E2%80%9C%E4%BB%8E%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA%E5%9B%9E%E5%88%B0%E4%B8%9A%E5%8A%A1%E5%BC%80%E5%8F%91%E2%80%9D%E7%9A%84%E6%84%9F%E8%A7%89"><span class="toc-text">八、为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81Spring-Boot-%E7%9C%9F%E6%AD%A3%E8%A6%81%E5%BB%BA%E7%AB%8B%E7%9A%84%E6%98%AF%E2%80%9C%E7%BA%A6%E5%AE%9A%E4%BC%98%E4%BA%8E%E9%85%8D%E7%BD%AE%E2%80%9D%E7%9A%84%E7%9B%B4%E8%A7%89"><span class="toc-text">九、Spring Boot 真正要建立的是“约定优于配置”的直觉</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":"wxi7641.github.io","officialHosts":["localhost","wxi7641.github.io"],"encoded":"d3hpNzY0MS5naXRodWIuaW8="};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages.js" defer></script>
+</div></body></html>

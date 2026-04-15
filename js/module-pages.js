@@ -22,6 +22,11 @@
     var groups = Array.from(document.querySelectorAll('[data-module-search-group]'))
     var toggles = Array.from(document.querySelectorAll('[data-module-tree-toggle]'))
     var mapAnchors = Array.from(document.querySelectorAll('.module-map-anchor[data-module-target]'))
+    var mapDetail = document.getElementById('module-map-detail')
+    var mapDetailTitle = mapDetail ? mapDetail.querySelector('.module-map-detail__title') : null
+    var mapDetailDesc = mapDetail ? mapDetail.querySelector('.module-map-detail__desc') : null
+    var mapDetailLinks = document.getElementById('module-map-detail-links')
+    var mapDetailAction = document.getElementById('module-map-detail-action')
 
     function setHidden(node, hidden) {
       node.classList.toggle('is-hidden', hidden)
@@ -85,14 +90,51 @@
     mapAnchors.forEach(function (button) {
       button.addEventListener('click', function () {
         var target = button.getAttribute('data-module-target')
-        if (!target) return
-        var section = document.getElementById('module-section-' + target)
-        if (!section) return
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        section.classList.add('is-focused')
-        window.setTimeout(function () {
-          section.classList.remove('is-focused')
-        }, 1400)
+        var node = button.closest('.module-map-node')
+        var title = button.querySelector('.module-map-anchor__title')
+        var desc = button.querySelector('.module-map-anchor__desc')
+        var links = node ? Array.from(node.querySelectorAll('.module-map-links a')) : []
+
+        if (mapDetailTitle) {
+          mapDetailTitle.textContent = title ? title.textContent : '知识节点'
+        }
+        if (mapDetailDesc) {
+          mapDetailDesc.textContent = desc ? desc.textContent : '这个节点下暂时还没有补充说明。'
+        }
+        if (mapDetailLinks) {
+          mapDetailLinks.innerHTML = ''
+          if (links.length > 0) {
+            links.forEach(function (link) {
+              var clone = link.cloneNode(true)
+              mapDetailLinks.appendChild(clone)
+            })
+          } else {
+            var empty = document.createElement('p')
+            empty.className = 'module-map-detail__desc'
+            empty.textContent = '这个节点还没有挂接具体文章，后面会继续补。'
+            mapDetailLinks.appendChild(empty)
+          }
+        }
+
+        if (mapDetailAction) {
+          if (target) {
+            mapDetailAction.classList.remove('is-hidden')
+            mapDetailAction.setAttribute('href', '#module-section-' + target)
+            mapDetailAction.onclick = function () {
+              var section = document.getElementById('module-section-' + target)
+              if (!section) return
+              section.scrollIntoView({ behavior: 'smooth', block: 'start' })
+              section.classList.add('is-focused')
+              window.setTimeout(function () {
+                section.classList.remove('is-focused')
+              }, 1400)
+            }
+          } else {
+            mapDetailAction.classList.add('is-hidden')
+            mapDetailAction.removeAttribute('href')
+            mapDetailAction.onclick = null
+          }
+        }
       })
     })
 
