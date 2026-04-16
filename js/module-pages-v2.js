@@ -29,7 +29,7 @@
       }).length
 
       if (!query) {
-        meta.textContent = '输入关键词，实时筛选模块目录和快速开始。'
+        meta.textContent = '输入关键词，实时筛选模块目录。'
         return
       }
 
