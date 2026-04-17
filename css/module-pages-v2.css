@@ -95,6 +95,15 @@
   gap: 24px;
 }
 
+.module-article-shell {
+  display: grid;
+  gap: 0;
+}
+
+.module-article-shell > article.content {
+  margin-top: 0;
+}
+
 .module-home-panel {
   display: grid;
   gap: 18px;
@@ -280,6 +289,10 @@
   padding: 4px 10px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.72);
+}
+
+.module-tree-home__badge {
+  display: none;
 }
 
 .module-tree-group,
