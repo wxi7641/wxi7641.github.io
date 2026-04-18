@@ -20,12 +20,12 @@
   <title>Java笔记47 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记47JDBC 学习真正进入项目阶段时，第一步通常不是写业务，而是把数据库连接和资源关闭先统一封装起来。  为什么 JDBC 一开始总要先讲连接结合你导入的 JDBC笔记.md，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。 在 JDBC 项目里，第一步通常不是直接写 CRUD，而是先把连接数据库这件事封装起来；这套">
+    <meta name="description" content="Java笔记47JDBC 学习真正进入项目阶段时，第一步通常不是写业务，而是把数据库连接和资源关闭先统一封装起来。  为什么 JDBC 一开始总要先讲连接围绕 JDBC 入门阶段的常见问题来看，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。 在 JDBC 项目里，第一步通常不是直接写 CRUD，而是先把连接数据库这件事封装起来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记47">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/05/Java%E7%AC%94%E8%AE%B047-JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%81%E8%A3%85/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记47JDBC 学习真正进入项目阶段时，第一步通常不是写业务，而是把数据库连接和资源关闭先统一封装起来。  为什么 JDBC 一开始总要先讲连接结合你导入的 JDBC笔记.md，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。 在 JDBC 项目里，第一步通常不是直接写 CRUD，而是先把连接数据库这件事封装起来；这套">
+<meta property="og:description" content="Java笔记47JDBC 学习真正进入项目阶段时，第一步通常不是写业务，而是把数据库连接和资源关闭先统一封装起来。  为什么 JDBC 一开始总要先讲连接围绕 JDBC 入门阶段的常见问题来看，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。 在 JDBC 项目里，第一步通常不是直接写 CRUD，而是先把连接数据库这件事封装起来">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-05T11:00:00.000Z">
@@ -105,7 +105,7 @@
   </div>
 <article class="md-text content"><h1 id="Java笔记47"><a href="#Java笔记47" class="headerlink" title="Java笔记47"></a>Java笔记47</h1><p>JDBC 学习真正进入项目阶段时，第一步通常不是写业务，而是把数据库连接和资源关闭先统一封装起来。</p>
 <hr>
-<h2 id="为什么-JDBC-一开始总要先讲连接"><a href="#为什么-JDBC-一开始总要先讲连接" class="headerlink" title="为什么 JDBC 一开始总要先讲连接"></a>为什么 JDBC 一开始总要先讲连接</h2><p>结合你导入的 <code>JDBC笔记.md</code>，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。</p>
+<h2 id="为什么-JDBC-一开始总要先讲连接"><a href="#为什么-JDBC-一开始总要先讲连接" class="headerlink" title="为什么 JDBC 一开始总要先讲连接"></a>为什么 JDBC 一开始总要先讲连接</h2><p>围绕 JDBC 入门阶段的常见问题来看，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。</p>
 <p>在 JDBC 项目里，第一步通常不是直接写 CRUD，而是先把连接数据库这件事封装起来；这套代码把驱动、URL、用户名和密码都放进了 <code>db.properties</code>；<code>JDBCUtil</code> 负责读取配置、创建连接、关闭资源；这样后面的 DAO 层就能专注于 SQL 本身。</p>
 <p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 就会明白框架到底帮我们省掉了哪些重复劳动。</p>
 <h2 id="工具类封装到底是在减少什么重复"><a href="#工具类封装到底是在减少什么重复" class="headerlink" title="工具类封装到底是在减少什么重复"></a>工具类封装到底是在减少什么重复</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
@@ -124,13 +124,13 @@
 <ul>
 <li>如果项目再往后发展，连接获取可以交给连接池，例如 Druid、C3P0 或 HikariCP。</li>
 <li>更高一层的持久层框架如 MyBatis，本质上也是在替你封装这类重复 JDBC 过程。</li>
-<li>这篇最适合放在 JDBC 系列的第一个技术主题位置。</li>
+<li>这一节可以放在 JDBC 项目实践的起点位置，用来先建立完整的数据库访问流程认知。</li>
 </ul>
-<p>如果顺着这一篇继续往后补，下面这些方向都很值得继续展开：</p>
+<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
 <ul>
 <li>可以继续补连接池、DBUtils 和事务控制，让 JDBC 知识链更完整。</li>
 <li>涉及增删改查时，尽量把参数绑定和 SQL 组织方式分开解释，会更清楚。</li>
-<li>如果后面要衔接框架学习，这一类文章非常适合作为 MyBatis 的前置章节。</li>
+<li>如果继续衔接框架学习，这一类文章会帮助更顺畅地理解 MyBatis 的抽象。</li>
 </ul>
 </article>
 <div class="article-footer">
@@ -155,7 +155,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +164,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -887,5 +887,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

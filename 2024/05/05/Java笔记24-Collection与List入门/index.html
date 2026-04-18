@@ -192,7 +192,7 @@
 <td>删除元素或按索引删除</td>
 </tr>
 </tbody></table>
-<h2 id="ArrayList-5-不等于只能装五个元素"><a href="#ArrayList-5-不等于只能装五个元素" class="headerlink" title="ArrayList(5) 不等于只能装五个元素"></a><code>ArrayList(5)</code> 不等于只能装五个元素</h2><p><code>ArrayListTest</code> 里有一段非常适合顺手讲清楚“容量”和“元素个数”区别的代码：</p>
+<h2 id="ArrayList-5-不等于只能装五个元素"><a href="#ArrayList-5-不等于只能装五个元素" class="headerlink" title="ArrayList(5) 不等于只能装五个元素"></a><code>ArrayList(5)</code> 不等于只能装五个元素</h2><p><code>ArrayListTest</code> 里有一段代码，正好可以用来讲清楚“容量”和“元素个数”的区别：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ArrayList</span> <span class="variable">list</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ArrayList</span>(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">17</span>; i++) &#123;</span><br><span class="line">    list.add(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>构造器中的 <code>5</code> 表示 <strong>初始容量</strong>，不是最终大小限制。后面继续 <code>add()</code> 时，<code>ArrayList</code> 会自动扩容。</p>
@@ -256,7 +256,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -265,7 +265,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -988,5 +988,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

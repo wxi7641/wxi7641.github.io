@@ -20,12 +20,12 @@
   <title>Java笔记54 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记54Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。  不写 XML 之后 Spring 到底怎么找到对象你导入的 IOC 文档里已经提到了 @Controller、@Service、@Repository、@Autowired、@Qualifier，项目里的组件扫描配置正好是它们的运行前提。 Spring 早期很多配置都写在 XML 里，">
+    <meta name="description" content="Java笔记54Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。  不写 XML 之后 Spring 到底怎么找到对象常见的 IOC 注解包括 @Controller、@Service、@Repository、@Autowired、@Qualifier，而项目里的组件扫描配置正好是它们的运行前提。 Spring 早期很多配置都写在 XML 里，后来逐渐">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记54">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/12/Java%E7%AC%94%E8%AE%B054-Spring%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E4%B8%8E%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记54Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。  不写 XML 之后 Spring 到底怎么找到对象你导入的 IOC 文档里已经提到了 @Controller、@Service、@Repository、@Autowired、@Qualifier，项目里的组件扫描配置正好是它们的运行前提。 Spring 早期很多配置都写在 XML 里，">
+<meta property="og:description" content="Java笔记54Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。  不写 XML 之后 Spring 到底怎么找到对象常见的 IOC 注解包括 @Controller、@Service、@Repository、@Autowired、@Qualifier，而项目里的组件扫描配置正好是它们的运行前提。 Spring 早期很多配置都写在 XML 里，后来逐渐">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-12T11:00:00.000Z">
@@ -105,8 +105,8 @@
   </div>
 <article class="md-text content"><h1 id="Java笔记54"><a href="#Java笔记54" class="headerlink" title="Java笔记54"></a>Java笔记54</h1><p>Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。</p>
 <hr>
-<h2 id="不写-XML-之后-Spring-到底怎么找到对象"><a href="#不写-XML-之后-Spring-到底怎么找到对象" class="headerlink" title="不写 XML 之后 Spring 到底怎么找到对象"></a>不写 XML 之后 Spring 到底怎么找到对象</h2><p>你导入的 IOC 文档里已经提到了 <code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>、<code>@Autowired</code>、<code>@Qualifier</code>，项目里的组件扫描配置正好是它们的运行前提。</p>
-<p>Spring 早期很多配置都写在 XML 里，后来逐渐转向注解开发；这个项目里已经开始使用 <code>@Component</code> 这样的注解；<code>applicationContext.xml</code> 中的组件扫描配置，正好说明 Spring 会去指定包里寻找这些组件；这篇适合写成一篇很轻量的注解入门笔记。</p>
+<h2 id="不写-XML-之后-Spring-到底怎么找到对象"><a href="#不写-XML-之后-Spring-到底怎么找到对象" class="headerlink" title="不写 XML 之后 Spring 到底怎么找到对象"></a>不写 XML 之后 Spring 到底怎么找到对象</h2><p>常见的 IOC 注解包括 <code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>、<code>@Autowired</code>、<code>@Qualifier</code>，而项目里的组件扫描配置正好是它们的运行前提。</p>
+<p>Spring 早期很多配置都写在 XML 里，后来逐渐转向注解开发；这个项目里已经开始使用 <code>@Component</code> 这样的注解；<code>applicationContext.xml</code> 中的组件扫描配置，正好说明 Spring 会去指定包里寻找这些组件；这一节本身就是从 XML 过渡到注解开发的轻量入门说明。</p>
 <p>Spring 的学习重点从来都不只是配置文件，而是理解容器和代理这两个抽象。只要把对象如何被托管、依赖如何被注入、横切逻辑如何被织入想明白，后面的注解开发、事务和整合配置都会自然很多。</p>
 <h2 id="组件扫描这件事背后的思路是什么"><a href="#组件扫描这件事背后的思路是什么" class="headerlink" title="组件扫描这件事背后的思路是什么"></a>组件扫描这件事背后的思路是什么</h2><p>Spring 这一层放到项目里看，最直观的就是对象不再自己 <code>new</code> 来 <code>new</code> 去，而是交给容器统一管理。控制器依赖服务层、服务层依赖数据访问层，再加上代理和切面去处理公共逻辑，整套结构会比手写耦合代码清晰很多。</p>
 <p>IOC 最直观的体现就是三层对象的依赖关系不再手工维护；代理相关示例则适合拿来讲日志、事务这类公共逻辑为什么不该散落在业务方法里；只要这两条线看顺了，后面的注解开发和整合配置就会更容易。</p>
@@ -124,13 +124,13 @@
 <ul>
 <li>注解开发并不代表 XML 完全消失，像 AOP、事务、整合配置在传统项目里仍然很常见。</li>
 <li><code>@Resource</code> 更偏按名称注入，<code>@Autowired</code> 更偏按类型注入，这一点在复杂项目里很重要。</li>
-<li>这篇适合作为 Spring 从 XML 过渡到注解开发的说明文。</li>
+<li>这一节可以用来理解 Spring 从 XML 过渡到注解开发的过程。</li>
 </ul>
-<p>如果顺着这一篇继续往后补，下面这些方向都很值得继续展开：</p>
+<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
 <ul>
 <li>继续往下写时，可以把 Bean 生命周期、事务、整合测试单独拉出来讲。</li>
-<li>看到代理相关内容时，顺手把静态代理、JDK 代理和 CGLIB 的边界也梳理一下。</li>
-<li>这类文章最好始终围绕“容器管理对象”和“横切逻辑解耦”两条主线。</li>
+<li>进一步学习代理相关内容时，也可以同时比较静态代理、JDK 代理和 CGLIB 的边界。</li>
+<li>理解这类内容时，可以始终围绕“容器管理对象”和“横切逻辑解耦”两条主线展开。</li>
 </ul>
 </article>
 <div class="article-footer">
@@ -155,7 +155,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +164,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -887,5 +887,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

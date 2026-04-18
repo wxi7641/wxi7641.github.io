@@ -20,12 +20,12 @@
   <title>Java笔记53 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记53动态代理解决了静态代理“代理类写太多”的问题，而 AOP 则是在这个思想上继续做抽象，让增强逻辑配置化。  动态代理为什么是理解 AOP 的关键台阶你导入的 AOP 文档和项目中的 ProxyIH、BeforeAdvice、AfterAdvice 很吻合：目标对象照常写业务，增强逻辑由代理和通知接管。 动态代理比静态代理更灵活，因为它不需要为每个目标类都手写一个代理类；Invoca">
+    <meta name="description" content="Java笔记53动态代理解决了静态代理“代理类写太多”的问题，而 AOP 则是在这个思想上继续做抽象，让增强逻辑配置化。  动态代理为什么是理解 AOP 的关键台阶从 AOP 的典型实现来看，项目中的 ProxyIH、BeforeAdvice、AfterAdvice 很有代表性：目标对象照常写业务，增强逻辑由代理和通知接管。 动态代理比静态代理更灵活，因为它不需要为每个目标类都手写一个代理类；In">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记53">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/12/Java%E7%AC%94%E8%AE%B053-Spring%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86%E4%B8%8EAOP%E9%80%9A%E7%9F%A5/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记53动态代理解决了静态代理“代理类写太多”的问题，而 AOP 则是在这个思想上继续做抽象，让增强逻辑配置化。  动态代理为什么是理解 AOP 的关键台阶你导入的 AOP 文档和项目中的 ProxyIH、BeforeAdvice、AfterAdvice 很吻合：目标对象照常写业务，增强逻辑由代理和通知接管。 动态代理比静态代理更灵活，因为它不需要为每个目标类都手写一个代理类；Invoca">
+<meta property="og:description" content="Java笔记53动态代理解决了静态代理“代理类写太多”的问题，而 AOP 则是在这个思想上继续做抽象，让增强逻辑配置化。  动态代理为什么是理解 AOP 的关键台阶从 AOP 的典型实现来看，项目中的 ProxyIH、BeforeAdvice、AfterAdvice 很有代表性：目标对象照常写业务，增强逻辑由代理和通知接管。 动态代理比静态代理更灵活，因为它不需要为每个目标类都手写一个代理类；In">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-12T11:00:00.000Z">
@@ -105,7 +105,7 @@
   </div>
 <article class="md-text content"><h1 id="Java笔记53"><a href="#Java笔记53" class="headerlink" title="Java笔记53"></a>Java笔记53</h1><p>动态代理解决了静态代理“代理类写太多”的问题，而 AOP 则是在这个思想上继续做抽象，让增强逻辑配置化。</p>
 <hr>
-<h2 id="动态代理为什么是理解-AOP-的关键台阶"><a href="#动态代理为什么是理解-AOP-的关键台阶" class="headerlink" title="动态代理为什么是理解 AOP 的关键台阶"></a>动态代理为什么是理解 AOP 的关键台阶</h2><p>你导入的 AOP 文档和项目中的 <code>ProxyIH</code>、<code>BeforeAdvice</code>、<code>AfterAdvice</code> 很吻合：目标对象照常写业务，增强逻辑由代理和通知接管。</p>
+<h2 id="动态代理为什么是理解-AOP-的关键台阶"><a href="#动态代理为什么是理解-AOP-的关键台阶" class="headerlink" title="动态代理为什么是理解 AOP 的关键台阶"></a>动态代理为什么是理解 AOP 的关键台阶</h2><p>从 AOP 的典型实现来看，项目中的 <code>ProxyIH</code>、<code>BeforeAdvice</code>、<code>AfterAdvice</code> 很有代表性：目标对象照常写业务，增强逻辑由代理和通知接管。</p>
 <p>动态代理比静态代理更灵活，因为它不需要为每个目标类都手写一个代理类；<code>InvocationHandler</code> 是 JDK 动态代理的核心接口；项目里的 <code>BeforeAdvice</code>、<code>AfterAdvice</code> 则很适合拿来理解 AOP 通知；如果把这篇写顺了，后面的 Spring AOP 就会很好理解。</p>
 <p>Spring 的学习重点从来都不只是配置文件，而是理解容器和代理这两个抽象。只要把对象如何被托管、依赖如何被注入、横切逻辑如何被织入想明白，后面的注解开发、事务和整合配置都会自然很多。</p>
 <h2 id="通知、切点和代理对象该怎么对应起来"><a href="#通知、切点和代理对象该怎么对应起来" class="headerlink" title="通知、切点和代理对象该怎么对应起来"></a>通知、切点和代理对象该怎么对应起来</h2><p>Spring 这一层放到项目里看，最直观的就是对象不再自己 <code>new</code> 来 <code>new</code> 去，而是交给容器统一管理。控制器依赖服务层、服务层依赖数据访问层，再加上代理和切面去处理公共逻辑，整套结构会比手写耦合代码清晰很多。</p>
@@ -124,13 +124,13 @@
 <ul>
 <li>目标对象实现了接口时，Spring 更容易使用 JDK 动态代理；没有接口时，通常会转向 CGLIB。</li>
 <li>通知类型除了前置、后置，还有异常通知、环绕通知等。</li>
-<li>这篇最适合和上一节静态代理对照着看，能更明显感受到抽象层次的提升。</li>
+<li>这一节和上一节静态代理对照阅读时，更容易感受到抽象层次的提升。</li>
 </ul>
-<p>如果顺着这一篇继续往后补，下面这些方向都很值得继续展开：</p>
+<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
 <ul>
 <li>继续往下写时，可以把 Bean 生命周期、事务、整合测试单独拉出来讲。</li>
-<li>看到代理相关内容时，顺手把静态代理、JDK 代理和 CGLIB 的边界也梳理一下。</li>
-<li>这类文章最好始终围绕“容器管理对象”和“横切逻辑解耦”两条主线。</li>
+<li>进一步学习代理相关内容时，也可以同时比较静态代理、JDK 代理和 CGLIB 的边界。</li>
+<li>理解这类内容时，可以始终围绕“容器管理对象”和“横切逻辑解耦”两条主线展开。</li>
 </ul>
 </article>
 <div class="article-footer">
@@ -155,7 +155,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +164,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -887,5 +887,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

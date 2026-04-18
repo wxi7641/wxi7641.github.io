@@ -148,7 +148,7 @@
 <h2 id="Calendar-的重点，是把一个时间拆成年月日时分秒"><a href="#Calendar-的重点，是把一个时间拆成年月日时分秒" class="headerlink" title="Calendar 的重点，是把一个时间拆成年月日时分秒"></a><code>Calendar</code> 的重点，是把一个时间拆成年月日时分秒</h2><p><code>CalendarDemo</code> 更像“时间字段拆解器”：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Calendar</span> <span class="variable">instance</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line">System.out.println(instance.getTime());</span><br><span class="line">System.out.println(instance.get(Calendar.DAY_OF_WEEK) - <span class="number">1</span>);</span><br><span class="line">System.out.println(instance.get(Calendar.YEAR));</span><br><span class="line">System.out.println(instance.get(Calendar.MONTH) + <span class="number">1</span>);</span><br><span class="line">System.out.println(instance.get(Calendar.DAY_OF_MONTH));</span><br><span class="line">System.out.println(instance.get(Calendar.HOUR));</span><br><span class="line">System.out.println(instance.get(Calendar.MINUTE));</span><br><span class="line">System.out.println(instance.get(Calendar.SECOND));</span><br></pre></td></tr></table></figure>
 
-<p>这段代码特别适合顺手记住两个经典细节：</p>
+<p>这段代码可以顺便帮助理清两个经典细节：</p>
 <table>
 <thead>
 <tr>
@@ -263,7 +263,7 @@
 <td>四舍五入</td>
 </tr>
 </tbody></table>
-<p><code>ceil(-3.14)</code> 和 <code>floor(-3.14)</code> 这类负数结果特别适合顺手记一下，因为它们很容易和直觉混淆。</p>
+<p><code>ceil(-3.14)</code> 和 <code>floor(-3.14)</code> 这类负数结果值得单独留意，因为它们很容易和直觉混淆。</p>
 <h2 id="Math-random-最容易出问题的不是范围，而是运算顺序"><a href="#Math-random-最容易出问题的不是范围，而是运算顺序" class="headerlink" title="Math.random() 最容易出问题的不是范围，而是运算顺序"></a><code>Math.random()</code> 最容易出问题的不是范围，而是运算顺序</h2><p><code>MathDemo02</code> 里有三种随机数写法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Math.random()); <span class="comment">//0-1</span></span><br><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * <span class="number">100</span>)); <span class="comment">//0-100</span></span><br><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * <span class="number">100</span>) + <span class="number">100</span>); <span class="comment">//100-200</span></span><br></pre></td></tr></table></figure>
 
@@ -274,7 +274,7 @@
 <p>正确的写法应该是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * (max - min)) + min);</span><br></pre></td></tr></table></figure>
 
-<p>这类细节特别适合作为工具类章节里的重点提醒，因为它说明：<strong>工具方法本身不难，真正难的是表达式和边界是否写对。</strong></p>
+<p>这类细节值得放在工具类章节里重点提醒，因为它说明：<strong>工具方法本身不难，真正难的是表达式和边界是否写对。</strong></p>
 <h2 id="旧版时间-API-和工具类的价值，在于“看得懂旧代码”"><a href="#旧版时间-API-和工具类的价值，在于“看得懂旧代码”" class="headerlink" title="旧版时间 API 和工具类的价值，在于“看得懂旧代码”"></a>旧版时间 API 和工具类的价值，在于“看得懂旧代码”</h2><p>今天如果是新项目，日期时间处理通常更推荐：</p>
 <ul>
 <li><code>LocalDate</code></li>
@@ -305,7 +305,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -314,7 +314,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -1037,5 +1037,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

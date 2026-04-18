@@ -162,7 +162,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">ApplicationContext</span> <span class="variable">context</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassPathXmlApplicationContext</span>(<span class="string">&quot;applicationContext.xml&quot;</span>);</span><br><span class="line"><span class="type">Student</span> <span class="variable">student1</span> <span class="operator">=</span> (Student) context.getBean(<span class="string">&quot;student&quot;</span>);</span><br><span class="line"><span class="type">Student</span> <span class="variable">student2</span> <span class="operator">=</span> (Student) context.getBean(<span class="string">&quot;student&quot;</span>);</span><br><span class="line">System.out.println(student1 == student2);</span><br></pre></td></tr></table></figure>
 
 <p>如果输出是 <code>true</code>，就说明两次拿到的是容器里的同一个单例对象。</p>
-<p>Bean 作用域最好顺手记成下面这张表：</p>
+<p>Bean 作用域可以先按下面这张表做对照理解：</p>
 <table>
 <thead>
 <tr>
@@ -327,7 +327,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -336,7 +336,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -1059,5 +1059,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

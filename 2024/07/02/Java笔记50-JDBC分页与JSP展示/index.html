@@ -20,12 +20,12 @@
   <title>Java笔记50 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记50分页是传统后台项目中最常见的列表需求之一。它同时涉及 SQL、后端对象封装和 JSP 页面展示。  分页为什么是数据库项目绕不开的主题你导入的 MyBatis 和 PageHelper 文档更偏框架化分页，而这个项目里的 PageInfo 是最原始、最容易看清本质的一种手写分页实现。 分页是传统后台项目里很常见的功能；这个项目里把分页结果封装成了 PageInfo，包含列表数据、总">
+    <meta name="description" content="Java笔记50分页是传统后台项目中最常见的列表需求之一。它同时涉及 SQL、后端对象封装和 JSP 页面展示。  分页为什么是数据库项目绕不开的主题和 MyBatis、PageHelper 这类框架化分页方案相比，这个项目里的 PageInfo 是更原始、也更容易看清本质的一种手写分页实现。 分页是传统后台项目里很常见的功能；这个项目里把分页结果封装成了 PageInfo，包含列表数据、总页数、">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记50">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/02/Java%E7%AC%94%E8%AE%B050-JDBC%E5%88%86%E9%A1%B5%E4%B8%8EJSP%E5%B1%95%E7%A4%BA/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记50分页是传统后台项目中最常见的列表需求之一。它同时涉及 SQL、后端对象封装和 JSP 页面展示。  分页为什么是数据库项目绕不开的主题你导入的 MyBatis 和 PageHelper 文档更偏框架化分页，而这个项目里的 PageInfo 是最原始、最容易看清本质的一种手写分页实现。 分页是传统后台项目里很常见的功能；这个项目里把分页结果封装成了 PageInfo，包含列表数据、总">
+<meta property="og:description" content="Java笔记50分页是传统后台项目中最常见的列表需求之一。它同时涉及 SQL、后端对象封装和 JSP 页面展示。  分页为什么是数据库项目绕不开的主题和 MyBatis、PageHelper 这类框架化分页方案相比，这个项目里的 PageInfo 是更原始、也更容易看清本质的一种手写分页实现。 分页是传统后台项目里很常见的功能；这个项目里把分页结果封装成了 PageInfo，包含列表数据、总页数、">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-02T11:00:00.000Z">
@@ -105,7 +105,7 @@
   </div>
 <article class="md-text content"><h1 id="Java笔记50"><a href="#Java笔记50" class="headerlink" title="Java笔记50"></a>Java笔记50</h1><p>分页是传统后台项目中最常见的列表需求之一。它同时涉及 SQL、后端对象封装和 JSP 页面展示。</p>
 <hr>
-<h2 id="分页为什么是数据库项目绕不开的主题"><a href="#分页为什么是数据库项目绕不开的主题" class="headerlink" title="分页为什么是数据库项目绕不开的主题"></a>分页为什么是数据库项目绕不开的主题</h2><p>你导入的 MyBatis 和 PageHelper 文档更偏框架化分页，而这个项目里的 <code>PageInfo</code> 是最原始、最容易看清本质的一种手写分页实现。</p>
+<h2 id="分页为什么是数据库项目绕不开的主题"><a href="#分页为什么是数据库项目绕不开的主题" class="headerlink" title="分页为什么是数据库项目绕不开的主题"></a>分页为什么是数据库项目绕不开的主题</h2><p>和 MyBatis、PageHelper 这类框架化分页方案相比，这个项目里的 <code>PageInfo</code> 是更原始、也更容易看清本质的一种手写分页实现。</p>
 <p>分页是传统后台项目里很常见的功能；这个项目里把分页结果封装成了 <code>PageInfo</code>，包含列表数据、总页数、当前页和页大小；后台先算出分页数据，再交给 JSP 做展示；这是一篇非常适合从“业务需求”切入的文章。</p>
 <p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 就会明白框架到底帮我们省掉了哪些重复劳动。</p>
 <h2 id="查询结果和页面展示该怎么配合"><a href="#查询结果和页面展示该怎么配合" class="headerlink" title="查询结果和页面展示该怎么配合"></a>查询结果和页面展示该怎么配合</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
@@ -124,13 +124,13 @@
 <ul>
 <li>如果后面使用 MyBatis，可以引入 PageHelper 自动改写 SQL 来完成分页。</li>
 <li>如果换成前后端分离，分页对象通常会以 JSON 形式返回给前端表格组件。</li>
-<li>这篇很适合作为“理解分页本质”的文章，比直接上插件更容易看懂。</li>
+<li>这一节更适合用来理解分页的底层思路，比直接引入插件更容易看清实现过程。</li>
 </ul>
-<p>如果顺着这一篇继续往后补，下面这些方向都很值得继续展开：</p>
+<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
 <ul>
 <li>可以继续补连接池、DBUtils 和事务控制，让 JDBC 知识链更完整。</li>
 <li>涉及增删改查时，尽量把参数绑定和 SQL 组织方式分开解释，会更清楚。</li>
-<li>如果后面要衔接框架学习，这一类文章非常适合作为 MyBatis 的前置章节。</li>
+<li>如果继续衔接框架学习，这一类文章会帮助更顺畅地理解 MyBatis 的抽象。</li>
 </ul>
 </article>
 <div class="article-footer">
@@ -155,7 +155,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +164,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -887,5 +887,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

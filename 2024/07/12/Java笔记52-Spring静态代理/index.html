@@ -20,12 +20,12 @@
   <title>Java笔记52 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记52静态代理不是 Spring 专属概念，但它是理解 AOP 的最好铺垫。它说明了如何在不改业务类代码的前提下增强行为。  为什么很多老师都先从静态代理讲起你导入的 SpringAOP、静态代理、动态代理 文档里用了秘书和董事长的例子，项目里的租房与用户服务代理代码也属于同样的思路：代理类和目标类实现同一接口。 在讲 AOP 之前，先讲代理模式会更容易理解；静态代理的思路是：代理类和目">
+    <meta name="description" content="Java笔记52静态代理不是 Spring 专属概念，但它是理解 AOP 的最好铺垫。它说明了如何在不改业务类代码的前提下增强行为。  为什么很多老师都先从静态代理讲起无论是常见的秘书与董事长示例，还是项目里的租房与用户服务代理代码，本质上都属于同一种思路：代理类和目标类实现同一接口。 在讲 AOP 之前，先讲代理模式会更容易理解；静态代理的思路是：代理类和目标类实现同一个接口；调用代理类时，它可">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记52">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/12/Java%E7%AC%94%E8%AE%B052-Spring%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记52静态代理不是 Spring 专属概念，但它是理解 AOP 的最好铺垫。它说明了如何在不改业务类代码的前提下增强行为。  为什么很多老师都先从静态代理讲起你导入的 SpringAOP、静态代理、动态代理 文档里用了秘书和董事长的例子，项目里的租房与用户服务代理代码也属于同样的思路：代理类和目标类实现同一接口。 在讲 AOP 之前，先讲代理模式会更容易理解；静态代理的思路是：代理类和目">
+<meta property="og:description" content="Java笔记52静态代理不是 Spring 专属概念，但它是理解 AOP 的最好铺垫。它说明了如何在不改业务类代码的前提下增强行为。  为什么很多老师都先从静态代理讲起无论是常见的秘书与董事长示例，还是项目里的租房与用户服务代理代码，本质上都属于同一种思路：代理类和目标类实现同一接口。 在讲 AOP 之前，先讲代理模式会更容易理解；静态代理的思路是：代理类和目标类实现同一个接口；调用代理类时，它可">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-12T11:00:00.000Z">
@@ -105,7 +105,7 @@
   </div>
 <article class="md-text content"><h1 id="Java笔记52"><a href="#Java笔记52" class="headerlink" title="Java笔记52"></a>Java笔记52</h1><p>静态代理不是 Spring 专属概念，但它是理解 AOP 的最好铺垫。它说明了如何在不改业务类代码的前提下增强行为。</p>
 <hr>
-<h2 id="为什么很多老师都先从静态代理讲起"><a href="#为什么很多老师都先从静态代理讲起" class="headerlink" title="为什么很多老师都先从静态代理讲起"></a>为什么很多老师都先从静态代理讲起</h2><p>你导入的 <code>SpringAOP、静态代理、动态代理</code> 文档里用了秘书和董事长的例子，项目里的租房与用户服务代理代码也属于同样的思路：代理类和目标类实现同一接口。</p>
+<h2 id="为什么很多老师都先从静态代理讲起"><a href="#为什么很多老师都先从静态代理讲起" class="headerlink" title="为什么很多老师都先从静态代理讲起"></a>为什么很多老师都先从静态代理讲起</h2><p>无论是常见的秘书与董事长示例，还是项目里的租房与用户服务代理代码，本质上都属于同一种思路：代理类和目标类实现同一接口。</p>
 <p>在讲 AOP 之前，先讲代理模式会更容易理解；静态代理的思路是：代理类和目标类实现同一个接口；调用代理类时，它可以在目标方法前后额外做一些事情；这和后面的 Spring AOP 思想是相通的。</p>
 <p>Spring 的学习重点从来都不只是配置文件，而是理解容器和代理这两个抽象。只要把对象如何被托管、依赖如何被注入、横切逻辑如何被织入想明白，后面的注解开发、事务和整合配置都会自然很多。</p>
 <h2 id="代理模式到底在帮业务代码隔开什么"><a href="#代理模式到底在帮业务代码隔开什么" class="headerlink" title="代理模式到底在帮业务代码隔开什么"></a>代理模式到底在帮业务代码隔开什么</h2><p>Spring 这一层放到项目里看，最直观的就是对象不再自己 <code>new</code> 来 <code>new</code> 去，而是交给容器统一管理。控制器依赖服务层、服务层依赖数据访问层，再加上代理和切面去处理公共逻辑，整套结构会比手写耦合代码清晰很多。</p>
@@ -126,11 +126,11 @@
 <li>如果目标对象足够多，后面就要转向动态代理。</li>
 <li>这篇可以作为 AOP 章节里最容易理解的一篇前置文。</li>
 </ul>
-<p>如果顺着这一篇继续往后补，下面这些方向都很值得继续展开：</p>
+<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
 <ul>
 <li>继续往下写时，可以把 Bean 生命周期、事务、整合测试单独拉出来讲。</li>
-<li>看到代理相关内容时，顺手把静态代理、JDK 代理和 CGLIB 的边界也梳理一下。</li>
-<li>这类文章最好始终围绕“容器管理对象”和“横切逻辑解耦”两条主线。</li>
+<li>进一步学习代理相关内容时，也可以同时比较静态代理、JDK 代理和 CGLIB 的边界。</li>
+<li>理解这类内容时，可以始终围绕“容器管理对象”和“横切逻辑解耦”两条主线展开。</li>
 </ul>
 </article>
 <div class="article-footer">
@@ -155,7 +155,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +164,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -887,5 +887,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>

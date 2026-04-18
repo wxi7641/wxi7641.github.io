@@ -20,12 +20,12 @@
   <title>Java笔记49 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记49登录模块把 JDBC 小项目从“单纯数据库练习”推进到“具备基础访问控制的 Web 应用”。  登录注册为什么总会牵出过滤器结合你导入的 Web 和 JDBC 笔记，这篇的关键知识链是：表单提交 -&gt; Servlet 接收 -&gt; Service 校验 -&gt; Session 保存 -&gt; Filter 拦截未登录请求。 用户模块适合拿来讲 Java Web 里的">
+    <meta name="description" content="Java笔记49登录模块把 JDBC 小项目从“单纯数据库练习”推进到“具备基础访问控制的 Web 应用”。  登录注册为什么总会牵出过滤器从 Web 与 JDBC 配合的项目链路来看，这篇的关键知识链是：表单提交 -&gt; Servlet 接收 -&gt; Service 校验 -&gt; Session 保存 -&gt; Filter 拦截未登录请求。 用户模块适合拿来讲 Java Web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记49">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/06/Java%E7%AC%94%E8%AE%B049-JDBC%E7%99%BB%E5%BD%95%E6%B3%A8%E5%86%8C%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记49登录模块把 JDBC 小项目从“单纯数据库练习”推进到“具备基础访问控制的 Web 应用”。  登录注册为什么总会牵出过滤器结合你导入的 Web 和 JDBC 笔记，这篇的关键知识链是：表单提交 -&gt; Servlet 接收 -&gt; Service 校验 -&gt; Session 保存 -&gt; Filter 拦截未登录请求。 用户模块适合拿来讲 Java Web 里的">
+<meta property="og:description" content="Java笔记49登录模块把 JDBC 小项目从“单纯数据库练习”推进到“具备基础访问控制的 Web 应用”。  登录注册为什么总会牵出过滤器从 Web 与 JDBC 配合的项目链路来看，这篇的关键知识链是：表单提交 -&gt; Servlet 接收 -&gt; Service 校验 -&gt; Session 保存 -&gt; Filter 拦截未登录请求。 用户模块适合拿来讲 Java Web">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-06T11:00:00.000Z">
@@ -105,7 +105,7 @@
   </div>
 <article class="md-text content"><h1 id="Java笔记49"><a href="#Java笔记49" class="headerlink" title="Java笔记49"></a>Java笔记49</h1><p>登录模块把 JDBC 小项目从“单纯数据库练习”推进到“具备基础访问控制的 Web 应用”。</p>
 <hr>
-<h2 id="登录注册为什么总会牵出过滤器"><a href="#登录注册为什么总会牵出过滤器" class="headerlink" title="登录注册为什么总会牵出过滤器"></a>登录注册为什么总会牵出过滤器</h2><p>结合你导入的 Web 和 JDBC 笔记，这篇的关键知识链是：表单提交 -&gt; Servlet 接收 -&gt; Service 校验 -&gt; Session 保存 -&gt; Filter 拦截未登录请求。</p>
+<h2 id="登录注册为什么总会牵出过滤器"><a href="#登录注册为什么总会牵出过滤器" class="headerlink" title="登录注册为什么总会牵出过滤器"></a>登录注册为什么总会牵出过滤器</h2><p>从 Web 与 JDBC 配合的项目链路来看，这篇的关键知识链是：表单提交 -&gt; Servlet 接收 -&gt; Service 校验 -&gt; Session 保存 -&gt; Filter 拦截未登录请求。</p>
 <p>用户模块适合拿来讲 Java Web 里的最基础登录流程；登录成功后，把用户对象放进 <code>Session</code>；过滤器统一拦截请求，判断用户是否已经登录；这样就不用每个 Servlet 都重复写权限校验代码。</p>
 <p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 就会明白框架到底帮我们省掉了哪些重复劳动。</p>
 <h2 id="表单提交、会话控制和拦截到底怎么配合"><a href="#表单提交、会话控制和拦截到底怎么配合" class="headerlink" title="表单提交、会话控制和拦截到底怎么配合"></a>表单提交、会话控制和拦截到底怎么配合</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
@@ -124,13 +124,13 @@
 <ul>
 <li>在 Spring MVC 项目里，这类登录校验通常会转移到拦截器中完成。</li>
 <li>如果再往后学习前后端分离，就会从 Session 模式过渡到 JWT&#x2F;Token 模式。</li>
-<li>这篇很适合和你导入的登录、JWT、Token 文档形成前后对照。</li>
+<li>这一节适合与后续的 JWT、Token 等认证方案对照阅读，理解传统会话登录与前后端分离认证的差异。</li>
 </ul>
-<p>如果顺着这一篇继续往后补，下面这些方向都很值得继续展开：</p>
+<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
 <ul>
 <li>可以继续补连接池、DBUtils 和事务控制，让 JDBC 知识链更完整。</li>
 <li>涉及增删改查时，尽量把参数绑定和 SQL 组织方式分开解释，会更清楚。</li>
-<li>如果后面要衔接框架学习，这一类文章非常适合作为 MyBatis 的前置章节。</li>
+<li>如果继续衔接框架学习，这一类文章会帮助更顺畅地理解 MyBatis 的抽象。</li>
 </ul>
 </article>
 <div class="article-footer">
@@ -155,7 +155,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>815</strong> 天
+      运营 <strong>816</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +164,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>63,756</strong> 字
+      累计 <strong>58,963</strong> 字
     </p>
   </div>
 </footer>
@@ -887,5 +887,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v2.js" defer></script>
+<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
 </div></body></html>
