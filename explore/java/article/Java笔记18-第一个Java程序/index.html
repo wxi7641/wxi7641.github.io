@@ -894,15 +894,14 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记18"><a href="#Java笔记18" class="headerlink" title="Java笔记18"></a>Java笔记18</h1><p>Hello World 看起来只是最简单的一行输出，真正需要先掌握的是 <strong>Java 程序的最小执行结构</strong>。类怎么声明、<code>main</code> 为什么固定、<code>System.out.println()</code> 到底是什么、注释为什么值得从第一天就养成习惯，这些内容会在后面的每一篇 Java 笔记里不断重复出现。</p>
+    <h1 id="Java笔记18-第一个Java程序"><a href="#Java笔记18-第一个Java程序" class="headerlink" title="Java笔记18-第一个Java程序"></a>Java笔记18-第一个Java程序</h1><p>Hello World 看起来只是最简单的一行输出，真正需要先掌握的是 <strong>Java 程序的最小执行结构</strong>。类怎么声明、<code>main</code> 为什么固定、<code>System.out.println()</code> 到底是什么、注释为什么值得从第一天就养成习惯，这些内容会在后面的每一篇 Java 笔记里不断重复出现。</p>
 <blockquote>
 <p><strong>核心先记住一句话：</strong><mark><code>main</code> 是 JVM 默认寻找的入口方法</mark>，Java 代码并不是“写一行就能直接跑”，而是先组织成类，再由 JVM 从入口方法开始执行。</p>
 </blockquote>
 <hr>
-<h2 id="Java-程序的最小结构"><a href="#Java-程序的最小结构" class="headerlink" title="Java 程序的最小结构"></a>Java 程序的最小结构</h2><p>最基础的结构已经完整出现在 <code>FirstProgram</code> 里：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FirstProgram</span> &#123;</span><br><span class="line">    <span class="comment">// At here we creat our first program - Hello World</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello,World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="🧩Java-程序的最小结构"><a href="#🧩Java-程序的最小结构" class="headerlink" title="🧩Java 程序的最小结构"></a>🧩Java 程序的最小结构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FirstProgram</span> &#123;</span><br><span class="line">    <span class="comment">// At here we creat our first program - Hello World</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello,World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这段代码虽然短，但它把 Java 初学阶段最重要的四件事一次性摆出来了。</p>
+<p>这段代码虽然短，但已经具备一个完整 Java 程序所需的最小结构。</p>
 <ul>
 <li><strong>类声明</strong>：<code>public class FirstProgram</code> 表示这个源文件里定义了一个公开类，Java 程序通常以类为基本组织单位。</li>
 <li><strong>入口方法</strong>：<code>public static void main(String[] args)</code> 是约定俗成的程序入口，JVM 会优先寻找这一签名的方法。</li>
@@ -934,7 +933,83 @@
 <td>传入的字符串内容</td>
 </tr>
 </tbody></table>
-<h2 id="从-java-到运行结果，中间发生了什么"><a href="#从-java-到运行结果，中间发生了什么" class="headerlink" title="从 .java 到运行结果，中间发生了什么"></a>从 <code>.java</code> 到运行结果，中间发生了什么</h2><p>Java 程序从源代码到运行，大体上会经过下面三个步骤：</p>
+<hr>
+<h2 id="🔍-最小结构的逐层拆解"><a href="#🔍-最小结构的逐层拆解" class="headerlink" title="🔍 最小结构的逐层拆解"></a>🔍 最小结构的逐层拆解</h2><h3 id="▍-类（class）：程序的基本单位"><a href="#▍-类（class）：程序的基本单位" class="headerlink" title="▍ 类（class）：程序的基本单位"></a>▍ 类（class）：程序的基本单位</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class FirstProgram</span><br></pre></td></tr></table></figure>
+
+<p>在 Java 中：</p>
+<ul>
+<li>代码必须写在类中</li>
+<li>程序以类为单位组织</li>
+<li>JVM 也是以类为单位加载代码</li>
+</ul>
+<p>这也是为什么 Java 程序不会像脚本语言那样“写一行执行一行”。</p>
+<h3 id="▍-main-方法：程序的入口"><a href="#▍-main-方法：程序的入口" class="headerlink" title="▍ main 方法：程序的入口"></a>▍ main 方法：程序的入口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args)</span><br></pre></td></tr></table></figure>
+
+<h4 id="🔸-各部分含义"><a href="#🔸-各部分含义" class="headerlink" title="🔸 各部分含义"></a>🔸 各部分含义</h4><table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>public</code></td>
+<td>保证方法可以被外部访问</td>
+</tr>
+<tr>
+<td><code>static</code></td>
+<td>不依赖对象即可调用</td>
+</tr>
+<tr>
+<td><code>void</code></td>
+<td>不返回结果</td>
+</tr>
+<tr>
+<td><code>String[] args</code></td>
+<td>用于接收外部传入参数</td>
+</tr>
+</tbody></table>
+<h4 id="💡-一个小细节"><a href="#💡-一个小细节" class="headerlink" title="💡 一个小细节"></a>💡 一个小细节</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String... args)</span><br></pre></td></tr></table></figure>
+
+<p>这种写法同样是合法的，本质仍然是数组。</p>
+<h3 id="▍-println——输出是如何发生的"><a href="#▍-println——输出是如何发生的" class="headerlink" title="▍ println——输出是如何发生的"></a>▍ println——输出是如何发生的</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;Hello, World!&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>这并不是语言关键字，而是一段完整的方法调用链。</p>
+<h4 id="🔍-拆解结构"><a href="#🔍-拆解结构" class="headerlink" title="🔍 拆解结构"></a>🔍 拆解结构</h4><table>
+<thead>
+<tr>
+<th>代码部分</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>System</code></td>
+<td>Java 提供的系统类</td>
+</tr>
+<tr>
+<td><code>out</code></td>
+<td>标准输出流对象</td>
+</tr>
+<tr>
+<td><code>println()</code></td>
+<td>输出并换行的方法</td>
+</tr>
+</tbody></table>
+<h4 id="🔬-本质过程"><a href="#🔬-本质过程" class="headerlink" title="🔬 本质过程"></a>🔬 本质过程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">System.out.println()</span><br><span class="line">→ PrintStream.println()</span><br><span class="line">→ 底层输出到控制台</span><br></pre></td></tr></table></figure>
+
+<h4 id="🔸-扩展：另一种输出"><a href="#🔸-扩展：另一种输出" class="headerlink" title="🔸 扩展：另一种输出"></a>🔸 扩展：另一种输出</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.err.println(&quot;error&quot;);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>out</code>：标准输出</li>
+<li><code>err</code>：错误输出</li>
+</ul>
+<p>两者在控制台中可能表现相同，但在重定向或日志处理中会有区别。</p>
+<h3 id="▍-分号（-）：语句结束符"><a href="#▍-分号（-）：语句结束符" class="headerlink" title="▍ 分号（;）：语句结束符"></a>▍ 分号（;）：语句结束符</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;</span><br></pre></td></tr></table></figure>
+
+<p>Java 中每一条完整语句必须以分号结束。</p>
+<p>这与一些不依赖分号的语言（如 Python）不同，是语法层面的强约束。</p>
+<hr>
+<h2 id="🤔-从-java-到运行结果，中间发生了什么"><a href="#🤔-从-java-到运行结果，中间发生了什么" class="headerlink" title="🤔 从 .java 到运行结果，中间发生了什么"></a>🤔 从 <code>.java</code> 到运行结果，中间发生了什么</h2><p>Java 程序从源代码到运行，大体上会经过下面三个步骤：</p>
 <ol>
 <li>编写 <code>.java</code> 源文件。</li>
 <li>用 <code>javac</code> 编译成 <code>.class</code> 字节码文件。</li>
@@ -943,8 +1018,32 @@
 <p>命令行里最基础的过程就是：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javac FirstProgram.java</span><br><span class="line">java FirstProgram</span><br></pre></td></tr></table></figure>
 
-<p>很多初学者第一次学 Java 会觉得这个过程比脚本语言“麻烦”，其实这正是 Java 运行机制的一部分。源码不会直接交给操作系统执行，而是先变成字节码，再由 JVM 解释或编译执行。</p>
-<h2 id="注释不是装饰，而是理解代码的一部分"><a href="#注释不是装饰，而是理解代码的一部分" class="headerlink" title="注释不是装饰，而是理解代码的一部分"></a>注释不是装饰，而是理解代码的一部分</h2><p>Java 里常见的注释一共有三种：</p>
+<h3 id="🔍-执行流程"><a href="#🔍-执行流程" class="headerlink" title="🔍 执行流程"></a>🔍 执行流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.java 源文件</span><br><span class="line">   ↓ 编译（javac）</span><br><span class="line">.class 字节码</span><br><span class="line">   ↓ JVM加载</span><br><span class="line">程序运行</span><br></pre></td></tr></table></figure>
+
+<h3 id="🔬-补充：执行方式"><a href="#🔬-补充：执行方式" class="headerlink" title="🔬 补充：执行方式"></a>🔬 补充：执行方式</h3><p>JVM 在执行字节码时，通常会结合两种方式：</p>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>解释执行</td>
+<td>按顺序逐条执行字节码</td>
+</tr>
+<tr>
+<td>编译执行</td>
+<td>将热点代码编译为机器码</td>
+</tr>
+</tbody></table>
+<p>这种机制让程序在运行过程中逐步优化性能。</p>
+<h3 id="💡-一个常见特点"><a href="#💡-一个常见特点" class="headerlink" title="💡 一个常见特点"></a>💡 一个常见特点</h3><p>Java 程序之所以可以在不同系统上运行，是因为：</p>
+<blockquote>
+<p><code>.class</code> 文件是统一的字节码格式，由不同平台的 JVM 负责执行</p>
+</blockquote>
+<hr>
+<h2 id="🧵注释不是装饰，而是理解代码的一部分"><a href="#🧵注释不是装饰，而是理解代码的一部分" class="headerlink" title="🧵注释不是装饰，而是理解代码的一部分"></a>🧵注释不是装饰，而是理解代码的一部分</h2><p>Java 里常见的注释一共有三种：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单行注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">多行注释</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 文档注释</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
 <table>
@@ -968,9 +1067,8 @@
 </tr>
 </tbody></table>
 <p>真正写代码时，注释最有价值的地方不是“解释显而易见的语句”，而是记录 <strong>设计意图、边界条件、特殊写法和调试结论</strong>。</p>
-<h2 id="IDEA-中最先会高频使用的几个动作"><a href="#IDEA-中最先会高频使用的几个动作" class="headerlink" title="IDEA 中最先会高频使用的几个动作"></a>IDEA 中最先会高频使用的几个动作</h2><p><code>HelloWorld.java</code> 旁边留下的注释其实很有代表性，它反映的是刚开始接触 IDEA 时最常用的一批操作：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloWorld</span> &#123;</span><br><span class="line">    <span class="comment">//psvm main</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;<span class="comment">//行尾风格</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Hello World!&quot;</span>);<span class="comment">//ctrl+d</span></span><br><span class="line">        System.out.println(<span class="string">&quot;Hello World!&quot;</span>);<span class="comment">//ctrl+x</span></span><br><span class="line">        <span class="type">double</span> <span class="variable">f</span> <span class="operator">=</span> <span class="number">22.0</span>;<span class="comment">//ctrl alt l</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">18</span>;<span class="comment">//alt shift</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<hr>
+<h2 id="📌-开发工具中的高频操作"><a href="#📌-开发工具中的高频操作" class="headerlink" title="📌 开发工具中的高频操作"></a>📌 开发工具中的高频操作</h2><p>在实际开发中，一些快捷操作可以显著提高效率：</p>
 <table>
 <thead>
 <tr>
@@ -1003,13 +1101,14 @@
 <td>自动导包、修复常见提示</td>
 </tr>
 </tbody></table>
-<h2 id="第一篇真正要记住的是“结构”"><a href="#第一篇真正要记住的是“结构”" class="headerlink" title="第一篇真正要记住的是“结构”"></a>第一篇真正要记住的是“结构”</h2><p>这一节真正要带走的，不是输出了什么文字，而是下面这些最基础的认知：</p>
+<hr>
+<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>这一节虽然从最简单的程序开始，但已经可以看到 Java 的几个基础特征：</p>
 <ul>
-<li><strong>Java 代码通常先放进类里，再从 <code>main</code> 方法开始执行。</strong></li>
-<li><strong>类名和文件名通常保持一致。</strong></li>
-<li><strong><code>println</code> 会换行，<code>print</code> 不会换行。</strong></li>
-<li><strong>注释会被编译器忽略，但会被人反复阅读。</strong></li>
-<li><strong>写 Java 时，IDEA 的模板和快捷键能明显减少重复劳动。</strong></li>
+<li>程序以类为组织单位</li>
+<li>从固定入口方法开始执行</li>
+<li>通过 JVM 运行字节码</li>
+<li>输出是通过对象方法完成的</li>
+<li>注释用于表达设计意图，而不仅是解释代码</li>
 </ul>
 
   </article>
@@ -1021,7 +1120,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>816</strong> 天
+      运营 <strong>817</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -1030,7 +1129,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>58,963</strong> 字
+      累计 <strong>60,117</strong> 字
     </p>
   </div>
 </footer>
@@ -1038,7 +1137,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B018"><span class="toc-text">Java笔记18</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%93%E6%9E%84"><span class="toc-text">Java 程序的最小结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E-java-%E5%88%B0%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%EF%BC%8C%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">从 .java 到运行结果，中间发生了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E9%87%8A%E4%B8%8D%E6%98%AF%E8%A3%85%E9%A5%B0%EF%BC%8C%E8%80%8C%E6%98%AF%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">注释不是装饰，而是理解代码的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IDEA-%E4%B8%AD%E6%9C%80%E5%85%88%E4%BC%9A%E9%AB%98%E9%A2%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%87%A0%E4%B8%AA%E5%8A%A8%E4%BD%9C"><span class="toc-text">IDEA 中最先会高频使用的几个动作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AF%87%E7%9C%9F%E6%AD%A3%E8%A6%81%E8%AE%B0%E4%BD%8F%E7%9A%84%E6%98%AF%E2%80%9C%E7%BB%93%E6%9E%84%E2%80%9D"><span class="toc-text">第一篇真正要记住的是“结构”</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B018-%E7%AC%AC%E4%B8%80%E4%B8%AAJava%E7%A8%8B%E5%BA%8F"><span class="toc-text">Java笔记18-第一个Java程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9Java-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%93%E6%9E%84"><span class="toc-text">🧩Java 程序的最小结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E6%9C%80%E5%B0%8F%E7%BB%93%E6%9E%84%E7%9A%84%E9%80%90%E5%B1%82%E6%8B%86%E8%A7%A3"><span class="toc-text">🔍 最小结构的逐层拆解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-%E7%B1%BB%EF%BC%88class%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D"><span class="toc-text">▍ 类（class）：程序的基本单位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-main-%E6%96%B9%E6%B3%95%EF%BC%9A%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%85%A5%E5%8F%A3"><span class="toc-text">▍ main 方法：程序的入口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B8-%E5%90%84%E9%83%A8%E5%88%86%E5%90%AB%E4%B9%89"><span class="toc-text">🔸 各部分含义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%BB%86%E8%8A%82"><span class="toc-text">💡 一个小细节</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-println%E2%80%94%E2%80%94%E8%BE%93%E5%87%BA%E6%98%AF%E5%A6%82%E4%BD%95%E5%8F%91%E7%94%9F%E7%9A%84"><span class="toc-text">▍ println——输出是如何发生的</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%8D-%E6%8B%86%E8%A7%A3%E7%BB%93%E6%9E%84"><span class="toc-text">🔍 拆解结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-%E6%9C%AC%E8%B4%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">🔬 本质过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B8-%E6%89%A9%E5%B1%95%EF%BC%9A%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%BE%93%E5%87%BA"><span class="toc-text">🔸 扩展：另一种输出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-%E5%88%86%E5%8F%B7%EF%BC%88-%EF%BC%89%EF%BC%9A%E8%AF%AD%E5%8F%A5%E7%BB%93%E6%9D%9F%E7%AC%A6"><span class="toc-text">▍ 分号（;）：语句结束符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A4%94-%E4%BB%8E-java-%E5%88%B0%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%EF%BC%8C%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">🤔 从 .java 到运行结果，中间发生了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">🔍 执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%AC-%E8%A1%A5%E5%85%85%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="toc-text">🔬 补充：执行方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%80%E4%B8%AA%E5%B8%B8%E8%A7%81%E7%89%B9%E7%82%B9"><span class="toc-text">💡 一个常见特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%B5%E6%B3%A8%E9%87%8A%E4%B8%8D%E6%98%AF%E8%A3%85%E9%A5%B0%EF%BC%8C%E8%80%8C%E6%98%AF%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">🧵注释不是装饰，而是理解代码的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%AD%E7%9A%84%E9%AB%98%E9%A2%91%E6%93%8D%E4%BD%9C"><span class="toc-text">📌 开发工具中的高频操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

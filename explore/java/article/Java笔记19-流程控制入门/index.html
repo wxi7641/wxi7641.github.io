@@ -894,107 +894,191 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记19"><a href="#Java笔记19" class="headerlink" title="Java笔记19"></a>Java笔记19</h1><p>流程控制真正解决的是两件最基础的事：<strong>什么时候执行</strong>，以及 <strong>执行多少次</strong>。只要程序开始接收输入、判断状态、批量处理数据，<code>if</code>、<code>switch</code>、<code>for</code>、<code>while</code> 这些语句就一定会出现。</p>
+    <h1 id="Java笔记19-流程控制入门"><a href="#Java笔记19-流程控制入门" class="headerlink" title="Java笔记19-流程控制入门"></a>Java笔记19-流程控制入门</h1><p>流程控制本质上是在解决一件事：<strong>程序的执行路径如何被控制</strong>。</p>
+<p>当程序开始接收输入、处理不同情况、或者对一批数据重复操作时，就不再是简单的“从上往下执行”，而是会出现分支和循环。换句话说，流程控制的作用可以概括为两点：</p>
+<ul>
+<li>在多个路径中“选择一条执行”</li>
+<li>对某段逻辑“重复执行若干次”</li>
+</ul>
 <blockquote>
-<p><strong>先把一句话记牢：</strong><mark>分支负责“选路”，循环负责“重复动作”。</mark></p>
+<p><mark>分支解决“走哪条路”，循环解决“走多少次”。</mark></p>
 </blockquote>
 <hr>
-<h2 id="if-更适合处理区间判断和条件链"><a href="#if-更适合处理区间判断和条件链" class="headerlink" title="if 更适合处理区间判断和条件链"></a><code>if</code> 更适合处理区间判断和条件链</h2><p><code>IfDemo01</code> 里最有代表性的就是 BMI 判断：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="variable">BMI</span> <span class="operator">=</span> weight / (height * height);</span><br><span class="line"><span class="keyword">if</span>(BMI &lt; <span class="number">18.5</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;过轻&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (BMI &gt;= <span class="number">18.5</span> &amp;&amp; BMI &lt; <span class="number">25</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;正常&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (BMI &gt;= <span class="number">25</span> &amp;&amp; BMI &lt; <span class="number">28</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;过重&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (BMI &gt;= <span class="number">28</span> &amp;&amp; BMI &lt; <span class="number">32</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;肥胖&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span>(BMI &gt;= <span class="number">32</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;非常肥胖&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;输入错误&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="🧩-分支结构：让程序具备“判断能力”"><a href="#🧩-分支结构：让程序具备“判断能力”" class="headerlink" title="🧩 分支结构：让程序具备“判断能力”"></a>🧩 分支结构：让程序具备“判断能力”</h2><p>分支结构中最核心的是 <code>if</code> 和 <code>switch</code>。它们的区别不在语法，而在<strong>适用问题类型不同</strong>。</p>
+<hr>
+<h3 id="▍if：处理区间与复杂逻辑"><a href="#▍if：处理区间与复杂逻辑" class="headerlink" title="▍if：处理区间与复杂逻辑"></a>▍if：处理区间与复杂逻辑</h3><p><code>if</code> 的典型使用场景是区间判断或条件组合，例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="variable">BMI</span> <span class="operator">=</span> weight / (height * height);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(BMI &lt; <span class="number">18.5</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;过轻&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (BMI &lt; <span class="number">25</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;正常&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (BMI &lt; <span class="number">28</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;过重&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (BMI &lt; <span class="number">32</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;肥胖&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;非常肥胖&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这段代码为什么很适合拿来理解 <code>if / else if / else</code>？因为它不是只判断真假，而是在一串连续区间里选一个结果。</p>
-<p>真正要注意的是 <strong>顺序</strong>。<code>if</code> 条件是从上往下检查的，一旦命中某一支，后面的分支就不会再继续判断。所以区间写法如果顺序错了，结果会直接出错。</p>
-<p>同一个文件里还保留了最基础的三层结构：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a &gt; <span class="number">5</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;a&gt;5&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这一段代码表面上只是分支判断，但背后有一个很重要的逻辑：<strong>条件是“逐层过滤”的</strong>。</p>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (BMI &lt; <span class="number">25</span>)</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a &gt; <span class="number">5</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;a&gt;5&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;a&lt;5&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>并没有写 <code>BMI &gt;= 18.5</code>，但逻辑仍然正确，因为前面的分支已经排除了 <code>&lt;18.5</code> 的情况。</p>
+<p>可以这样理解：</p>
+<blockquote>
+<p>👉 if-else 并不是“并列判断”，而是“逐层缩小范围”</p>
+</blockquote>
+<p>这也是为什么条件顺序非常重要。如果顺序写错，就会出现某些分支永远无法执行的问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (BMI &lt; <span class="number">25</span>)&#123;</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (BMI &lt; <span class="number">18.5</span>)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a &gt; <span class="number">5</span>)&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;a&gt;5&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (a &lt; <span class="number">5</span>) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;a&lt;5&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;输入错误&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在这种写法中，第二个分支是不可达的。</p>
+<hr>
+<h3 id="▍字符串判断：equals-与-的本质区别"><a href="#▍字符串判断：equals-与-的本质区别" class="headerlink" title="▍字符串判断：equals 与 &#x3D;&#x3D; 的本质区别"></a>▍字符串判断：equals 与 &#x3D;&#x3D; 的本质区别</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">color</span> <span class="operator">=</span> sc.next();</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (color.equals(<span class="string">&quot;红&quot;</span>))&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;停车&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>把这三个版本放在一起看，分支结构的层次就很清楚了。</p>
-<h2 id="字符串条件判断里，equals-比-更关键"><a href="#字符串条件判断里，equals-比-更关键" class="headerlink" title="字符串条件判断里，equals() 比 == 更关键"></a>字符串条件判断里，<code>equals()</code> 比 <code>==</code> 更关键</h2><p><code>IfDemo02</code> 的红绿灯判断特别适合补这个点：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">color</span> <span class="operator">=</span> sc.next();</span><br><span class="line"><span class="keyword">if</span> (color.equals(<span class="string">&quot;红&quot;</span>))&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;停车&quot;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span> <span class="keyword">if</span> (color.equals(<span class="string">&quot;绿&quot;</span>))&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;通行&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (color.equals(<span class="string">&quot;黄&quot;</span>)) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;等下&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;输入颜色错误！&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这里用的是 <code>equals()</code>，不是 <code>==</code>。这不是细枝末节，而是字符串判断里最常见也最容易踩坑的地方：</p>
-<table>
+<p>这里看起来只是一个简单判断，但实际上涉及到 Java 中一个非常核心的问题：<strong>对象比较的本质是什么</strong>。</p>
+<hr>
+<h4 id="🔬-与-equals-的区别"><a href="#🔬-与-equals-的区别" class="headerlink" title="🔬 == 与 equals() 的区别"></a>🔬 <code>==</code> 与 <code>equals()</code> 的区别</h4><table>
 <thead>
 <tr>
 <th>写法</th>
-<th>比较的是什么</th>
+<th>比较内容</th>
 </tr>
 </thead>
 <tbody><tr>
 <td><code>==</code></td>
-<td>两个引用是不是同一个对象</td>
+<td>比较两个变量是否指向同一块内存</td>
 </tr>
 <tr>
 <td><code>equals()</code></td>
-<td>两段字符串内容是否相同</td>
+<td>比较两个对象的内容是否相同</td>
 </tr>
 </tbody></table>
-<p>因此只要判断的是文本内容，默认就应该先想到 <code>equals()</code>。</p>
-<h2 id="switch-更适合固定值分派"><a href="#switch-更适合固定值分派" class="headerlink" title="switch 更适合固定值分派"></a><code>switch</code> 更适合固定值分派</h2><p><code>SwitchDemo01</code> 里有两种很典型的 <code>switch</code> 场景。</p>
-<p>第一种是单个值对应单个结果：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">mouth</span> <span class="operator">=</span> sc.nextInt();</span><br><span class="line"><span class="keyword">switch</span> (mouth)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;一月&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;二月&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;三月&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;未知月份&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="🔬-深入理解：变量存的到底是什么？"><a href="#🔬-深入理解：变量存的到底是什么？" class="headerlink" title="🔬 深入理解：变量存的到底是什么？"></a>🔬 深入理解：变量存的到底是什么？</h4><p>在 Java 中，变量的存储可以简单理解为：</p>
+<ul>
+<li>基本类型：直接存值</li>
+<li>引用类型：存的是“地址”</li>
+</ul>
+<p>例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">s1</span> <span class="operator">=</span> <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s2</span> <span class="operator">=</span> <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line"><span class="type">String</span> <span class="variable">s3</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">String</span>(<span class="string">&quot;Hello&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<p>第二种是多个值合并到同一段逻辑：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">day</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="keyword">switch</span>(day)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;学习&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;睡觉&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以这样理解它们的关系：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s1 → 常量池中的 &quot;Hello&quot;</span><br><span class="line">s2 → 常量池中的 &quot;Hello&quot;</span><br><span class="line">s3 → 堆中新创建的对象</span><br></pre></td></tr></table></figure>
 
-<p>这里最值得强调的就是 <code>break</code>。没有 <code>break</code> 时，程序会继续向下执行，也就是所谓的“穿透”。</p>
-<p>可以把 <code>if</code> 和 <code>switch</code> 的区别直接记成下面这张表：</p>
-<table>
-<thead>
-<tr>
-<th>语句</th>
-<th>更适合的场景</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>if / else if / else</code></td>
-<td>区间判断、复杂条件链</td>
-</tr>
-<tr>
-<td><code>switch</code></td>
-<td>固定值匹配、菜单分支、状态分派</td>
-</tr>
-</tbody></table>
-<h2 id="for-与-while-的差别，本质上是“结束条件写在哪里”"><a href="#for-与-while-的差别，本质上是“结束条件写在哪里”" class="headerlink" title="for 与 while 的差别，本质上是“结束条件写在哪里”"></a><code>for</code> 与 <code>while</code> 的差别，本质上是“结束条件写在哪里”</h2><p><code>ForDemo01</code> 和 <code>WhileDemo01</code> 把几种最常见的循环形式都摆出来了。</p>
-<h3 id="普通-for：已知范围时最紧凑"><a href="#普通-for：已知范围时最紧凑" class="headerlink" title="普通 for：已知范围时最紧凑"></a>普通 <code>for</code>：已知范围时最紧凑</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] ns = &#123; <span class="number">1</span>, <span class="number">4</span>, <span class="number">9</span>, <span class="number">16</span>, <span class="number">25</span> &#125;;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> ns.length - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i--)&#123;</span><br><span class="line">    System.out.println(ns[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="🔬-为什么-有时候是-true，有时候是-false？"><a href="#🔬-为什么-有时候是-true，有时候是-false？" class="headerlink" title="🔬 为什么 == 有时候是 true，有时候是 false？"></a>🔬 为什么 <code>==</code> 有时候是 true，有时候是 false？</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(s1 == s2); <span class="comment">// true</span></span><br><span class="line">System.out.println(s1 == s3); <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span> ;</span><br><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">2</span>; a &lt;= <span class="number">10</span>; a += <span class="number">2</span>)&#123;</span><br><span class="line">    sum += a;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(<span class="string">&quot;sum=&quot;</span> + sum);</span><br></pre></td></tr></table></figure>
+<p>原因是：</p>
+<ul>
+<li><code>s1</code> 和 <code>s2</code> 指向同一个常量池对象</li>
+<li><code>s3</code> 是在堆中重新创建的对象</li>
+</ul>
+<p>👉 所以：</p>
+<blockquote>
+<p><code>==</code> 判断的是“是不是同一个对象”，而不是“内容是否一样”</p>
+</blockquote>
+<hr>
+<h4 id="🔬-equals-为什么可以比较内容？"><a href="#🔬-equals-为什么可以比较内容？" class="headerlink" title="🔬 equals() 为什么可以比较内容？"></a>🔬 equals() 为什么可以比较内容？</h4><p><code>String</code> 类重写了 <code>equals()</code> 方法，使其比较的是字符串内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(s1.equals(s3)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="增强-for：只关心元素本身时更清爽"><a href="#增强-for：只关心元素本身时更清爽" class="headerlink" title="增强 for：只关心元素本身时更清爽"></a>增强 <code>for</code>：只关心元素本身时更清爽</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span>[] array = &#123;<span class="string">&#x27;a&#x27;</span>,<span class="string">&#x27;b&#x27;</span>&#125;;</span><br><span class="line"><span class="keyword">for</span> (<span class="type">char</span> a : array)&#123;</span><br><span class="line">    System.out.println(a);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="⚠️-一个容易忽略的问题：空指针"><a href="#⚠️-一个容易忽略的问题：空指针" class="headerlink" title="⚠️ 一个容易忽略的问题：空指针"></a>⚠️ 一个容易忽略的问题：空指针</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">color.equals(<span class="string">&quot;红&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<h3 id="while：条件驱动更明显"><a href="#while：条件驱动更明显" class="headerlink" title="while：条件驱动更明显"></a><code>while</code>：条件驱动更明显</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line"><span class="keyword">while</span>(m &lt;= n)&#123;</span><br><span class="line">    sum += m;</span><br><span class="line">    m++;</span><br><span class="line">&#125;</span><br><span class="line">System.out.println(sum);</span><br></pre></td></tr></table></figure>
+<p>如果 <code>color == null</code>，会直接抛出异常。</p>
+<p>更安全的写法是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;红&quot;</span>.equals(color);</span><br></pre></td></tr></table></figure>
 
-<h3 id="do-while：先执行一次再判断"><a href="#do-while：先执行一次再判断" class="headerlink" title="do...while：先执行一次再判断"></a><code>do...while</code>：先执行一次再判断</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">m</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">    sum += m;</span><br><span class="line">    m++;</span><br><span class="line">&#125;<span class="keyword">while</span> (m &lt;= n);</span><br><span class="line">System.out.println(sum);</span><br></pre></td></tr></table></figure>
+<p>👉 原因很简单：</p>
+<ul>
+<li><code>&quot;红&quot;</code> 是确定存在的对象</li>
+<li>即使 <code>color</code> 为 null，也不会报错</li>
+</ul>
+<hr>
+<h3 id="💡-总结这个问题"><a href="#💡-总结这个问题" class="headerlink" title="💡 总结这个问题"></a>💡 总结这个问题</h3><blockquote>
+<p>👉 <code>==</code> 用于判断“是不是同一个对象”<br>👉 <code>equals()</code> 用于判断“内容是否相同”<br>👉 字符串比较默认使用 <code>equals()</code></p>
+</blockquote>
+<hr>
+<hr>
+<h3 id="▍switch：处理“离散值分支”"><a href="#▍switch：处理“离散值分支”" class="headerlink" title="▍switch：处理“离散值分支”"></a>▍switch：处理“离散值分支”</h3><p>当条件不再是区间，而是“固定值匹配”时，<code>switch</code> 会更合适。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">day</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span>(day)&#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;学习&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;休息&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>可以直接这样理解：</p>
-<table>
-<thead>
-<tr>
-<th>循环类型</th>
-<th>特点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>for</code></td>
-<td>初始化、判断、更新写在一起，已知范围时更清晰</td>
-</tr>
-<tr>
-<td><code>while</code></td>
-<td>先判断后执行，更像“条件满足就继续”</td>
-</tr>
-<tr>
-<td><code>do...while</code></td>
-<td>先执行后判断，至少会执行一次</td>
-</tr>
-</tbody></table>
-<h2 id="死循环不是特殊语法，而是条件永远成立"><a href="#死循环不是特殊语法，而是条件永远成立" class="headerlink" title="死循环不是特殊语法，而是条件永远成立"></a>死循环不是特殊语法，而是条件永远成立</h2><p><code>If01</code> 里直接放了一个最典型的例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;HelloWorld01&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// for(;;)&#123;</span></span><br><span class="line"><span class="comment">//     System.out.println(&quot;HelloWorld02&quot;);</span></span><br><span class="line"><span class="comment">// &#125;</span></span><br></pre></td></tr></table></figure>
+<p>这种写法表达的是：</p>
+<blockquote>
+<p>👉 一个变量只会匹配某几个“明确的值”</p>
+</blockquote>
+<hr>
+<h4 id="🔬-一个关键点：贯穿（fall-through）"><a href="#🔬-一个关键点：贯穿（fall-through）" class="headerlink" title="🔬 一个关键点：贯穿（fall-through）"></a>🔬 一个关键点：贯穿（fall-through）</h4><p>如果省略 <code>break</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line"><span class="keyword">case</span> <span class="number">2</span>:</span><br></pre></td></tr></table></figure>
 
-<p><code>while(true)</code> 和 <code>for(;;)</code> 本质上都能构成无限循环。它们在学习阶段通常只是示例，但往后做服务监听、消息消费、游戏主循环时，这种结构其实会经常出现。</p>
-<p>流程控制这一节真正的价值，不是背语法，而是形成一种“程序执行路径”的感觉：条件怎样分流，循环怎样收口，什么时候跳出，什么时候继续。只要这层感觉建立起来，后面的数组、集合、IO 和数据库操作都会顺得多。</p>
+<p>程序会继续向下执行，直到遇到 <code>break</code>。</p>
+<hr>
+<h4 id="⚠️-switch-的限制"><a href="#⚠️-switch-的限制" class="headerlink" title="⚠️ switch 的限制"></a>⚠️ switch 的限制</h4><ul>
+<li>适合离散值（如菜单、状态）</li>
+<li>不适合区间判断</li>
+<li>类型受限（整数、String、枚举等）</li>
+</ul>
+<hr>
+<h2 id="🧩-循环结构：让程序具备“重复能力”"><a href="#🧩-循环结构：让程序具备“重复能力”" class="headerlink" title="🧩 循环结构：让程序具备“重复能力”"></a>🧩 循环结构：让程序具备“重复能力”</h2><p>如果说分支是“选择路径”，那么循环就是“在路径上反复执行”。</p>
+<hr>
+<h3 id="▍for：结构最完整的循环"><a href="#▍for：结构最完整的循环" class="headerlink" title="▍for：结构最完整的循环"></a>▍for：结构最完整的循环</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)&#123;</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以拆解为三个部分：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(初始化; 条件; 更新)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>初始化：定义变量</li>
+<li>条件：是否继续循环</li>
+<li>更新：改变变量</li>
+</ul>
+<hr>
+<h4 id="🔬-为什么常用"><a href="#🔬-为什么常用" class="headerlink" title="🔬 为什么常用 &lt; 而不是 &lt;=？"></a>🔬 为什么常用 <code>&lt;</code> 而不是 <code>&lt;=</code>？</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; n; i++)</span><br></pre></td></tr></table></figure>
+
+<p>这种写法更自然，因为：</p>
+<ul>
+<li>从 0 开始</li>
+<li>到 n 结束（不包含 n）</li>
+<li>与数组下标一致</li>
+</ul>
+<hr>
+<h3 id="▍while：更偏“条件驱动”"><a href="#▍while：更偏“条件驱动”" class="headerlink" title="▍while：更偏“条件驱动”"></a>▍while：更偏“条件驱动”</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(m &lt;= n)&#123;</span><br><span class="line">    sum += m;</span><br><span class="line">    m++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>特点是：</p>
+<ul>
+<li>更灵活</li>
+<li>更接近“只要满足条件就继续”</li>
+</ul>
+<hr>
+<h3 id="▍do…while：至少执行一次"><a href="#▍do…while：至少执行一次" class="headerlink" title="▍do…while：至少执行一次"></a>▍do…while：至少执行一次</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span>&#123;</span><br><span class="line">    sum += m;</span><br><span class="line">    m++;</span><br><span class="line">&#125;<span class="keyword">while</span>(m &lt;= n);</span><br></pre></td></tr></table></figure>
+
+<p>这种结构的特点是：</p>
+<blockquote>
+<p>👉 不管条件是否成立，先执行一次</p>
+</blockquote>
+<hr>
+<h2 id="🔍-死循环与实际用途"><a href="#🔍-死循环与实际用途" class="headerlink" title="🔍 死循环与实际用途"></a>🔍 死循环与实际用途</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span>(<span class="literal">true</span>)&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这类循环在学习阶段看起来“没用”，但在实际中很常见，例如：</p>
+<ul>
+<li>服务监听</li>
+<li>游戏循环</li>
+<li>后台任务处理</li>
+</ul>
+<hr>
+<h2 id="⚠️-循环中的几个细节"><a href="#⚠️-循环中的几个细节" class="headerlink" title="⚠️ 循环中的几个细节"></a>⚠️ 循环中的几个细节</h2><hr>
+<h3 id="▍break-与-continue"><a href="#▍break-与-continue" class="headerlink" title="▍break 与 continue"></a>▍break 与 continue</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">    <span class="keyword">if</span>(i == <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>输出结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0 1 3 4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>break</code>：结束整个循环</li>
+<li><code>continue</code>：跳过当前这一次</li>
+</ul>
+<hr>
+<h3 id="▍循环边界问题"><a href="#▍循环边界问题" class="headerlink" title="▍循环边界问题"></a>▍循环边界问题</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt;= <span class="number">10</span>; i++)</span><br></pre></td></tr></table></figure>
+
+<p>和：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++)</span><br></pre></td></tr></table></figure>
+
+<p>区别在于是否包含边界，这种细节在处理数组时尤其重要。</p>
+<hr>
+<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>流程控制的关键不在于记住语法，而在于理解：</p>
+<ul>
+<li>条件是如何一步步筛选路径的</li>
+<li>循环是如何控制执行范围的</li>
+<li>程序是如何在不同路径之间切换的</li>
+</ul>
+<p>当这些逻辑清晰之后，代码就不再只是“能运行”，而是开始变得可控、可读，也更容易扩展。</p>
 
   </article>
 </section>
@@ -1005,7 +1089,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>816</strong> 天
+      运营 <strong>817</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -1014,7 +1098,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>58,963</strong> 字
+      累计 <strong>60,117</strong> 字
     </p>
   </div>
 </footer>
@@ -1022,7 +1106,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B019"><span class="toc-text">Java笔记19</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#if-%E6%9B%B4%E9%80%82%E5%90%88%E5%A4%84%E7%90%86%E5%8C%BA%E9%97%B4%E5%88%A4%E6%96%AD%E5%92%8C%E6%9D%A1%E4%BB%B6%E9%93%BE"><span class="toc-text">if 更适合处理区间判断和条件链</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9D%A1%E4%BB%B6%E5%88%A4%E6%96%AD%E9%87%8C%EF%BC%8Cequals-%E6%AF%94-%E6%9B%B4%E5%85%B3%E9%94%AE"><span class="toc-text">字符串条件判断里，equals() 比 &#x3D;&#x3D; 更关键</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#switch-%E6%9B%B4%E9%80%82%E5%90%88%E5%9B%BA%E5%AE%9A%E5%80%BC%E5%88%86%E6%B4%BE"><span class="toc-text">switch 更适合固定值分派</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#for-%E4%B8%8E-while-%E7%9A%84%E5%B7%AE%E5%88%AB%EF%BC%8C%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E2%80%9C%E7%BB%93%E6%9D%9F%E6%9D%A1%E4%BB%B6%E5%86%99%E5%9C%A8%E5%93%AA%E9%87%8C%E2%80%9D"><span class="toc-text">for 与 while 的差别，本质上是“结束条件写在哪里”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%99%AE%E9%80%9A-for%EF%BC%9A%E5%B7%B2%E7%9F%A5%E8%8C%83%E5%9B%B4%E6%97%B6%E6%9C%80%E7%B4%A7%E5%87%91"><span class="toc-text">普通 for：已知范围时最紧凑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A2%9E%E5%BC%BA-for%EF%BC%9A%E5%8F%AA%E5%85%B3%E5%BF%83%E5%85%83%E7%B4%A0%E6%9C%AC%E8%BA%AB%E6%97%B6%E6%9B%B4%E6%B8%85%E7%88%BD"><span class="toc-text">增强 for：只关心元素本身时更清爽</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#while%EF%BC%9A%E6%9D%A1%E4%BB%B6%E9%A9%B1%E5%8A%A8%E6%9B%B4%E6%98%8E%E6%98%BE"><span class="toc-text">while：条件驱动更明显</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#do-while%EF%BC%9A%E5%85%88%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E5%86%8D%E5%88%A4%E6%96%AD"><span class="toc-text">do...while：先执行一次再判断</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AD%BB%E5%BE%AA%E7%8E%AF%E4%B8%8D%E6%98%AF%E7%89%B9%E6%AE%8A%E8%AF%AD%E6%B3%95%EF%BC%8C%E8%80%8C%E6%98%AF%E6%9D%A1%E4%BB%B6%E6%B0%B8%E8%BF%9C%E6%88%90%E7%AB%8B"><span class="toc-text">死循环不是特殊语法，而是条件永远成立</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B019-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E5%85%A5%E9%97%A8"><span class="toc-text">Java笔记19-流程控制入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E5%88%86%E6%94%AF%E7%BB%93%E6%9E%84%EF%BC%9A%E8%AE%A9%E7%A8%8B%E5%BA%8F%E5%85%B7%E5%A4%87%E2%80%9C%E5%88%A4%E6%96%AD%E8%83%BD%E5%8A%9B%E2%80%9D"><span class="toc-text">🧩 分支结构：让程序具备“判断能力”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8Dif%EF%BC%9A%E5%A4%84%E7%90%86%E5%8C%BA%E9%97%B4%E4%B8%8E%E5%A4%8D%E6%9D%82%E9%80%BB%E8%BE%91"><span class="toc-text">▍if：处理区间与复杂逻辑</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%A4%E6%96%AD%EF%BC%9Aequals-%E4%B8%8E-%E7%9A%84%E6%9C%AC%E8%B4%A8%E5%8C%BA%E5%88%AB"><span class="toc-text">▍字符串判断：equals 与 &#x3D;&#x3D; 的本质区别</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-%E4%B8%8E-equals-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">🔬 &#x3D;&#x3D; 与 equals() 的区别</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%EF%BC%9A%E5%8F%98%E9%87%8F%E5%AD%98%E7%9A%84%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-text">🔬 深入理解：变量存的到底是什么？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-%E4%B8%BA%E4%BB%80%E4%B9%88-%E6%9C%89%E6%97%B6%E5%80%99%E6%98%AF-true%EF%BC%8C%E6%9C%89%E6%97%B6%E5%80%99%E6%98%AF-false%EF%BC%9F"><span class="toc-text">🔬 为什么 &#x3D;&#x3D; 有时候是 true，有时候是 false？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-equals-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AF%E4%BB%A5%E6%AF%94%E8%BE%83%E5%86%85%E5%AE%B9%EF%BC%9F"><span class="toc-text">🔬 equals() 为什么可以比较内容？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E4%B8%80%E4%B8%AA%E5%AE%B9%E6%98%93%E5%BF%BD%E7%95%A5%E7%9A%84%E9%97%AE%E9%A2%98%EF%BC%9A%E7%A9%BA%E6%8C%87%E9%92%88"><span class="toc-text">⚠️ 一个容易忽略的问题：空指针</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E6%80%BB%E7%BB%93%E8%BF%99%E4%B8%AA%E9%97%AE%E9%A2%98"><span class="toc-text">💡 总结这个问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8Dswitch%EF%BC%9A%E5%A4%84%E7%90%86%E2%80%9C%E7%A6%BB%E6%95%A3%E5%80%BC%E5%88%86%E6%94%AF%E2%80%9D"><span class="toc-text">▍switch：处理“离散值分支”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-%E4%B8%80%E4%B8%AA%E5%85%B3%E9%94%AE%E7%82%B9%EF%BC%9A%E8%B4%AF%E7%A9%BF%EF%BC%88fall-through%EF%BC%89"><span class="toc-text">🔬 一个关键点：贯穿（fall-through）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-switch-%E7%9A%84%E9%99%90%E5%88%B6"><span class="toc-text">⚠️ switch 的限制</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E5%BE%AA%E7%8E%AF%E7%BB%93%E6%9E%84%EF%BC%9A%E8%AE%A9%E7%A8%8B%E5%BA%8F%E5%85%B7%E5%A4%87%E2%80%9C%E9%87%8D%E5%A4%8D%E8%83%BD%E5%8A%9B%E2%80%9D"><span class="toc-text">🧩 循环结构：让程序具备“重复能力”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8Dfor%EF%BC%9A%E7%BB%93%E6%9E%84%E6%9C%80%E5%AE%8C%E6%95%B4%E7%9A%84%E5%BE%AA%E7%8E%AF"><span class="toc-text">▍for：结构最完整的循环</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%B8%B8%E7%94%A8"><span class="toc-text">🔬 为什么常用 &lt; 而不是 &lt;&#x3D;？</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8Dwhile%EF%BC%9A%E6%9B%B4%E5%81%8F%E2%80%9C%E6%9D%A1%E4%BB%B6%E9%A9%B1%E5%8A%A8%E2%80%9D"><span class="toc-text">▍while：更偏“条件驱动”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8Ddo%E2%80%A6while%EF%BC%9A%E8%87%B3%E5%B0%91%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1"><span class="toc-text">▍do…while：至少执行一次</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E6%AD%BB%E5%BE%AA%E7%8E%AF%E4%B8%8E%E5%AE%9E%E9%99%85%E7%94%A8%E9%80%94"><span class="toc-text">🔍 死循环与实际用途</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E2%9A%A0%EF%B8%8F-%E5%BE%AA%E7%8E%AF%E4%B8%AD%E7%9A%84%E5%87%A0%E4%B8%AA%E7%BB%86%E8%8A%82"><span class="toc-text">⚠️ 循环中的几个细节</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8Dbreak-%E4%B8%8E-continue"><span class="toc-text">▍break 与 continue</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E5%BE%AA%E7%8E%AF%E8%BE%B9%E7%95%8C%E9%97%AE%E9%A2%98"><span class="toc-text">▍循环边界问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
