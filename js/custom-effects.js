@@ -34,6 +34,9 @@
       utils.dark.method.toggle.start();
     }
     updateThemeLabel();
+    if (typeof window.codexRefreshVisualEffects === 'function') {
+      window.requestAnimationFrame(window.codexRefreshVisualEffects);
+    }
   }
 
   window.codexToggleTheme = function () {
@@ -97,6 +100,7 @@
           minCountFine: 34,
           maxCountCoarse: 52,
           maxCountFine: 92,
+          darkCountScale: 1.22,
           velocityXCoarse: 0.28,
           velocityXFine: 0.46,
           velocityYCoarse: 0.22,
@@ -148,6 +152,7 @@
           minCountFine: 38,
           maxCountCoarse: 56,
           maxCountFine: 98,
+          darkCountScale: 1.32,
           velocityXCoarse: 0.3,
           velocityXFine: 0.5,
           velocityYCoarse: 0.24,
@@ -199,6 +204,7 @@
           minCountFine: 42,
           maxCountCoarse: 62,
           maxCountFine: 108,
+          darkCountScale: 1.26,
           velocityXCoarse: 0.28,
           velocityXFine: 0.44,
           velocityYCoarse: 0.22,
@@ -256,6 +262,11 @@
         return {
           nodeFill: 'rgba(252, 244, 255, 0.98)',
           nodeCore: 'rgba(236, 211, 255, 1)',
+          nodeAura: 'rgba(241, 213, 146, 0.34)',
+          nodeTrail: 'rgba(183, 154, 245, 0.22)',
+          nodeOuter: 'rgba(183, 154, 245, 0)',
+          threadInner: 'rgba(244, 214, 154, 0.24)',
+          threadOuter: 'rgba(192, 159, 248, 0)',
           haloInner: 'rgba(244, 214, 154, 0.42)',
           haloMid: 'rgba(192, 159, 248, 0.2)',
           haloOuter: 'rgba(181, 151, 244, 0)'
@@ -267,6 +278,11 @@
       return {
         nodeFill: 'rgba(248, 255, 250, 0.98)',
         nodeCore: 'rgba(201, 255, 224, 1)',
+        nodeAura: 'rgba(78, 221, 145, 0.24)',
+        nodeTrail: 'rgba(196, 255, 221, 0.28)',
+        nodeOuter: 'rgba(92, 211, 158, 0)',
+        threadInner: 'rgba(78, 221, 145, 0.18)',
+        threadOuter: 'rgba(196, 255, 221, 0)',
         haloInner: 'rgba(196, 255, 221, 0.44)',
         haloMid: 'rgba(82, 224, 151, 0.22)',
         haloOuter: 'rgba(92, 211, 158, 0)'
@@ -277,7 +293,8 @@
       const areaPerDot = prefersCoarse ? effectPreset.areaPerDotCoarse : effectPreset.areaPerDotFine;
       const minCount = prefersCoarse ? effectPreset.minCountCoarse : effectPreset.minCountFine;
       const maxCount = prefersCoarse ? effectPreset.maxCountCoarse : effectPreset.maxCountFine;
-      const count = Math.max(minCount, Math.min(maxCount, Math.round((width * height) / areaPerDot)));
+      const countScale = currentMode() === 'dark' ? (effectPreset.darkCountScale || 1) : 1;
+      const count = Math.max(minCount, Math.min(maxCount, Math.round((width * height) / areaPerDot * countScale)));
 
       nodes.length = 0;
       for (let i = 0; i < count; i += 1) {
@@ -306,12 +323,18 @@
       createNodes();
     }
 
+    window.codexRefreshVisualEffects = resize;
+
     function pointerStrength() {
       const elapsed = performance.now() - pointer.lastActiveAt;
       if (!pointer.active && elapsed > 1200) {
         return 0;
       }
       return Math.max(0, 1 - elapsed / 1200);
+    }
+
+    function setGlowTransform(scale) {
+      glow.style.transform = 'translate3d(' + pointer.x + 'px, ' + pointer.y + 'px, 0) scale(' + scale + ')';
     }
 
     function drawHalo(colors, strength, clusterBoost) {
@@ -326,12 +349,24 @@
       gradient.addColorStop(0, colors.haloInner);
       gradient.addColorStop(0.42, colors.haloMid);
       gradient.addColorStop(1, colors.haloOuter);
+      context.save();
+      context.globalCompositeOperation = currentMode() === 'dark' ? 'screen' : 'lighter';
       context.beginPath();
       context.arc(pointer.x, pointer.y, radius, 0, Math.PI * 2);
       context.fillStyle = gradient;
       context.globalAlpha = Math.min(1, effectPreset.haloOpacityBase + combined * effectPreset.haloOpacityScale);
       context.fill();
-      context.globalAlpha = 1;
+      const coreRadius = Math.max(40, radius * 0.38);
+      const core = context.createRadialGradient(pointer.x, pointer.y, 0, pointer.x, pointer.y, coreRadius);
+      core.addColorStop(0, colors.nodeAura);
+      core.addColorStop(0.72, colors.nodeTrail);
+      core.addColorStop(1, colors.nodeOuter);
+      context.beginPath();
+      context.arc(pointer.x, pointer.y, coreRadius, 0, Math.PI * 2);
+      context.fillStyle = core;
+      context.globalAlpha = Math.min(0.7, 0.18 + combined * 0.22);
+      context.fill();
+      context.restore();
     }
 
     function drawParticle(node, colors, glowBoost, densityBoost) {
@@ -339,6 +374,23 @@
         node.r +
         glowBoost * effectPreset.pointGlowScale +
         densityBoost * effectPreset.pointDensityScale;
+      const auraRadius = Math.max(
+        coreRadius * 3.2,
+        coreRadius + 5 + glowBoost * 0.42 + densityBoost * 1.8
+      );
+      const aura = context.createRadialGradient(node.x, node.y, 0, node.x, node.y, auraRadius);
+      aura.addColorStop(0, colors.nodeAura);
+      aura.addColorStop(0.42, colors.nodeTrail);
+      aura.addColorStop(1, colors.nodeOuter);
+      context.save();
+      context.globalCompositeOperation = currentMode() === 'dark' ? 'screen' : 'lighter';
+      context.beginPath();
+      context.arc(node.x, node.y, auraRadius, 0, Math.PI * 2);
+      context.fillStyle = aura;
+      context.globalAlpha = Math.min(0.84, 0.18 + glowBoost * 0.038 + densityBoost * 0.08);
+      context.fill();
+      context.restore();
+
       context.beginPath();
       context.arc(node.x, node.y, coreRadius, 0, Math.PI * 2);
       context.fillStyle = colors.nodeCore;
@@ -357,13 +409,38 @@
       context.fill();
     }
 
+    function drawAttractionField(colors, strength, densityBoost) {
+      if (strength <= 0 || densityBoost <= 0.05) {
+        return;
+      }
+      context.save();
+      context.globalCompositeOperation = currentMode() === 'dark' ? 'screen' : 'lighter';
+      for (let i = 0; i < nodes.length; i += 1) {
+        const node = nodes[i];
+        if (!node._attraction || node._attraction < 0.16) {
+          continue;
+        }
+        const gradient = context.createLinearGradient(pointer.x, pointer.y, node.x, node.y);
+        gradient.addColorStop(0, colors.threadInner);
+        gradient.addColorStop(1, colors.threadOuter);
+        context.beginPath();
+        context.moveTo(pointer.x, pointer.y);
+        context.lineTo(node.x, node.y);
+        context.strokeStyle = gradient;
+        context.lineWidth = Math.min(1.8, 0.42 + node._attraction * 0.22);
+        context.globalAlpha = Math.min(0.38, 0.06 + node._attraction * 0.052 + densityBoost * 0.045);
+        context.stroke();
+      }
+      context.restore();
+    }
+
     function activatePointer(x, y) {
       pointer.x = x;
       pointer.y = y;
       pointer.active = true;
       pointer.lastActiveAt = performance.now();
       glow.style.opacity = '1';
-      glow.style.transform = 'translate3d(' + pointer.x + 'px, ' + pointer.y + 'px, 0)';
+      setGlowTransform(1);
     }
 
     function step(now) {
@@ -375,7 +452,8 @@
       }
       const colors = palette();
       const strength = pointerStrength();
-      const influenceRadius = prefersCoarse ? effectPreset.influenceRadiusCoarse : effectPreset.influenceRadiusFine;
+      const modePullBoost = currentMode() === 'dark' ? 1.12 : 1.04;
+      const influenceRadius = (prefersCoarse ? effectPreset.influenceRadiusCoarse : effectPreset.influenceRadiusFine) * modePullBoost;
       context.clearRect(0, 0, width, height);
       let clusterLight = 0;
       let attractedCount = 0;
@@ -433,6 +511,7 @@
       );
 
       drawHalo(colors, strength, densityBoost);
+      drawAttractionField(colors, strength, densityBoost);
       if (strength > 0) {
         glow.style.opacity = String(
           Math.min(
@@ -442,6 +521,7 @@
               densityBoost * effectPreset.glowOpacityDensity
           )
         );
+        setGlowTransform(Math.min(1.12, 1 + strength * 0.025 + densityBoost * 0.035));
       } else if (!pointer.active) {
         glow.style.opacity = '0';
       }

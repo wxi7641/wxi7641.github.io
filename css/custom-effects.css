@@ -204,7 +204,43 @@ body > .sitebg .siteblur {
 
 .explore-hub {
   display: grid;
-  gap: 18px;
+  gap: 24px;
+}
+
+.explore-hero {
+  display: grid;
+  gap: 12px;
+  padding: 28px 32px 30px;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at top right, rgba(190, 233, 206, 0.18), rgba(190, 233, 206, 0) 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(246, 252, 248, 0.9));
+  border: 1px solid rgba(193, 219, 203, 0.44);
+  box-shadow: 0 16px 36px rgba(69, 106, 82, 0.06);
+}
+
+.explore-hero__eyebrow {
+  width: fit-content;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(232, 244, 237, 0.86);
+  color: var(--theme);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.explore-hero h1 {
+  margin: 0;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.05;
+}
+
+.explore-hero p {
+  margin: 0;
+  max-width: 66rem;
+  color: var(--text-p2);
+  line-height: 1.9;
 }
 
 .explore-toolbar {
@@ -237,23 +273,48 @@ body > .sitebg .siteblur {
 
 .explore-list {
   display: grid;
-  gap: 16px;
+  gap: 18px;
 }
 
 .explore-card {
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: 88px minmax(0, 1fr) auto;
+  grid-template-columns: 96px minmax(0, 1fr) auto;
   align-items: center;
-  gap: 22px;
-  padding: 24px 28px;
-  border-radius: 24px;
-  background: rgba(255, 255, 255, 0.82);
+  gap: 20px;
+  min-height: 164px;
+  padding: 26px 30px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.84);
   border: 1px solid rgba(214, 229, 221, 0.9);
   box-shadow: 0 14px 34px rgba(66, 101, 79, 0.06);
   transition:
     transform 180ms ease,
     box-shadow 180ms ease,
     border-color 180ms ease;
+}
+
+.explore-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 6px;
+  background: linear-gradient(180deg, var(--explore-accent), rgba(255, 255, 255, 0));
+  opacity: 0.96;
+}
+
+.explore-card::after {
+  content: '';
+  position: absolute;
+  top: -48px;
+  right: -52px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--explore-glow) 0%, rgba(255, 255, 255, 0) 70%);
+  opacity: 0.82;
+  pointer-events: none;
 }
 
 .explore-card:hover {
@@ -263,9 +324,11 @@ body > .sitebg .siteblur {
 }
 
 .explore-badge {
-  width: 88px;
-  height: 88px;
-  border-radius: 24px;
+  position: relative;
+  z-index: 1;
+  width: 92px;
+  height: 92px;
+  border-radius: 26px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -306,21 +369,37 @@ body > .sitebg .siteblur {
 }
 
 .explore-copy {
+  position: relative;
+  z-index: 1;
   display: grid;
-  gap: 8px;
+  gap: 10px;
   min-width: 0;
 }
 
+.explore-kicker {
+  color: var(--theme);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
 .explore-copy strong {
-  font-size: clamp(1.18rem, 1.9vw, 1.7rem);
+  font-size: clamp(1.3rem, 2vw, 1.84rem);
   line-height: 1.25;
 }
 
 .explore-copy small {
   display: block;
-  font-size: 0.98rem;
+  font-size: 1rem;
   line-height: 1.8;
   color: var(--text-p2);
+}
+
+.explore-note {
+  color: var(--text-p3);
+  font-size: 0.88rem;
+  line-height: 1.5;
 }
 
 .explore-state {
@@ -332,6 +411,8 @@ body > .sitebg .siteblur {
 }
 
 .explore-meta {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: end;
   align-self: stretch;
@@ -366,6 +447,46 @@ body > .sitebg .siteblur {
 .state-build {
   background: rgba(95, 152, 176, 0.14);
   color: hsl(193, 42%, 34%);
+}
+
+.card-netsec {
+  --explore-accent: rgba(83, 176, 118, 0.82);
+  --explore-glow: rgba(123, 202, 154, 0.24);
+}
+
+.card-pentest {
+  --explore-accent: rgba(95, 152, 176, 0.82);
+  --explore-glow: rgba(117, 197, 210, 0.22);
+}
+
+.card-reverse {
+  --explore-accent: rgba(84, 118, 188, 0.82);
+  --explore-glow: rgba(109, 147, 214, 0.2);
+}
+
+.card-java {
+  --explore-accent: rgba(122, 91, 180, 0.82);
+  --explore-glow: rgba(162, 122, 205, 0.18);
+}
+
+.card-db {
+  --explore-accent: rgba(91, 163, 130, 0.82);
+  --explore-glow: rgba(124, 196, 162, 0.2);
+}
+
+.card-structure {
+  --explore-accent: rgba(70, 144, 173, 0.82);
+  --explore-glow: rgba(94, 181, 205, 0.2);
+}
+
+.card-reading {
+  --explore-accent: rgba(79, 119, 186, 0.82);
+  --explore-glow: rgba(110, 149, 210, 0.18);
+}
+
+.card-life {
+  --explore-accent: rgba(118, 160, 85, 0.82);
+  --explore-glow: rgba(155, 196, 118, 0.2);
 }
 
 :root[data-theme='dark'] {
@@ -451,8 +572,21 @@ body > .sitebg .siteblur {
   box-shadow: 0 12px 30px rgba(9, 4, 16, 0.22);
 }
 
+:root[data-theme='dark'] .explore-hero {
+  background:
+    radial-gradient(circle at top right, rgba(209, 180, 126, 0.12), rgba(209, 180, 126, 0) 34%),
+    linear-gradient(145deg, rgba(39, 33, 50, 0.84), rgba(31, 27, 42, 0.9));
+  border-color: rgba(214, 181, 126, 0.12);
+  box-shadow: 0 18px 40px rgba(9, 4, 16, 0.2);
+}
+
+:root[data-theme='dark'] .explore-hero__eyebrow {
+  background: rgba(56, 49, 69, 0.8);
+  color: var(--accent);
+}
+
 :root[data-theme='dark'] .explore-card {
-  background: rgba(39, 33, 50, 0.76);
+  background: rgba(39, 33, 50, 0.8);
   border-color: rgba(214, 181, 126, 0.12);
   box-shadow: 0 18px 40px rgba(9, 4, 16, 0.22);
 }
@@ -460,6 +594,14 @@ body > .sitebg .siteblur {
 :root[data-theme='dark'] .explore-card:hover {
   border-color: rgba(214, 181, 126, 0.28);
   box-shadow: 0 20px 46px rgba(9, 4, 16, 0.3);
+}
+
+:root[data-theme='dark'] .explore-card::after {
+  opacity: 0.62;
+}
+
+:root[data-theme='dark'] .explore-kicker {
+  color: var(--accent);
 }
 
 :root[data-theme='dark'] .explore-link {
@@ -506,10 +648,15 @@ body > .sitebg .siteblur {
     display: none;
   }
 
+  .explore-hero {
+    padding: 22px 20px 24px;
+  }
+
   .explore-card {
-    grid-template-columns: 72px 1fr;
+    grid-template-columns: 72px minmax(0, 1fr);
     gap: 16px;
     padding: 18px 18px 16px;
+    min-height: 0;
   }
 
   .explore-badge {
@@ -517,6 +664,10 @@ body > .sitebg .siteblur {
     height: 72px;
     border-radius: 20px;
     font-size: 1.68rem;
+  }
+
+  .explore-copy strong {
+    font-size: 1.12rem;
   }
 
   .explore-state {
@@ -528,5 +679,12 @@ body > .sitebg .siteblur {
     grid-column: 2;
     justify-items: start;
     align-content: start;
+  }
+
+  .explore-card::after {
+    right: -78px;
+    top: -68px;
+    width: 180px;
+    height: 180px;
   }
 }
