@@ -306,14 +306,24 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记50"><a href="#Java笔记50" class="headerlink" title="Java笔记50"></a>Java笔记50</h1><p>分页是传统后台项目中最常见的列表需求之一。它同时涉及 SQL、后端对象封装和 JSP 页面展示。</p>
+    <h1 id="Java笔记50-JDBC分页与JSP展示"><a href="#Java笔记50-JDBC分页与JSP展示" class="headerlink" title="Java笔记50-JDBC分页与JSP展示"></a>Java笔记50-JDBC分页与JSP展示</h1><p>分页是传统后台项目中最常见的列表需求之一。它同时涉及 SQL、后端对象封装和 JSP 页面展示。</p>
+<blockquote>
+<p><mark>分页的核心不是“页面上有几个按钮”，而是把一大批数据按稳定规则切成一页一页返回。</mark></p>
+</blockquote>
 <hr>
-<h2 id="分页为什么是数据库项目绕不开的主题"><a href="#分页为什么是数据库项目绕不开的主题" class="headerlink" title="分页为什么是数据库项目绕不开的主题"></a>分页为什么是数据库项目绕不开的主题</h2><p>和 MyBatis、PageHelper 这类框架化分页方案相比，这个项目里的 <code>PageInfo</code> 是更原始、也更容易看清本质的一种手写分页实现。</p>
-<p>分页是传统后台项目里很常见的功能；这个项目里把分页结果封装成了 <code>PageInfo</code>，包含列表数据、总页数、当前页和页大小；后台先算出分页数据，再交给 JSP 做展示；这是一篇非常适合从“业务需求”切入的文章。</p>
-<p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 就会明白框架到底帮我们省掉了哪些重复劳动。</p>
-<h2 id="查询结果和页面展示该怎么配合"><a href="#查询结果和页面展示该怎么配合" class="headerlink" title="查询结果和页面展示该怎么配合"></a>查询结果和页面展示该怎么配合</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
+<h2 id="🧩-分页为什么是数据库项目绕不开的主题"><a href="#🧩-分页为什么是数据库项目绕不开的主题" class="headerlink" title="🧩 分页为什么是数据库项目绕不开的主题"></a>🧩 分页为什么是数据库项目绕不开的主题</h2><p>和 MyBatis、PageHelper 这类框架化分页方案相比，这个项目里的 <code>PageInfo</code> 是更原始、也更容易看清本质的一种手写分页实现。</p>
+<p>分页是传统后台项目里很常见的功能；这个项目里把分页结果封装成了 <code>PageInfo</code>，包含列表数据、总页数、当前页和页大小；后台先算出分页数据，再交给 JSP 做展示；这套结构很适合从“业务需求”切入理解。</p>
+<p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。分页只是把这条访问链路进一步拆成了“查当前页数据”和“查总数量”两个动作。</p>
+<h2 id="🔬-分页本质上是-SQL-截取与页面状态的配合"><a href="#🔬-分页本质上是-SQL-截取与页面状态的配合" class="headerlink" title="🔬 分页本质上是 SQL 截取与页面状态的配合"></a>🔬 分页本质上是 SQL 截取与页面状态的配合</h2><p>分页至少需要三个核心参数：当前页 <code>pageNo</code>、每页数量 <code>pageSize</code>、总记录数 <code>totalCount</code>。有了这些参数，才能继续计算偏移量和总页数。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">offset = (pageNo - 1) * pageSize</span><br><span class="line">totalPage = ceil(totalCount / pageSize)</span><br></pre></td></tr></table></figure>
+
+<p>在 MySQL 中，最常见的分页 SQL 形态是：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span></span><br><span class="line"><span class="keyword">FROM</span> tb_brand</span><br><span class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> id</span><br><span class="line">LIMIT ?, ?</span><br></pre></td></tr></table></figure>
+
+<p>第一个占位符对应偏移量，第二个占位符对应本页需要取多少条。这里必须配合稳定排序，否则数据顺序可能在不同请求之间变化，页面就会出现重复或遗漏。分页不是单纯少查几条数据，而是在数据库结果集上建立一套稳定的切片规则。</p>
+<h2 id="💡-查询结果和页面展示该怎么配合"><a href="#💡-查询结果和页面展示该怎么配合" class="headerlink" title="💡 查询结果和页面展示该怎么配合"></a>💡 查询结果和页面展示该怎么配合</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
 <p>登录功能让我们看到查询单条数据时参数绑定和结果封装的写法；品牌列表和分页功能则把“查询多条数据”以及“前台展示”串了起来；这类案例最适合拿来解释 JDBC 为什么总和 Servlet、JSP 一起出现。</p>
-<p>可以先看一段最能代表这一节的代码，很多概念放到具体写法里会更容易看懂。JDBC 代码最适合按“连接 -&gt; SQL -&gt; 参数 -&gt; 结果 -&gt; 关闭资源”这条顺序去读。只要顺序感建立起来，哪怕代码行数变多，也不会轻易看乱。</p>
+<p>下面这段代码最能代表分页查询的核心过程。JDBC 代码最适合按“连接 -&gt; SQL -&gt; 参数 -&gt; 结果 -&gt; 关闭资源”这条顺序去读。只要顺序感建立起来，哪怕代码行数变多，也不会轻易看乱。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">offset</span> <span class="operator">=</span> (pageNo - <span class="number">1</span>) * pageSize;</span><br><span class="line">List&lt;Brand&gt; list = branddao.getByPage(offset, pageSize);</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">totalCount</span> <span class="operator">=</span> branddao.getTotalCount();</span><br><span class="line"><span class="type">int</span> <span class="variable">totalPage</span> <span class="operator">=</span> (<span class="type">int</span>) Math.ceil((<span class="type">double</span>) totalCount / pageSize);</span><br><span class="line"><span class="type">PageInfo</span> <span class="variable">pageInfo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PageInfo</span>(list, totalPage, pageNo, pageSize);</span><br></pre></td></tr></table></figure>
 
 <p>把这段代码拆开看，最关键的地方其实就在下面几处：</p>
@@ -322,19 +332,41 @@
 <li><code>PageInfo</code> 把当前页数据、总页数、页大小等信息打包起来，便于 JSP 页面统一使用。</li>
 <li>JSP 里的页码循环和上一页、下一页链接，说明分页最终还要落实到页面跳转逻辑。</li>
 </ul>
-<p>JDBC 这一层的细节看起来繁琐，但也正因为它足够原始，才特别适合理解数据库访问的本来面目。后面换成连接池、DBUtils 或 ORM 框架时，你会更清楚每一层抽象到底替你做了什么。</p>
-<h2 id="写分页时最该先理清的几个参数"><a href="#写分页时最该先理清的几个参数" class="headerlink" title="写分页时最该先理清的几个参数"></a>写分页时最该先理清的几个参数</h2><p>这一块如果只是停在“会写”其实还不够，更有价值的是知道它还有哪些常见写法，以及它会继续和哪些知识连起来。</p>
-<ul>
-<li>如果后面使用 MyBatis，可以引入 PageHelper 自动改写 SQL 来完成分页。</li>
-<li>如果换成前后端分离，分页对象通常会以 JSON 形式返回给前端表格组件。</li>
-<li>这一节更适合用来理解分页的底层思路，比直接引入插件更容易看清实现过程。</li>
-</ul>
-<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
-<ul>
-<li>可以继续补连接池、DBUtils 和事务控制，让 JDBC 知识链更完整。</li>
-<li>涉及增删改查时，尽量把参数绑定和 SQL 组织方式分开解释，会更清楚。</li>
-<li>如果继续衔接框架学习，这一类文章会帮助更顺畅地理解 MyBatis 的抽象。</li>
-</ul>
+<p>JDBC 这一层的细节看起来繁琐，但也正因为它足够原始，才特别适合理解数据库访问的本来面目。后面换成 PageHelper 这类工具时，底层分页公式仍然没有消失，只是被框架自动处理了。</p>
+<h2 id="🔸-PageInfo-的价值是把页面需要的信息一次说清"><a href="#🔸-PageInfo-的价值是把页面需要的信息一次说清" class="headerlink" title="🔸 PageInfo 的价值是把页面需要的信息一次说清"></a>🔸 <code>PageInfo</code> 的价值是把页面需要的信息一次说清</h2><p>如果只返回当前页列表，JSP 页面无法知道是否还有下一页，也无法知道总页数。<code>PageInfo</code> 这类对象的意义，就是把分页页面真正需要的状态统一封装起来：</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>list</code></td>
+<td>当前页数据</td>
+</tr>
+<tr>
+<td><code>pageNo</code></td>
+<td>当前页码</td>
+</tr>
+<tr>
+<td><code>pageSize</code></td>
+<td>每页条数</td>
+</tr>
+<tr>
+<td><code>totalCount</code></td>
+<td>总记录数</td>
+</tr>
+<tr>
+<td><code>totalPage</code></td>
+<td>总页数</td>
+</tr>
+</tbody></table>
+<p>这样 Controller 只需要把一个分页对象交给 JSP，页面就能同时完成数据展示、页码渲染和上一页 &#x2F; 下一页判断。</p>
+<h2 id="💡-大偏移量分页会带来性能问题"><a href="#💡-大偏移量分页会带来性能问题" class="headerlink" title="💡 大偏移量分页会带来性能问题"></a>💡 大偏移量分页会带来性能问题</h2><p>手写分页时还需要知道一个更深入的点：<code>LIMIT offset, pageSize</code> 在数据量很大、页码很靠后时可能变慢，因为数据库需要跳过大量记录后再取当前页。后台管理系统早期可以先使用这种写法，但数据量继续增长时，就要结合索引、条件筛选，甚至改成基于游标或上一页最后一条记录的分页方式。</p>
+<p>这不是入门阶段必须马上实现的优化，但它能帮助建立一个重要认知：分页既是页面功能，也是数据库查询性能问题。</p>
+<h2 id="🧠-分页最先要理清的几个参数"><a href="#🧠-分页最先要理清的几个参数" class="headerlink" title="🧠 分页最先要理清的几个参数"></a>🧠 分页最先要理清的几个参数</h2><p>分页最核心的几个参数是 <code>pageNo</code>、<code>pageSize</code>、<code>offset</code>、<code>totalCount</code> 和 <code>totalPage</code>。它们分别对应页面状态、SQL 截取位置和总页数计算，任何一个处理不清，页面展示都会出现错位。</p>
+<p>JDBC 手写分页虽然代码多，但能把底层公式讲得最清楚。后面使用 PageHelper、MyBatis-Plus 或前端表格组件时，分页对象和总数统计依然存在，只是实现方式被框架封装了。</p>
 
   </article>
 </section>
@@ -345,7 +377,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -354,7 +386,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -362,7 +394,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B050"><span class="toc-text">Java笔记50</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A1%B9%E7%9B%AE%E7%BB%95%E4%B8%8D%E5%BC%80%E7%9A%84%E4%B8%BB%E9%A2%98"><span class="toc-text">分页为什么是数据库项目绕不开的主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E5%92%8C%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA%E8%AF%A5%E6%80%8E%E4%B9%88%E9%85%8D%E5%90%88"><span class="toc-text">查询结果和页面展示该怎么配合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E5%88%86%E9%A1%B5%E6%97%B6%E6%9C%80%E8%AF%A5%E5%85%88%E7%90%86%E6%B8%85%E7%9A%84%E5%87%A0%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-text">写分页时最该先理清的几个参数</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B050-JDBC%E5%88%86%E9%A1%B5%E4%B8%8EJSP%E5%B1%95%E7%A4%BA"><span class="toc-text">Java笔记50-JDBC分页与JSP展示</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E5%88%86%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A1%B9%E7%9B%AE%E7%BB%95%E4%B8%8D%E5%BC%80%E7%9A%84%E4%B8%BB%E9%A2%98"><span class="toc-text">🧩 分页为什么是数据库项目绕不开的主题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E5%88%86%E9%A1%B5%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF-SQL-%E6%88%AA%E5%8F%96%E4%B8%8E%E9%A1%B5%E9%9D%A2%E7%8A%B6%E6%80%81%E7%9A%84%E9%85%8D%E5%90%88"><span class="toc-text">🔬 分页本质上是 SQL 截取与页面状态的配合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E6%9F%A5%E8%AF%A2%E7%BB%93%E6%9E%9C%E5%92%8C%E9%A1%B5%E9%9D%A2%E5%B1%95%E7%A4%BA%E8%AF%A5%E6%80%8E%E4%B9%88%E9%85%8D%E5%90%88"><span class="toc-text">💡 查询结果和页面展示该怎么配合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-PageInfo-%E7%9A%84%E4%BB%B7%E5%80%BC%E6%98%AF%E6%8A%8A%E9%A1%B5%E9%9D%A2%E9%9C%80%E8%A6%81%E7%9A%84%E4%BF%A1%E6%81%AF%E4%B8%80%E6%AC%A1%E8%AF%B4%E6%B8%85"><span class="toc-text">🔸 PageInfo 的价值是把页面需要的信息一次说清</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E5%A4%A7%E5%81%8F%E7%A7%BB%E9%87%8F%E5%88%86%E9%A1%B5%E4%BC%9A%E5%B8%A6%E6%9D%A5%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">💡 大偏移量分页会带来性能问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%88%86%E9%A1%B5%E6%9C%80%E5%85%88%E8%A6%81%E7%90%86%E6%B8%85%E7%9A%84%E5%87%A0%E4%B8%AA%E5%8F%82%E6%95%B0"><span class="toc-text">🧠 分页最先要理清的几个参数</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

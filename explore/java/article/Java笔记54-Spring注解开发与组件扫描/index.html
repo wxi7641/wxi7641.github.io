@@ -894,14 +894,33 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记54"><a href="#Java笔记54" class="headerlink" title="Java笔记54"></a>Java笔记54</h1><p>Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。</p>
+    <h1 id="Java笔记54-Spring注解开发与组件扫描"><a href="#Java笔记54-Spring注解开发与组件扫描" class="headerlink" title="Java笔记54-Spring注解开发与组件扫描"></a>Java笔记54-Spring注解开发与组件扫描</h1><p>Spring 从 XML 走向注解，本质是把对象声明和依赖关系逐步从配置文件转移到代码标记上。</p>
+<blockquote>
+<p><mark>注解开发不是把 XML 全部删掉，而是把“谁是组件、谁依赖谁”这件事更贴近代码本身。</mark></p>
+</blockquote>
 <hr>
-<h2 id="不写-XML-之后-Spring-到底怎么找到对象"><a href="#不写-XML-之后-Spring-到底怎么找到对象" class="headerlink" title="不写 XML 之后 Spring 到底怎么找到对象"></a>不写 XML 之后 Spring 到底怎么找到对象</h2><p>常见的 IOC 注解包括 <code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>、<code>@Autowired</code>、<code>@Qualifier</code>，而项目里的组件扫描配置正好是它们的运行前提。</p>
-<p>Spring 早期很多配置都写在 XML 里，后来逐渐转向注解开发；这个项目里已经开始使用 <code>@Component</code> 这样的注解；<code>applicationContext.xml</code> 中的组件扫描配置，正好说明 Spring 会去指定包里寻找这些组件；这一节本身就是从 XML 过渡到注解开发的轻量入门说明。</p>
+<h2 id="🧩-不写-XML-之后-Spring-到底怎么找到对象"><a href="#🧩-不写-XML-之后-Spring-到底怎么找到对象" class="headerlink" title="🧩 不写 XML 之后 Spring 到底怎么找到对象"></a>🧩 不写 XML 之后 Spring 到底怎么找到对象</h2><p>常见的 IOC 注解包括 <code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>、<code>@Autowired</code>、<code>@Qualifier</code>，而项目里的组件扫描配置正好是它们的运行前提。</p>
+<p>Spring 早期很多配置都写在 XML 里，后来逐渐转向注解开发；项目中已经开始使用 <code>@Component</code> 这样的注解；<code>applicationContext.xml</code> 中的组件扫描配置，正好说明 Spring 会去指定包里寻找这些组件；这部分内容正好说明 XML 怎样过渡到注解开发。</p>
 <p>Spring 的学习重点从来都不只是配置文件，而是理解容器和代理这两个抽象。只要把对象如何被托管、依赖如何被注入、横切逻辑如何被织入想明白，后面的注解开发、事务和整合配置都会自然很多。</p>
-<h2 id="组件扫描这件事背后的思路是什么"><a href="#组件扫描这件事背后的思路是什么" class="headerlink" title="组件扫描这件事背后的思路是什么"></a>组件扫描这件事背后的思路是什么</h2><p>Spring 这一层放到项目里看，最直观的就是对象不再自己 <code>new</code> 来 <code>new</code> 去，而是交给容器统一管理。控制器依赖服务层、服务层依赖数据访问层，再加上代理和切面去处理公共逻辑，整套结构会比手写耦合代码清晰很多。</p>
+<h2 id="🔬-组件扫描做的事，其实就是“按规则找-Bean”"><a href="#🔬-组件扫描做的事，其实就是“按规则找-Bean”" class="headerlink" title="🔬 组件扫描做的事，其实就是“按规则找 Bean”"></a>🔬 组件扫描做的事，其实就是“按规则找 Bean”</h2><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.java&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这行配置的本质，是告诉 Spring 去指定包及其子包下寻找带注解的类，然后把它们注册成 Bean。<code>@Controller</code>、<code>@Service</code>、<code>@Repository</code>、<code>@Component</code> 这些注解的共同点，就是都在声明：这个类应该交给 Spring 管理。</p>
+<p>组件扫描的实际意义有三层：</p>
+<ul>
+<li>省掉大量 <code>&lt;bean&gt;</code> 手工声明</li>
+<li>让组件身份直接贴在类定义上</li>
+<li>让包结构和系统分层更贴近</li>
+</ul>
+<p>这也是为什么注解开发特别适合 Java Web 项目。Controller、Service、DAO 的职责边界，本来就应该体现在代码结构里。</p>
+<h2 id="🔸-注入方式不同，依赖表达也不同"><a href="#🔸-注入方式不同，依赖表达也不同" class="headerlink" title="🔸 注入方式不同，依赖表达也不同"></a>🔸 注入方式不同，依赖表达也不同</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="keyword">private</span> StudentService studentService;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Resource(name = &quot;studentService&quot;)</span></span><br><span class="line"><span class="keyword">private</span> StudentService studentService;</span><br></pre></td></tr></table></figure>
+
+<p>两者都能完成依赖注入，但侧重点不同。<code>@Autowired</code> 更偏按类型装配，<code>@Resource</code> 更偏按名称装配。这种差异在简单项目里不明显，但在实现类较多、同类型 Bean 较多时就很重要，因为它直接决定容器该把哪个对象注入进来。</p>
+<p>注解开发真正改变的，不只是写法，还有阅读方式。以前要在 XML 里来回找 bean，现在更多时候可以直接顺着类上的注解和字段上的注入关系看对象图。</p>
+<h2 id="🔍-组件扫描这件事背后的思路是什么"><a href="#🔍-组件扫描这件事背后的思路是什么" class="headerlink" title="🔍 组件扫描这件事背后的思路是什么"></a>🔍 组件扫描这件事背后的思路是什么</h2><p>Spring 这一层放到项目里看，最直观的就是对象不再自己 <code>new</code> 来 <code>new</code> 去，而是交给容器统一管理。控制器依赖服务层、服务层依赖数据访问层，再加上代理和切面去处理公共逻辑，整套结构会比手写耦合代码清晰很多。</p>
 <p>IOC 最直观的体现就是三层对象的依赖关系不再手工维护；代理相关示例则适合拿来讲日志、事务这类公共逻辑为什么不该散落在业务方法里；只要这两条线看顺了，后面的注解开发和整合配置就会更容易。</p>
-<p>可以先看一段最能代表这一节的代码，很多概念放到具体写法里会更容易看懂。Spring 相关代码往往不是单靠一个方法就能看懂，关键在于它背后的容器和代理机制。先看这段典型代码，再回头理解 Bean、依赖注入和增强逻辑，会更容易建立整体感。</p>
+<p>组件扫描的核心代码可以看下面这段。Spring 相关代码往往不是单靠一个方法就能看懂，关键在于它背后的容器和代理机制。先看这段典型代码，再回头理解 Bean、依赖注入和增强逻辑，会更容易建立整体感。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">&quot;com.java&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>把这段代码拆开看，最关键的地方其实就在下面几处：</p>
@@ -910,19 +929,10 @@
 <li><code>@Component</code> 及其派生注解本质上都代表“把这个类交给 Spring 容器管理”。</li>
 <li>组件扫描生效后，很多原来写在 XML 里的 <code>&lt;bean&gt;</code> 声明可以省略。</li>
 </ul>
-<p>从这一节再往后走，很多框架功能其实都能回到 IOC 或 AOP 身上。学会抽象出“对象交给谁管理”“公共逻辑放在哪里”，后面理解事务、缓存和权限控制会快很多。</p>
-<h2 id="注解开发方便-但别只停在会写注解"><a href="#注解开发方便-但别只停在会写注解" class="headerlink" title="注解开发方便 但别只停在会写注解"></a>注解开发方便 但别只停在会写注解</h2><p>这一块如果只是停在“会写”其实还不够，更有价值的是知道它还有哪些常见写法，以及它会继续和哪些知识连起来。</p>
-<ul>
-<li>注解开发并不代表 XML 完全消失，像 AOP、事务、整合配置在传统项目里仍然很常见。</li>
-<li><code>@Resource</code> 更偏按名称注入，<code>@Autowired</code> 更偏按类型注入，这一点在复杂项目里很重要。</li>
-<li>这一节可以用来理解 Spring 从 XML 过渡到注解开发的过程。</li>
-</ul>
-<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
-<ul>
-<li>继续往下写时，可以把 Bean 生命周期、事务、整合测试单独拉出来讲。</li>
-<li>进一步学习代理相关内容时，也可以同时比较静态代理、JDK 代理和 CGLIB 的边界。</li>
-<li>理解这类内容时，可以始终围绕“容器管理对象”和“横切逻辑解耦”两条主线展开。</li>
-</ul>
+<p>Spring 后续的很多框架功能，其实都能回到 IOC 或 AOP 身上。学会抽象出“对象交给谁管理”“公共逻辑放在哪里”，后面理解事务、缓存和权限控制会快很多。</p>
+<h2 id="💡-Bean-作用域和初始化"><a href="#💡-Bean-作用域和初始化" class="headerlink" title="💡 Bean 作用域和初始化"></a>💡 Bean 作用域和初始化</h2><p>注解开发不只是把组件扫进来，还涉及 Bean 的作用域、初始化和销毁。比如单例 Bean 和原型 Bean 的行为就不同，初始化方法和销毁方法也能通过注解或配置方式参与控制。把这些知识补上之后，注解开发才算真正从“会写”走到“知道容器怎么工作”。</p>
+<h2 id="🧠-注解开发的关键不只是写法"><a href="#🧠-注解开发的关键不只是写法" class="headerlink" title="🧠 注解开发的关键不只是写法"></a>🧠 注解开发的关键不只是写法</h2><p>注解开发让 Bean 声明和依赖注入更贴近代码，但它并没有改变 Spring 的底层逻辑。组件仍然要进入容器，依赖仍然要完成装配，Bean 生命周期仍然存在。</p>
+<p>所以注解开发的重点不是记住多少注解，而是理解组件扫描如何把类注册成 Bean，注入注解如何把对象连起来。只要这层理解稳定，后面从 XML 项目过渡到 Spring Boot 自动扫描时，思路会非常顺。</p>
 
   </article>
 </section>
@@ -933,7 +943,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -942,7 +952,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -950,7 +960,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B054"><span class="toc-text">Java笔记54</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8D%E5%86%99-XML-%E4%B9%8B%E5%90%8E-Spring-%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E6%89%BE%E5%88%B0%E5%AF%B9%E8%B1%A1"><span class="toc-text">不写 XML 之后 Spring 到底怎么找到对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F%E8%BF%99%E4%BB%B6%E4%BA%8B%E8%83%8C%E5%90%8E%E7%9A%84%E6%80%9D%E8%B7%AF%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">组件扫描这件事背后的思路是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E6%96%B9%E4%BE%BF-%E4%BD%86%E5%88%AB%E5%8F%AA%E5%81%9C%E5%9C%A8%E4%BC%9A%E5%86%99%E6%B3%A8%E8%A7%A3"><span class="toc-text">注解开发方便 但别只停在会写注解</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B054-Spring%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E4%B8%8E%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F"><span class="toc-text">Java笔记54-Spring注解开发与组件扫描</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%B8%8D%E5%86%99-XML-%E4%B9%8B%E5%90%8E-Spring-%E5%88%B0%E5%BA%95%E6%80%8E%E4%B9%88%E6%89%BE%E5%88%B0%E5%AF%B9%E8%B1%A1"><span class="toc-text">🧩 不写 XML 之后 Spring 到底怎么找到对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F%E5%81%9A%E7%9A%84%E4%BA%8B%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%B0%B1%E6%98%AF%E2%80%9C%E6%8C%89%E8%A7%84%E5%88%99%E6%89%BE-Bean%E2%80%9D"><span class="toc-text">🔬 组件扫描做的事，其实就是“按规则找 Bean”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E6%B3%A8%E5%85%A5%E6%96%B9%E5%BC%8F%E4%B8%8D%E5%90%8C%EF%BC%8C%E4%BE%9D%E8%B5%96%E8%A1%A8%E8%BE%BE%E4%B9%9F%E4%B8%8D%E5%90%8C"><span class="toc-text">🔸 注入方式不同，依赖表达也不同</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E7%BB%84%E4%BB%B6%E6%89%AB%E6%8F%8F%E8%BF%99%E4%BB%B6%E4%BA%8B%E8%83%8C%E5%90%8E%E7%9A%84%E6%80%9D%E8%B7%AF%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">🔍 组件扫描这件事背后的思路是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-Bean-%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-text">💡 Bean 作用域和初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91%E7%9A%84%E5%85%B3%E9%94%AE%E4%B8%8D%E5%8F%AA%E6%98%AF%E5%86%99%E6%B3%95"><span class="toc-text">🧠 注解开发的关键不只是写法</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

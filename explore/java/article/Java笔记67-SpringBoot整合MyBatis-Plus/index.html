@@ -894,23 +894,35 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记67"><a href="#Java笔记67" class="headerlink" title="Java笔记67"></a>Java笔记67</h1><p>写过一段时间原生 MyBatis 之后，再看 MyBatis-Plus，最大的感受通常不是“功能变多了”，而是很多单表 CRUD 不再值得反复手写。它不是替代 MyBatis 思想，而是在 MyBatis 之上继续做增强。</p>
-<h2 id="MyBatis-Plus-解决的是哪一层重复劳动"><a href="#MyBatis-Plus-解决的是哪一层重复劳动" class="headerlink" title="MyBatis-Plus 解决的是哪一层重复劳动"></a>MyBatis-Plus 解决的是哪一层重复劳动</h2><p>先看原生 MyBatis 常见结构：</p>
+    <h1 id="Java笔记67-SpringBoot整合MyBatis-Plus"><a href="#Java笔记67-SpringBoot整合MyBatis-Plus" class="headerlink" title="Java笔记67-SpringBoot整合MyBatis-Plus"></a>Java笔记67-SpringBoot整合MyBatis-Plus</h1><p>写过一段时间原生 MyBatis 之后，再看 MyBatis-Plus，最大的感受通常不是“功能变多了”，而是很多单表 CRUD 不再值得反复手写。它不是替代 MyBatis 思想，而是在 MyBatis 之上继续做增强。</p>
+<blockquote>
+<p><mark>MyBatis-Plus 适合把标准单表操作变轻，但它不应该替代对 SQL 和数据模型的理解。</mark></p>
+</blockquote>
+<h2 id="🧩-MyBatis-Plus-解决的是哪一层重复劳动"><a href="#🧩-MyBatis-Plus-解决的是哪一层重复劳动" class="headerlink" title="🧩 MyBatis-Plus 解决的是哪一层重复劳动"></a>🧩 MyBatis-Plus 解决的是哪一层重复劳动</h2><p>先看原生 MyBatis 常见结构：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">BrandMapper</span> &#123;</span><br><span class="line">    List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">mapper</span> <span class="attr">namespace</span>=<span class="string">&quot;com.java.springboot.mapper.BrandMapper&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;selectAll&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;Brand&quot;</span>&gt;</span></span><br><span class="line">        SELECT * FROM tb_brand</span><br><span class="line">    <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">mapper</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>这种写法没有问题，但如果每个实体都要自己补查询、新增、删除、更新，重复度就会越来越高。MyBatis-Plus 的出发点正是把这类重复动作收起来。</p>
-<h2 id="BaseMapper-为什么会显得很轻"><a href="#BaseMapper-为什么会显得很轻" class="headerlink" title="BaseMapper&lt;T&gt; 为什么会显得很轻"></a><code>BaseMapper&lt;T&gt;</code> 为什么会显得很轻</h2><p>典型写法通常是：</p>
+<h2 id="📌-BaseMapper-为什么会显得很轻"><a href="#📌-BaseMapper-为什么会显得很轻" class="headerlink" title="📌 BaseMapper&lt;T&gt; 为什么会显得很轻"></a>📌 <code>BaseMapper&lt;T&gt;</code> 为什么会显得很轻</h2><p>最小定义通常是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title class_">UserMapper</span> <span class="keyword">extends</span> <span class="title class_">BaseMapper</span>&lt;User&gt; &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>只要继承了 <code>BaseMapper&lt;T&gt;</code>，单表常用 CRUD 方法就已经具备了。也就是说，<strong>很多时候连基础 XML 都不用再手写</strong>。</p>
-<h2 id="分页插件是-MyBatis-Plus-最容易直接受益的一部分"><a href="#分页插件是-MyBatis-Plus-最容易直接受益的一部分" class="headerlink" title="分页插件是 MyBatis-Plus 最容易直接受益的一部分"></a>分页插件是 MyBatis-Plus 最容易直接受益的一部分</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> MybatisPlusInterceptor <span class="title function_">mybatisPlusInterceptor</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">MybatisPlusInterceptor</span> <span class="variable">interceptor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MybatisPlusInterceptor</span>();</span><br><span class="line">    interceptor.addInnerInterceptor(<span class="keyword">new</span> <span class="title class_">PaginationInnerInterceptor</span>(DbType.MYSQL));</span><br><span class="line">    <span class="keyword">return</span> interceptor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="🔬-BaseMapper-轻，是因为表和实体之间有了约定"><a href="#🔬-BaseMapper-轻，是因为表和实体之间有了约定" class="headerlink" title="🔬 BaseMapper&lt;T&gt; 轻，是因为表和实体之间有了约定"></a>🔬 <code>BaseMapper&lt;T&gt;</code> 轻，是因为表和实体之间有了约定</h2><p>MyBatis-Plus 能直接提供 <code>insert</code>、<code>selectById</code>、<code>updateById</code>、<code>deleteById</code> 等方法，前提是它能根据实体类、主键、字段名和表名推导出对应 SQL。也就是说，它依赖的是一套约定：</p>
+<ul>
+<li>实体类对应数据库表</li>
+<li>主键字段有明确标识</li>
+<li>字段名和列名能按规则映射</li>
+<li>单表 CRUD 的 SQL 结构相对稳定</li>
+</ul>
+<p>如果表结构命名不规范、字段映射复杂，或者查询经常跨多张表，MyBatis-Plus 的便利性就会下降，这时仍然要回到原生 SQL 表达能力上。</p>
+<h2 id="💡-分页插件是-MyBatis-Plus-最容易直接受益的一部分"><a href="#💡-分页插件是-MyBatis-Plus-最容易直接受益的一部分" class="headerlink" title="💡 分页插件是 MyBatis-Plus 最容易直接受益的一部分"></a>💡 分页插件是 MyBatis-Plus 最容易直接受益的一部分</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="keyword">public</span> MybatisPlusInterceptor <span class="title function_">mybatisPlusInterceptor</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="type">MybatisPlusInterceptor</span> <span class="variable">interceptor</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MybatisPlusInterceptor</span>();</span><br><span class="line">    interceptor.addInnerInterceptor(<span class="keyword">new</span> <span class="title class_">PaginationInnerInterceptor</span>(DbType.MYSQL));</span><br><span class="line">    <span class="keyword">return</span> interceptor;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>然后业务里就可以直接分页查询：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Page&lt;User&gt; page = <span class="keyword">new</span> <span class="title class_">Page</span>&lt;&gt;(<span class="number">1</span>, <span class="number">10</span>);</span><br><span class="line">Page&lt;User&gt; result = userMapper.selectPage(page, wrapper);</span><br></pre></td></tr></table></figure>
 
-<h2 id="自动填充和逻辑删除为什么很适合后台系统"><a href="#自动填充和逻辑删除为什么很适合后台系统" class="headerlink" title="自动填充和逻辑删除为什么很适合后台系统"></a>自动填充和逻辑删除为什么很适合后台系统</h2><table>
+<p>这里的 <code>wrapper</code> 通常用来组织查询条件，例如等值、模糊搜索、排序等。它能减少一部分动态 SQL，但也要控制复杂度。如果查询条件已经非常复杂，继续硬塞进 Wrapper 反而会降低可读性。</p>
+<h2 id="💡-自动填充和逻辑删除为什么很适合后台系统"><a href="#💡-自动填充和逻辑删除为什么很适合后台系统" class="headerlink" title="💡 自动填充和逻辑删除为什么很适合后台系统"></a>💡 自动填充和逻辑删除为什么很适合后台系统</h2><table>
 <thead>
 <tr>
 <th>功能</th>
@@ -930,7 +942,8 @@
 <td>自增、雪花算法、UUID 等</td>
 </tr>
 </tbody></table>
-<h2 id="什么时候-MyBatis-Plus-不应该硬上"><a href="#什么时候-MyBatis-Plus-不应该硬上" class="headerlink" title="什么时候 MyBatis-Plus 不应该硬上"></a>什么时候 MyBatis-Plus 不应该硬上</h2><p>虽然 MyBatis-Plus 很方便，但它并不意味着 XML 可以完全消失。下面这些场景依然经常会回到原生 MyBatis：</p>
+<p>逻辑删除尤其需要注意：它并不是真的删除数据，而是在查询时默认过滤掉已删除记录。这样便于恢复和审计，但也意味着唯一索引、历史数据统计、关联查询都要考虑删除标记的影响。</p>
+<h2 id="🧠-MyBatis-Plus-的适用边界"><a href="#🧠-MyBatis-Plus-的适用边界" class="headerlink" title="🧠 MyBatis-Plus 的适用边界"></a>🧠 MyBatis-Plus 的适用边界</h2><p>虽然 MyBatis-Plus 很方便，但它并不意味着 XML 可以完全消失。下面这些场景依然经常会回到原生 MyBatis：</p>
 <ul>
 <li>多表联查很复杂</li>
 <li>统计 SQL 较多</li>
@@ -950,7 +963,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -959,7 +972,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -967,7 +980,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B067"><span class="toc-text">Java笔记67</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MyBatis-Plus-%E8%A7%A3%E5%86%B3%E7%9A%84%E6%98%AF%E5%93%AA%E4%B8%80%E5%B1%82%E9%87%8D%E5%A4%8D%E5%8A%B3%E5%8A%A8"><span class="toc-text">MyBatis-Plus 解决的是哪一层重复劳动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#BaseMapper-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%98%BE%E5%BE%97%E5%BE%88%E8%BD%BB"><span class="toc-text">BaseMapper&lt;T&gt; 为什么会显得很轻</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6%E6%98%AF-MyBatis-Plus-%E6%9C%80%E5%AE%B9%E6%98%93%E7%9B%B4%E6%8E%A5%E5%8F%97%E7%9B%8A%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">分页插件是 MyBatis-Plus 最容易直接受益的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%E5%92%8C%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E9%80%82%E5%90%88%E5%90%8E%E5%8F%B0%E7%B3%BB%E7%BB%9F"><span class="toc-text">自动填充和逻辑删除为什么很适合后台系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99-MyBatis-Plus-%E4%B8%8D%E5%BA%94%E8%AF%A5%E7%A1%AC%E4%B8%8A"><span class="toc-text">什么时候 MyBatis-Plus 不应该硬上</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B067-SpringBoot%E6%95%B4%E5%90%88MyBatis-Plus"><span class="toc-text">Java笔记67-SpringBoot整合MyBatis-Plus</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-MyBatis-Plus-%E8%A7%A3%E5%86%B3%E7%9A%84%E6%98%AF%E5%93%AA%E4%B8%80%E5%B1%82%E9%87%8D%E5%A4%8D%E5%8A%B3%E5%8A%A8"><span class="toc-text">🧩 MyBatis-Plus 解决的是哪一层重复劳动</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-BaseMapper-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%98%BE%E5%BE%97%E5%BE%88%E8%BD%BB"><span class="toc-text">📌 BaseMapper&lt;T&gt; 为什么会显得很轻</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-BaseMapper-%E8%BD%BB%EF%BC%8C%E6%98%AF%E5%9B%A0%E4%B8%BA%E8%A1%A8%E5%92%8C%E5%AE%9E%E4%BD%93%E4%B9%8B%E9%97%B4%E6%9C%89%E4%BA%86%E7%BA%A6%E5%AE%9A"><span class="toc-text">🔬 BaseMapper&lt;T&gt; 轻，是因为表和实体之间有了约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E5%88%86%E9%A1%B5%E6%8F%92%E4%BB%B6%E6%98%AF-MyBatis-Plus-%E6%9C%80%E5%AE%B9%E6%98%93%E7%9B%B4%E6%8E%A5%E5%8F%97%E7%9B%8A%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">💡 分页插件是 MyBatis-Plus 最容易直接受益的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E8%87%AA%E5%8A%A8%E5%A1%AB%E5%85%85%E5%92%8C%E9%80%BB%E8%BE%91%E5%88%A0%E9%99%A4%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E9%80%82%E5%90%88%E5%90%8E%E5%8F%B0%E7%B3%BB%E7%BB%9F"><span class="toc-text">💡 自动填充和逻辑删除为什么很适合后台系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-MyBatis-Plus-%E7%9A%84%E9%80%82%E7%94%A8%E8%BE%B9%E7%95%8C"><span class="toc-text">🧠 MyBatis-Plus 的适用边界</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

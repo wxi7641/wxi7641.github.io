@@ -894,11 +894,11 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记60"><a href="#Java笔记60" class="headerlink" title="Java笔记60"></a>Java笔记60</h1><p>Spring Boot 的启动类经常只有几行，但这几行代码几乎决定了整个应用怎样被拉起来。很多人第一次看到它时会觉得“太简单了”，真正往后写项目才会发现，<strong>简单只是表象，背后收起来的是大量默认配置、类路径判断和自动装配逻辑</strong>。</p>
+    <h1 id="Java笔记60-SpringBoot启动类与自动配置"><a href="#Java笔记60-SpringBoot启动类与自动配置" class="headerlink" title="Java笔记60-SpringBoot启动类与自动配置"></a>Java笔记60-SpringBoot启动类与自动配置</h1><p>Spring Boot 的启动类经常只有几行，但这几行代码几乎决定了整个应用怎样被拉起来。第一次看到它时，常会觉得“太简单了”，真正往后写项目才会发现，<strong>简单只是表象，背后收起来的是大量默认配置、类路径判断和自动装配逻辑</strong>。</p>
 <blockquote>
 <p><mark>Spring Boot 真正改变的不是 Java Web 的分层结构，而是项目启动与基础整合的成本。</mark></p>
 </blockquote>
-<h2 id="启动类为什么能成为整个项目的入口"><a href="#启动类为什么能成为整个项目的入口" class="headerlink" title="启动类为什么能成为整个项目的入口"></a>启动类为什么能成为整个项目的入口</h2><p>最常见的写法就是这样：</p>
+<h2 id="🧩-启动类为什么能成为整个项目的入口"><a href="#🧩-启动类为什么能成为整个项目的入口" class="headerlink" title="🧩 启动类为什么能成为整个项目的入口"></a>🧩 启动类为什么能成为整个项目的入口</h2><p>启动类的常见结构如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@MapperScan(&quot;com.java.springboot.mapper&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这段代码短，但至少做了四件事：</p>
@@ -927,7 +927,12 @@
 </tr>
 </tbody></table>
 <p>如果把传统 Spring + Spring MVC + MyBatis 项目放在旁边对照，会更容易感受到差异。过去常见的动作是：配 <code>web.xml</code>、配监听器、配 <code>DispatcherServlet</code>、配一堆 XML。现在这些动作被收口到了启动类和依赖体系里。</p>
-<h2 id="SpringBootApplication-并不是一个“普通注解”"><a href="#SpringBootApplication-并不是一个“普通注解”" class="headerlink" title="@SpringBootApplication 并不是一个“普通注解”"></a><code>@SpringBootApplication</code> 并不是一个“普通注解”</h2><p>它本质上是组合注解，最常见的理解方式可以拆成下面三层：</p>
+<h2 id="🔬-SpringApplication-run-不只是调用一个-main-方法"><a href="#🔬-SpringApplication-run-不只是调用一个-main-方法" class="headerlink" title="🔬 SpringApplication.run(...) 不只是调用一个 main 方法"></a>🔬 <code>SpringApplication.run(...)</code> 不只是调用一个 main 方法</h2><p><code>SpringApplication.run(Application.class, args)</code> 背后会创建应用上下文、加载环境配置、准备 BeanDefinition、刷新容器，并在 Web 项目中启动内嵌 Tomcat。也就是说，启动类虽然写得短，但它触发的是一整套 Spring 容器启动流程。</p>
+<p>可以把它理解成下面这条线：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">main 方法</span><br><span class="line">-&gt; SpringApplication.run(...)</span><br><span class="line">-&gt; 加载配置与环境</span><br><span class="line">-&gt; 创建并刷新 Spring 容器</span><br><span class="line">-&gt; 扫描组件并装配 Bean</span><br><span class="line">-&gt; 启动内嵌 Web 容器</span><br><span class="line">-&gt; 接收 HTTP 请求</span><br></pre></td></tr></table></figure>
+
+<p>这也是 Spring Boot 和传统 WAR 部署方式最大的直观差异之一：应用自己带着内嵌容器启动，而不是完全依赖外部 Tomcat 去拉起项目。</p>
+<h2 id="📌-SpringBootApplication-并不是一个“普通注解”"><a href="#📌-SpringBootApplication-并不是一个“普通注解”" class="headerlink" title="📌 @SpringBootApplication 并不是一个“普通注解”"></a>📌 <code>@SpringBootApplication</code> 并不是一个“普通注解”</h2><p>它本质上是组合注解，最常见的理解方式可以拆成下面三层：</p>
 <table>
 <thead>
 <tr>
@@ -949,7 +954,7 @@
 </tr>
 </tbody></table>
 <p>也就是说，启动类放在哪个包下，不只是目录习惯的问题，而是会直接影响组件扫描范围。启动类通常放在根包，就是为了让控制器、服务层、Mapper、配置类都能被一并扫描到。</p>
-<h2 id="自动配置到底“自动”在哪"><a href="#自动配置到底“自动”在哪" class="headerlink" title="自动配置到底“自动”在哪"></a>自动配置到底“自动”在哪</h2><p>很多人刚接触时会把自动配置理解成“框架帮忙魔法生成代码”，其实并不是。更准确的说法是：</p>
+<h2 id="🔬-自动配置到底“自动”在哪"><a href="#🔬-自动配置到底“自动”在哪" class="headerlink" title="🔬 自动配置到底“自动”在哪"></a>🔬 自动配置到底“自动”在哪</h2><p>自动配置刚进入视野时，很容易被理解成“框架帮忙魔法生成代码”，其实并不是。更准确的说法是：</p>
 <ol>
 <li>先根据依赖判断某个功能有没有出现</li>
 <li>再根据配置项判断是否满足启用条件</li>
@@ -962,7 +967,8 @@
 <li>配了 <code>server.port</code>，Tomcat 监听端口就会发生变化</li>
 </ul>
 <p>这也是为什么 Spring Boot 非常强调“依赖 + 配置”的组合关系。</p>
-<h2 id="Starter-依赖不是简单的“少写几个-jar”"><a href="#Starter-依赖不是简单的“少写几个-jar”" class="headerlink" title="Starter 依赖不是简单的“少写几个 jar”"></a>Starter 依赖不是简单的“少写几个 jar”</h2><p><code>pom.xml</code> 里最有代表性的部分通常是这些：</p>
+<p>自动配置还有一个重要特点：它通常会尊重已有 Bean。如果项目中已经手动声明了某个同类型 Bean，自动配置往往不会再创建默认对象。这样既能提供开箱即用的默认行为，又给自定义扩展留下空间。</p>
+<h2 id="🔍-Starter-依赖不是简单的“少写几个-jar”"><a href="#🔍-Starter-依赖不是简单的“少写几个-jar”" class="headerlink" title="🔍 Starter 依赖不是简单的“少写几个 jar”"></a>🔍 Starter 依赖不是简单的“少写几个 jar”</h2><p><code>pom.xml</code> 里最有代表性的部分通常是这些：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-web<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.mybatis.spring.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>mybatis-spring-boot-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.0.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>Starter 的意义至少有两层：</p>
@@ -971,14 +977,14 @@
 <li>给自动配置提供“判断条件”</li>
 </ul>
 <p>所以 Starter 不是语法糖，它是 Spring Boot 能够“约定优于配置”的基础之一。</p>
-<h2 id="MapperScan-为什么值得单独记住"><a href="#MapperScan-为什么值得单独记住" class="headerlink" title="@MapperScan 为什么值得单独记住"></a><code>@MapperScan</code> 为什么值得单独记住</h2><p>启动类里这一行虽然不起眼，但在 MyBatis 项目里非常关键：</p>
+<h2 id="📌-MapperScan-为什么值得单独记住"><a href="#📌-MapperScan-为什么值得单独记住" class="headerlink" title="📌 @MapperScan 为什么值得单独记住"></a>📌 <code>@MapperScan</code> 为什么值得单独记住</h2><p>启动类里这一行虽然不起眼，但在 MyBatis 项目里非常关键：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MapperScan(&quot;com.java.springboot.mapper&quot;)</span></span><br></pre></td></tr></table></figure>
 
 <p>它解决的是 Mapper 接口如何进入 Spring 容器的问题。Mapper 接口没有具体实现类，Spring 本身不能直接实例化它们；<code>@MapperScan</code> 会帮助扫描这些接口，并通过代理方式把它们注册成可注入对象。</p>
 <p>如果缺了这一层，下面这种注入就接不上：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BrandServiceImp</span> <span class="keyword">implements</span> <span class="title class_">BrandService</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BrandMapper brandMapper;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="启动类很短，不代表可以“无脑复制”"><a href="#启动类很短，不代表可以“无脑复制”" class="headerlink" title="启动类很短，不代表可以“无脑复制”"></a>启动类很短，不代表可以“无脑复制”</h2><p>启动类最常见的问题通常有这几种：</p>
+<h2 id="🧠-启动类很短，不代表可以直接照搬"><a href="#🧠-启动类很短，不代表可以直接照搬" class="headerlink" title="🧠 启动类很短，不代表可以直接照搬"></a>🧠 启动类很短，不代表可以直接照搬</h2><p>启动类最常见的问题通常有这几种：</p>
 <table>
 <thead>
 <tr>
@@ -1014,7 +1020,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -1023,7 +1029,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -1031,7 +1037,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B060"><span class="toc-text">Java笔记60</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%B1%BB%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%88%90%E4%B8%BA%E6%95%B4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%85%A5%E5%8F%A3"><span class="toc-text">启动类为什么能成为整个项目的入口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SpringBootApplication-%E5%B9%B6%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E2%80%9C%E6%99%AE%E9%80%9A%E6%B3%A8%E8%A7%A3%E2%80%9D"><span class="toc-text">@SpringBootApplication 并不是一个“普通注解”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%88%B0%E5%BA%95%E2%80%9C%E8%87%AA%E5%8A%A8%E2%80%9D%E5%9C%A8%E5%93%AA"><span class="toc-text">自动配置到底“自动”在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Starter-%E4%BE%9D%E8%B5%96%E4%B8%8D%E6%98%AF%E7%AE%80%E5%8D%95%E7%9A%84%E2%80%9C%E5%B0%91%E5%86%99%E5%87%A0%E4%B8%AA-jar%E2%80%9D"><span class="toc-text">Starter 依赖不是简单的“少写几个 jar”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapperScan-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E5%8D%95%E7%8B%AC%E8%AE%B0%E4%BD%8F"><span class="toc-text">@MapperScan 为什么值得单独记住</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%BE%88%E7%9F%AD%EF%BC%8C%E4%B8%8D%E4%BB%A3%E8%A1%A8%E5%8F%AF%E4%BB%A5%E2%80%9C%E6%97%A0%E8%84%91%E5%A4%8D%E5%88%B6%E2%80%9D"><span class="toc-text">启动类很短，不代表可以“无脑复制”</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B060-SpringBoot%E5%90%AF%E5%8A%A8%E7%B1%BB%E4%B8%8E%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE"><span class="toc-text">Java笔记60-SpringBoot启动类与自动配置</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E5%90%AF%E5%8A%A8%E7%B1%BB%E4%B8%BA%E4%BB%80%E4%B9%88%E8%83%BD%E6%88%90%E4%B8%BA%E6%95%B4%E4%B8%AA%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%85%A5%E5%8F%A3"><span class="toc-text">🧩 启动类为什么能成为整个项目的入口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-SpringApplication-run-%E4%B8%8D%E5%8F%AA%E6%98%AF%E8%B0%83%E7%94%A8%E4%B8%80%E4%B8%AA-main-%E6%96%B9%E6%B3%95"><span class="toc-text">🔬 SpringApplication.run(...) 不只是调用一个 main 方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-SpringBootApplication-%E5%B9%B6%E4%B8%8D%E6%98%AF%E4%B8%80%E4%B8%AA%E2%80%9C%E6%99%AE%E9%80%9A%E6%B3%A8%E8%A7%A3%E2%80%9D"><span class="toc-text">📌 @SpringBootApplication 并不是一个“普通注解”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%88%B0%E5%BA%95%E2%80%9C%E8%87%AA%E5%8A%A8%E2%80%9D%E5%9C%A8%E5%93%AA"><span class="toc-text">🔬 自动配置到底“自动”在哪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-Starter-%E4%BE%9D%E8%B5%96%E4%B8%8D%E6%98%AF%E7%AE%80%E5%8D%95%E7%9A%84%E2%80%9C%E5%B0%91%E5%86%99%E5%87%A0%E4%B8%AA-jar%E2%80%9D"><span class="toc-text">🔍 Starter 依赖不是简单的“少写几个 jar”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-MapperScan-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%80%BC%E5%BE%97%E5%8D%95%E7%8B%AC%E8%AE%B0%E4%BD%8F"><span class="toc-text">📌 @MapperScan 为什么值得单独记住</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%90%AF%E5%8A%A8%E7%B1%BB%E5%BE%88%E7%9F%AD%EF%BC%8C%E4%B8%8D%E4%BB%A3%E8%A1%A8%E5%8F%AF%E4%BB%A5%E7%9B%B4%E6%8E%A5%E7%85%A7%E6%90%AC"><span class="toc-text">🧠 启动类很短，不代表可以直接照搬</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

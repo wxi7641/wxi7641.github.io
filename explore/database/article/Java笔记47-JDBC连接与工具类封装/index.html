@@ -306,14 +306,48 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记47"><a href="#Java笔记47" class="headerlink" title="Java笔记47"></a>Java笔记47</h1><p>JDBC 学习真正进入项目阶段时，第一步通常不是写业务，而是把数据库连接和资源关闭先统一封装起来。</p>
+    <h1 id="Java笔记47-JDBC连接与工具类封装"><a href="#Java笔记47-JDBC连接与工具类封装" class="headerlink" title="Java笔记47-JDBC连接与工具类封装"></a>Java笔记47-JDBC连接与工具类封装</h1><p>JDBC 学习真正进入项目阶段时，第一步通常不是写业务，而是把数据库连接和资源关闭先统一封装起来。</p>
+<blockquote>
+<p><mark>JDBC 工具类的价值不只是少写几行代码，而是把数据库访问链路中最容易重复、最容易出错的部分统一收口。</mark></p>
+</blockquote>
 <hr>
-<h2 id="为什么-JDBC-一开始总要先讲连接"><a href="#为什么-JDBC-一开始总要先讲连接" class="headerlink" title="为什么 JDBC 一开始总要先讲连接"></a>为什么 JDBC 一开始总要先讲连接</h2><p>围绕 JDBC 入门阶段的常见问题来看，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。</p>
+<h2 id="🧩-为什么-JDBC-一开始总要先讲连接"><a href="#🧩-为什么-JDBC-一开始总要先讲连接" class="headerlink" title="🧩 为什么 JDBC 一开始总要先讲连接"></a>🧩 为什么 JDBC 一开始总要先讲连接</h2><p>围绕 JDBC 入门阶段的常见问题来看，这里最重要的知识点不是 API 名称，而是 JDBC 基本流程：注册驱动、获取连接、执行 SQL、处理结果、释放资源。</p>
 <p>在 JDBC 项目里，第一步通常不是直接写 CRUD，而是先把连接数据库这件事封装起来；这套代码把驱动、URL、用户名和密码都放进了 <code>db.properties</code>；<code>JDBCUtil</code> 负责读取配置、创建连接、关闭资源；这样后面的 DAO 层就能专注于 SQL 本身。</p>
-<p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 就会明白框架到底帮我们省掉了哪些重复劳动。</p>
-<h2 id="工具类封装到底是在减少什么重复"><a href="#工具类封装到底是在减少什么重复" class="headerlink" title="工具类封装到底是在减少什么重复"></a>工具类封装到底是在减少什么重复</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
+<p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 时，就能更清楚框架到底封装了哪些重复劳动。</p>
+<h2 id="🔬-Connection-不是普通对象，而是一次数据库会话"><a href="#🔬-Connection-不是普通对象，而是一次数据库会话" class="headerlink" title="🔬 Connection 不是普通对象，而是一次数据库会话"></a>🔬 <code>Connection</code> 不是普通对象，而是一次数据库会话</h2><p><code>Connection</code> 表面上只是一个 Java 对象，但它背后对应的是应用程序与数据库之间的一次连接。这个连接建立成本并不低，因为它可能涉及网络通信、认证、数据库端资源分配等动作。也正因为如此，在真实项目里很少每次请求都直接 <code>DriverManager.getConnection(...)</code> 后用完即丢，而是会交给连接池复用。</p>
+<p>早期手写 JDBC 工具类的意义，是先把最原始的过程看清楚：</p>
+<table>
+<thead>
+<tr>
+<th>环节</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>加载驱动</td>
+<td>让 JDBC 能找到对应数据库厂商的驱动实现</td>
+</tr>
+<tr>
+<td>获取连接</td>
+<td>建立 Java 程序到数据库的访问通道</td>
+</tr>
+<tr>
+<td>创建 <code>PreparedStatement</code></td>
+<td>预编译 SQL，并通过占位符绑定参数</td>
+</tr>
+<tr>
+<td>处理 <code>ResultSet</code></td>
+<td>把关系型数据转换成 Java 对象</td>
+</tr>
+<tr>
+<td>关闭资源</td>
+<td>释放数据库连接、语句对象和结果集</td>
+</tr>
+</tbody></table>
+<p>这条链路就是后续持久层框架的底层基础。MyBatis 看起来不再手写 <code>ResultSet</code>，但最终仍然要通过 JDBC 与数据库交互。</p>
+<h2 id="📌-工具类封装到底是在减少什么重复"><a href="#📌-工具类封装到底是在减少什么重复" class="headerlink" title="📌 工具类封装到底是在减少什么重复"></a>📌 工具类封装到底是在减少什么重复</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
 <p>登录功能让我们看到查询单条数据时参数绑定和结果封装的写法；品牌列表和分页功能则把“查询多条数据”以及“前台展示”串了起来；这类案例最适合拿来解释 JDBC 为什么总和 Servlet、JSP 一起出现。</p>
-<p>可以先看一段最能代表这一节的代码，很多概念放到具体写法里会更容易看懂。JDBC 代码最适合按“连接 -&gt; SQL -&gt; 参数 -&gt; 结果 -&gt; 关闭资源”这条顺序去读。只要顺序感建立起来，哪怕代码行数变多，也不会轻易看乱。</p>
+<p>下面这段代码最能代表 JDBC 工具类的核心流程。JDBC 代码最适合按“连接 -&gt; SQL -&gt; 参数 -&gt; 结果 -&gt; 关闭资源”这条顺序去读。只要顺序感建立起来，哪怕代码行数变多，也不会轻易看乱。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> Connection <span class="title function_">getConnection</span><span class="params">()</span> <span class="keyword">throws</span> SQLException &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        Class.forName(<span class="string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>);</span><br><span class="line">        <span class="type">Connection</span> <span class="variable">connection</span> <span class="operator">=</span> DriverManager.getConnection(url, user, password);</span><br><span class="line">        <span class="keyword">return</span> connection;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(e);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>把这段代码拆开看，最关键的地方其实就在下面几处：</p>
@@ -322,19 +356,14 @@
 <li><code>DriverManager.getConnection(...)</code> 真正建立与数据库的连接。</li>
 <li>工具类把连接和关闭资源集中处理之后，DAO 层就不需要每次重复写一大段样板代码。</li>
 </ul>
-<p>JDBC 这一层的细节看起来繁琐，但也正因为它足够原始，才特别适合理解数据库访问的本来面目。后面换成连接池、DBUtils 或 ORM 框架时，你会更清楚每一层抽象到底替你做了什么。</p>
-<h2 id="这一步做扎实后面-CRUD-才会顺"><a href="#这一步做扎实后面-CRUD-才会顺" class="headerlink" title="这一步做扎实后面 CRUD 才会顺"></a>这一步做扎实后面 CRUD 才会顺</h2><p>这一块如果只是停在“会写”其实还不够，更有价值的是知道它还有哪些常见写法，以及它会继续和哪些知识连起来。</p>
-<ul>
-<li>如果项目再往后发展，连接获取可以交给连接池，例如 Druid、C3P0 或 HikariCP。</li>
-<li>更高一层的持久层框架如 MyBatis，本质上也是在替你封装这类重复 JDBC 过程。</li>
-<li>这一节可以放在 JDBC 项目实践的起点位置，用来先建立完整的数据库访问流程认知。</li>
-</ul>
-<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
-<ul>
-<li>可以继续补连接池、DBUtils 和事务控制，让 JDBC 知识链更完整。</li>
-<li>涉及增删改查时，尽量把参数绑定和 SQL 组织方式分开解释，会更清楚。</li>
-<li>如果继续衔接框架学习，这一类文章会帮助更顺畅地理解 MyBatis 的抽象。</li>
-</ul>
+<p>JDBC 这一层的细节看起来繁琐，但也正因为它足够原始，才特别适合理解数据库访问的本来面目。后面换成连接池、DBUtils 或 ORM 框架时，每一层抽象到底封装了什么会更容易看清。</p>
+<h2 id="🔸-资源关闭顺序也属于-JDBC-基础能力"><a href="#🔸-资源关闭顺序也属于-JDBC-基础能力" class="headerlink" title="🔸 资源关闭顺序也属于 JDBC 基础能力"></a>🔸 资源关闭顺序也属于 JDBC 基础能力</h2><p>JDBC 代码里经常同时出现 <code>ResultSet</code>、<code>PreparedStatement</code> 和 <code>Connection</code>。这些资源存在依赖关系，因此释放时通常按创建的反方向关闭：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ResultSet -&gt; PreparedStatement -&gt; Connection</span><br></pre></td></tr></table></figure>
+
+<p>如果先关闭连接，再继续使用结果集或语句对象，就会出现不可预期的问题。更稳的写法是把关闭逻辑放到工具类里集中处理，或者在较新的代码中使用 <code>try-with-resources</code>，让资源在作用域结束时自动关闭。</p>
+<p>连接关闭这件事在连接池场景下还有一层特殊含义：调用 <code>close()</code> 往往不是物理断开数据库连接，而是把连接归还给连接池。也就是说，“关闭资源”从来不是可有可无的收尾动作，而是应用稳定运行的一部分。</p>
+<h2 id="🧠-工具类封装打稳后，CRUD-才会顺"><a href="#🧠-工具类封装打稳后，CRUD-才会顺" class="headerlink" title="🧠 工具类封装打稳后，CRUD 才会顺"></a>🧠 工具类封装打稳后，CRUD 才会顺</h2><p>JDBC 工具类是项目进入数据库访问阶段的基础设施。它把连接获取、配置读取和资源关闭集中起来，让 DAO 层可以专注 SQL 与结果映射。</p>
+<p>JDBC 工具类真正要建立的是底层链路感：连接从哪里来，SQL 怎么执行，结果如何转成对象，资源为什么必须释放。后面无论切换到连接池、DBUtils、MyBatis 还是更高层的持久层方案，本质上都是在这条链路上继续做封装。</p>
 
   </article>
 </section>
@@ -345,7 +374,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -354,7 +383,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -362,7 +391,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B047"><span class="toc-text">Java笔记47</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-JDBC-%E4%B8%80%E5%BC%80%E5%A7%8B%E6%80%BB%E8%A6%81%E5%85%88%E8%AE%B2%E8%BF%9E%E6%8E%A5"><span class="toc-text">为什么 JDBC 一开始总要先讲连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%81%E8%A3%85%E5%88%B0%E5%BA%95%E6%98%AF%E5%9C%A8%E5%87%8F%E5%B0%91%E4%BB%80%E4%B9%88%E9%87%8D%E5%A4%8D"><span class="toc-text">工具类封装到底是在减少什么重复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%B8%80%E6%AD%A5%E5%81%9A%E6%89%8E%E5%AE%9E%E5%90%8E%E9%9D%A2-CRUD-%E6%89%8D%E4%BC%9A%E9%A1%BA"><span class="toc-text">这一步做扎实后面 CRUD 才会顺</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B047-JDBC%E8%BF%9E%E6%8E%A5%E4%B8%8E%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%81%E8%A3%85"><span class="toc-text">Java笔记47-JDBC连接与工具类封装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%B8%BA%E4%BB%80%E4%B9%88-JDBC-%E4%B8%80%E5%BC%80%E5%A7%8B%E6%80%BB%E8%A6%81%E5%85%88%E8%AE%B2%E8%BF%9E%E6%8E%A5"><span class="toc-text">🧩 为什么 JDBC 一开始总要先讲连接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-Connection-%E4%B8%8D%E6%98%AF%E6%99%AE%E9%80%9A%E5%AF%B9%E8%B1%A1%EF%BC%8C%E8%80%8C%E6%98%AF%E4%B8%80%E6%AC%A1%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BC%9A%E8%AF%9D"><span class="toc-text">🔬 Connection 不是普通对象，而是一次数据库会话</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%81%E8%A3%85%E5%88%B0%E5%BA%95%E6%98%AF%E5%9C%A8%E5%87%8F%E5%B0%91%E4%BB%80%E4%B9%88%E9%87%8D%E5%A4%8D"><span class="toc-text">📌 工具类封装到底是在减少什么重复</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E8%B5%84%E6%BA%90%E5%85%B3%E9%97%AD%E9%A1%BA%E5%BA%8F%E4%B9%9F%E5%B1%9E%E4%BA%8E-JDBC-%E5%9F%BA%E7%A1%80%E8%83%BD%E5%8A%9B"><span class="toc-text">🔸 资源关闭顺序也属于 JDBC 基础能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B7%A5%E5%85%B7%E7%B1%BB%E5%B0%81%E8%A3%85%E6%89%93%E7%A8%B3%E5%90%8E%EF%BC%8CCRUD-%E6%89%8D%E4%BC%9A%E9%A1%BA"><span class="toc-text">🧠 工具类封装打稳后，CRUD 才会顺</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

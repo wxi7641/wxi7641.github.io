@@ -894,13 +894,78 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记05"><a href="#Java笔记05" class="headerlink" title="Java笔记05"></a>Java笔记05</h1><ul>
-<li>流程控制学习</li>
-<li>了解流程控制概念</li>
-<li>if语句</li>
-<li>switch语句</li>
-<li>while语句</li>
+    <h1 id="Java笔记05-流程控制的主线"><a href="#Java笔记05-流程控制的主线" class="headerlink" title="Java笔记05-流程控制的主线"></a>Java笔记05-流程控制的主线</h1><p>流程控制解决的是“代码到底走哪条路、要执行多少次”。分支负责选择，循环负责重复，这两条线看似简单，但几乎贯穿了后面的每一类业务代码。</p>
+<blockquote>
+<p><strong>先把一句话记住：</strong><mark>分支解决条件判断，循环解决重复执行。</mark></p>
+</blockquote>
+<hr>
+<h2 id="🧩-if-负责处理范围判断和复杂条件"><a href="#🧩-if-负责处理范围判断和复杂条件" class="headerlink" title="🧩 if 负责处理范围判断和复杂条件"></a>🧩 <code>if</code> 负责处理范围判断和复杂条件</h2><p><code>if</code> 最适合处理区间判断、多个条件组合、逻辑层层筛选这类问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">double</span> <span class="variable">bmi</span> <span class="operator">=</span> weight / (height * height);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (bmi &lt; <span class="number">18.5</span>) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;偏瘦&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (bmi &lt; <span class="number">25</span>) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;正常&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> <span class="keyword">if</span> (bmi &lt; <span class="number">28</span>) &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;偏重&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    System.out.println(<span class="string">&quot;超重&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这类写法的关键不是“写了很多分支”，而是条件本身有顺序。前面的条件一旦成立，后面的分支就不会再继续判断。</p>
+<hr>
+<h2 id="🔍-switch-更适合离散值选择"><a href="#🔍-switch-更适合离散值选择" class="headerlink" title="🔍 switch 更适合离散值选择"></a>🔍 <code>switch</code> 更适合离散值选择</h2><p>当条件不是区间，而是几个明确的取值时，<code>switch</code> 往往更清晰。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">day</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">switch</span> (day) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">3</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">4</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">5</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;工作日&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="number">6</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="number">7</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;周末&quot;</span>);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">        System.out.println(<span class="string">&quot;无效输入&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>结构</th>
+<th>适合什么情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>if</code></td>
+<td>范围判断、复杂逻辑</td>
+</tr>
+<tr>
+<td><code>switch</code></td>
+<td>固定离散值选择</td>
+</tr>
+</tbody></table>
+<p><code>switch</code> 的另一个重点是 <code>break</code>。如果忘记写，程序会继续向下执行后面的 <code>case</code>，这就是所谓的贯穿。</p>
+<hr>
+<h2 id="🔬-循环负责重复执行，重点是边界和退出条件"><a href="#🔬-循环负责重复执行，重点是边界和退出条件" class="headerlink" title="🔬 循环负责重复执行，重点是边界和退出条件"></a>🔬 循环负责重复执行，重点是边界和退出条件</h2><p><code>for</code>、<code>while</code>、<code>do...while</code> 是三种最常见的循环形式。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (count &lt; <span class="number">10</span>) &#123;</span><br><span class="line">    count++;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    count++;</span><br><span class="line">&#125; <span class="keyword">while</span> (count &lt; <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
+
+<p>它们的差别可以压缩成一句话：</p>
+<ul>
+<li><code>for</code> 更适合已知循环次数。</li>
+<li><code>while</code> 更适合条件驱动。</li>
+<li><code>do...while</code> 至少会执行一次。</li>
 </ul>
+<hr>
+<h2 id="💡-break-和-continue-控制的是循环节奏"><a href="#💡-break-和-continue-控制的是循环节奏" class="headerlink" title="💡 break 和 continue 控制的是循环节奏"></a>💡 <code>break</code> 和 <code>continue</code> 控制的是循环节奏</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">continue</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>关键字</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>break</code></td>
+<td>直接结束循环</td>
+</tr>
+<tr>
+<td><code>continue</code></td>
+<td>跳过本次循环，进入下一轮</td>
+</tr>
+</tbody></table>
+<p>这两个关键字的差别非常基础，但在嵌套循环和复杂条件里特别常用。</p>
+<hr>
+<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>流程控制这一节，真正要记住的是结构，而不是孤立语法：</p>
+<ul>
+<li><code>if</code> 和 <code>switch</code> 用来选择路径。</li>
+<li><code>for</code>、<code>while</code>、<code>do...while</code> 用来控制重复。</li>
+<li><code>break</code>、<code>continue</code> 用来干预循环节奏。</li>
+</ul>
+<p>当这条主线清楚之后，后面的数组遍历、字符串处理、集合遍历都会自然接上。</p>
 
   </article>
 </section>
@@ -911,7 +976,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -920,7 +985,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -928,7 +993,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B005"><span class="toc-text">Java笔记05</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B005-%E6%B5%81%E7%A8%8B%E6%8E%A7%E5%88%B6%E7%9A%84%E4%B8%BB%E7%BA%BF"><span class="toc-text">Java笔记05-流程控制的主线</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-if-%E8%B4%9F%E8%B4%A3%E5%A4%84%E7%90%86%E8%8C%83%E5%9B%B4%E5%88%A4%E6%96%AD%E5%92%8C%E5%A4%8D%E6%9D%82%E6%9D%A1%E4%BB%B6"><span class="toc-text">🧩 if 负责处理范围判断和复杂条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-switch-%E6%9B%B4%E9%80%82%E5%90%88%E7%A6%BB%E6%95%A3%E5%80%BC%E9%80%89%E6%8B%A9"><span class="toc-text">🔍 switch 更适合离散值选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E5%BE%AA%E7%8E%AF%E8%B4%9F%E8%B4%A3%E9%87%8D%E5%A4%8D%E6%89%A7%E8%A1%8C%EF%BC%8C%E9%87%8D%E7%82%B9%E6%98%AF%E8%BE%B9%E7%95%8C%E5%92%8C%E9%80%80%E5%87%BA%E6%9D%A1%E4%BB%B6"><span class="toc-text">🔬 循环负责重复执行，重点是边界和退出条件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-break-%E5%92%8C-continue-%E6%8E%A7%E5%88%B6%E7%9A%84%E6%98%AF%E5%BE%AA%E7%8E%AF%E8%8A%82%E5%A5%8F"><span class="toc-text">💡 break 和 continue 控制的是循环节奏</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

@@ -894,8 +894,11 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记61"><a href="#Java笔记61" class="headerlink" title="Java笔记61"></a>Java笔记61</h1><p>Spring Boot 项目写到一定阶段，最先变复杂的往往不是业务代码，而是配置。端口、数据源、日志、静态资源、环境切换、上传大小限制，全都会往配置文件里汇聚。<strong>配置文件写得是否清楚，直接决定项目后期是不是容易维护。</strong></p>
-<h2 id="application-properties-为什么会成为项目的总开关"><a href="#application-properties-为什么会成为项目的总开关" class="headerlink" title="application.properties 为什么会成为项目的总开关"></a><code>application.properties</code> 为什么会成为项目的总开关</h2><p>常见的 Spring Boot 配置通常会集中在这里：</p>
+    <h1 id="Java笔记61-SpringBoot配置文件与多环境思路"><a href="#Java笔记61-SpringBoot配置文件与多环境思路" class="headerlink" title="Java笔记61-SpringBoot配置文件与多环境思路"></a>Java笔记61-SpringBoot配置文件与多环境思路</h1><p>Spring Boot 项目写到一定阶段，最先变复杂的往往不是业务代码，而是配置。端口、数据源、日志、静态资源、环境切换、上传大小限制，全都会往配置文件里汇聚。<strong>配置文件写得是否清楚，直接决定项目后期是不是容易维护。</strong></p>
+<blockquote>
+<p><mark>配置文件的核心价值，是把“会随着环境变化的东西”从代码里剥离出来。</mark></p>
+</blockquote>
+<h2 id="🧩-application-properties-为什么会成为项目的总开关"><a href="#🧩-application-properties-为什么会成为项目的总开关" class="headerlink" title="🧩 application.properties 为什么会成为项目的总开关"></a>🧩 <code>application.properties</code> 为什么会成为项目的总开关</h2><p>常见的 Spring Boot 配置通常会集中在这里：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">SpringBoot</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8081</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.datasource.driver-class-name</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://&lt;db-host&gt;:&lt;db-port&gt;/&lt;db-name&gt;?useSSL=false&amp;characterEncoding=utf8</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">$&#123;DB_USERNAME&#125;</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">$&#123;DB_PASSWORD&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis.type-aliases-package</span>=<span class="string">com.java.springboot.pojo</span></span><br><span class="line"><span class="attr">mybatis.mapper-locations</span>=<span class="string">classpath:mapper/*Mapper.xml</span></span><br><span class="line"><span class="attr">mybatis.configuration.map-underscore-to-camel-case</span>=<span class="string">true</span></span><br><span class="line"><span class="attr">mybatis.configuration.log-impl</span>=<span class="string">org.apache.ibatis.logging.stdout.StdOutImpl</span></span><br></pre></td></tr></table></figure>
 
 <p>这一类配置最适合按功能块来读：</p>
@@ -924,22 +927,24 @@
 </tr>
 </tbody></table>
 <p>当配置项都进入一个文件之后，Spring Boot 工程会明显比多份 XML 更容易定位问题。</p>
-<h2 id="为什么公开文章里不能直接贴真实数据库配置"><a href="#为什么公开文章里不能直接贴真实数据库配置" class="headerlink" title="为什么公开文章里不能直接贴真实数据库配置"></a>为什么公开文章里不能直接贴真实数据库配置</h2><p>很多入门笔记喜欢把数据库地址、账号、密码直接写在示例里，教学上看起来方便，但对公开博客并不合适。至少有三类信息应该处理成占位或环境变量：</p>
+<h2 id="🔬-配置项本质上是在描述应用的运行环境"><a href="#🔬-配置项本质上是在描述应用的运行环境" class="headerlink" title="🔬 配置项本质上是在描述应用的运行环境"></a>🔬 配置项本质上是在描述应用的运行环境</h2><p>端口、数据库地址、日志级别、上传目录这些内容都有一个共同点：它们不是业务逻辑本身，而是应用在某个环境里运行时需要的外部条件。把它们写进配置文件，能让同一套代码在不同机器、不同数据库、不同端口下运行。</p>
+<p>这也是为什么配置文件不应该变成“第二份业务代码”。业务规则适合放在 Java 代码里，环境差异适合放在配置里。边界分清之后，项目迁移、部署和排错都会轻很多。</p>
+<h2 id="💡-真实数据库配置不应该直接暴露"><a href="#💡-真实数据库配置不应该直接暴露" class="headerlink" title="💡 真实数据库配置不应该直接暴露"></a>💡 真实数据库配置不应该直接暴露</h2><p>数据库地址、账号、密码直接写在示例里看起来方便，但会带来明显的安全风险。至少有三类信息应该处理成占位或环境变量：</p>
 <ol>
 <li>数据库地址和库名</li>
 <li>用户名与密码</li>
 <li>第三方服务密钥</li>
 </ol>
-<p>更稳妥的写法通常像这样：</p>
+<p>更稳妥的配置通常像这样：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">$&#123;DB_URL&#125;</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">$&#123;DB_USERNAME&#125;</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">$&#123;DB_PASSWORD&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>或者：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://&lt;db-host&gt;:&lt;db-port&gt;/&lt;db-name&gt;</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">&lt;db-username&gt;</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">&lt;db-password&gt;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p><mark>公开示例要说明“怎么配”，而不是把真实运行环境直接暴露出去。</mark></p>
+<p><mark>示例配置要说明“怎么配”，而不是把真实运行环境直接暴露出去。</mark></p>
 </blockquote>
-<h2 id="properties-和-yml-只是格式不同吗"><a href="#properties-和-yml-只是格式不同吗" class="headerlink" title="properties 和 yml 只是格式不同吗"></a><code>properties</code> 和 <code>yml</code> 只是格式不同吗</h2><p>两者都能完成 Spring Boot 配置，但写法风格不同。</p>
+<h2 id="🔍-properties-和-yml-只是格式不同吗"><a href="#🔍-properties-和-yml-只是格式不同吗" class="headerlink" title="🔍 properties 和 yml 只是格式不同吗"></a>🔍 <code>properties</code> 和 <code>yml</code> 只是格式不同吗</h2><p>两者都能完成 Spring Boot 配置，但写法风格不同。</p>
 <table>
 <thead>
 <tr>
@@ -960,7 +965,7 @@
 <figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line">  <span class="attr">datasource:</span></span><br><span class="line">    <span class="attr">driver-class-name:</span> <span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line">    <span class="attr">url:</span> <span class="string">jdbc:mysql://&lt;db-host&gt;:&lt;db-port&gt;/&lt;db-name&gt;</span></span><br><span class="line">    <span class="attr">username:</span> <span class="string">$&#123;DB_USERNAME&#125;</span></span><br><span class="line">    <span class="attr">password:</span> <span class="string">$&#123;DB_PASSWORD&#125;</span></span><br></pre></td></tr></table></figure>
 
 <p>如果项目不大，<code>properties</code> 完全够用；如果配置层级很多，<code>yml</code> 往往更整洁。</p>
-<h2 id="多环境配置不是“大项目专属”，很早就值得建立意识"><a href="#多环境配置不是“大项目专属”，很早就值得建立意识" class="headerlink" title="多环境配置不是“大项目专属”，很早就值得建立意识"></a>多环境配置不是“大项目专属”，很早就值得建立意识</h2><p>即使是个人练手项目，也经常会遇到下面这些情况：</p>
+<h2 id="🔍-多环境配置不是“大项目专属”，很早就值得建立意识"><a href="#🔍-多环境配置不是“大项目专属”，很早就值得建立意识" class="headerlink" title="🔍 多环境配置不是“大项目专属”，很早就值得建立意识"></a>🔍 多环境配置不是“大项目专属”，很早就值得建立意识</h2><p>即使是个人练手项目，也经常会遇到下面这些情况：</p>
 <ul>
 <li>本地开发库和线上库不一样</li>
 <li>开发端口与部署端口不一样</li>
@@ -976,7 +981,10 @@
 <li><code>application-prod.properties</code></li>
 </ul>
 <p>这样做的价值在于：同一套代码，可以在不同环境中加载不同配置。</p>
-<h2 id="配置项越来越多时，最怕的不是“麻烦”，而是失去边界"><a href="#配置项越来越多时，最怕的不是“麻烦”，而是失去边界" class="headerlink" title="配置项越来越多时，最怕的不是“麻烦”，而是失去边界"></a>配置项越来越多时，最怕的不是“麻烦”，而是失去边界</h2><p>一个配置文件如果没有边界意识，常见问题会很快出现：</p>
+<h2 id="🔸-配置来源有优先级，环境变量通常更适合敏感信息"><a href="#🔸-配置来源有优先级，环境变量通常更适合敏感信息" class="headerlink" title="🔸 配置来源有优先级，环境变量通常更适合敏感信息"></a>🔸 配置来源有优先级，环境变量通常更适合敏感信息</h2><p>Spring Boot 可以从多个位置读取配置，例如项目内配置文件、命令行参数、系统环境变量等。越靠近运行环境的配置，越适合承载差异化信息。</p>
+<p>比如数据库密码、JWT 密钥、上传目录这类内容，放在环境变量或部署平台的配置中心里会更稳妥；而 MyBatis 驼峰映射、应用名、默认分页大小这类通用项，则可以保留在项目配置文件中。</p>
+<p>使用 <code>$&#123;DB_USERNAME&#125;</code>、<code>$&#123;DB_PASSWORD&#125;</code> 这类占位符，不只是为了隐藏真实值，也是在表达一种更合理的配置分层方式。</p>
+<h2 id="🧠-配置项越来越多时，最怕的不是“麻烦”，而是失去边界"><a href="#🧠-配置项越来越多时，最怕的不是“麻烦”，而是失去边界" class="headerlink" title="🧠 配置项越来越多时，最怕的不是“麻烦”，而是失去边界"></a>🧠 配置项越来越多时，最怕的不是“麻烦”，而是失去边界</h2><p>一个配置文件如果没有边界意识，常见问题会很快出现：</p>
 <table>
 <thead>
 <tr>
@@ -1012,7 +1020,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -1021,7 +1029,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -1029,7 +1037,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B061"><span class="toc-text">Java笔记61</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#application-properties-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%88%90%E4%B8%BA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%80%BB%E5%BC%80%E5%85%B3"><span class="toc-text">application.properties 为什么会成为项目的总开关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%85%AC%E5%BC%80%E6%96%87%E7%AB%A0%E9%87%8C%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%B4%B4%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE"><span class="toc-text">为什么公开文章里不能直接贴真实数据库配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#properties-%E5%92%8C-yml-%E5%8F%AA%E6%98%AF%E6%A0%BC%E5%BC%8F%E4%B8%8D%E5%90%8C%E5%90%97"><span class="toc-text">properties 和 yml 只是格式不同吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%B8%8D%E6%98%AF%E2%80%9C%E5%A4%A7%E9%A1%B9%E7%9B%AE%E4%B8%93%E5%B1%9E%E2%80%9D%EF%BC%8C%E5%BE%88%E6%97%A9%E5%B0%B1%E5%80%BC%E5%BE%97%E5%BB%BA%E7%AB%8B%E6%84%8F%E8%AF%86"><span class="toc-text">多环境配置不是“大项目专属”，很早就值得建立意识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E9%A1%B9%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A4%9A%E6%97%B6%EF%BC%8C%E6%9C%80%E6%80%95%E7%9A%84%E4%B8%8D%E6%98%AF%E2%80%9C%E9%BA%BB%E7%83%A6%E2%80%9D%EF%BC%8C%E8%80%8C%E6%98%AF%E5%A4%B1%E5%8E%BB%E8%BE%B9%E7%95%8C"><span class="toc-text">配置项越来越多时，最怕的不是“麻烦”，而是失去边界</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B061-SpringBoot%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E4%B8%8E%E5%A4%9A%E7%8E%AF%E5%A2%83%E6%80%9D%E8%B7%AF"><span class="toc-text">Java笔记61-SpringBoot配置文件与多环境思路</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-application-properties-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%88%90%E4%B8%BA%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%80%BB%E5%BC%80%E5%85%B3"><span class="toc-text">🧩 application.properties 为什么会成为项目的总开关</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E9%85%8D%E7%BD%AE%E9%A1%B9%E6%9C%AC%E8%B4%A8%E4%B8%8A%E6%98%AF%E5%9C%A8%E6%8F%8F%E8%BF%B0%E5%BA%94%E7%94%A8%E7%9A%84%E8%BF%90%E8%A1%8C%E7%8E%AF%E5%A2%83"><span class="toc-text">🔬 配置项本质上是在描述应用的运行环境</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E7%9C%9F%E5%AE%9E%E6%95%B0%E6%8D%AE%E5%BA%93%E9%85%8D%E7%BD%AE%E4%B8%8D%E5%BA%94%E8%AF%A5%E7%9B%B4%E6%8E%A5%E6%9A%B4%E9%9C%B2"><span class="toc-text">💡 真实数据库配置不应该直接暴露</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-properties-%E5%92%8C-yml-%E5%8F%AA%E6%98%AF%E6%A0%BC%E5%BC%8F%E4%B8%8D%E5%90%8C%E5%90%97"><span class="toc-text">🔍 properties 和 yml 只是格式不同吗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E5%A4%9A%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE%E4%B8%8D%E6%98%AF%E2%80%9C%E5%A4%A7%E9%A1%B9%E7%9B%AE%E4%B8%93%E5%B1%9E%E2%80%9D%EF%BC%8C%E5%BE%88%E6%97%A9%E5%B0%B1%E5%80%BC%E5%BE%97%E5%BB%BA%E7%AB%8B%E6%84%8F%E8%AF%86"><span class="toc-text">🔍 多环境配置不是“大项目专属”，很早就值得建立意识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E9%85%8D%E7%BD%AE%E6%9D%A5%E6%BA%90%E6%9C%89%E4%BC%98%E5%85%88%E7%BA%A7%EF%BC%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%80%9A%E5%B8%B8%E6%9B%B4%E9%80%82%E5%90%88%E6%95%8F%E6%84%9F%E4%BF%A1%E6%81%AF"><span class="toc-text">🔸 配置来源有优先级，环境变量通常更适合敏感信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E9%85%8D%E7%BD%AE%E9%A1%B9%E8%B6%8A%E6%9D%A5%E8%B6%8A%E5%A4%9A%E6%97%B6%EF%BC%8C%E6%9C%80%E6%80%95%E7%9A%84%E4%B8%8D%E6%98%AF%E2%80%9C%E9%BA%BB%E7%83%A6%E2%80%9D%EF%BC%8C%E8%80%8C%E6%98%AF%E5%A4%B1%E5%8E%BB%E8%BE%B9%E7%95%8C"><span class="toc-text">🧠 配置项越来越多时，最怕的不是“麻烦”，而是失去边界</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

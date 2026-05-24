@@ -894,20 +894,20 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记23"><a href="#Java笔记23" class="headerlink" title="Java笔记23"></a>Java笔记23</h1><p>时间类和数学工具类虽然看起来分散，但在日常代码里出现频率都很高。它们不像集合和线程那样有强烈的结构感，却经常承担“把业务细节补完整”的工作。</p>
+    <h1 id="Java笔记23-Date、Calendar与Math工具类"><a href="#Java笔记23-Date、Calendar与Math工具类" class="headerlink" title="Java笔记23-Date、Calendar与Math工具类"></a>Java笔记23-Date、Calendar与Math工具类</h1><p>时间类和数学工具类虽然看起来分散，但在日常代码里出现频率都很高。它们不像集合和线程那样有强烈的结构感，却经常承担“把业务细节补完整”的工作。</p>
 <blockquote>
 <p><strong>先把一句话记住：</strong><mark>这类工具类的价值不在于会背方法名，而在于知道什么时候该拿出来用。</mark></p>
 </blockquote>
 <hr>
-<h2 id="Date-的重点，是“时间对象”和“时间戳”之间的来回转换"><a href="#Date-的重点，是“时间对象”和“时间戳”之间的来回转换" class="headerlink" title="Date 的重点，是“时间对象”和“时间戳”之间的来回转换"></a><code>Date</code> 的重点，是“时间对象”和“时间戳”之间的来回转换</h2><p><code>DateDemo</code> 里已经把最常用的几种写法放在一起了：</p>
+<h2 id="🧩-Date-的重点，是“时间对象”和“时间戳”之间的来回转换"><a href="#🧩-Date-的重点，是“时间对象”和“时间戳”之间的来回转换" class="headerlink" title="🧩 Date 的重点，是“时间对象”和“时间戳”之间的来回转换"></a>🧩 <code>Date</code> 的重点，是“时间对象”和“时间戳”之间的来回转换</h2><p><code>DateDemo</code> 里已经把最常用的几种写法放在一起了：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">System.out.println(date);</span><br><span class="line"></span><br><span class="line"><span class="type">Date</span> <span class="variable">date1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="number">1000</span>);</span><br><span class="line">System.out.println(date1);</span><br><span class="line"></span><br><span class="line">System.out.println(date.before(date1));</span><br><span class="line">System.out.println(date.after(date1));</span><br><span class="line">System.out.println(date.compareTo(date1));</span><br><span class="line">System.out.println(date.equals(date1));</span><br><span class="line"></span><br><span class="line">System.out.println(date.getTime());</span><br><span class="line">System.out.println(<span class="keyword">new</span> <span class="title class_">Date</span>(<span class="number">1745838019613L</span>));</span><br><span class="line"></span><br><span class="line">date.setTime(<span class="number">1681814479507L</span>);</span><br><span class="line">System.out.println(date);</span><br></pre></td></tr></table></figure>
 
 <p>这段代码最值得拆开的其实是三条线：</p>
-<h3 id="1-创建时间对象"><a href="#1-创建时间对象" class="headerlink" title="1. 创建时间对象"></a>1. 创建时间对象</h3><ul>
+<h3 id="▍创建时间对象"><a href="#▍创建时间对象" class="headerlink" title="▍创建时间对象"></a>▍创建时间对象</h3><ul>
 <li><code>new Date()</code>：当前系统时间</li>
 <li><code>new Date(1000)</code>：传入毫秒值创建时间对象</li>
 </ul>
-<h3 id="2-时间比较"><a href="#2-时间比较" class="headerlink" title="2. 时间比较"></a>2. 时间比较</h3><table>
+<h3 id="▍时间比较"><a href="#▍时间比较" class="headerlink" title="▍时间比较"></a>▍时间比较</h3><table>
 <thead>
 <tr>
 <th>方法</th>
@@ -931,12 +931,12 @@
 <td>判断两个时间对象是否表示同一时刻</td>
 </tr>
 </tbody></table>
-<h3 id="3-时间戳转换"><a href="#3-时间戳转换" class="headerlink" title="3. 时间戳转换"></a>3. 时间戳转换</h3><ul>
+<h3 id="▍时间戳转换"><a href="#▍时间戳转换" class="headerlink" title="▍时间戳转换"></a>▍时间戳转换</h3><ul>
 <li><code>getTime()</code>：从时间对象取出毫秒值</li>
 <li><code>setTime()</code>：把某个毫秒值重新设回当前 <code>Date</code> 对象</li>
 </ul>
 <p>很多旧代码里看到的“毫秒值转时间”“时间转毫秒值”，本质上都绕不开这条线。</p>
-<h2 id="Calendar-的重点，是把一个时间拆成年月日时分秒"><a href="#Calendar-的重点，是把一个时间拆成年月日时分秒" class="headerlink" title="Calendar 的重点，是把一个时间拆成年月日时分秒"></a><code>Calendar</code> 的重点，是把一个时间拆成年月日时分秒</h2><p><code>CalendarDemo</code> 更像“时间字段拆解器”：</p>
+<h2 id="🔍-Calendar-的重点，是把一个时间拆成年月日时分秒"><a href="#🔍-Calendar-的重点，是把一个时间拆成年月日时分秒" class="headerlink" title="🔍 Calendar 的重点，是把一个时间拆成年月日时分秒"></a>🔍 <code>Calendar</code> 的重点，是把一个时间拆成年月日时分秒</h2><p><code>CalendarDemo</code> 更像“时间字段拆解器”：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Calendar</span> <span class="variable">instance</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line">System.out.println(instance.getTime());</span><br><span class="line">System.out.println(instance.get(Calendar.DAY_OF_WEEK) - <span class="number">1</span>);</span><br><span class="line">System.out.println(instance.get(Calendar.YEAR));</span><br><span class="line">System.out.println(instance.get(Calendar.MONTH) + <span class="number">1</span>);</span><br><span class="line">System.out.println(instance.get(Calendar.DAY_OF_MONTH));</span><br><span class="line">System.out.println(instance.get(Calendar.HOUR));</span><br><span class="line">System.out.println(instance.get(Calendar.MINUTE));</span><br><span class="line">System.out.println(instance.get(Calendar.SECOND));</span><br></pre></td></tr></table></figure>
 
 <p>这段代码可以顺便帮助理清两个经典细节：</p>
@@ -957,7 +957,7 @@
 </tr>
 </tbody></table>
 <p>也就是说，<code>Calendar</code> 的问题往往不是“不会取值”，而是<strong>字段规则和日常直觉不完全一样</strong>。</p>
-<h2 id="SimpleDateFormat-把“时间对象”和“展示格式”接了起来"><a href="#SimpleDateFormat-把“时间对象”和“展示格式”接了起来" class="headerlink" title="SimpleDateFormat 把“时间对象”和“展示格式”接了起来"></a><code>SimpleDateFormat</code> 把“时间对象”和“展示格式”接了起来</h2><p><code>SimpleDateFormatDemo</code> 里既有格式定义，也有字符串解析：</p>
+<h2 id="🔍-SimpleDateFormat-把“时间对象”和“展示格式”接了起来"><a href="#🔍-SimpleDateFormat-把“时间对象”和“展示格式”接了起来" class="headerlink" title="🔍 SimpleDateFormat 把“时间对象”和“展示格式”接了起来"></a>🔍 <code>SimpleDateFormat</code> 把“时间对象”和“展示格式”接了起来</h2><p><code>SimpleDateFormatDemo</code> 里既有格式定义，也有字符串解析：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">sdf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy/MM/dd HH:mm:ss&quot;</span>);</span><br><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">sdf1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy年MM月dd日&quot;</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(sdf.parse(<span class="string">&quot;2025/04/28 19:19:10&quot;</span>));</span><br></pre></td></tr></table></figure>
 
 <p>如果把被注释掉的格式化代码一起看，这个类主要做两件事：</p>
@@ -1010,7 +1010,7 @@
 <td>秒</td>
 </tr>
 </tbody></table>
-<h2 id="Math-这一组方法，真正常用的其实非常固定"><a href="#Math-这一组方法，真正常用的其实非常固定" class="headerlink" title="Math 这一组方法，真正常用的其实非常固定"></a><code>Math</code> 这一组方法，真正常用的其实非常固定</h2><p><code>MathDemo</code> 里几乎把基础常用方法都过了一遍：</p>
+<h2 id="🔍-Math-这一组方法，真正常用的其实非常固定"><a href="#🔍-Math-这一组方法，真正常用的其实非常固定" class="headerlink" title="🔍 Math 这一组方法，真正常用的其实非常固定"></a>🔍 <code>Math</code> 这一组方法，真正常用的其实非常固定</h2><p><code>MathDemo</code> 里几乎把基础常用方法都过了一遍：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Math.abs(a));</span><br><span class="line">System.out.println(Math.max(<span class="number">100</span>, <span class="number">1</span>));</span><br><span class="line">System.out.println(Math.min(<span class="number">100</span>, <span class="number">1</span>));</span><br><span class="line">System.out.println(Math.pow(<span class="number">2</span>, <span class="number">10</span>));</span><br><span class="line">System.out.println(Math.sin(pi / <span class="number">2</span>));</span><br><span class="line">System.out.println(Math.sqrt(<span class="number">3.0</span>));</span><br><span class="line">System.out.println(Math.ceil(<span class="number">3.14</span>));</span><br><span class="line">System.out.println(Math.floor(-<span class="number">3.14</span>));</span><br><span class="line">System.out.println(Math.round(<span class="number">3.94</span>));</span><br></pre></td></tr></table></figure>
 
 <p>可以直接整理成速查表：</p>
@@ -1055,7 +1055,7 @@
 </tr>
 </tbody></table>
 <p><code>ceil(-3.14)</code> 和 <code>floor(-3.14)</code> 这类负数结果值得单独留意，因为它们很容易和直觉混淆。</p>
-<h2 id="Math-random-最容易出问题的不是范围，而是运算顺序"><a href="#Math-random-最容易出问题的不是范围，而是运算顺序" class="headerlink" title="Math.random() 最容易出问题的不是范围，而是运算顺序"></a><code>Math.random()</code> 最容易出问题的不是范围，而是运算顺序</h2><p><code>MathDemo02</code> 里有三种随机数写法：</p>
+<h2 id="💡-Math-random-最容易出问题的不是范围，而是运算顺序"><a href="#💡-Math-random-最容易出问题的不是范围，而是运算顺序" class="headerlink" title="💡 Math.random() 最容易出问题的不是范围，而是运算顺序"></a>💡 <code>Math.random()</code> 最容易出问题的不是范围，而是运算顺序</h2><p><code>MathDemo02</code> 里有三种随机数写法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Math.random()); <span class="comment">//0-1</span></span><br><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * <span class="number">100</span>)); <span class="comment">//0-100</span></span><br><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * <span class="number">100</span>) + <span class="number">100</span>); <span class="comment">//100-200</span></span><br></pre></td></tr></table></figure>
 
 <p>前两种都比较直观，但最后这段最值得单独指出：</p>
@@ -1066,7 +1066,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * (max - min)) + min);</span><br></pre></td></tr></table></figure>
 
 <p>这类细节值得放在工具类章节里重点提醒，因为它说明：<strong>工具方法本身不难，真正难的是表达式和边界是否写对。</strong></p>
-<h2 id="旧版时间-API-和工具类的价值，在于“看得懂旧代码”"><a href="#旧版时间-API-和工具类的价值，在于“看得懂旧代码”" class="headerlink" title="旧版时间 API 和工具类的价值，在于“看得懂旧代码”"></a>旧版时间 API 和工具类的价值，在于“看得懂旧代码”</h2><p>今天如果是新项目，日期时间处理通常更推荐：</p>
+<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>今天如果是新项目，日期时间处理通常更推荐：</p>
 <ul>
 <li><code>LocalDate</code></li>
 <li><code>LocalDateTime</code></li>
@@ -1083,7 +1083,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -1092,7 +1092,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -1100,7 +1100,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B023"><span class="toc-text">Java笔记23</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Date-%E7%9A%84%E9%87%8D%E7%82%B9%EF%BC%8C%E6%98%AF%E2%80%9C%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E2%80%9D%E5%92%8C%E2%80%9C%E6%97%B6%E9%97%B4%E6%88%B3%E2%80%9D%E4%B9%8B%E9%97%B4%E7%9A%84%E6%9D%A5%E5%9B%9E%E8%BD%AC%E6%8D%A2"><span class="toc-text">Date 的重点，是“时间对象”和“时间戳”之间的来回转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%88%9B%E5%BB%BA%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1"><span class="toc-text">1. 创建时间对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%97%B6%E9%97%B4%E6%AF%94%E8%BE%83"><span class="toc-text">2. 时间比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2"><span class="toc-text">3. 时间戳转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Calendar-%E7%9A%84%E9%87%8D%E7%82%B9%EF%BC%8C%E6%98%AF%E6%8A%8A%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E6%8B%86%E6%88%90%E5%B9%B4%E6%9C%88%E6%97%A5%E6%97%B6%E5%88%86%E7%A7%92"><span class="toc-text">Calendar 的重点，是把一个时间拆成年月日时分秒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SimpleDateFormat-%E6%8A%8A%E2%80%9C%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E2%80%9D%E5%92%8C%E2%80%9C%E5%B1%95%E7%A4%BA%E6%A0%BC%E5%BC%8F%E2%80%9D%E6%8E%A5%E4%BA%86%E8%B5%B7%E6%9D%A5"><span class="toc-text">SimpleDateFormat 把“时间对象”和“展示格式”接了起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Math-%E8%BF%99%E4%B8%80%E7%BB%84%E6%96%B9%E6%B3%95%EF%BC%8C%E7%9C%9F%E6%AD%A3%E5%B8%B8%E7%94%A8%E7%9A%84%E5%85%B6%E5%AE%9E%E9%9D%9E%E5%B8%B8%E5%9B%BA%E5%AE%9A"><span class="toc-text">Math 这一组方法，真正常用的其实非常固定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Math-random-%E6%9C%80%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%8D%E6%98%AF%E8%8C%83%E5%9B%B4%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%90%E7%AE%97%E9%A1%BA%E5%BA%8F"><span class="toc-text">Math.random() 最容易出问题的不是范围，而是运算顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A7%E7%89%88%E6%97%B6%E9%97%B4-API-%E5%92%8C%E5%B7%A5%E5%85%B7%E7%B1%BB%E7%9A%84%E4%BB%B7%E5%80%BC%EF%BC%8C%E5%9C%A8%E4%BA%8E%E2%80%9C%E7%9C%8B%E5%BE%97%E6%87%82%E6%97%A7%E4%BB%A3%E7%A0%81%E2%80%9D"><span class="toc-text">旧版时间 API 和工具类的价值，在于“看得懂旧代码”</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B023-Date%E3%80%81Calendar%E4%B8%8EMath%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-text">Java笔记23-Date、Calendar与Math工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-Date-%E7%9A%84%E9%87%8D%E7%82%B9%EF%BC%8C%E6%98%AF%E2%80%9C%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E2%80%9D%E5%92%8C%E2%80%9C%E6%97%B6%E9%97%B4%E6%88%B3%E2%80%9D%E4%B9%8B%E9%97%B4%E7%9A%84%E6%9D%A5%E5%9B%9E%E8%BD%AC%E6%8D%A2"><span class="toc-text">🧩 Date 的重点，是“时间对象”和“时间戳”之间的来回转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E5%88%9B%E5%BB%BA%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1"><span class="toc-text">▍创建时间对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E6%97%B6%E9%97%B4%E6%AF%94%E8%BE%83"><span class="toc-text">▍时间比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2"><span class="toc-text">▍时间戳转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-Calendar-%E7%9A%84%E9%87%8D%E7%82%B9%EF%BC%8C%E6%98%AF%E6%8A%8A%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E6%8B%86%E6%88%90%E5%B9%B4%E6%9C%88%E6%97%A5%E6%97%B6%E5%88%86%E7%A7%92"><span class="toc-text">🔍 Calendar 的重点，是把一个时间拆成年月日时分秒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-SimpleDateFormat-%E6%8A%8A%E2%80%9C%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E2%80%9D%E5%92%8C%E2%80%9C%E5%B1%95%E7%A4%BA%E6%A0%BC%E5%BC%8F%E2%80%9D%E6%8E%A5%E4%BA%86%E8%B5%B7%E6%9D%A5"><span class="toc-text">🔍 SimpleDateFormat 把“时间对象”和“展示格式”接了起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-Math-%E8%BF%99%E4%B8%80%E7%BB%84%E6%96%B9%E6%B3%95%EF%BC%8C%E7%9C%9F%E6%AD%A3%E5%B8%B8%E7%94%A8%E7%9A%84%E5%85%B6%E5%AE%9E%E9%9D%9E%E5%B8%B8%E5%9B%BA%E5%AE%9A"><span class="toc-text">🔍 Math 这一组方法，真正常用的其实非常固定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-Math-random-%E6%9C%80%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%8D%E6%98%AF%E8%8C%83%E5%9B%B4%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%90%E7%AE%97%E9%A1%BA%E5%BA%8F"><span class="toc-text">💡 Math.random() 最容易出问题的不是范围，而是运算顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

@@ -894,8 +894,11 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记64"><a href="#Java笔记64" class="headerlink" title="Java笔记64"></a>Java笔记64</h1><p>分页和条件搜索几乎是后台系统里出现频率最高的一类需求。真正麻烦的地方不在于“会不会写 <code>LIMIT</code>”，而在于怎样把页码、总数、筛选条件、返回结构都组织得稳定。</p>
-<h2 id="最原始的分页思路通常是-offset-limit"><a href="#最原始的分页思路通常是-offset-limit" class="headerlink" title="最原始的分页思路通常是 offset + limit"></a>最原始的分页思路通常是 <code>offset + limit</code></h2><p>这一类写法非常常见：</p>
+    <h1 id="Java笔记64-SpringBoot分页、多条件搜索与PageHelper"><a href="#Java笔记64-SpringBoot分页、多条件搜索与PageHelper" class="headerlink" title="Java笔记64-SpringBoot分页、多条件搜索与PageHelper"></a>Java笔记64-SpringBoot分页、多条件搜索与PageHelper</h1><p>分页和条件搜索几乎是后台系统里出现频率最高的一类需求。真正麻烦的地方不在于“会不会写 <code>LIMIT</code>”，而在于怎样把页码、总数、筛选条件、返回结构都组织得稳定。</p>
+<blockquote>
+<p><mark>分页是后端查询、数据库性能和前端表格状态共同作用的结果。</mark></p>
+</blockquote>
+<h2 id="🧩-最原始的分页思路通常是-offset-limit"><a href="#🧩-最原始的分页思路通常是-offset-limit" class="headerlink" title="🧩 最原始的分页思路通常是 offset + limit"></a>🧩 最原始的分页思路通常是 <code>offset + limit</code></h2><p>手写分页的典型结构如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;Book&gt; <span class="title function_">findPage</span><span class="params">(<span class="type">int</span> page, <span class="type">int</span> size)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">offset</span> <span class="operator">=</span> (page - <span class="number">1</span>) * size;</span><br><span class="line">    <span class="keyword">return</span> bookMapper.findPage(offset, size);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>对应 SQL：</p>
@@ -904,7 +907,8 @@
 <p>这套方式直观、容易理解，非常适合入门，因为分页公式会被看得很清楚：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">offset = (page - 1) * size</span><br></pre></td></tr></table></figure>
 
-<h2 id="手写分页为什么后面容易变重"><a href="#手写分页为什么后面容易变重" class="headerlink" title="手写分页为什么后面容易变重"></a>手写分页为什么后面容易变重</h2><p>手工分页一开始没有问题，但往后经常会碰到这些事：</p>
+<p>这里还要注意一个基础边界：<code>page</code> 通常从 1 开始，而数据库偏移量从 0 开始。如果页码没有做最小值保护，<code>page = 0</code> 会导致偏移量变成负数。分页参数进入 Service 层后，最好先做默认值和边界处理，再交给 Mapper。</p>
+<h2 id="💡-手写分页为什么后面容易变重"><a href="#💡-手写分页为什么后面容易变重" class="headerlink" title="💡 手写分页为什么后面容易变重"></a>💡 手写分页为什么后面容易变重</h2><p>手工分页一开始没有问题，但往后经常会碰到这些事：</p>
 <ul>
 <li>还要再查一次总记录数</li>
 <li>条件搜索也要带分页</li>
@@ -912,7 +916,7 @@
 <li>返回结构要兼顾列表和总数</li>
 </ul>
 <p>于是分页就不再只是两行 SQL，而开始牵扯查询总数、统一结果体、前端表格组件适配。</p>
-<h2 id="PageResult-这种结构为什么很常见"><a href="#PageResult-这种结构为什么很常见" class="headerlink" title="PageResult&lt;T&gt; 这种结构为什么很常见"></a><code>PageResult&lt;T&gt;</code> 这种结构为什么很常见</h2><p>分页接口通常不只要返回一组数据，还要告诉前端总数、状态和消息。</p>
+<h2 id="💡-PageResult-这种结构为什么很常见"><a href="#💡-PageResult-这种结构为什么很常见" class="headerlink" title="💡 PageResult&lt;T&gt; 这种结构为什么很常见"></a>💡 <code>PageResult&lt;T&gt;</code> 这种结构为什么很常见</h2><p>分页接口通常不只要返回一组数据，还要告诉前端总数、状态和消息。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PageResult</span>&lt;T&gt; &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">Integer</span> <span class="variable">code</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">String</span> <span class="variable">msg</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> Integer count;</span><br><span class="line">    <span class="keyword">private</span> List&lt;T&gt; data;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <table>
@@ -939,11 +943,12 @@
 <td>当前页数据</td>
 </tr>
 </tbody></table>
-<h2 id="多条件搜索为什么经常和分页一起出现"><a href="#多条件搜索为什么经常和分页一起出现" class="headerlink" title="多条件搜索为什么经常和分页一起出现"></a>多条件搜索为什么经常和分页一起出现</h2><p>真实后台很少只有“纯分页”，更常见的是按名称、作者、状态做筛选。这时 SQL 往往会进入动态条件写法：</p>
+<h2 id="💡-多条件搜索为什么经常和分页一起出现"><a href="#💡-多条件搜索为什么经常和分页一起出现" class="headerlink" title="💡 多条件搜索为什么经常和分页一起出现"></a>💡 多条件搜索为什么经常和分页一起出现</h2><p>真实后台很少只有“纯分页”，更常见的是按名称、作者、状态做筛选。这时 SQL 往往会进入动态条件写法：</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">&quot;searchPage&quot;</span> <span class="attr">resultType</span>=<span class="string">&quot;com.java.pojo.Book&quot;</span>&gt;</span></span><br><span class="line">    SELECT * FROM book</span><br><span class="line">    <span class="tag">&lt;<span class="name">where</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;title != null and title != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">            title LIKE CONCAT(&#x27;%&#x27;, #&#123;title&#125;, &#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">if</span> <span class="attr">test</span>=<span class="string">&quot;author != null and author != &#x27;&#x27;&quot;</span>&gt;</span></span><br><span class="line">            AND author LIKE CONCAT(&#x27;%&#x27;, #&#123;author&#125;, &#x27;%&#x27;)</span><br><span class="line">        <span class="tag">&lt;/<span class="name">if</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">where</span>&gt;</span></span><br><span class="line">    ORDER BY id</span><br><span class="line">    LIMIT #&#123;offset&#125;, #&#123;limit&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <p>这里最重要的不是标签本身，而是查询条件和分页条件能够自然组合。</p>
-<h2 id="PageHelper-为什么会成为更常见的升级方案"><a href="#PageHelper-为什么会成为更常见的升级方案" class="headerlink" title="PageHelper 为什么会成为更常见的升级方案"></a>PageHelper 为什么会成为更常见的升级方案</h2><p>当分页写得越来越多时，很多项目会引入 PageHelper。它的思路不是替换查询方法，而是在执行 SQL 前通过拦截器补上分页逻辑。</p>
+<p>多条件搜索还要注意 <code>&lt;where&gt;</code> 标签的价值。它可以在有条件时自动补 <code>WHERE</code>，并处理多余的 <code>AND</code>，避免 SQL 因为某个筛选项为空而拼出非法语句。这也是动态 SQL 比手工字符串拼接更可靠的原因。</p>
+<h2 id="📌-PageHelper-为什么会成为更常见的升级方案"><a href="#📌-PageHelper-为什么会成为更常见的升级方案" class="headerlink" title="📌 PageHelper 为什么会成为更常见的升级方案"></a>📌 PageHelper 为什么会成为更常见的升级方案</h2><p>当分页写得越来越多时，很多项目会引入 PageHelper。它的思路不是替换查询方法，而是在执行 SQL 前通过拦截器补上分页逻辑。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">PageHelper.startPage(page, size);</span><br><span class="line">List&lt;Book&gt; list = bookMapper.search(title, author);</span><br><span class="line">PageInfo&lt;Book&gt; pi = <span class="keyword">new</span> <span class="title class_">PageInfo</span>&lt;&gt;(list);</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PageResult</span>&lt;&gt;((<span class="type">int</span>) pi.getTotal(), pi.getList());</span><br></pre></td></tr></table></figure>
 
 <table>
@@ -962,7 +967,8 @@
 <td>少写分页 SQL，总数统计更自然</td>
 </tr>
 </tbody></table>
-<h2 id="读分页代码时，建议优先抓三条线"><a href="#读分页代码时，建议优先抓三条线" class="headerlink" title="读分页代码时，建议优先抓三条线"></a>读分页代码时，建议优先抓三条线</h2><p>第一条线是参数怎么传进来。<br>第二条线是 SQL 怎么落地。<br>第三条线是结果怎么回出去。</p>
+<p>PageHelper 的使用顺序很关键。<code>startPage(page, size)</code> 必须紧挨着真正的查询方法，因为它会在当前线程中记录分页参数，然后拦截后续 SQL。如果中间夹了其他查询，分页可能会套到错误的 SQL 上。这个细节能帮助理解：分页插件并不是凭空生成结果，而是在 MyBatis 执行 SQL 前做了拦截和改写。</p>
+<h2 id="🧠-分页代码优先抓三条线"><a href="#🧠-分页代码优先抓三条线" class="headerlink" title="🧠 分页代码优先抓三条线"></a>🧠 分页代码优先抓三条线</h2><p>第一条线是参数怎么传进来。<br>第二条线是 SQL 怎么落地。<br>第三条线是结果怎么回出去。</p>
 <p>把这三条线打通，分页就不再只是一个功能点，而会变成后台系统里非常稳定的一块基础能力。</p>
 
   </article>
@@ -974,7 +980,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -983,7 +989,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -991,7 +997,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B064"><span class="toc-text">Java笔记64</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%8E%9F%E5%A7%8B%E7%9A%84%E5%88%86%E9%A1%B5%E6%80%9D%E8%B7%AF%E9%80%9A%E5%B8%B8%E6%98%AF-offset-limit"><span class="toc-text">最原始的分页思路通常是 offset + limit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%8B%E5%86%99%E5%88%86%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E5%90%8E%E9%9D%A2%E5%AE%B9%E6%98%93%E5%8F%98%E9%87%8D"><span class="toc-text">手写分页为什么后面容易变重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PageResult-%E8%BF%99%E7%A7%8D%E7%BB%93%E6%9E%84%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E5%B8%B8%E8%A7%81"><span class="toc-text">PageResult&lt;T&gt; 这种结构为什么很常见</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BB%8F%E5%B8%B8%E5%92%8C%E5%88%86%E9%A1%B5%E4%B8%80%E8%B5%B7%E5%87%BA%E7%8E%B0"><span class="toc-text">多条件搜索为什么经常和分页一起出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PageHelper-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%88%90%E4%B8%BA%E6%9B%B4%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8D%87%E7%BA%A7%E6%96%B9%E6%A1%88"><span class="toc-text">PageHelper 为什么会成为更常见的升级方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%BB%E5%88%86%E9%A1%B5%E4%BB%A3%E7%A0%81%E6%97%B6%EF%BC%8C%E5%BB%BA%E8%AE%AE%E4%BC%98%E5%85%88%E6%8A%93%E4%B8%89%E6%9D%A1%E7%BA%BF"><span class="toc-text">读分页代码时，建议优先抓三条线</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B064-SpringBoot%E5%88%86%E9%A1%B5%E3%80%81%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2%E4%B8%8EPageHelper"><span class="toc-text">Java笔记64-SpringBoot分页、多条件搜索与PageHelper</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E6%9C%80%E5%8E%9F%E5%A7%8B%E7%9A%84%E5%88%86%E9%A1%B5%E6%80%9D%E8%B7%AF%E9%80%9A%E5%B8%B8%E6%98%AF-offset-limit"><span class="toc-text">🧩 最原始的分页思路通常是 offset + limit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E6%89%8B%E5%86%99%E5%88%86%E9%A1%B5%E4%B8%BA%E4%BB%80%E4%B9%88%E5%90%8E%E9%9D%A2%E5%AE%B9%E6%98%93%E5%8F%98%E9%87%8D"><span class="toc-text">💡 手写分页为什么后面容易变重</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-PageResult-%E8%BF%99%E7%A7%8D%E7%BB%93%E6%9E%84%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BE%88%E5%B8%B8%E8%A7%81"><span class="toc-text">💡 PageResult&lt;T&gt; 这种结构为什么很常见</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E5%A4%9A%E6%9D%A1%E4%BB%B6%E6%90%9C%E7%B4%A2%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BB%8F%E5%B8%B8%E5%92%8C%E5%88%86%E9%A1%B5%E4%B8%80%E8%B5%B7%E5%87%BA%E7%8E%B0"><span class="toc-text">💡 多条件搜索为什么经常和分页一起出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-PageHelper-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%88%90%E4%B8%BA%E6%9B%B4%E5%B8%B8%E8%A7%81%E7%9A%84%E5%8D%87%E7%BA%A7%E6%96%B9%E6%A1%88"><span class="toc-text">📌 PageHelper 为什么会成为更常见的升级方案</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%88%86%E9%A1%B5%E4%BB%A3%E7%A0%81%E4%BC%98%E5%85%88%E6%8A%93%E4%B8%89%E6%9D%A1%E7%BA%BF"><span class="toc-text">🧠 分页代码优先抓三条线</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

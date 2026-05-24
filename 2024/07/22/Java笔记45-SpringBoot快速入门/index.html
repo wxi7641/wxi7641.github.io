@@ -20,12 +20,12 @@
   <title>Java笔记45 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记45Spring Boot 真正让人觉得轻，不是因为它“变简单了”，而是因为很多以前必须手工拼起来的 Spring 配置，现在都被默认约定和自动配置接住了。  Spring Boot 不是弱化 Spring，而是把 Spring 项目最常见的初始化工作提前封装好。   一、启动类非常短，但信息量非常大Spring Boot 项目最经典的入口通常就是这样： 1234567@SpringB">
+    <meta name="description" content="Java笔记45-SpringBoot快速入门Spring Boot 真正让人觉得轻，不是因为它“变简单了”，而是因为很多以前必须手工拼起来的 Spring 配置，现在都被默认约定和自动配置接住了。  Spring Boot 不是弱化 Spring，而是把 Spring 项目最常见的初始化工作提前封装好。   🧩 启动类非常短，但信息量非常大Spring Boot 项目最经典的入口通常就是这样：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记45">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/22/Java%E7%AC%94%E8%AE%B045-SpringBoot%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记45Spring Boot 真正让人觉得轻，不是因为它“变简单了”，而是因为很多以前必须手工拼起来的 Spring 配置，现在都被默认约定和自动配置接住了。  Spring Boot 不是弱化 Spring，而是把 Spring 项目最常见的初始化工作提前封装好。   一、启动类非常短，但信息量非常大Spring Boot 项目最经典的入口通常就是这样： 1234567@SpringB">
+<meta property="og:description" content="Java笔记45-SpringBoot快速入门Spring Boot 真正让人觉得轻，不是因为它“变简单了”，而是因为很多以前必须手工拼起来的 Spring 配置，现在都被默认约定和自动配置接住了。  Spring Boot 不是弱化 Spring，而是把 Spring 项目最常见的初始化工作提前封装好。   🧩 启动类非常短，但信息量非常大Spring Boot 项目最经典的入口通常就是这样：">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-22T11:00:00.000Z">
@@ -103,12 +103,12 @@
     
   </div>
   </div>
-<article class="md-text content"><h1 id="Java笔记45"><a href="#Java笔记45" class="headerlink" title="Java笔记45"></a>Java笔记45</h1><p>Spring Boot 真正让人觉得轻，不是因为它“变简单了”，而是因为很多以前必须手工拼起来的 Spring 配置，现在都被默认约定和自动配置接住了。</p>
+<article class="md-text content"><h1 id="Java笔记45-SpringBoot快速入门"><a href="#Java笔记45-SpringBoot快速入门" class="headerlink" title="Java笔记45-SpringBoot快速入门"></a>Java笔记45-SpringBoot快速入门</h1><p>Spring Boot 真正让人觉得轻，不是因为它“变简单了”，而是因为很多以前必须手工拼起来的 Spring 配置，现在都被默认约定和自动配置接住了。</p>
 <blockquote>
 <p><mark>Spring Boot 不是弱化 Spring，而是把 Spring 项目最常见的初始化工作提前封装好。</mark></p>
 </blockquote>
 <hr>
-<h2 id="一、启动类非常短，但信息量非常大"><a href="#一、启动类非常短，但信息量非常大" class="headerlink" title="一、启动类非常短，但信息量非常大"></a>一、启动类非常短，但信息量非常大</h2><p>Spring Boot 项目最经典的入口通常就是这样：</p>
+<h2 id="🧩-启动类非常短，但信息量非常大"><a href="#🧩-启动类非常短，但信息量非常大" class="headerlink" title="🧩 启动类非常短，但信息量非常大"></a>🧩 启动类非常短，但信息量非常大</h2><p>Spring Boot 项目最经典的入口通常就是这样：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@MapperScan(&quot;com.java.springboot.mapper&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Application</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        SpringApplication.run(Application.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这段代码短得几乎不像传统 Spring 项目，但它把几个很重要的动作收起来了：</p>
@@ -133,7 +133,30 @@
 </tr>
 </tbody></table>
 <p>传统配置方式里很多在 XML 中完成的事情，从这里开始都被逐渐转移到注解和自动配置里了。</p>
-<h2 id="二、配置文件统一收口，是-Spring-Boot-最直观的变化之一"><a href="#二、配置文件统一收口，是-Spring-Boot-最直观的变化之一" class="headerlink" title="二、配置文件统一收口，是 Spring Boot 最直观的变化之一"></a>二、配置文件统一收口，是 Spring Boot 最直观的变化之一</h2><p>配置文件中的关键项通常会集中在 <code>application.properties</code> 或 <code>application.yml</code>：</p>
+<h2 id="🔬-SpringBootApplication-是三个关键能力的组合"><a href="#🔬-SpringBootApplication-是三个关键能力的组合" class="headerlink" title="🔬 @SpringBootApplication 是三个关键能力的组合"></a>🔬 <code>@SpringBootApplication</code> 是三个关键能力的组合</h2><p>启动类之所以能短，是因为 <code>@SpringBootApplication</code> 本身就是组合注解。它把 Spring Boot 应用启动时最常用的三件事压缩到一个入口里：</p>
+<table>
+<thead>
+<tr>
+<th>能力</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>@SpringBootConfiguration</code></td>
+<td>标记当前类是配置类，本质上仍然属于 Spring 配置体系</td>
+</tr>
+<tr>
+<td><code>@EnableAutoConfiguration</code></td>
+<td>开启自动配置，让框架根据依赖和条件装配常用 Bean</td>
+</tr>
+<tr>
+<td><code>@ComponentScan</code></td>
+<td>从启动类所在包开始扫描组件</td>
+</tr>
+</tbody></table>
+<p>这里最容易踩到的是扫描范围。默认情况下，组件扫描会从启动类所在包向下扫描，所以启动类通常放在项目根包下。如果启动类位置太深，Controller、Service、Mapper 等组件可能不在扫描范围内，结果就是代码写了注解，容器里却没有对应 Bean。</p>
+<p>自动配置也不是“无条件全部开启”。Spring Boot 通常会根据三个方面判断是否装配某个能力：classpath 中是否存在相关依赖、容器中是否已经存在同类 Bean、配置文件中是否提供了对应属性。比如加入 Web Starter 后，内置 Web 容器、Spring MVC 基础组件和 JSON 转换能力才会自然接上；加入 MyBatis Starter 后，Mapper 扫描、<code>SqlSessionFactory</code>、数据源绑定这些能力才有条件被整合起来。</p>
+<h2 id="🔍-配置文件统一收口，是-Spring-Boot-最直观的变化之一"><a href="#🔍-配置文件统一收口，是-Spring-Boot-最直观的变化之一" class="headerlink" title="🔍 配置文件统一收口，是 Spring Boot 最直观的变化之一"></a>🔍 配置文件统一收口，是 Spring Boot 最直观的变化之一</h2><p>配置文件中的关键项通常会集中在 <code>application.properties</code> 或 <code>application.yml</code>：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.application.name</span>=<span class="string">SpringBoot</span></span><br><span class="line"><span class="attr">server.port</span>=<span class="string">8081</span></span><br><span class="line"></span><br><span class="line"><span class="attr">spring.datasource.driverClassName</span>=<span class="string">com.mysql.cj.jdbc.Driver</span></span><br><span class="line"><span class="attr">spring.datasource.url</span>=<span class="string">jdbc:mysql://&lt;db-host&gt;:&lt;db-port&gt;/&lt;db-name&gt;?useSSL=false&amp;characterEncoding=utf8</span></span><br><span class="line"><span class="attr">spring.datasource.username</span>=<span class="string">&lt;db-username&gt;</span></span><br><span class="line"><span class="attr">spring.datasource.password</span>=<span class="string">&lt;db-password&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">mybatis.type-aliases-package</span>=<span class="string">com.java.springboot.pojo</span></span><br><span class="line"><span class="attr">mybatis.mapper-locations</span>=<span class="string">classpath:mapper/*Mapper.xml</span></span><br><span class="line"><span class="attr">mybatis.configuration.map-underscore-to-camel-case</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
 
 <p>这类配置最适合分块理解：</p>
@@ -157,8 +180,8 @@
 <td>MyBatis 集成配置</td>
 </tr>
 </tbody></table>
-<p>公开笔记里更适合使用这种占位写法，真实数据库地址、账号密码应放进本地配置、环境变量或密钥管理方案里，而不是直接出现在对外文章中。</p>
-<h2 id="三、Spring-Boot-依然是分层结构，只是搭环境的动作少了很多"><a href="#三、Spring-Boot-依然是分层结构，只是搭环境的动作少了很多" class="headerlink" title="三、Spring Boot 依然是分层结构，只是搭环境的动作少了很多"></a>三、Spring Boot 依然是分层结构，只是搭环境的动作少了很多</h2><p>控制层：</p>
+<p>示例配置更适合使用这种占位写法，真实数据库地址、账号密码应放进本地配置、环境变量或密钥管理方案里，而不是直接出现在项目文档或代码仓库中。</p>
+<h2 id="🔍-Spring-Boot-依然是分层结构，只是搭环境的动作少了很多"><a href="#🔍-Spring-Boot-依然是分层结构，只是搭环境的动作少了很多" class="headerlink" title="🔍 Spring Boot 依然是分层结构，只是搭环境的动作少了很多"></a>🔍 Spring Boot 依然是分层结构，只是搭环境的动作少了很多</h2><p>控制层：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/brand&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BrandController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BrandService brandService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/selectAll&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> brandService.selectAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>Service 层：</p>
@@ -172,7 +195,7 @@
 
 <p>把这几段放在一起看，会发现一件很重要的事：</p>
 <p><mark>Spring Boot 并没有取消 Controller &#x2F; Service &#x2F; Mapper 这种经典分层，它只是把项目启动、组件装配和框架整合变得更自然了。</mark></p>
-<h2 id="四、自动配置到底替开发者省掉了什么"><a href="#四、自动配置到底替开发者省掉了什么" class="headerlink" title="四、自动配置到底替开发者省掉了什么"></a>四、自动配置到底替开发者省掉了什么</h2><p>如果把传统 Spring + Spring MVC + MyBatis 项目和 Spring Boot 放在一起比较，最明显的差别通常有这些：</p>
+<h2 id="🔬-自动配置到底替开发者省掉了什么"><a href="#🔬-自动配置到底替开发者省掉了什么" class="headerlink" title="🔬 自动配置到底替开发者省掉了什么"></a>🔬 自动配置到底替开发者省掉了什么</h2><p>如果把传统 Spring + Spring MVC + MyBatis 项目和 Spring Boot 放在一起比较，最明显的差别通常有这些：</p>
 <table>
 <thead>
 <tr>
@@ -202,22 +225,22 @@
 <td>约定式配置更集中</td>
 </tr>
 </tbody></table>
-<p>自动配置的本质并不是“神秘地帮你做事”，而是框架根据依赖和配置项，提前把最常见的组合情况准备好了。</p>
-<h2 id="五、为什么-Starter-这么重要"><a href="#五、为什么-Starter-这么重要" class="headerlink" title="五、为什么 Starter 这么重要"></a>五、为什么 Starter 这么重要</h2><p>Spring Boot 学习时经常会听到“起步依赖”这个词。它的真正意义不是一个新概念，而是把一类功能常用的依赖组合先打包好。</p>
+<p>自动配置的本质并不是“神秘地替项目生成能力”，而是框架根据依赖和配置项，提前把最常见的组合情况准备好了。</p>
+<h2 id="💡-为什么-Starter-这么重要"><a href="#💡-为什么-Starter-这么重要" class="headerlink" title="💡 为什么 Starter 这么重要"></a>💡 为什么 Starter 这么重要</h2><p>Spring Boot 学习时经常会听到“起步依赖”这个词。它的真正意义不是一个新概念，而是把一类功能常用的依赖组合先打包好。</p>
 <p>这样做有两个直接效果：</p>
 <ol>
 <li>少写很多零散依赖</li>
 <li>让自动配置有条件可判断</li>
 </ol>
 <p>也就是说，<strong>Starter 负责把“需要哪些依赖”这件事先整理好，自动配置再负责决定“这些依赖该怎么配起来”。</strong></p>
-<h2 id="六、-ResponseBody-在-Spring-Boot-里几乎成了默认思维的一部分"><a href="#六、-ResponseBody-在-Spring-Boot-里几乎成了默认思维的一部分" class="headerlink" title="六、@ResponseBody 在 Spring Boot 里几乎成了默认思维的一部分"></a>六、<code>@ResponseBody</code> 在 Spring Boot 里几乎成了默认思维的一部分</h2><p>这一段控制器代码特别有代表性：</p>
+<h2 id="📌-ResponseBody-在-Spring-Boot-里几乎成了默认思维的一部分"><a href="#📌-ResponseBody-在-Spring-Boot-里几乎成了默认思维的一部分" class="headerlink" title="📌 @ResponseBody 在 Spring Boot 里几乎成了默认思维的一部分"></a>📌 <code>@ResponseBody</code> 在 Spring Boot 里几乎成了默认思维的一部分</h2><p>这一段控制器代码特别有代表性：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RequestMapping(&quot;/selectAll&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> brandService.selectAll();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这说明在 Spring Boot 里，接口返回 JSON 已经变成非常自然的写法。很多时候如果整个类都以接口返回为主，还会直接写成：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br></pre></td></tr></table></figure>
 
 <p>也就是说，Spring Boot 常常和“接口式开发”“前后端分离”“JSON 响应”这些开发习惯一起出现。</p>
-<h2 id="七、配置文件除了集中，还开始承担“环境切换入口”的角色"><a href="#七、配置文件除了集中，还开始承担“环境切换入口”的角色" class="headerlink" title="七、配置文件除了集中，还开始承担“环境切换入口”的角色"></a>七、配置文件除了集中，还开始承担“环境切换入口”的角色</h2><p>Spring Boot 把配置收拢之后，后续最容易继续扩展的方向也就清晰了：</p>
+<h2 id="🔬-配置文件除了集中，还开始承担“环境切换入口”的角色"><a href="#🔬-配置文件除了集中，还开始承担“环境切换入口”的角色" class="headerlink" title="🔬 配置文件除了集中，还开始承担“环境切换入口”的角色"></a>🔬 配置文件除了集中，还开始承担“环境切换入口”的角色</h2><p>Spring Boot 把配置收拢之后，后续最容易继续扩展的方向也就清晰了：</p>
 <ul>
 <li>多环境配置</li>
 <li>端口切换</li>
@@ -226,7 +249,7 @@
 <li>文件上传限制</li>
 </ul>
 <p>所以 <code>application.properties</code> 不只是“一个配置文件”，而是应用运行参数的主入口之一。</p>
-<h2 id="八、为什么-Spring-Boot-让人有“从工程搭建回到业务开发”的感觉"><a href="#八、为什么-Spring-Boot-让人有“从工程搭建回到业务开发”的感觉" class="headerlink" title="八、为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉"></a>八、为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉</h2><p>以前做 Spring 项目时，很多精力会消耗在：</p>
+<h2 id="💡-为什么-Spring-Boot-让人有“从工程搭建回到业务开发”的感觉"><a href="#💡-为什么-Spring-Boot-让人有“从工程搭建回到业务开发”的感觉" class="headerlink" title="💡 为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉"></a>💡 为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉</h2><p>以前做 Spring 项目时，很多精力会消耗在：</p>
 <ul>
 <li>XML 配置</li>
 <li>组件注册</li>
@@ -239,8 +262,8 @@
 <li>数据处理</li>
 <li>页面或接口输出</li>
 </ul>
-<p>这也是为什么很多人第一次上手 Spring Boot，会直接感受到“项目终于没那么重了”。</p>
-<h2 id="九、Spring-Boot-真正要建立的是“约定优于配置”的直觉"><a href="#九、Spring-Boot-真正要建立的是“约定优于配置”的直觉" class="headerlink" title="九、Spring Boot 真正要建立的是“约定优于配置”的直觉"></a>九、Spring Boot 真正要建立的是“约定优于配置”的直觉</h2><p>这一节最重要的不是记住多少属性，而是建立下面这层理解：</p>
+<p>这也是 Spring Boot 给人的常见感受：项目终于没那么重了。</p>
+<h2 id="🧠-Spring-Boot-真正要建立的是“约定优于配置”的直觉"><a href="#🧠-Spring-Boot-真正要建立的是“约定优于配置”的直觉" class="headerlink" title="🧠 Spring Boot 真正要建立的是“约定优于配置”的直觉"></a>🧠 Spring Boot 真正要建立的是“约定优于配置”的直觉</h2><p>Spring Boot 配置最重要的不是记住多少属性，而是建立下面这层理解：</p>
 <ul>
 <li>依赖选得对，自动配置就能接上</li>
 <li>配置项放到规定位置，框架就知道去哪里找</li>
@@ -271,7 +294,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -280,7 +303,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -288,7 +311,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B045"><span class="toc-text">Java笔记45</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%90%AF%E5%8A%A8%E7%B1%BB%E9%9D%9E%E5%B8%B8%E7%9F%AD%EF%BC%8C%E4%BD%86%E4%BF%A1%E6%81%AF%E9%87%8F%E9%9D%9E%E5%B8%B8%E5%A4%A7"><span class="toc-text">一、启动类非常短，但信息量非常大</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%BB%9F%E4%B8%80%E6%94%B6%E5%8F%A3%EF%BC%8C%E6%98%AF-Spring-Boot-%E6%9C%80%E7%9B%B4%E8%A7%82%E7%9A%84%E5%8F%98%E5%8C%96%E4%B9%8B%E4%B8%80"><span class="toc-text">二、配置文件统一收口，是 Spring Boot 最直观的变化之一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81Spring-Boot-%E4%BE%9D%E7%84%B6%E6%98%AF%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8F%AA%E6%98%AF%E6%90%AD%E7%8E%AF%E5%A2%83%E7%9A%84%E5%8A%A8%E4%BD%9C%E5%B0%91%E4%BA%86%E5%BE%88%E5%A4%9A"><span class="toc-text">三、Spring Boot 依然是分层结构，只是搭环境的动作少了很多</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%88%B0%E5%BA%95%E6%9B%BF%E5%BC%80%E5%8F%91%E8%80%85%E7%9C%81%E6%8E%89%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">四、自动配置到底替开发者省掉了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Starter-%E8%BF%99%E4%B9%88%E9%87%8D%E8%A6%81"><span class="toc-text">五、为什么 Starter 这么重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81-ResponseBody-%E5%9C%A8-Spring-Boot-%E9%87%8C%E5%87%A0%E4%B9%8E%E6%88%90%E4%BA%86%E9%BB%98%E8%AE%A4%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">六、@ResponseBody 在 Spring Boot 里几乎成了默认思维的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E9%99%A4%E4%BA%86%E9%9B%86%E4%B8%AD%EF%BC%8C%E8%BF%98%E5%BC%80%E5%A7%8B%E6%89%BF%E6%8B%85%E2%80%9C%E7%8E%AF%E5%A2%83%E5%88%87%E6%8D%A2%E5%85%A5%E5%8F%A3%E2%80%9D%E7%9A%84%E8%A7%92%E8%89%B2"><span class="toc-text">七、配置文件除了集中，还开始承担“环境切换入口”的角色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88-Spring-Boot-%E8%AE%A9%E4%BA%BA%E6%9C%89%E2%80%9C%E4%BB%8E%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA%E5%9B%9E%E5%88%B0%E4%B8%9A%E5%8A%A1%E5%BC%80%E5%8F%91%E2%80%9D%E7%9A%84%E6%84%9F%E8%A7%89"><span class="toc-text">八、为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81Spring-Boot-%E7%9C%9F%E6%AD%A3%E8%A6%81%E5%BB%BA%E7%AB%8B%E7%9A%84%E6%98%AF%E2%80%9C%E7%BA%A6%E5%AE%9A%E4%BC%98%E4%BA%8E%E9%85%8D%E7%BD%AE%E2%80%9D%E7%9A%84%E7%9B%B4%E8%A7%89"><span class="toc-text">九、Spring Boot 真正要建立的是“约定优于配置”的直觉</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B045-SpringBoot%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-text">Java笔记45-SpringBoot快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E5%90%AF%E5%8A%A8%E7%B1%BB%E9%9D%9E%E5%B8%B8%E7%9F%AD%EF%BC%8C%E4%BD%86%E4%BF%A1%E6%81%AF%E9%87%8F%E9%9D%9E%E5%B8%B8%E5%A4%A7"><span class="toc-text">🧩 启动类非常短，但信息量非常大</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-SpringBootApplication-%E6%98%AF%E4%B8%89%E4%B8%AA%E5%85%B3%E9%94%AE%E8%83%BD%E5%8A%9B%E7%9A%84%E7%BB%84%E5%90%88"><span class="toc-text">🔬 @SpringBootApplication 是三个关键能力的组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E7%BB%9F%E4%B8%80%E6%94%B6%E5%8F%A3%EF%BC%8C%E6%98%AF-Spring-Boot-%E6%9C%80%E7%9B%B4%E8%A7%82%E7%9A%84%E5%8F%98%E5%8C%96%E4%B9%8B%E4%B8%80"><span class="toc-text">🔍 配置文件统一收口，是 Spring Boot 最直观的变化之一</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-Spring-Boot-%E4%BE%9D%E7%84%B6%E6%98%AF%E5%88%86%E5%B1%82%E7%BB%93%E6%9E%84%EF%BC%8C%E5%8F%AA%E6%98%AF%E6%90%AD%E7%8E%AF%E5%A2%83%E7%9A%84%E5%8A%A8%E4%BD%9C%E5%B0%91%E4%BA%86%E5%BE%88%E5%A4%9A"><span class="toc-text">🔍 Spring Boot 依然是分层结构，只是搭环境的动作少了很多</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E8%87%AA%E5%8A%A8%E9%85%8D%E7%BD%AE%E5%88%B0%E5%BA%95%E6%9B%BF%E5%BC%80%E5%8F%91%E8%80%85%E7%9C%81%E6%8E%89%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">🔬 自动配置到底替开发者省掉了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%BA%E4%BB%80%E4%B9%88-Starter-%E8%BF%99%E4%B9%88%E9%87%8D%E8%A6%81"><span class="toc-text">💡 为什么 Starter 这么重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-ResponseBody-%E5%9C%A8-Spring-Boot-%E9%87%8C%E5%87%A0%E4%B9%8E%E6%88%90%E4%BA%86%E9%BB%98%E8%AE%A4%E6%80%9D%E7%BB%B4%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">📌 @ResponseBody 在 Spring Boot 里几乎成了默认思维的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E9%99%A4%E4%BA%86%E9%9B%86%E4%B8%AD%EF%BC%8C%E8%BF%98%E5%BC%80%E5%A7%8B%E6%89%BF%E6%8B%85%E2%80%9C%E7%8E%AF%E5%A2%83%E5%88%87%E6%8D%A2%E5%85%A5%E5%8F%A3%E2%80%9D%E7%9A%84%E8%A7%92%E8%89%B2"><span class="toc-text">🔬 配置文件除了集中，还开始承担“环境切换入口”的角色</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%BA%E4%BB%80%E4%B9%88-Spring-Boot-%E8%AE%A9%E4%BA%BA%E6%9C%89%E2%80%9C%E4%BB%8E%E5%B7%A5%E7%A8%8B%E6%90%AD%E5%BB%BA%E5%9B%9E%E5%88%B0%E4%B8%9A%E5%8A%A1%E5%BC%80%E5%8F%91%E2%80%9D%E7%9A%84%E6%84%9F%E8%A7%89"><span class="toc-text">💡 为什么 Spring Boot 让人有“从工程搭建回到业务开发”的感觉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-Spring-Boot-%E7%9C%9F%E6%AD%A3%E8%A6%81%E5%BB%BA%E7%AB%8B%E7%9A%84%E6%98%AF%E2%80%9C%E7%BA%A6%E5%AE%9A%E4%BC%98%E4%BA%8E%E9%85%8D%E7%BD%AE%E2%80%9D%E7%9A%84%E7%9B%B4%E8%A7%89"><span class="toc-text">🧠 Spring Boot 真正要建立的是“约定优于配置”的直觉</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
 <widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 14px;" class="tag -3">IO</a> <a href="/tags/JAVA/" style="font-size: 20px;" class="tag -10">JAVA</a> <a href="/tags/JDBC/" style="font-size: 16px;" class="tag -5">JDBC</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 15px;" class="tag -4">MySQL</a> <a href="/tags/Network-Fundamentals-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 15px;" class="tag -4">Network Fundamentals  网络基础</a> <a href="/tags/Python/" style="font-size: 12px;" class="tag -0">Python</a> <a href="/tags/SQL/" style="font-size: 14px;" class="tag -3">SQL</a> <a href="/tags/SSM/" style="font-size: 18px;" class="tag -8">SSM</a> <a href="/tags/Spring/" style="font-size: 16px;" class="tag -5">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;" class="tag -8">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 12px;" class="tag -0">SpringMVC</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 19px;" class="tag -9">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 15px;" class="tag -4">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 13px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 17px;" class="tag -6">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 13px;" class="tag -1">数组</a> <a href="/tags/%E6%97%A5%E5%B8%B8%E7%82%B9%E6%BB%B4/" style="font-size: 12px;" class="tag -0">日常点滴</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 16px;" class="tag -5">网络安全</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 14px;" class="tag -3">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E6%84%9F%E6%82%9F/" style="font-size: 12px;" class="tag -0">阅读感悟</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 17px;" class="tag -6">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 14px;" class="tag -3">项目实践</a></div></widget>
 </div>

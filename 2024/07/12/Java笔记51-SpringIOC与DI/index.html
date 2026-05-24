@@ -20,12 +20,12 @@
   <title>Java笔记51 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记51IOC 和 DI 是 Spring 体系的基本盘。前者解决对象由谁创建，后者解决对象之间如何建立关系。  Spring IOC与DISpring IOC 的核心概念可以概括为：自己 new 对象叫控制正转，交给 Spring 容器创建并注入叫控制反转和依赖注入。项目代码正好是一个最小示例。 Spring 最核心的两个词就是 IOC 和 DI；IOC 可以理解为对象交给 Spring">
+    <meta name="description" content="Java笔记51-SpringIOC与DIIOC 和 DI 是 Spring 体系的基本盘。前者解决对象由谁创建，后者解决对象之间如何建立关系。  IOC 不是“少写 new”，而是把对象的创建、装配和生命周期交给容器统一管理。   🧩 Spring IOC与DISpring IOC 的核心概念可以概括为：自己 new 对象叫控制正转，交给 Spring 容器创建并注入叫控制反转和依赖注入。项目">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记51">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/12/Java%E7%AC%94%E8%AE%B051-SpringIOC%E4%B8%8EDI/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记51IOC 和 DI 是 Spring 体系的基本盘。前者解决对象由谁创建，后者解决对象之间如何建立关系。  Spring IOC与DISpring IOC 的核心概念可以概括为：自己 new 对象叫控制正转，交给 Spring 容器创建并注入叫控制反转和依赖注入。项目代码正好是一个最小示例。 Spring 最核心的两个词就是 IOC 和 DI；IOC 可以理解为对象交给 Spring">
+<meta property="og:description" content="Java笔记51-SpringIOC与DIIOC 和 DI 是 Spring 体系的基本盘。前者解决对象由谁创建，后者解决对象之间如何建立关系。  IOC 不是“少写 new”，而是把对象的创建、装配和生命周期交给容器统一管理。   🧩 Spring IOC与DISpring IOC 的核心概念可以概括为：自己 new 对象叫控制正转，交给 Spring 容器创建并注入叫控制反转和依赖注入。项目">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-12T11:00:00.000Z">
@@ -103,14 +103,35 @@
     
   </div>
   </div>
-<article class="md-text content"><h1 id="Java笔记51"><a href="#Java笔记51" class="headerlink" title="Java笔记51"></a>Java笔记51</h1><p>IOC 和 DI 是 Spring 体系的基本盘。前者解决对象由谁创建，后者解决对象之间如何建立关系。</p>
+<article class="md-text content"><h1 id="Java笔记51-SpringIOC与DI"><a href="#Java笔记51-SpringIOC与DI" class="headerlink" title="Java笔记51-SpringIOC与DI"></a>Java笔记51-SpringIOC与DI</h1><p>IOC 和 DI 是 Spring 体系的基本盘。前者解决对象由谁创建，后者解决对象之间如何建立关系。</p>
+<blockquote>
+<p><mark>IOC 不是“少写 new”，而是把对象的创建、装配和生命周期交给容器统一管理。</mark></p>
+</blockquote>
 <hr>
-<h2 id="Spring-IOC与DI"><a href="#Spring-IOC与DI" class="headerlink" title="Spring IOC与DI"></a>Spring IOC与DI</h2><p>Spring IOC 的核心概念可以概括为：自己 <code>new</code> 对象叫控制正转，交给 Spring 容器创建并注入叫控制反转和依赖注入。项目代码正好是一个最小示例。</p>
+<h2 id="🧩-Spring-IOC与DI"><a href="#🧩-Spring-IOC与DI" class="headerlink" title="🧩 Spring IOC与DI"></a>🧩 Spring IOC与DI</h2><p>Spring IOC 的核心概念可以概括为：自己 <code>new</code> 对象叫控制正转，交给 Spring 容器创建并注入叫控制反转和依赖注入。项目代码正好是一个最小示例。</p>
 <p>Spring 最核心的两个词就是 IOC 和 DI；IOC 可以理解为对象交给 Spring 容器来管理；DI 则是容器帮我们把依赖关系注入进去；这一组代码里 <code>StudentController -&gt; StudentService -&gt; StudentDao</code> 的结构很适合拿来讲这个思路。</p>
 <p>Spring 的学习重点从来都不只是配置文件，而是理解容器和代理这两个抽象。只要把对象如何被托管、依赖如何被注入、横切逻辑如何被织入想明白，后面的注解开发、事务和整合配置都会自然很多。</p>
-<h2 id="结合代码再看一遍"><a href="#结合代码再看一遍" class="headerlink" title="结合代码再看一遍"></a>结合代码再看一遍</h2><p>Spring 这一层放到项目里看，最直观的就是对象不再自己 <code>new</code> 来 <code>new</code> 去，而是交给容器统一管理。控制器依赖服务层、服务层依赖数据访问层，再加上代理和切面去处理公共逻辑，整套结构会比手写耦合代码清晰很多。</p>
+<h2 id="🔬-IOC-的本质，是把对象创建权从代码移交给容器"><a href="#🔬-IOC-的本质，是把对象创建权从代码移交给容器" class="headerlink" title="🔬 IOC 的本质，是把对象创建权从代码移交给容器"></a>🔬 IOC 的本质，是把对象创建权从代码移交给容器</h2><p>在普通 Java 程序里，对象之间的依赖通常是手工建立的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">StudentService</span> <span class="variable">service</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StudentServiceImp</span>();</span><br><span class="line"><span class="type">StudentController</span> <span class="variable">controller</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">StudentController</span>();</span><br><span class="line">controller.setStudentService(service);</span><br></pre></td></tr></table></figure>
+
+<p>这种写法当然能跑，但一旦对象关系增多，创建逻辑和业务逻辑就会交织在一起。IOC 解决的就是这个问题。对象不再由业务代码直接创建，而是交给 Spring 容器统一完成初始化、装配和管理。</p>
+<p>这带来的直接变化是：</p>
+<ul>
+<li>对象之间的依赖关系从代码里移到容器配置中</li>
+<li>上层组件只依赖抽象，不关心具体实现怎么实例化</li>
+<li>生命周期可以由容器统一控制，而不是散落在各处手写 <code>new</code></li>
+</ul>
+<p>DI 则是 IOC 的落地方式。容器把依赖注入到目标对象里，常见方式包括 setter 注入、构造器注入和注解注入。它们的核心目的都是同一个：把“谁创建对象”与“谁使用对象”拆开。</p>
+<h2 id="🔸-Bean-还有生命周期，不是创建完就结束"><a href="#🔸-Bean-还有生命周期，不是创建完就结束" class="headerlink" title="🔸 Bean 还有生命周期，不是创建完就结束"></a>🔸 Bean 还有生命周期，不是创建完就结束</h2><p>Spring 管理的对象通常叫 Bean，但 Bean 不只是“一个被容器拿着的对象”这么简单。它从实例化到可以使用，中间还会经历属性填充、初始化、销毁等阶段。这个过程决定了很多框架能力为什么能挂到 Bean 上，比如：</p>
+<ul>
+<li>初始化阶段可以加载必要资源</li>
+<li>后置处理器可以参与 Bean 生成过程</li>
+<li>销毁阶段可以释放连接、线程或缓存资源</li>
+</ul>
+<p>理解这一点之后，IOC 就不只是“自动注入字段”，而是一个完整的对象托管机制。</p>
+<h2 id="🔍-结合代码再看一遍"><a href="#🔍-结合代码再看一遍" class="headerlink" title="🔍 结合代码再看一遍"></a>🔍 结合代码再看一遍</h2><p>Spring 这一层放到项目里看，最直观的就是对象不再自己 <code>new</code> 来 <code>new</code> 去，而是交给容器统一管理。控制器依赖服务层、服务层依赖数据访问层，再加上代理和切面去处理公共逻辑，整套结构会比手写耦合代码清晰很多。</p>
 <p>IOC 最直观的体现就是三层对象的依赖关系不再手工维护；代理相关示例则适合拿来讲日志、事务这类公共逻辑为什么不该散落在业务方法里；只要这两条线看顺了，后面的注解开发和整合配置就会更容易。</p>
-<p>可以先看一段最能代表这一节的代码，很多概念放到具体写法里会更容易看懂。Spring 相关代码往往不是单靠一个方法就能看懂，关键在于它背后的容器和代理机制。先看这段典型代码，再回头理解 Bean、依赖注入和增强逻辑，会更容易建立整体感。</p>
+<p>下面这段代码最能代表 IOC 和 DI 的基础关系。Spring 相关代码往往不是单靠一个方法就能看懂，关键在于它背后的容器和代理机制。先看这段典型代码，再回头理解 Bean、依赖注入和增强逻辑，会更容易建立整体感。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">StudentController</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> StudentService studentService;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">setStudentService</span><span class="params">(StudentService studentService)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.studentService = studentService;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>把这段代码拆开看，最关键的地方其实就在下面几处：</p>
@@ -119,19 +140,9 @@
 <li><code>setStudentService(...)</code> 这样的 setter 方法，就是典型的依赖注入入口。</li>
 <li><code>applicationContext.xml</code> 中的 bean 配置相当于告诉 Spring：对象怎么创建、对象之间怎么连起来。</li>
 </ul>
-<p>从这一节再往后走，很多框架功能其实都能回到 IOC 或 AOP 身上。学会抽象出“对象交给谁管理”“公共逻辑放在哪里”，后面理解事务、缓存和权限控制会快很多。</p>
-<h2 id="顺着这一节再多想一步"><a href="#顺着这一节再多想一步" class="headerlink" title="顺着这一节再多想一步"></a>顺着这一节再多想一步</h2><p>这一块如果只是停在“会写”其实还不够，更有价值的是知道它还有哪些常见写法，以及它会继续和哪些知识连起来。</p>
-<ul>
-<li>依赖注入除了 setter 注入，还有构造方法注入和注解注入。</li>
-<li>如果进入注解开发阶段，就会从 <code>&lt;bean&gt;</code> 和 <code>&lt;property&gt;</code> 逐步过渡到 <code>@Component</code>、<code>@Autowired</code>。</li>
-<li>这一节可以放在理解 Spring 容器与依赖注入的起点位置。</li>
-</ul>
-<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
-<ul>
-<li>继续往下写时，可以把 Bean 生命周期、事务、整合测试单独拉出来讲。</li>
-<li>进一步学习代理相关内容时，也可以同时比较静态代理、JDK 代理和 CGLIB 的边界。</li>
-<li>理解这类内容时，可以始终围绕“容器管理对象”和“横切逻辑解耦”两条主线展开。</li>
-</ul>
+<p>Spring 后续的很多框架功能，其实都能回到 IOC 或 AOP 身上。学会抽象出“对象交给谁管理”“公共逻辑放在哪里”，后面理解事务、缓存和权限控制会快很多。</p>
+<h2 id="🧠-IOC-和-DI-的下一层理解"><a href="#🧠-IOC-和-DI-的下一层理解" class="headerlink" title="🧠 IOC 和 DI 的下一层理解"></a>🧠 IOC 和 DI 的下一层理解</h2><p>IOC 和 DI 建立的是 Spring 最核心的对象管理模型。<code>StudentController -&gt; StudentService -&gt; StudentDao</code> 这条链之所以值得反复看，是因为它把“面向接口编程”和“依赖交给容器装配”放在了一个最小案例里。</p>
+<p>后续从 XML 走向注解，从手工配置走向自动扫描，本质上都没有离开这条主线。Spring 复杂能力很多，但入口始终可以回到两个问题：对象由谁创建，依赖关系由谁维护。</p>
 </article>
 <div class="article-footer">
     <section id="license">
@@ -155,7 +166,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +175,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -172,7 +183,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B051"><span class="toc-text">Java笔记51</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-IOC%E4%B8%8EDI"><span class="toc-text">Spring IOC与DI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E4%BB%A3%E7%A0%81%E5%86%8D%E7%9C%8B%E4%B8%80%E9%81%8D"><span class="toc-text">结合代码再看一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A1%BA%E7%9D%80%E8%BF%99%E4%B8%80%E8%8A%82%E5%86%8D%E5%A4%9A%E6%83%B3%E4%B8%80%E6%AD%A5"><span class="toc-text">顺着这一节再多想一步</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B051-SpringIOC%E4%B8%8EDI"><span class="toc-text">Java笔记51-SpringIOC与DI</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-Spring-IOC%E4%B8%8EDI"><span class="toc-text">🧩 Spring IOC与DI</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-IOC-%E7%9A%84%E6%9C%AC%E8%B4%A8%EF%BC%8C%E6%98%AF%E6%8A%8A%E5%AF%B9%E8%B1%A1%E5%88%9B%E5%BB%BA%E6%9D%83%E4%BB%8E%E4%BB%A3%E7%A0%81%E7%A7%BB%E4%BA%A4%E7%BB%99%E5%AE%B9%E5%99%A8"><span class="toc-text">🔬 IOC 的本质，是把对象创建权从代码移交给容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-Bean-%E8%BF%98%E6%9C%89%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%8C%E4%B8%8D%E6%98%AF%E5%88%9B%E5%BB%BA%E5%AE%8C%E5%B0%B1%E7%BB%93%E6%9D%9F"><span class="toc-text">🔸 Bean 还有生命周期，不是创建完就结束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E7%BB%93%E5%90%88%E4%BB%A3%E7%A0%81%E5%86%8D%E7%9C%8B%E4%B8%80%E9%81%8D"><span class="toc-text">🔍 结合代码再看一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-IOC-%E5%92%8C-DI-%E7%9A%84%E4%B8%8B%E4%B8%80%E5%B1%82%E7%90%86%E8%A7%A3"><span class="toc-text">🧠 IOC 和 DI 的下一层理解</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
 <widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 14px;" class="tag -3">IO</a> <a href="/tags/JAVA/" style="font-size: 20px;" class="tag -10">JAVA</a> <a href="/tags/JDBC/" style="font-size: 16px;" class="tag -5">JDBC</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 15px;" class="tag -4">MySQL</a> <a href="/tags/Network-Fundamentals-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 15px;" class="tag -4">Network Fundamentals  网络基础</a> <a href="/tags/Python/" style="font-size: 12px;" class="tag -0">Python</a> <a href="/tags/SQL/" style="font-size: 14px;" class="tag -3">SQL</a> <a href="/tags/SSM/" style="font-size: 18px;" class="tag -8">SSM</a> <a href="/tags/Spring/" style="font-size: 16px;" class="tag -5">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;" class="tag -8">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 12px;" class="tag -0">SpringMVC</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 19px;" class="tag -9">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 15px;" class="tag -4">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 13px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 17px;" class="tag -6">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 13px;" class="tag -1">数组</a> <a href="/tags/%E6%97%A5%E5%B8%B8%E7%82%B9%E6%BB%B4/" style="font-size: 12px;" class="tag -0">日常点滴</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 16px;" class="tag -5">网络安全</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 14px;" class="tag -3">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E6%84%9F%E6%82%9F/" style="font-size: 12px;" class="tag -0">阅读感悟</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 17px;" class="tag -6">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 14px;" class="tag -3">项目实践</a></div></widget>
 </div>

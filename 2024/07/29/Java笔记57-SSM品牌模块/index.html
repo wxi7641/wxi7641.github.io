@@ -20,12 +20,12 @@
   <title>Java笔记57 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记57列表模块往往是 SSM 体系里很适合用来观察分层结构的一类场景。因为它通常同时包含请求进入、服务层转发、Mapper 查询、页面渲染，也常常会自然带出一部分 AJAX 接口写法。 列表类模块为什么特别适合观察三层结构一个典型的页面型控制器方法可能像这样： 123456@GetMapping(&quot;&#x2F;list&quot;)public String list(Model mod">
+    <meta name="description" content="Java笔记57-SSM品牌模块列表模块往往是 SSM 体系里很适合用来观察分层结构的一类场景。因为它通常同时包含请求进入、服务层转发、Mapper 查询、页面渲染，也常常会自然带出一部分 AJAX 接口写法。  品牌模块的价值不在于表名本身，而在于它完整展示了一个业务模块从列表展示到局部交互的演进过程。  🧩 列表类模块为什么特别适合观察三层结构一个典型的页面型控制器方法可能像这样： 1234">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记57">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/29/Java%E7%AC%94%E8%AE%B057-SSM%E5%93%81%E7%89%8C%E6%A8%A1%E5%9D%97/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记57列表模块往往是 SSM 体系里很适合用来观察分层结构的一类场景。因为它通常同时包含请求进入、服务层转发、Mapper 查询、页面渲染，也常常会自然带出一部分 AJAX 接口写法。 列表类模块为什么特别适合观察三层结构一个典型的页面型控制器方法可能像这样： 123456@GetMapping(&quot;&#x2F;list&quot;)public String list(Model mod">
+<meta property="og:description" content="Java笔记57-SSM品牌模块列表模块往往是 SSM 体系里很适合用来观察分层结构的一类场景。因为它通常同时包含请求进入、服务层转发、Mapper 查询、页面渲染，也常常会自然带出一部分 AJAX 接口写法。  品牌模块的价值不在于表名本身，而在于它完整展示了一个业务模块从列表展示到局部交互的演进过程。  🧩 列表类模块为什么特别适合观察三层结构一个典型的页面型控制器方法可能像这样： 1234">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-29T11:00:00.000Z">
@@ -103,8 +103,11 @@
     
   </div>
   </div>
-<article class="md-text content"><h1 id="Java笔记57"><a href="#Java笔记57" class="headerlink" title="Java笔记57"></a>Java笔记57</h1><p>列表模块往往是 SSM 体系里很适合用来观察分层结构的一类场景。因为它通常同时包含请求进入、服务层转发、Mapper 查询、页面渲染，也常常会自然带出一部分 AJAX 接口写法。</p>
-<h2 id="列表类模块为什么特别适合观察三层结构"><a href="#列表类模块为什么特别适合观察三层结构" class="headerlink" title="列表类模块为什么特别适合观察三层结构"></a>列表类模块为什么特别适合观察三层结构</h2><p>一个典型的页面型控制器方法可能像这样：</p>
+<article class="md-text content"><h1 id="Java笔记57-SSM品牌模块"><a href="#Java笔记57-SSM品牌模块" class="headerlink" title="Java笔记57-SSM品牌模块"></a>Java笔记57-SSM品牌模块</h1><p>列表模块往往是 SSM 体系里很适合用来观察分层结构的一类场景。因为它通常同时包含请求进入、服务层转发、Mapper 查询、页面渲染，也常常会自然带出一部分 AJAX 接口写法。</p>
+<blockquote>
+<p><mark>品牌模块的价值不在于表名本身，而在于它完整展示了一个业务模块从列表展示到局部交互的演进过程。</mark></p>
+</blockquote>
+<h2 id="🧩-列表类模块为什么特别适合观察三层结构"><a href="#🧩-列表类模块为什么特别适合观察三层结构" class="headerlink" title="🧩 列表类模块为什么特别适合观察三层结构"></a>🧩 列表类模块为什么特别适合观察三层结构</h2><p>一个典型的页面型控制器方法可能像这样：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">list</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">    List&lt;Entity&gt; list = entityService.selectAll();</span><br><span class="line">    model.addAttribute(<span class="string">&quot;list&quot;</span>, list);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;entity_list&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>虽然它表面上只是“查一个列表”，但其实把 MVC 结构的主线都带出来了：</p>
@@ -133,7 +136,15 @@
 </tr>
 </tbody></table>
 <p>这比单独看配置文件更容易理解项目到底是怎么跑起来的。</p>
-<h2 id="列表页和接口返回，其实常常会同时出现"><a href="#列表页和接口返回，其实常常会同时出现" class="headerlink" title="列表页和接口返回，其实常常会同时出现"></a>列表页和接口返回，其实常常会同时出现</h2><p>很多 SSM 项目并不是纯页面渲染，也不是纯接口项目，而是两种风格并存。</p>
+<h2 id="🔬-列表模块背后，是查询条件、分页和视图状态的组合"><a href="#🔬-列表模块背后，是查询条件、分页和视图状态的组合" class="headerlink" title="🔬 列表模块背后，是查询条件、分页和视图状态的组合"></a>🔬 列表模块背后，是查询条件、分页和视图状态的组合</h2><p>真实的后台列表通常不会永远只查全部数据。随着功能继续扩展，列表页会自然带出几个能力：</p>
+<ul>
+<li>按名称、状态等字段筛选</li>
+<li>按页码和页大小分页</li>
+<li>按创建时间、排序字段展示</li>
+<li>勾选多条数据后批量操作</li>
+</ul>
+<p>这些能力看起来属于页面交互，但最终都会落回到后端查询条件上。Controller 负责接收这些条件，Service 负责组织查询规则，Mapper 负责把条件翻译成 SQL。只要这条边界清楚，列表模块就不会因为功能增多而变成一个巨大的控制器方法。</p>
+<h2 id="📌-列表页和接口返回，其实常常会同时出现"><a href="#📌-列表页和接口返回，其实常常会同时出现" class="headerlink" title="📌 列表页和接口返回，其实常常会同时出现"></a>📌 列表页和接口返回，其实常常会同时出现</h2><p>很多 SSM 项目并不是纯页面渲染，也不是纯接口项目，而是两种风格并存。</p>
 <p>例如页面渲染：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/list&quot;)</span></span><br><span class="line"><span class="keyword">public</span> String <span class="title function_">list</span><span class="params">(Model model)</span> &#123;</span><br><span class="line">    model.addAttribute(<span class="string">&quot;list&quot;</span>, entityService.selectAll());</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;entity_list&quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -141,11 +152,11 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/edit&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">edit</span><span class="params">(Entity entity)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> entityService.update(entity);</span><br><span class="line">    <span class="keyword">return</span> Collections.singletonMap(<span class="string">&quot;updated&quot;</span>, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这正好说明了一件很重要的事：SSM 项目并不一定只有 JSP 页面，也可以在同一个系统里逐步引入 JSON 接口。</p>
-<h2 id="Model-的作用不是“存一下数据”，而是承接视图渲染"><a href="#Model-的作用不是“存一下数据”，而是承接视图渲染" class="headerlink" title="Model 的作用不是“存一下数据”，而是承接视图渲染"></a><code>Model</code> 的作用不是“存一下数据”，而是承接视图渲染</h2><p>很多初学者刚接触 Spring MVC 时，会把 <code>Model</code> 看成一个普通参数。实际上它在列表类页面里非常重要：</p>
+<h2 id="🔍-Model-的作用不是“存一下数据”，而是承接视图渲染"><a href="#🔍-Model-的作用不是“存一下数据”，而是承接视图渲染" class="headerlink" title="🔍 Model 的作用不是“存一下数据”，而是承接视图渲染"></a>🔍 <code>Model</code> 的作用不是“存一下数据”，而是承接视图渲染</h2><p>如果只把 <code>Model</code> 看成一个普通参数，就容易忽略它在列表类页面里的作用。实际上它负责把控制层准备好的数据交给视图层：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">model.addAttribute(<span class="string">&quot;list&quot;</span>, list);</span><br><span class="line"><span class="keyword">return</span> <span class="string">&quot;entity_list&quot;</span>;</span><br></pre></td></tr></table></figure>
 
 <p>它完成的是从控制层到页面层的数据传递。控制器不需要自己拼 HTML，也不需要直接输出内容，而是把数据交给视图模板。</p>
-<h2 id="为什么列表模块经常带出-CRUD-的接口化写法"><a href="#为什么列表模块经常带出-CRUD-的接口化写法" class="headerlink" title="为什么列表模块经常带出 CRUD 的接口化写法"></a>为什么列表模块经常带出 CRUD 的接口化写法</h2><p>列表一旦存在，后续最自然的需求通常就是：</p>
+<h2 id="📌-为什么列表模块经常带出-CRUD-的接口化写法"><a href="#📌-为什么列表模块经常带出-CRUD-的接口化写法" class="headerlink" title="📌 为什么列表模块经常带出 CRUD 的接口化写法"></a>📌 为什么列表模块经常带出 CRUD 的接口化写法</h2><p>列表一旦存在，后续最自然的需求通常就是：</p>
 <ul>
 <li>新增</li>
 <li>修改</li>
@@ -170,15 +181,18 @@
 </tr>
 </tbody></table>
 <p>这也是为什么列表模块特别适合用来理解“传统页面项目怎样逐步长出接口式能力”。</p>
-<h2 id="批量删除能很好地暴露参数绑定能力"><a href="#批量删除能很好地暴露参数绑定能力" class="headerlink" title="批量删除能很好地暴露参数绑定能力"></a>批量删除能很好地暴露参数绑定能力</h2><p>一个常见例子是：</p>
+<h2 id="🔸-页面型返回和接口型返回最好按使用场景区分"><a href="#🔸-页面型返回和接口型返回最好按使用场景区分" class="headerlink" title="🔸 页面型返回和接口型返回最好按使用场景区分"></a>🔸 页面型返回和接口型返回最好按使用场景区分</h2><p>页面型返回适合首次进入列表、需要服务器渲染完整 JSP 的场景；接口型返回适合局部刷新、弹窗编辑、批量删除这类交互。两者并存并不矛盾，关键是控制层方法的职责要清楚。</p>
+<p>如果方法返回视图名，就让它专注准备页面模型；如果方法返回 JSON，就让它专注表达操作结果。这样前端页面和后端接口都更容易维护。</p>
+<h2 id="📌-批量删除能很好地暴露参数绑定能力"><a href="#📌-批量删除能很好地暴露参数绑定能力" class="headerlink" title="📌 批量删除能很好地暴露参数绑定能力"></a>📌 批量删除能很好地暴露参数绑定能力</h2><p>一个常见例子是：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;/batchDelete&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> Map&lt;String, Object&gt; <span class="title function_">batchDelete</span><span class="params">(<span class="meta">@RequestParam(&quot;ids&quot;)</span> List&lt;Integer&gt; ids)</span> &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> entityService.batchDelete(ids);</span><br><span class="line">    <span class="keyword">return</span> Collections.singletonMap(<span class="string">&quot;deleted&quot;</span>, count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这里不只是做删除，更带出了两个很实用的知识点：</p>
-<ol>
+<ul>
 <li>Spring MVC 如何绑定集合参数</li>
 <li>Controller 怎样把结果包装成前端更好消费的结构</li>
-</ol>
-<h2 id="这一类模块最容易写乱的地方是什么"><a href="#这一类模块最容易写乱的地方是什么" class="headerlink" title="这一类模块最容易写乱的地方是什么"></a>这一类模块最容易写乱的地方是什么</h2><table>
+</ul>
+<p>批量删除还需要注意事务边界。如果删除动作背后不仅删除主表记录，还会删除关联表数据，就应该由 Service 层把整个操作纳入同一个事务中，而不是让页面一次触发多个分散的数据库操作。</p>
+<h2 id="💡-这一类模块最容易写乱的地方是什么"><a href="#💡-这一类模块最容易写乱的地方是什么" class="headerlink" title="💡 这一类模块最容易写乱的地方是什么"></a>💡 这一类模块最容易写乱的地方是什么</h2><table>
 <thead>
 <tr>
 <th>常见问题</th>
@@ -203,7 +217,7 @@
 </tr>
 </tbody></table>
 <p>列表模块看起来基础，但它非常适合用来观察一个 SSM 项目是否真正有清晰的边界感。</p>
-<h2 id="公开整理这类内容时，更值得强调的是“结构”，不是具体业务名"><a href="#公开整理这类内容时，更值得强调的是“结构”，不是具体业务名" class="headerlink" title="公开整理这类内容时，更值得强调的是“结构”，不是具体业务名"></a>公开整理这类内容时，更值得强调的是“结构”，不是具体业务名</h2><p>真正适合公开分享的不是某个品牌、某个表名或某个页面路径本身，而是这一类模块里稳定重复出现的模式：</p>
+<h2 id="🧠-列表模块更值得强调的是结构，而不是具体业务名"><a href="#🧠-列表模块更值得强调的是结构，而不是具体业务名" class="headerlink" title="🧠 列表模块更值得强调的是结构，而不是具体业务名"></a>🧠 列表模块更值得强调的是结构，而不是具体业务名</h2><p>真正稳定的不是某个品牌、某个表名或某个页面路径本身，而是这一类模块里重复出现的模式：</p>
 <ul>
 <li>列表如何渲染</li>
 <li>数据如何跨层传递</li>
@@ -234,7 +248,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -243,7 +257,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -251,7 +265,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B057"><span class="toc-text">Java笔记57</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E7%B1%BB%E6%A8%A1%E5%9D%97%E4%B8%BA%E4%BB%80%E4%B9%88%E7%89%B9%E5%88%AB%E9%80%82%E5%90%88%E8%A7%82%E5%AF%9F%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-text">列表类模块为什么特别适合观察三层结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%97%E8%A1%A8%E9%A1%B5%E5%92%8C%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%B8%B8%E5%B8%B8%E4%BC%9A%E5%90%8C%E6%97%B6%E5%87%BA%E7%8E%B0"><span class="toc-text">列表页和接口返回，其实常常会同时出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Model-%E7%9A%84%E4%BD%9C%E7%94%A8%E4%B8%8D%E6%98%AF%E2%80%9C%E5%AD%98%E4%B8%80%E4%B8%8B%E6%95%B0%E6%8D%AE%E2%80%9D%EF%BC%8C%E8%80%8C%E6%98%AF%E6%89%BF%E6%8E%A5%E8%A7%86%E5%9B%BE%E6%B8%B2%E6%9F%93"><span class="toc-text">Model 的作用不是“存一下数据”，而是承接视图渲染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%88%97%E8%A1%A8%E6%A8%A1%E5%9D%97%E7%BB%8F%E5%B8%B8%E5%B8%A6%E5%87%BA-CRUD-%E7%9A%84%E6%8E%A5%E5%8F%A3%E5%8C%96%E5%86%99%E6%B3%95"><span class="toc-text">为什么列表模块经常带出 CRUD 的接口化写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E8%83%BD%E5%BE%88%E5%A5%BD%E5%9C%B0%E6%9A%B4%E9%9C%B2%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E8%83%BD%E5%8A%9B"><span class="toc-text">批量删除能很好地暴露参数绑定能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%B8%80%E7%B1%BB%E6%A8%A1%E5%9D%97%E6%9C%80%E5%AE%B9%E6%98%93%E5%86%99%E4%B9%B1%E7%9A%84%E5%9C%B0%E6%96%B9%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">这一类模块最容易写乱的地方是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AC%E5%BC%80%E6%95%B4%E7%90%86%E8%BF%99%E7%B1%BB%E5%86%85%E5%AE%B9%E6%97%B6%EF%BC%8C%E6%9B%B4%E5%80%BC%E5%BE%97%E5%BC%BA%E8%B0%83%E7%9A%84%E6%98%AF%E2%80%9C%E7%BB%93%E6%9E%84%E2%80%9D%EF%BC%8C%E4%B8%8D%E6%98%AF%E5%85%B7%E4%BD%93%E4%B8%9A%E5%8A%A1%E5%90%8D"><span class="toc-text">公开整理这类内容时，更值得强调的是“结构”，不是具体业务名</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B057-SSM%E5%93%81%E7%89%8C%E6%A8%A1%E5%9D%97"><span class="toc-text">Java笔记57-SSM品牌模块</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E5%88%97%E8%A1%A8%E7%B1%BB%E6%A8%A1%E5%9D%97%E4%B8%BA%E4%BB%80%E4%B9%88%E7%89%B9%E5%88%AB%E9%80%82%E5%90%88%E8%A7%82%E5%AF%9F%E4%B8%89%E5%B1%82%E7%BB%93%E6%9E%84"><span class="toc-text">🧩 列表类模块为什么特别适合观察三层结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E5%88%97%E8%A1%A8%E6%A8%A1%E5%9D%97%E8%83%8C%E5%90%8E%EF%BC%8C%E6%98%AF%E6%9F%A5%E8%AF%A2%E6%9D%A1%E4%BB%B6%E3%80%81%E5%88%86%E9%A1%B5%E5%92%8C%E8%A7%86%E5%9B%BE%E7%8A%B6%E6%80%81%E7%9A%84%E7%BB%84%E5%90%88"><span class="toc-text">🔬 列表模块背后，是查询条件、分页和视图状态的组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%88%97%E8%A1%A8%E9%A1%B5%E5%92%8C%E6%8E%A5%E5%8F%A3%E8%BF%94%E5%9B%9E%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%B8%B8%E5%B8%B8%E4%BC%9A%E5%90%8C%E6%97%B6%E5%87%BA%E7%8E%B0"><span class="toc-text">📌 列表页和接口返回，其实常常会同时出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-Model-%E7%9A%84%E4%BD%9C%E7%94%A8%E4%B8%8D%E6%98%AF%E2%80%9C%E5%AD%98%E4%B8%80%E4%B8%8B%E6%95%B0%E6%8D%AE%E2%80%9D%EF%BC%8C%E8%80%8C%E6%98%AF%E6%89%BF%E6%8E%A5%E8%A7%86%E5%9B%BE%E6%B8%B2%E6%9F%93"><span class="toc-text">🔍 Model 的作用不是“存一下数据”，而是承接视图渲染</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%88%97%E8%A1%A8%E6%A8%A1%E5%9D%97%E7%BB%8F%E5%B8%B8%E5%B8%A6%E5%87%BA-CRUD-%E7%9A%84%E6%8E%A5%E5%8F%A3%E5%8C%96%E5%86%99%E6%B3%95"><span class="toc-text">📌 为什么列表模块经常带出 CRUD 的接口化写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E9%A1%B5%E9%9D%A2%E5%9E%8B%E8%BF%94%E5%9B%9E%E5%92%8C%E6%8E%A5%E5%8F%A3%E5%9E%8B%E8%BF%94%E5%9B%9E%E6%9C%80%E5%A5%BD%E6%8C%89%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E5%8C%BA%E5%88%86"><span class="toc-text">🔸 页面型返回和接口型返回最好按使用场景区分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E6%89%B9%E9%87%8F%E5%88%A0%E9%99%A4%E8%83%BD%E5%BE%88%E5%A5%BD%E5%9C%B0%E6%9A%B4%E9%9C%B2%E5%8F%82%E6%95%B0%E7%BB%91%E5%AE%9A%E8%83%BD%E5%8A%9B"><span class="toc-text">📌 批量删除能很好地暴露参数绑定能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E8%BF%99%E4%B8%80%E7%B1%BB%E6%A8%A1%E5%9D%97%E6%9C%80%E5%AE%B9%E6%98%93%E5%86%99%E4%B9%B1%E7%9A%84%E5%9C%B0%E6%96%B9%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-text">💡 这一类模块最容易写乱的地方是什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%88%97%E8%A1%A8%E6%A8%A1%E5%9D%97%E6%9B%B4%E5%80%BC%E5%BE%97%E5%BC%BA%E8%B0%83%E7%9A%84%E6%98%AF%E7%BB%93%E6%9E%84%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E5%85%B7%E4%BD%93%E4%B8%9A%E5%8A%A1%E5%90%8D"><span class="toc-text">🧠 列表模块更值得强调的是结构，而不是具体业务名</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
 <widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 14px;" class="tag -3">IO</a> <a href="/tags/JAVA/" style="font-size: 20px;" class="tag -10">JAVA</a> <a href="/tags/JDBC/" style="font-size: 16px;" class="tag -5">JDBC</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 15px;" class="tag -4">MySQL</a> <a href="/tags/Network-Fundamentals-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 15px;" class="tag -4">Network Fundamentals  网络基础</a> <a href="/tags/Python/" style="font-size: 12px;" class="tag -0">Python</a> <a href="/tags/SQL/" style="font-size: 14px;" class="tag -3">SQL</a> <a href="/tags/SSM/" style="font-size: 18px;" class="tag -8">SSM</a> <a href="/tags/Spring/" style="font-size: 16px;" class="tag -5">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;" class="tag -8">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 12px;" class="tag -0">SpringMVC</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 19px;" class="tag -9">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 15px;" class="tag -4">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 13px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 17px;" class="tag -6">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 13px;" class="tag -1">数组</a> <a href="/tags/%E6%97%A5%E5%B8%B8%E7%82%B9%E6%BB%B4/" style="font-size: 12px;" class="tag -0">日常点滴</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 16px;" class="tag -5">网络安全</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 14px;" class="tag -3">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E6%84%9F%E6%82%9F/" style="font-size: 12px;" class="tag -0">阅读感悟</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 17px;" class="tag -6">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 14px;" class="tag -3">项目实践</a></div></widget>
 </div>

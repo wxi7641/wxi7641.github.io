@@ -894,17 +894,119 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记04"><a href="#Java笔记04" class="headerlink" title="Java笔记04"></a>Java笔记04</h1><ul>
-<li><p>了解数组概念与创建</p>
-</li>
-<li><p>常用数组操作</p>
+    <h1 id="Java笔记04-数组的本质与基本使用"><a href="#Java笔记04-数组的本质与基本使用" class="headerlink" title="Java笔记04-数组的本质与基本使用"></a>Java笔记04-数组的本质与基本使用</h1><p>数组是 Java 里最早接触到的一种“批量保存数据”的方式。它解决的不是单个变量怎么存，而是“同类型数据放在一起时，如何连续、快速地访问”。</p>
 <blockquote>
-<p>数组遍历</p>
-<p>数组排序</p>
+<p><strong>先把一句话记住：</strong><mark>数组适合保存同类型、长度固定、需要通过下标快速访问的一组数据。</mark></p>
 </blockquote>
-</li>
+<hr>
+<h2 id="🧩-数组为什么会出现"><a href="#🧩-数组为什么会出现" class="headerlink" title="🧩 数组为什么会出现"></a>🧩 数组为什么会出现</h2><p>当数据从一个变成一组时，单独声明多个变量很快就会失控。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">20</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> <span class="number">30</span>;</span><br></pre></td></tr></table></figure>
+
+<p>如果数据量再继续增长，这种写法就会变得很难维护。数组把这类数据收拢到一起，结构会更稳定：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] scores = &#123; <span class="number">90</span>, <span class="number">85</span>, <span class="number">78</span>, <span class="number">95</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>数组的本质可以理解为：</p>
+<blockquote>
+<p>一段连续的内存空间，用来保存一组同类型数据。</p>
+</blockquote>
+<p>这也解释了它的两个重要特征：</p>
+<ul>
+<li>类型必须一致</li>
+<li>长度一旦确定就不能随意变</li>
 </ul>
 <hr>
+<h2 id="🔍-创建数组时，最常见的两种写法"><a href="#🔍-创建数组时，最常见的两种写法" class="headerlink" title="🔍 创建数组时，最常见的两种写法"></a>🔍 创建数组时，最常见的两种写法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] arr1 = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">5</span>];</span><br><span class="line"><span class="type">int</span>[] arr2 = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span> &#125;;</span><br></pre></td></tr></table></figure>
+
+<p>这两种写法的差别很直接：</p>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>new int[5]</code></td>
+<td>先确定长度，再由系统初始化默认值</td>
+</tr>
+<tr>
+<td><code>&#123; 1, 2, 3, 4, 5 &#125;</code></td>
+<td>创建时直接给出初始数据</td>
+</tr>
+</tbody></table>
+<p>数组创建后，每个元素都会有默认值：</p>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>默认值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>整型</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td>浮点型</td>
+<td><code>0.0</code></td>
+</tr>
+<tr>
+<td><code>char</code></td>
+<td><code>&#39;\u0000&#39;</code></td>
+</tr>
+<tr>
+<td><code>boolean</code></td>
+<td><code>false</code></td>
+</tr>
+<tr>
+<td>引用类型</td>
+<td><code>null</code></td>
+</tr>
+</tbody></table>
+<p>这就是为什么 <code>new int[5]</code> 创建出来后，元素并不是空白，而是全都带着默认值。</p>
+<hr>
+<h2 id="🔬-下标访问和遍历，才是数组最常见的实际动作"><a href="#🔬-下标访问和遍历，才是数组最常见的实际动作" class="headerlink" title="🔬 下标访问和遍历，才是数组最常见的实际动作"></a>🔬 下标访问和遍历，才是数组最常见的实际动作</h2><p>数组最有代表性的访问方式，就是通过下标：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] arr = &#123; <span class="number">28</span>, <span class="number">12</span>, <span class="number">89</span>, <span class="number">73</span>, <span class="number">65</span> &#125;;</span><br><span class="line">System.out.println(arr[<span class="number">0</span>]);</span><br><span class="line">System.out.println(arr[<span class="number">4</span>]);</span><br></pre></td></tr></table></figure>
+
+<p>下标从 <code>0</code> 开始，这一点必须牢牢记住。数组的最后一个元素下标，永远是 <code>arr.length - 1</code>。</p>
+<p>最常见的遍历方式有两种：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">    System.out.println(arr[i]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> value : arr) &#123;</span><br><span class="line">    System.out.println(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>遍历方式</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>普通 <code>for</code></td>
+<td>能拿到下标，适合修改元素</td>
+</tr>
+<tr>
+<td>增强 <code>for</code></td>
+<td>写法更简洁，适合只读遍历</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="💡-数组的边界感，比“会用”更重要"><a href="#💡-数组的边界感，比“会用”更重要" class="headerlink" title="💡 数组的边界感，比“会用”更重要"></a>💡 数组的边界感，比“会用”更重要</h2><p>数组相关错误里，最常见的就是越界。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(arr[arr.length]);</span><br></pre></td></tr></table></figure>
+
+<p>这一句会直接出问题，因为合法下标只到 <code>length - 1</code>。</p>
+<p>另一个需要顺手记住的点是：数组本身长度固定。如果需要更大的空间，通常做法不是“原地扩容”，而是新建一个更大的数组，再把旧数据复制进去。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span>[] oldArr = &#123; <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span> &#125;;</span><br><span class="line"><span class="type">int</span>[] newArr = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">6</span>];</span><br></pre></td></tr></table></figure>
+
+<p>这也是数组和后面集合类最直观的差别之一。</p>
+<hr>
+<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>数组这一节真正建立的是三个基础概念：</p>
+<ul>
+<li>数据放在连续空间里</li>
+<li>元素通过下标访问</li>
+<li>长度固定，越界要特别小心</li>
+</ul>
+<p>把这三点记牢，后面再学集合、字符串和排序时，会更容易看出它们各自解决的是什么问题。</p>
 
   </article>
 </section>
@@ -915,7 +1017,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -924,7 +1026,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -932,7 +1034,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B004"><span class="toc-text">Java笔记04</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B004-%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%AC%E8%B4%A8%E4%B8%8E%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-text">Java笔记04-数组的本质与基本使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E6%95%B0%E7%BB%84%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%87%BA%E7%8E%B0"><span class="toc-text">🧩 数组为什么会出现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E5%88%9B%E5%BB%BA%E6%95%B0%E7%BB%84%E6%97%B6%EF%BC%8C%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%86%99%E6%B3%95"><span class="toc-text">🔍 创建数组时，最常见的两种写法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E4%B8%8B%E6%A0%87%E8%AE%BF%E9%97%AE%E5%92%8C%E9%81%8D%E5%8E%86%EF%BC%8C%E6%89%8D%E6%98%AF%E6%95%B0%E7%BB%84%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E5%AE%9E%E9%99%85%E5%8A%A8%E4%BD%9C"><span class="toc-text">🔬 下标访问和遍历，才是数组最常见的实际动作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E6%95%B0%E7%BB%84%E7%9A%84%E8%BE%B9%E7%95%8C%E6%84%9F%EF%BC%8C%E6%AF%94%E2%80%9C%E4%BC%9A%E7%94%A8%E2%80%9D%E6%9B%B4%E9%87%8D%E8%A6%81"><span class="toc-text">💡 数组的边界感，比“会用”更重要</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

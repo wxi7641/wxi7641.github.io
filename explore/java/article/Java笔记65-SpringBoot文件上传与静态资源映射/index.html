@@ -894,17 +894,21 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记65"><a href="#Java笔记65" class="headerlink" title="Java笔记65"></a>Java笔记65</h1><p>文件上传在后台项目里很常见，但真正麻烦的地方通常不在“把文件收上来”，而在于上传后的命名、保存路径、访问方式、大小限制以及静态资源映射。</p>
-<h2 id="MultipartFile-解决的是“文件如何进入控制层”"><a href="#MultipartFile-解决的是“文件如何进入控制层”" class="headerlink" title="MultipartFile 解决的是“文件如何进入控制层”"></a><code>MultipartFile</code> 解决的是“文件如何进入控制层”</h2><p>最基本的上传控制器通常会长这样：</p>
+    <h1 id="Java笔记65-SpringBoot文件上传与静态资源映射"><a href="#Java笔记65-SpringBoot文件上传与静态资源映射" class="headerlink" title="Java笔记65-SpringBoot文件上传与静态资源映射"></a>Java笔记65-SpringBoot文件上传与静态资源映射</h1><p>文件上传在后台项目里很常见，但真正麻烦的地方通常不在“把文件收上来”，而在于上传后的命名、保存路径、访问方式、大小限制以及静态资源映射。</p>
+<blockquote>
+<p><mark>文件上传的重点，是把用户提交的二进制内容安全、稳定地转成系统可管理的资源。</mark></p>
+</blockquote>
+<h2 id="🧩-MultipartFile-解决的是“文件如何进入控制层”"><a href="#🧩-MultipartFile-解决的是“文件如何进入控制层”" class="headerlink" title="🧩 MultipartFile 解决的是“文件如何进入控制层”"></a>🧩 <code>MultipartFile</code> 解决的是“文件如何进入控制层”</h2><p>最基本的上传控制器通常会长这样：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">UploadController</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@PostMapping(&quot;/upload&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> Result <span class="title function_">uploadImage</span><span class="params">(MultipartFile file)</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">uuid</span> <span class="operator">=</span> UUID.randomUUID().toString().replace(<span class="string">&quot;-&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">originalName</span> <span class="operator">=</span> file.getOriginalFilename();</span><br><span class="line">        <span class="type">String</span> <span class="variable">extension</span> <span class="operator">=</span> originalName.substring(originalName.lastIndexOf(<span class="string">&quot;.&quot;</span>));</span><br><span class="line">        <span class="type">String</span> <span class="variable">newFilename</span> <span class="operator">=</span> uuid + extension;</span><br><span class="line"></span><br><span class="line">        <span class="type">Path</span> <span class="variable">target</span> <span class="operator">=</span> Paths.get(<span class="string">&quot;&lt;upload-dir&gt;&quot;</span>, newFilename);</span><br><span class="line">        Files.copy(file.getInputStream(), target);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Result.ok(<span class="string">&quot;上传成功&quot;</span>, newFilename);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>这里最重要的不是 API 名字，而是三个动作：</p>
-<ol>
+<ul>
 <li>接收上传内容</li>
 <li>重新命名文件</li>
 <li>保存并返回访问所需的信息</li>
-</ol>
-<h2 id="为什么上传文件几乎都要重命名"><a href="#为什么上传文件几乎都要重命名" class="headerlink" title="为什么上传文件几乎都要重命名"></a>为什么上传文件几乎都要重命名</h2><p>如果直接使用原文件名，常见问题会非常多：</p>
+</ul>
+<p><code>MultipartFile</code> 本质上是 Spring MVC 对 multipart&#x2F;form-data 请求的封装。控制器拿到它之后，还需要决定文件名、保存位置、访问路径和错误处理方式。也就是说，上传接口不能只关心“文件有没有传上来”，还要关心“传上来以后如何被系统长期管理”。</p>
+<h2 id="💡-为什么上传文件几乎都要重命名"><a href="#💡-为什么上传文件几乎都要重命名" class="headerlink" title="💡 为什么上传文件几乎都要重命名"></a>💡 为什么上传文件几乎都要重命名</h2><p>如果直接使用原文件名，常见问题会非常多：</p>
 <ul>
 <li>不同用户上传同名文件会互相覆盖</li>
 <li>文件名里可能带空格、中文或特殊字符</li>
@@ -931,25 +935,37 @@
 <td>适合去重场景</td>
 </tr>
 </tbody></table>
-<h2 id="上传成功不代表前端立刻能访问"><a href="#上传成功不代表前端立刻能访问" class="headerlink" title="上传成功不代表前端立刻能访问"></a>上传成功不代表前端立刻能访问</h2><p>很多初学者会遇到一个典型问题：文件已经保存到了磁盘，但浏览器却访问不到。原因通常是“磁盘目录”和“Web 可访问路径”是两回事。</p>
+<h2 id="📌-上传成功不代表前端立刻能访问"><a href="#📌-上传成功不代表前端立刻能访问" class="headerlink" title="📌 上传成功不代表前端立刻能访问"></a>📌 上传成功不代表前端立刻能访问</h2><p>文件上传后经常会遇到一个典型问题：文件已经保存到了磁盘，但浏览器却访问不到。原因通常是“磁盘目录”和“Web 可访问路径”是两回事。</p>
 <p>这时就需要静态资源映射：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">WebConfig</span> <span class="keyword">implements</span> <span class="title class_">WebMvcConfigurer</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">addResourceHandlers</span><span class="params">(ResourceHandlerRegistry registry)</span> &#123;</span><br><span class="line">        registry.addResourceHandler(<span class="string">&quot;/files/**&quot;</span>)</span><br><span class="line">                .addResourceLocations(<span class="string">&quot;file:/&lt;upload-dir&gt;/&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>配置完成后，磁盘上的文件才会通过一个受控 URL 暴露出来。</p>
-<h2 id="为什么公开示例不能直接贴真实上传目录"><a href="#为什么公开示例不能直接贴真实上传目录" class="headerlink" title="为什么公开示例不能直接贴真实上传目录"></a>为什么公开示例不能直接贴真实上传目录</h2><p>像“本地磁盘目录直接写死”这种做法，只适合本机实验，不适合直接写进公开文章。更合理的写法通常有两种：</p>
+<h2 id="🔸-保存路径和访问路径要分开理解"><a href="#🔸-保存路径和访问路径要分开理解" class="headerlink" title="🔸 保存路径和访问路径要分开理解"></a>🔸 保存路径和访问路径要分开理解</h2><p>文件保存路径通常是服务器磁盘路径，例如 <code>/data/uploads/avatar.png</code>；访问路径则是浏览器能请求的 URL，例如 <code>/files/avatar.png</code>。二者不是同一个概念，中间需要静态资源映射建立关系。</p>
+<p>这种分离有两个好处：一方面，真实磁盘目录不需要直接暴露给前端；另一方面，后续迁移到对象存储、CDN 或独立文件服务器时，对外访问路径也更容易统一。</p>
+<h2 id="📌-真实上传目录不应该直接写死"><a href="#📌-真实上传目录不应该直接写死" class="headerlink" title="📌 真实上传目录不应该直接写死"></a>📌 真实上传目录不应该直接写死</h2><p>“本地磁盘目录直接写死”这种做法，只适合本机实验，不适合直接进入项目代码。更合理的配置通常有两种：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">app.upload.dir</span>=<span class="string">/data/uploads</span></span><br></pre></td></tr></table></figure>
 
 <p>或者：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">app.upload.dir</span>=<span class="string">$&#123;UPLOAD_DIR&#125;</span></span><br></pre></td></tr></table></figure>
 
 <blockquote>
-<p><mark>上传目录属于运行环境信息，公开文章更适合写成占位或配置项。</mark></p>
+<p><mark>上传目录属于运行环境信息，更适合写成占位或配置项。</mark></p>
 </blockquote>
-<h2 id="文件上传经常还会碰到大小限制"><a href="#文件上传经常还会碰到大小限制" class="headerlink" title="文件上传经常还会碰到大小限制"></a>文件上传经常还会碰到大小限制</h2><p>Spring Boot 默认上传大小限制比较保守，实际项目里经常需要调整：</p>
+<h2 id="🧠-文件上传经常还会碰到大小限制"><a href="#🧠-文件上传经常还会碰到大小限制" class="headerlink" title="🧠 文件上传经常还会碰到大小限制"></a>🧠 文件上传经常还会碰到大小限制</h2><p>Spring Boot 默认上传大小限制比较保守，实际项目里经常需要调整：</p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring.servlet.multipart.max-file-size</span>=<span class="string">10MB</span></span><br><span class="line"><span class="attr">spring.servlet.multipart.max-request-size</span>=<span class="string">10MB</span></span><br></pre></td></tr></table></figure>
 
 <p>如果不改，上传图片、文档、头像时就很容易遇到：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Maximum upload size exceeded</span><br></pre></td></tr></table></figure>
+
+<h2 id="💡-上传接口还要补安全校验"><a href="#💡-上传接口还要补安全校验" class="headerlink" title="💡 上传接口还要补安全校验"></a>💡 上传接口还要补安全校验</h2><p>文件上传不能只写到保存文件，真实项目至少还要考虑几类校验：</p>
+<ul>
+<li>文件大小是否超过限制</li>
+<li>扩展名和实际内容类型是否匹配</li>
+<li>是否允许上传可执行脚本</li>
+<li>原始文件名中是否带路径穿越字符</li>
+<li>保存失败时是否会留下半成品文件</li>
+</ul>
+<p>这些细节不一定都要在入门案例里全部实现，但文件上传是典型的边界输入，不能把用户提交的文件名和文件内容完全当成可信数据。</p>
 
   </article>
 </section>
@@ -960,7 +976,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -969,7 +985,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -977,7 +993,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B065"><span class="toc-text">Java笔记65</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MultipartFile-%E8%A7%A3%E5%86%B3%E7%9A%84%E6%98%AF%E2%80%9C%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E8%BF%9B%E5%85%A5%E6%8E%A7%E5%88%B6%E5%B1%82%E2%80%9D"><span class="toc-text">MultipartFile 解决的是“文件如何进入控制层”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%87%A0%E4%B9%8E%E9%83%BD%E8%A6%81%E9%87%8D%E5%91%BD%E5%90%8D"><span class="toc-text">为什么上传文件几乎都要重命名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%BC%A0%E6%88%90%E5%8A%9F%E4%B8%8D%E4%BB%A3%E8%A1%A8%E5%89%8D%E7%AB%AF%E7%AB%8B%E5%88%BB%E8%83%BD%E8%AE%BF%E9%97%AE"><span class="toc-text">上传成功不代表前端立刻能访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%85%AC%E5%BC%80%E7%A4%BA%E4%BE%8B%E4%B8%8D%E8%83%BD%E7%9B%B4%E6%8E%A5%E8%B4%B4%E7%9C%9F%E5%AE%9E%E4%B8%8A%E4%BC%A0%E7%9B%AE%E5%BD%95"><span class="toc-text">为什么公开示例不能直接贴真实上传目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%8F%E5%B8%B8%E8%BF%98%E4%BC%9A%E7%A2%B0%E5%88%B0%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6"><span class="toc-text">文件上传经常还会碰到大小限制</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B065-SpringBoot%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E4%B8%8E%E9%9D%99%E6%80%81%E8%B5%84%E6%BA%90%E6%98%A0%E5%B0%84"><span class="toc-text">Java笔记65-SpringBoot文件上传与静态资源映射</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-MultipartFile-%E8%A7%A3%E5%86%B3%E7%9A%84%E6%98%AF%E2%80%9C%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E8%BF%9B%E5%85%A5%E6%8E%A7%E5%88%B6%E5%B1%82%E2%80%9D"><span class="toc-text">🧩 MultipartFile 解决的是“文件如何进入控制层”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%87%A0%E4%B9%8E%E9%83%BD%E8%A6%81%E9%87%8D%E5%91%BD%E5%90%8D"><span class="toc-text">💡 为什么上传文件几乎都要重命名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E4%B8%8A%E4%BC%A0%E6%88%90%E5%8A%9F%E4%B8%8D%E4%BB%A3%E8%A1%A8%E5%89%8D%E7%AB%AF%E7%AB%8B%E5%88%BB%E8%83%BD%E8%AE%BF%E9%97%AE"><span class="toc-text">📌 上传成功不代表前端立刻能访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E4%BF%9D%E5%AD%98%E8%B7%AF%E5%BE%84%E5%92%8C%E8%AE%BF%E9%97%AE%E8%B7%AF%E5%BE%84%E8%A6%81%E5%88%86%E5%BC%80%E7%90%86%E8%A7%A3"><span class="toc-text">🔸 保存路径和访问路径要分开理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E7%9C%9F%E5%AE%9E%E4%B8%8A%E4%BC%A0%E7%9B%AE%E5%BD%95%E4%B8%8D%E5%BA%94%E8%AF%A5%E7%9B%B4%E6%8E%A5%E5%86%99%E6%AD%BB"><span class="toc-text">📌 真实上传目录不应该直接写死</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E7%BB%8F%E5%B8%B8%E8%BF%98%E4%BC%9A%E7%A2%B0%E5%88%B0%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6"><span class="toc-text">🧠 文件上传经常还会碰到大小限制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%8A%E4%BC%A0%E6%8E%A5%E5%8F%A3%E8%BF%98%E8%A6%81%E8%A1%A5%E5%AE%89%E5%85%A8%E6%A0%A1%E9%AA%8C"><span class="toc-text">💡 上传接口还要补安全校验</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

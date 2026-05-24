@@ -306,8 +306,11 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记62"><a href="#Java笔记62" class="headerlink" title="Java笔记62"></a>Java笔记62</h1><p>Spring Boot 整合 MyBatis 之后，最值得观察的不是单独某一层代码，而是一次请求怎样从控制层穿到数据库，再把结果返回出去。分层结构没有消失，只是搭框架的动作被压缩了。</p>
-<h2 id="一个最短的查询链路长什么样"><a href="#一个最短的查询链路长什么样" class="headerlink" title="一个最短的查询链路长什么样"></a>一个最短的查询链路长什么样</h2><p>控制器：</p>
+    <h1 id="Java笔记62-SpringBoot整合MyBatis与分层调用"><a href="#Java笔记62-SpringBoot整合MyBatis与分层调用" class="headerlink" title="Java笔记62-SpringBoot整合MyBatis与分层调用"></a>Java笔记62-SpringBoot整合MyBatis与分层调用</h1><p>Spring Boot 整合 MyBatis 之后，最值得观察的不是单独某一层代码，而是一次请求怎样从控制层穿到数据库，再把结果返回出去。分层结构没有消失，只是搭框架的动作被压缩了。</p>
+<blockquote>
+<p><mark>Spring Boot 简化的是整合成本，不是取消 Controller、Service、Mapper 的职责边界。</mark></p>
+</blockquote>
+<h2 id="🧩-一个最短的查询链路长什么样"><a href="#🧩-一个最短的查询链路长什么样" class="headerlink" title="🧩 一个最短的查询链路长什么样"></a>🧩 一个最短的查询链路长什么样</h2><p>控制器：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/brand&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BrandController</span> &#123;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> BrandService brandService;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(&quot;/selectAll&quot;)</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="keyword">public</span> List&lt;Brand&gt; <span class="title function_">selectAll</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> brandService.selectAll();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>服务层：</p>
@@ -344,13 +347,17 @@
 <td>写 SQL 和结果映射</td>
 </tr>
 </tbody></table>
-<h2 id="控制器里那段被注释掉的假数据，其实很值得一看"><a href="#控制器里那段被注释掉的假数据，其实很值得一看" class="headerlink" title="控制器里那段被注释掉的假数据，其实很值得一看"></a>控制器里那段被注释掉的假数据，其实很值得一看</h2><p>很多入门项目里，控制器最开始会先手写一组列表数据，后面再切到 Service 调用。这个过程非常正常，因为它反映了开发时常见的两个阶段：</p>
+<h2 id="🔬-Mapper-注入进来的不是实现类，而是代理对象"><a href="#🔬-Mapper-注入进来的不是实现类，而是代理对象" class="headerlink" title="🔬 Mapper 注入进来的不是实现类，而是代理对象"></a>🔬 Mapper 注入进来的不是实现类，而是代理对象</h2><p><code>BrandMapper</code> 是接口，本身没有实现类。服务层能直接注入它，是因为 MyBatis 在运行时根据 Mapper 接口和 XML 映射关系生成了代理对象。这个代理对象接到方法调用后，会根据接口方法名找到对应 SQL，再通过 <code>SqlSession</code> 执行数据库操作。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">brandMapper.selectAll()</span><br><span class="line">-&gt; Mapper 代理对象</span><br><span class="line">-&gt; namespace + id 定位 SQL</span><br><span class="line">-&gt; SqlSession 执行</span><br><span class="line">-&gt; ResultSet 映射为 Brand 对象</span><br></pre></td></tr></table></figure>
+
+<p>这条链能解释为什么 XML 里的 <code>namespace</code> 必须和 Mapper 接口全限定名对应，<code>select</code> 的 <code>id</code> 也要和接口方法名对应。它们不是随便起名，而是在建立接口方法和 SQL 语句之间的绑定关系。</p>
+<h2 id="🔍-控制器里被注释掉的模拟数据，也能说明开发过渡过程"><a href="#🔍-控制器里被注释掉的模拟数据，也能说明开发过渡过程" class="headerlink" title="🔍 控制器里被注释掉的模拟数据，也能说明开发过渡过程"></a>🔍 控制器里被注释掉的模拟数据，也能说明开发过渡过程</h2><p>很多入门项目里，控制器最开始会先手写一组列表数据，后面再切到 Service 调用。这个过程非常正常，因为它反映了开发时常见的两个阶段：</p>
 <ol>
 <li>先验证接口能否通、返回结构是否正确</li>
 <li>再把“假数据”替换成真正的数据库查询</li>
 </ol>
 <p>也就是说，控制器里那段被注释掉的 <code>new ArrayList&lt;&gt;()</code> 并不只是练习痕迹，它其实展示了接口开发从“通路验证”到“正式分层”的过渡过程。</p>
-<h2 id="MapperScan、Mapper-接口和-XML-是怎样串起来的"><a href="#MapperScan、Mapper-接口和-XML-是怎样串起来的" class="headerlink" title="@MapperScan、Mapper 接口和 XML 是怎样串起来的"></a><code>@MapperScan</code>、Mapper 接口和 XML 是怎样串起来的</h2><p>启动类里的：</p>
+<h2 id="📌-MapperScan、Mapper-接口和-XML-是怎样串起来的"><a href="#📌-MapperScan、Mapper-接口和-XML-是怎样串起来的" class="headerlink" title="📌 @MapperScan、Mapper 接口和 XML 是怎样串起来的"></a>📌 <code>@MapperScan</code>、Mapper 接口和 XML 是怎样串起来的</h2><p>启动类里的：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MapperScan(&quot;com.java.springboot.mapper&quot;)</span></span><br></pre></td></tr></table></figure>
 
 <p>会先扫描 Mapper 接口，再由 MyBatis 帮这些接口创建代理对象。这样服务层注入 <code>BrandMapper</code> 时，拿到的并不是手写实现类，而是运行时代理。</p>
@@ -363,7 +370,15 @@
 <li>让 <code>Brand</code> 这种结果类型可以直接写短名</li>
 </ul>
 <p>这套组合拳就是 Spring Boot 整合 MyBatis 的核心骨架。</p>
-<h2 id="从请求到结果，最好始终按一条链去理解"><a href="#从请求到结果，最好始终按一条链去理解" class="headerlink" title="从请求到结果，最好始终按一条链去理解"></a>从请求到结果，最好始终按一条链去理解</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">浏览器请求</span><br><span class="line">-&gt; Controller</span><br><span class="line">-&gt; Service</span><br><span class="line">-&gt; Mapper 代理</span><br><span class="line">-&gt; Mapper XML 中的 SQL</span><br><span class="line">-&gt; 数据库</span><br><span class="line">-&gt; 返回 Java 对象</span><br><span class="line">-&gt; JSON 响应</span><br></pre></td></tr></table></figure>
+<h2 id="🔸-Service-层不是简单“转发一层”"><a href="#🔸-Service-层不是简单“转发一层”" class="headerlink" title="🔸 Service 层不是简单“转发一层”"></a>🔸 Service 层不是简单“转发一层”</h2><p>在最短查询案例里，Service 方法看起来只是调用 Mapper，好像可以省略。但随着业务变复杂，Service 层会承担更多职责：</p>
+<ul>
+<li>组合多个 Mapper 调用</li>
+<li>处理业务校验</li>
+<li>控制事务边界</li>
+<li>统一返回业务含义明确的结果</li>
+</ul>
+<p>所以入门案例里的 Service 可能很薄，但它代表的层次不能轻易删除。真正的工程里，Controller 直接调用 Mapper 会让 Web 层和持久层耦合过紧。</p>
+<h2 id="🧠-从请求到结果，最好始终按一条链去理解"><a href="#🧠-从请求到结果，最好始终按一条链去理解" class="headerlink" title="🧠 从请求到结果，最好始终按一条链去理解"></a>🧠 从请求到结果，最好始终按一条链去理解</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">浏览器请求</span><br><span class="line">-&gt; Controller</span><br><span class="line">-&gt; Service</span><br><span class="line">-&gt; Mapper 代理</span><br><span class="line">-&gt; Mapper XML 中的 SQL</span><br><span class="line">-&gt; 数据库</span><br><span class="line">-&gt; 返回 Java 对象</span><br><span class="line">-&gt; JSON 响应</span><br></pre></td></tr></table></figure>
 
 <p>真正建立起来之后，后面再遇到分页、模糊搜索、更新、删除，都只是这条链上的变化，而不是重新学一套新东西。</p>
 
@@ -376,7 +391,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -385,7 +400,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -393,7 +408,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B062"><span class="toc-text">Java笔记62</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E6%9C%80%E7%9F%AD%E7%9A%84%E6%9F%A5%E8%AF%A2%E9%93%BE%E8%B7%AF%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-text">一个最短的查询链路长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A7%E5%88%B6%E5%99%A8%E9%87%8C%E9%82%A3%E6%AE%B5%E8%A2%AB%E6%B3%A8%E9%87%8A%E6%8E%89%E7%9A%84%E5%81%87%E6%95%B0%E6%8D%AE%EF%BC%8C%E5%85%B6%E5%AE%9E%E5%BE%88%E5%80%BC%E5%BE%97%E4%B8%80%E7%9C%8B"><span class="toc-text">控制器里那段被注释掉的假数据，其实很值得一看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapperScan%E3%80%81Mapper-%E6%8E%A5%E5%8F%A3%E5%92%8C-XML-%E6%98%AF%E6%80%8E%E6%A0%B7%E4%B8%B2%E8%B5%B7%E6%9D%A5%E7%9A%84"><span class="toc-text">@MapperScan、Mapper 接口和 XML 是怎样串起来的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E8%AF%B7%E6%B1%82%E5%88%B0%E7%BB%93%E6%9E%9C%EF%BC%8C%E6%9C%80%E5%A5%BD%E5%A7%8B%E7%BB%88%E6%8C%89%E4%B8%80%E6%9D%A1%E9%93%BE%E5%8E%BB%E7%90%86%E8%A7%A3"><span class="toc-text">从请求到结果，最好始终按一条链去理解</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B062-SpringBoot%E6%95%B4%E5%90%88MyBatis%E4%B8%8E%E5%88%86%E5%B1%82%E8%B0%83%E7%94%A8"><span class="toc-text">Java笔记62-SpringBoot整合MyBatis与分层调用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E4%B8%80%E4%B8%AA%E6%9C%80%E7%9F%AD%E7%9A%84%E6%9F%A5%E8%AF%A2%E9%93%BE%E8%B7%AF%E9%95%BF%E4%BB%80%E4%B9%88%E6%A0%B7"><span class="toc-text">🧩 一个最短的查询链路长什么样</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-Mapper-%E6%B3%A8%E5%85%A5%E8%BF%9B%E6%9D%A5%E7%9A%84%E4%B8%8D%E6%98%AF%E5%AE%9E%E7%8E%B0%E7%B1%BB%EF%BC%8C%E8%80%8C%E6%98%AF%E4%BB%A3%E7%90%86%E5%AF%B9%E8%B1%A1"><span class="toc-text">🔬 Mapper 注入进来的不是实现类，而是代理对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E6%8E%A7%E5%88%B6%E5%99%A8%E9%87%8C%E8%A2%AB%E6%B3%A8%E9%87%8A%E6%8E%89%E7%9A%84%E6%A8%A1%E6%8B%9F%E6%95%B0%E6%8D%AE%EF%BC%8C%E4%B9%9F%E8%83%BD%E8%AF%B4%E6%98%8E%E5%BC%80%E5%8F%91%E8%BF%87%E6%B8%A1%E8%BF%87%E7%A8%8B"><span class="toc-text">🔍 控制器里被注释掉的模拟数据，也能说明开发过渡过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-MapperScan%E3%80%81Mapper-%E6%8E%A5%E5%8F%A3%E5%92%8C-XML-%E6%98%AF%E6%80%8E%E6%A0%B7%E4%B8%B2%E8%B5%B7%E6%9D%A5%E7%9A%84"><span class="toc-text">📌 @MapperScan、Mapper 接口和 XML 是怎样串起来的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-Service-%E5%B1%82%E4%B8%8D%E6%98%AF%E7%AE%80%E5%8D%95%E2%80%9C%E8%BD%AC%E5%8F%91%E4%B8%80%E5%B1%82%E2%80%9D"><span class="toc-text">🔸 Service 层不是简单“转发一层”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E4%BB%8E%E8%AF%B7%E6%B1%82%E5%88%B0%E7%BB%93%E6%9E%9C%EF%BC%8C%E6%9C%80%E5%A5%BD%E5%A7%8B%E7%BB%88%E6%8C%89%E4%B8%80%E6%9D%A1%E9%93%BE%E5%8E%BB%E7%90%86%E8%A7%A3"><span class="toc-text">🧠 从请求到结果，最好始终按一条链去理解</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

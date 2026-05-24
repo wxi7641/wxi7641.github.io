@@ -894,9 +894,9 @@
   </div>
 
   <article class="md-text content">
-    <h1 id="Java笔记28"><a href="#Java笔记28" class="headerlink" title="Java笔记28"></a>Java笔记28</h1><p>如果说上一节的重点是“集合里的值为什么能去重”，这一节的重点就变成了“哈希结构除了存值，还能不能存键值对”。<code>Hashtable</code> 正是把这个视角从 <code>Set</code> 推进到 <code>Map</code> 的一个过渡容器。</p>
+    <h1 id="Java笔记28-HashSet与Hashtable补充"><a href="#Java笔记28-HashSet与Hashtable补充" class="headerlink" title="Java笔记28-HashSet与Hashtable补充"></a>Java笔记28-HashSet与Hashtable补充</h1><p>如果说上一节的重点是“集合里的值为什么能去重”，这一节的重点就变成了“哈希结构除了存值，还能不能存键值对”。<code>Hashtable</code> 正是把这个视角从 <code>Set</code> 推进到 <code>Map</code> 的一个过渡容器。</p>
 <hr>
-<h2 id="HashSet-和-Hashtable-根本不是同一种容器"><a href="#HashSet-和-Hashtable-根本不是同一种容器" class="headerlink" title="HashSet 和 Hashtable 根本不是同一种容器"></a><code>HashSet</code> 和 <code>Hashtable</code> 根本不是同一种容器</h2><table>
+<h2 id="🧩-HashSet-和-Hashtable-根本不是同一种容器"><a href="#🧩-HashSet-和-Hashtable-根本不是同一种容器" class="headerlink" title="🧩 HashSet 和 Hashtable 根本不是同一种容器"></a>🧩 <code>HashSet</code> 和 <code>Hashtable</code> 根本不是同一种容器</h2><table>
 <thead>
 <tr>
 <th>容器</th>
@@ -912,14 +912,22 @@
 <td>键值对</td>
 </tr>
 </tbody></table>
-<h2 id="先看-Hashtable-的最短代码"><a href="#先看-Hashtable-的最短代码" class="headerlink" title="先看 Hashtable 的最短代码"></a>先看 <code>Hashtable</code> 的最短代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Hashtable</span> <span class="variable">table</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Hashtable</span>();</span><br><span class="line">table.put(<span class="string">&quot;null&quot;</span>, <span class="number">100</span>);</span><br><span class="line">table.put(<span class="string">&quot;null&quot;</span>, <span class="number">100</span>);</span><br><span class="line">table.put(<span class="string">&quot;null&quot;</span>, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<h2 id="🔬-Hashtable-的旧设计，重点在“同步”和“键值映射”"><a href="#🔬-Hashtable-的旧设计，重点在“同步”和“键值映射”" class="headerlink" title="🔬 Hashtable 的旧设计，重点在“同步”和“键值映射”"></a>🔬 <code>Hashtable</code> 的旧设计，重点在“同步”和“键值映射”</h2><p><code>Hashtable</code> 不是 <code>HashSet</code> 的变体，而是另一条线上的容器。它的核心任务是保存键值对，并且在更早的 Java 设计里就带有同步控制，因此很多方法都偏向保守。</p>
+<p>这也意味着它和现代更常用的 <code>HashMap</code> 不太一样：</p>
+<ul>
+<li><code>Hashtable</code> 不允许 <code>null</code> 键或 <code>null</code> 值。</li>
+<li><code>Hashtable</code> 的同步粒度更粗。</li>
+<li><code>Hashtable</code> 更像是历史上早期线程安全哈希容器的代表。</li>
+</ul>
+<h2 id="🔍-先看-Hashtable-的最短代码"><a href="#🔍-先看-Hashtable-的最短代码" class="headerlink" title="🔍 先看 Hashtable 的最短代码"></a>🔍 先看 <code>Hashtable</code> 的最短代码</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Hashtable</span> <span class="variable">table</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Hashtable</span>();</span><br><span class="line">table.put(<span class="string">&quot;null&quot;</span>, <span class="number">100</span>);</span><br><span class="line">table.put(<span class="string">&quot;null&quot;</span>, <span class="number">100</span>);</span><br><span class="line">table.put(<span class="string">&quot;null&quot;</span>, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
 
 <p>这段代码最值得注意的地方有两个：</p>
 <ol>
 <li>这里放进去的 <code>&quot;null&quot;</code> 是一个字符串，不是真正的 <code>null</code>。</li>
 <li>同一个键连续 <code>put()</code>，后面的值会覆盖前面的值。</li>
 </ol>
-<h2 id="为什么还要专门认识-Hashtable"><a href="#为什么还要专门认识-Hashtable" class="headerlink" title="为什么还要专门认识 Hashtable"></a>为什么还要专门认识 <code>Hashtable</code></h2><p>今天写新代码时，<code>HashMap</code> 的出镜率显然更高，但 <code>Hashtable</code> 依然值得认识，原因主要有两个：</p>
+<p>这也说明了一个很重要的点：在键值结构里，键的作用远比值更“唯一”。值可以重复，但键负责定位，所以键不能随便重复。</p>
+<h2 id="🔸-为什么还要专门认识-Hashtable"><a href="#🔸-为什么还要专门认识-Hashtable" class="headerlink" title="🔸 为什么还要专门认识 Hashtable"></a>🔸 为什么还要专门认识 <code>Hashtable</code></h2><p>今天写新代码时，<code>HashMap</code> 的出镜率显然更高，但 <code>Hashtable</code> 依然值得认识，原因主要有两个：</p>
 <ul>
 <li>它是早期哈希键值容器的重要代表。</li>
 <li>它保留了更老一代的线程安全设计风格。</li>
@@ -952,7 +960,8 @@
 <td>老式同步容器</td>
 </tr>
 </tbody></table>
-<h2 id="这一节真正补的是“从值集合到键值映射”的视角切换"><a href="#这一节真正补的是“从值集合到键值映射”的视角切换" class="headerlink" title="这一节真正补的是“从值集合到键值映射”的视角切换"></a>这一节真正补的是“从值集合到键值映射”的视角切换</h2><ul>
+<p>如果把这三者放在一起看，会更清楚：<code>HashSet</code> 负责“只保留值”；<code>HashMap</code> 负责“键到值的映射”；<code>Hashtable</code> 则是这一类映射结构里更早、也更保守的一种同步实现。</p>
+<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><ul>
 <li><code>HashSet</code> 关注的是元素是否重复。</li>
 <li><code>Hashtable</code> 关注的是键和值如何配对。</li>
 <li>只要这个视角切换完成，后面的 <code>Map</code> 就不会再只是一个“多了两个泛型参数的集合”。</li>
@@ -967,7 +976,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -976,7 +985,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -984,7 +993,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B028"><span class="toc-text">Java笔记28</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#HashSet-%E5%92%8C-Hashtable-%E6%A0%B9%E6%9C%AC%E4%B8%8D%E6%98%AF%E5%90%8C%E4%B8%80%E7%A7%8D%E5%AE%B9%E5%99%A8"><span class="toc-text">HashSet 和 Hashtable 根本不是同一种容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%88%E7%9C%8B-Hashtable-%E7%9A%84%E6%9C%80%E7%9F%AD%E4%BB%A3%E7%A0%81"><span class="toc-text">先看 Hashtable 的最短代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E8%A6%81%E4%B8%93%E9%97%A8%E8%AE%A4%E8%AF%86-Hashtable"><span class="toc-text">为什么还要专门认识 Hashtable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%99%E4%B8%80%E8%8A%82%E7%9C%9F%E6%AD%A3%E8%A1%A5%E7%9A%84%E6%98%AF%E2%80%9C%E4%BB%8E%E5%80%BC%E9%9B%86%E5%90%88%E5%88%B0%E9%94%AE%E5%80%BC%E6%98%A0%E5%B0%84%E2%80%9D%E7%9A%84%E8%A7%86%E8%A7%92%E5%88%87%E6%8D%A2"><span class="toc-text">这一节真正补的是“从值集合到键值映射”的视角切换</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B028-HashSet%E4%B8%8EHashtable%E8%A1%A5%E5%85%85"><span class="toc-text">Java笔记28-HashSet与Hashtable补充</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-HashSet-%E5%92%8C-Hashtable-%E6%A0%B9%E6%9C%AC%E4%B8%8D%E6%98%AF%E5%90%8C%E4%B8%80%E7%A7%8D%E5%AE%B9%E5%99%A8"><span class="toc-text">🧩 HashSet 和 Hashtable 根本不是同一种容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-Hashtable-%E7%9A%84%E6%97%A7%E8%AE%BE%E8%AE%A1%EF%BC%8C%E9%87%8D%E7%82%B9%E5%9C%A8%E2%80%9C%E5%90%8C%E6%AD%A5%E2%80%9D%E5%92%8C%E2%80%9C%E9%94%AE%E5%80%BC%E6%98%A0%E5%B0%84%E2%80%9D"><span class="toc-text">🔬 Hashtable 的旧设计，重点在“同步”和“键值映射”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E5%85%88%E7%9C%8B-Hashtable-%E7%9A%84%E6%9C%80%E7%9F%AD%E4%BB%A3%E7%A0%81"><span class="toc-text">🔍 先看 Hashtable 的最短代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%98%E8%A6%81%E4%B8%93%E9%97%A8%E8%AE%A4%E8%AF%86-Hashtable"><span class="toc-text">🔸 为什么还要专门认识 Hashtable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

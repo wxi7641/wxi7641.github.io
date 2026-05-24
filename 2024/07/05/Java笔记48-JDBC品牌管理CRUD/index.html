@@ -20,12 +20,12 @@
   <title>Java笔记48 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Java笔记48CRUD 是 JDBC 项目最典型的落地方式。品牌模块之所以适合单独成篇，是因为它恰好把查询、新增、修改、删除全覆盖了。  用一个品牌模块把 CRUD 真正走一遍你的 BrandDaoImp、BrandServiceImp、BrandServlet 已经形成了很标准的三层调用链，非常适合做“一个模块如何从数据库走到页面”的知识条目。 Brand 模块是这个 JDBC 项目里最完整的">
+    <meta name="description" content="Java笔记48-JDBC品牌管理CRUDCRUD 是 JDBC 项目最典型的落地方式。品牌模块之所以适合单独成篇，是因为它恰好把查询、新增、修改、删除全覆盖了。  CRUD 看似只是四个动作，但它实际上已经把参数绑定、结果映射、业务拆分和页面跳转都串了起来。   🧩 用一个品牌模块把 CRUD 真正走一遍这组 BrandDaoImp、BrandServiceImp、BrandServlet 已">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java笔记48">
 <meta property="og:url" content="https://wxi7641.github.io/2024/07/05/Java%E7%AC%94%E8%AE%B048-JDBC%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86CRUD/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Java笔记48CRUD 是 JDBC 项目最典型的落地方式。品牌模块之所以适合单独成篇，是因为它恰好把查询、新增、修改、删除全覆盖了。  用一个品牌模块把 CRUD 真正走一遍你的 BrandDaoImp、BrandServiceImp、BrandServlet 已经形成了很标准的三层调用链，非常适合做“一个模块如何从数据库走到页面”的知识条目。 Brand 模块是这个 JDBC 项目里最完整的">
+<meta property="og:description" content="Java笔记48-JDBC品牌管理CRUDCRUD 是 JDBC 项目最典型的落地方式。品牌模块之所以适合单独成篇，是因为它恰好把查询、新增、修改、删除全覆盖了。  CRUD 看似只是四个动作，但它实际上已经把参数绑定、结果映射、业务拆分和页面跳转都串了起来。   🧩 用一个品牌模块把 CRUD 真正走一遍这组 BrandDaoImp、BrandServiceImp、BrandServlet 已">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-07-05T11:00:00.000Z">
@@ -103,35 +103,55 @@
     
   </div>
   </div>
-<article class="md-text content"><h1 id="Java笔记48"><a href="#Java笔记48" class="headerlink" title="Java笔记48"></a>Java笔记48</h1><p>CRUD 是 JDBC 项目最典型的落地方式。品牌模块之所以适合单独成篇，是因为它恰好把查询、新增、修改、删除全覆盖了。</p>
+<article class="md-text content"><h1 id="Java笔记48-JDBC品牌管理CRUD"><a href="#Java笔记48-JDBC品牌管理CRUD" class="headerlink" title="Java笔记48-JDBC品牌管理CRUD"></a>Java笔记48-JDBC品牌管理CRUD</h1><p>CRUD 是 JDBC 项目最典型的落地方式。品牌模块之所以适合单独成篇，是因为它恰好把查询、新增、修改、删除全覆盖了。</p>
+<blockquote>
+<p><mark>CRUD 看似只是四个动作，但它实际上已经把参数绑定、结果映射、业务拆分和页面跳转都串了起来。</mark></p>
+</blockquote>
 <hr>
-<h2 id="用一个品牌模块把-CRUD-真正走一遍"><a href="#用一个品牌模块把-CRUD-真正走一遍" class="headerlink" title="用一个品牌模块把 CRUD 真正走一遍"></a>用一个品牌模块把 CRUD 真正走一遍</h2><p>你的 <code>BrandDaoImp</code>、<code>BrandServiceImp</code>、<code>BrandServlet</code> 已经形成了很标准的三层调用链，非常适合做“一个模块如何从数据库走到页面”的知识条目。</p>
-<p><code>Brand</code> 模块是这个 JDBC 项目里最完整的一块；DAO 层负责执行 SQL，Service 层负责组织业务逻辑，Servlet 层负责接收请求；这种分层方式虽然传统，但非常适合教学；一篇文章里可以把列表、详情、添加、修改、删除串成一个完整流程。</p>
-<p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 就会明白框架到底帮我们省掉了哪些重复劳动。</p>
-<h2 id="从-DAO-到-Servlet-这条线应该怎么看"><a href="#从-DAO-到-Servlet-这条线应该怎么看" class="headerlink" title="从 DAO 到 Servlet 这条线应该怎么看"></a>从 DAO 到 Servlet 这条线应该怎么看</h2><p>JDBC 相关内容一放进项目里，链路就会非常清晰：登录注册要查用户表，品牌管理要做增删改查，分页列表要查总数和当前页数据。也正因为这些需求很具体，JDBC 笔记特别适合围绕“一个功能怎么从页面走到数据库”来整理。</p>
-<p>登录功能让我们看到查询单条数据时参数绑定和结果封装的写法；品牌列表和分页功能则把“查询多条数据”以及“前台展示”串了起来；这类案例最适合拿来解释 JDBC 为什么总和 Servlet、JSP 一起出现。</p>
-<p>可以先看一段最能代表这一节的代码，很多概念放到具体写法里会更容易看懂。JDBC 代码最适合按“连接 -&gt; SQL -&gt; 参数 -&gt; 结果 -&gt; 关闭资源”这条顺序去读。只要顺序感建立起来，哪怕代码行数变多，也不会轻易看乱。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;insert into tb_brand(brand_name,company_name,ordered,description,status) &quot;</span> +</span><br><span class="line">        <span class="string">&quot;values(?,?,?,?,?)&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">PreparedStatement</span> <span class="variable">pr</span> <span class="operator">=</span> conn.prepareStatement(sql);</span><br><span class="line">pr.setString(<span class="number">1</span>, brand.getBrandName());</span><br><span class="line">pr.setString(<span class="number">2</span>, brand.getCompanyName());</span><br><span class="line">pr.setInt(<span class="number">3</span>, brand.getOrdered());</span><br><span class="line">pr.setString(<span class="number">4</span>, brand.getDescription());</span><br><span class="line">pr.setInt(<span class="number">5</span>, brand.getStatus());</span><br></pre></td></tr></table></figure>
+<h2 id="🧩-用一个品牌模块把-CRUD-真正走一遍"><a href="#🧩-用一个品牌模块把-CRUD-真正走一遍" class="headerlink" title="🧩 用一个品牌模块把 CRUD 真正走一遍"></a>🧩 用一个品牌模块把 CRUD 真正走一遍</h2><p>这组 <code>BrandDaoImp</code>、<code>BrandServiceImp</code>、<code>BrandServlet</code> 已经形成了很标准的三层调用链，非常适合用来说明“一个模块如何从数据库走到页面”。</p>
+<p><code>Brand</code> 模块是这个 JDBC 项目里最完整的一块；DAO 层负责执行 SQL，Service 层负责组织业务逻辑，Servlet 层负责接收请求；这种分层方式虽然传统，但能把列表、详情、添加、修改、删除串成一个完整流程。</p>
+<p>JDBC 最值得整理的，不是单个 API 名字，而是一整条数据库访问链路：拿连接、写 SQL、设置参数、处理结果集、关闭资源。把这条线反复看熟，后面再学 MyBatis 时，会更清楚框架到底替代了哪一段。</p>
+<h2 id="🔬-CRUD-真正关心的是“数据怎么被安全地改掉”"><a href="#🔬-CRUD-真正关心的是“数据怎么被安全地改掉”" class="headerlink" title="🔬 CRUD 真正关心的是“数据怎么被安全地改掉”"></a>🔬 CRUD 真正关心的是“数据怎么被安全地改掉”</h2><p>品牌模块里的增删改查，不只是页面按钮对应四条 SQL，而是一个完整的数据生命周期：</p>
+<ul>
+<li>查询负责把数据库中的状态展示出来</li>
+<li>新增负责把新的业务记录落库</li>
+<li>修改负责改变已有记录的某些字段</li>
+<li>删除负责让记录退出当前业务视野</li>
+</ul>
+<p>这四类动作看起来不同，但都离不开同一套底层套路：参数怎么传、SQL 怎么写、执行结果怎么判断、失败后页面怎么提示。</p>
+<p><code>PreparedStatement</code> 在这里比 <code>Statement</code> 更适合使用，不只是因为写法稳定，还因为它把 SQL 结构和参数值分开了。占位符先定义结构，后续再绑定值，这样既减少拼接字符串带来的风险，也让代码更容易维护。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;insert into tb_brand(brand_name,company_name,ordered,description,status) values(?,?,?,?,?)&quot;</span>;</span><br><span class="line"><span class="type">PreparedStatement</span> <span class="variable">pr</span> <span class="operator">=</span> conn.prepareStatement(sql);</span><br><span class="line">pr.setString(<span class="number">1</span>, brand.getBrandName());</span><br><span class="line">pr.setString(<span class="number">2</span>, brand.getCompanyName());</span><br><span class="line">pr.setInt(<span class="number">3</span>, brand.getOrdered());</span><br><span class="line">pr.setString(<span class="number">4</span>, brand.getDescription());</span><br><span class="line">pr.setInt(<span class="number">5</span>, brand.getStatus());</span><br></pre></td></tr></table></figure>
 
-<p>把这段代码拆开看，最关键的地方其实就在下面几处：</p>
-<ul>
-<li><code>PreparedStatement</code> 的作用不只是执行 SQL，还能安全地给占位符设置参数。</li>
-<li>DAO 层的每个方法都只做一件事，例如按 id 查询、插入一条品牌、删除一条品牌。</li>
-<li>Service 层把 DAO 封起来后，Servlet 层只需要面向业务方法，不用关心底层 SQL 细节。</li>
-</ul>
-<p>JDBC 这一层的细节看起来繁琐，但也正因为它足够原始，才特别适合理解数据库访问的本来面目。后面换成连接池、DBUtils 或 ORM 框架时，你会更清楚每一层抽象到底替你做了什么。</p>
-<h2 id="写这类功能时最常见的几个坑"><a href="#写这类功能时最常见的几个坑" class="headerlink" title="写这类功能时最常见的几个坑"></a>写这类功能时最常见的几个坑</h2><p>这一块如果只是停在“会写”其实还不够，更有价值的是知道它还有哪些常见写法，以及它会继续和哪些知识连起来。</p>
-<ul>
-<li>如果以后迁移到 MyBatis，这一类 CRUD 语句会从 Java 代码中转移到 mapper XML 里。</li>
-<li>品牌模块也可以继续拆成“查询”“新增修改”“删除与跳转”三篇更细的文档。</li>
-<li>这一节适合用来观察 JDBC 如何落到具体业务模块。</li>
-</ul>
-<p>沿着这一篇继续深入时，可以重点关注这些方向：</p>
-<ul>
-<li>可以继续补连接池、DBUtils 和事务控制，让 JDBC 知识链更完整。</li>
-<li>涉及增删改查时，尽量把参数绑定和 SQL 组织方式分开解释，会更清楚。</li>
-<li>如果继续衔接框架学习，这一类文章会帮助更顺畅地理解 MyBatis 的抽象。</li>
-</ul>
+<p>这段代码最值得看的地方不是参数写了几个，而是它体现了“先定结构，再填内容”的思路。对数据库操作来说，结构稳定、参数变化，这种模式比字符串拼接更可靠。</p>
+<h2 id="💡-从-DAO-到-Servlet-这条线应该怎么看"><a href="#💡-从-DAO-到-Servlet-这条线应该怎么看" class="headerlink" title="💡 从 DAO 到 Servlet 这条线应该怎么看"></a>💡 从 DAO 到 Servlet 这条线应该怎么看</h2><p>品牌模块一旦放进 Web 项目里，调用链就会非常清楚：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">页面表单 / 链接</span><br><span class="line">-&gt; BrandServlet 接收请求</span><br><span class="line">-&gt; BrandServiceImp 组织业务动作</span><br><span class="line">-&gt; BrandDaoImp 执行 SQL</span><br><span class="line">-&gt; 数据库返回结果</span><br><span class="line">-&gt; Servlet 决定转发或重定向</span><br></pre></td></tr></table></figure>
+
+<p>这条链上每一层都应该尽量只做自己的事。DAO 层关注 SQL 和结果封装，Service 层关注业务含义，Servlet 层关注请求参数、页面跳转和结果反馈。只要这条边界清楚，CRUD 代码即使变多，也不会变成所有逻辑都塞进一个 Servlet 的结构。</p>
+<p>JDBC 这一层的细节看起来繁琐，但也正因为它足够原始，才特别适合理解数据库访问的本来面目。后面换成连接池、DBUtils 或 ORM 框架时，每一层抽象到底封装了什么会更清楚。</p>
+<h2 id="🔸-删除和修改最容易暴露“影响行数”的判断"><a href="#🔸-删除和修改最容易暴露“影响行数”的判断" class="headerlink" title="🔸 删除和修改最容易暴露“影响行数”的判断"></a>🔸 删除和修改最容易暴露“影响行数”的判断</h2><p>CRUD 里真正要注意的，往往不是 SQL 能不能执行，而是执行之后到底有没有真正影响到预期数据。比如更新和删除通常会返回影响行数，这个值比“执行成功”四个字更有业务意义：</p>
+<table>
+<thead>
+<tr>
+<th>返回结果</th>
+<th>常见含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>1</code></td>
+<td>成功影响一条记录</td>
+</tr>
+<tr>
+<td><code>0</code></td>
+<td>没有匹配到目标数据，或更新值没有变化</td>
+</tr>
+<tr>
+<td>大于 <code>1</code></td>
+<td>批量操作或 SQL 条件过宽</td>
+</tr>
+</tbody></table>
+<p>这也是为什么很多 CRUD 方法会在 Service 层再包一层结果判断。DAO 只负责执行，Service 才负责把数据库结果翻译成业务结果。</p>
+<h2 id="🧠-CRUD-最容易出问题的地方"><a href="#🧠-CRUD-最容易出问题的地方" class="headerlink" title="🧠 CRUD 最容易出问题的地方"></a>🧠 CRUD 最容易出问题的地方</h2><p>品牌 CRUD 的重点不只是四条 SQL，而是把三层结构真正跑通。Servlet 不直接拼 SQL，Service 不处理页面细节，DAO 不承担业务判断，代码才会有清晰边界。</p>
+<p>后续迁移到 MyBatis 时，SQL 会从 Java 代码转移到 Mapper XML 或注解中，但参数绑定、影响行数判断、结果封装这些底层问题并不会消失。JDBC 阶段把这些看清，框架阶段就不会只停留在“少写代码”的表层感受上。</p>
 </article>
 <div class="article-footer">
     <section id="license">
@@ -155,7 +175,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>820</strong> 天
+      运营 <strong>852</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
@@ -164,7 +184,7 @@
     <p class="meta-line">
       共发布 <strong>89</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>60,741</strong> 字
+      累计 <strong>78,953</strong> 字
     </p>
   </div>
 </footer>
@@ -172,7 +192,7 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B048"><span class="toc-text">Java笔记48</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E4%B8%80%E4%B8%AA%E5%93%81%E7%89%8C%E6%A8%A1%E5%9D%97%E6%8A%8A-CRUD-%E7%9C%9F%E6%AD%A3%E8%B5%B0%E4%B8%80%E9%81%8D"><span class="toc-text">用一个品牌模块把 CRUD 真正走一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E-DAO-%E5%88%B0-Servlet-%E8%BF%99%E6%9D%A1%E7%BA%BF%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E7%9C%8B"><span class="toc-text">从 DAO 到 Servlet 这条线应该怎么看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%99%E8%BF%99%E7%B1%BB%E5%8A%9F%E8%83%BD%E6%97%B6%E6%9C%80%E5%B8%B8%E8%A7%81%E7%9A%84%E5%87%A0%E4%B8%AA%E5%9D%91"><span class="toc-text">写这类功能时最常见的几个坑</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Java%E7%AC%94%E8%AE%B048-JDBC%E5%93%81%E7%89%8C%E7%AE%A1%E7%90%86CRUD"><span class="toc-text">Java笔记48-JDBC品牌管理CRUD</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E7%94%A8%E4%B8%80%E4%B8%AA%E5%93%81%E7%89%8C%E6%A8%A1%E5%9D%97%E6%8A%8A-CRUD-%E7%9C%9F%E6%AD%A3%E8%B5%B0%E4%B8%80%E9%81%8D"><span class="toc-text">🧩 用一个品牌模块把 CRUD 真正走一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-CRUD-%E7%9C%9F%E6%AD%A3%E5%85%B3%E5%BF%83%E7%9A%84%E6%98%AF%E2%80%9C%E6%95%B0%E6%8D%AE%E6%80%8E%E4%B9%88%E8%A2%AB%E5%AE%89%E5%85%A8%E5%9C%B0%E6%94%B9%E6%8E%89%E2%80%9D"><span class="toc-text">🔬 CRUD 真正关心的是“数据怎么被安全地改掉”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E4%BB%8E-DAO-%E5%88%B0-Servlet-%E8%BF%99%E6%9D%A1%E7%BA%BF%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E7%9C%8B"><span class="toc-text">💡 从 DAO 到 Servlet 这条线应该怎么看</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E5%88%A0%E9%99%A4%E5%92%8C%E4%BF%AE%E6%94%B9%E6%9C%80%E5%AE%B9%E6%98%93%E6%9A%B4%E9%9C%B2%E2%80%9C%E5%BD%B1%E5%93%8D%E8%A1%8C%E6%95%B0%E2%80%9D%E7%9A%84%E5%88%A4%E6%96%AD"><span class="toc-text">🔸 删除和修改最容易暴露“影响行数”的判断</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-CRUD-%E6%9C%80%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E5%9C%B0%E6%96%B9"><span class="toc-text">🧠 CRUD 最容易出问题的地方</span></a></li></ol></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
 <widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 14px;" class="tag -3">IO</a> <a href="/tags/JAVA/" style="font-size: 20px;" class="tag -10">JAVA</a> <a href="/tags/JDBC/" style="font-size: 16px;" class="tag -5">JDBC</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 15px;" class="tag -4">MySQL</a> <a href="/tags/Network-Fundamentals-%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 15px;" class="tag -4">Network Fundamentals  网络基础</a> <a href="/tags/Python/" style="font-size: 12px;" class="tag -0">Python</a> <a href="/tags/SQL/" style="font-size: 14px;" class="tag -3">SQL</a> <a href="/tags/SSM/" style="font-size: 18px;" class="tag -8">SSM</a> <a href="/tags/Spring/" style="font-size: 16px;" class="tag -5">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 18px;" class="tag -8">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 12px;" class="tag -0">SpringMVC</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 19px;" class="tag -9">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 15px;" class="tag -4">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 13px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 17px;" class="tag -6">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 13px;" class="tag -1">数组</a> <a href="/tags/%E6%97%A5%E5%B8%B8%E7%82%B9%E6%BB%B4/" style="font-size: 12px;" class="tag -0">日常点滴</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 16px;" class="tag -5">网络安全</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 14px;" class="tag -3">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E6%84%9F%E6%82%9F/" style="font-size: 12px;" class="tag -0">阅读感悟</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 14px;" class="tag -3">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 17px;" class="tag -6">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 14px;" class="tag -3">项目实践</a></div></widget>
 </div>
