@@ -28,8 +28,8 @@
 <meta property="og:description" content="Java笔记66-SpringBoot登录认证、拦截器与JWT登录认证这一块最容易出现两种极端：一种是只会写登录表单，不理解认证状态如何维持；另一种是上来就背 JWT，却不知道它到底解决了什么问题。真正稳妥的学习顺序通常是先把 Session 方案看清，再理解 Token &#x2F; JWT 为什么出现。  认证方案的本质，是让服务端能够可信地识别当前请求对应的用户身份。  🧩 Session">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
-<meta property="article:published_time" content="2024-08-06T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-08-06T11:00:00.000Z">
+<meta property="article:published_time" content="2024-08-07T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-08-07T00:00:00.000Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring Boot">
@@ -52,8 +52,8 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-08-06T19:00:00+08:00","dateModified":"2024-08-06T06:00:00-05:00","datePublished":"2024-08-06T19:00:00+08:00","description":"","headline":"Java笔记66","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/08/06/Java%E7%AC%94%E8%AE%B066-SpringBoot%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8EJWT/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/08/06/Java%E7%AC%94%E8%AE%B066-SpringBoot%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8EJWT/","keywords":"Java, Spring Boot","image":[]}</script>
-  <link rel="stylesheet" href="/css/custom-effects.css"><link rel="stylesheet" href="/css/module-pages-v2.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-08-07T08:00:00+08:00","dateModified":"2024-08-06T19:00:00-05:00","datePublished":"2024-08-07T08:00:00+08:00","description":"","headline":"Java笔记66","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/08/06/Java%E7%AC%94%E8%AE%B066-SpringBoot%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8EJWT/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/08/06/Java%E7%AC%94%E8%AE%B066-SpringBoot%E7%99%BB%E5%BD%95%E8%AE%A4%E8%AF%81%E3%80%81%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8EJWT/","keywords":"Java, Spring Boot","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
 
@@ -90,7 +90,7 @@
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a>
 </div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-08-06">2024-08-06</time></span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-08-07">2024-08-07</time></span></div>
 </div></div>
     
     <div class="bottom only-title">
@@ -210,7 +210,7 @@
     <p class="meta-line">
       共发布 <strong>101</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>88,983</strong> 字
+      累计 <strong>88,989</strong> 字
     </p>
   </div>
 </footer>
@@ -253,7 +253,7 @@
     ctx.search = {};
     ctx.search.service = `local_search`;
     if (ctx.search.service == 'local_search') {
-      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":false,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
       ctx.search[ctx.search.service] = service_obj;
     }
   }
@@ -848,14 +848,6 @@
     utils.js('/js/search/local-search.js', { defer: true });
   });
 </script><script>
-  window.FPConfig = {
-    delay: 0,
-    ignoreKeywords: [],
-    maxRPS: 5,
-    hoverDelay: 25
-  };
-</script>
-<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
   ctx.fancybox = {
     selector: `.timenode p>img`,
     css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
@@ -933,5 +925,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
+<script src="/js/custom-effects.js" defer></script>
 </div></body></html>

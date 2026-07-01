@@ -28,8 +28,8 @@
 <meta property="og:description" content="MySQL笔记02真正让 SQL 变得有力量的，不是 SELECT 本身，而是“如何把要的数据筛出来”。条件查询、模糊匹配、排序、分页、聚合与分组，基本构成了数据库查询阶段最核心的能力。 一、先理解查询不是“把表全拿出来”从这组 SQL 开始，重点已经不再是建表，而是怎样从已有数据里精准拿到想要的结果。 123SELECT name, age FROM stu;SELECT DISTINCT ad">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
-<meta property="article:published_time" content="2024-06-23T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-06-23T11:00:00.000Z">
+<meta property="article:published_time" content="2024-06-24T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-06-24T00:00:00.000Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="MySQL">
 <meta property="article:tag" content="SQL">
@@ -54,8 +54,8 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-06-23T19:00:00+08:00","dateModified":"2024-06-23T06:00:00-05:00","datePublished":"2024-06-23T19:00:00+08:00","description":"","headline":"MySQL笔记02","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/06/23/MySQL%E7%AC%94%E8%AE%B002-%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E3%80%81%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%88%86%E7%BB%84%E7%BB%9F%E8%AE%A1/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/06/23/MySQL%E7%AC%94%E8%AE%B002-%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E3%80%81%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%88%86%E7%BB%84%E7%BB%9F%E8%AE%A1/","keywords":"MySQL, SQL, DQL, 查询","image":[]}</script>
-  <link rel="stylesheet" href="/css/custom-effects.css"><link rel="stylesheet" href="/css/module-pages-v2.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-06-24T08:00:00+08:00","dateModified":"2024-06-23T19:00:00-05:00","datePublished":"2024-06-24T08:00:00+08:00","description":"","headline":"MySQL笔记02","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/06/23/MySQL%E7%AC%94%E8%AE%B002-%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E3%80%81%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%88%86%E7%BB%84%E7%BB%9F%E8%AE%A1/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/06/23/MySQL%E7%AC%94%E8%AE%B002-%E6%9D%A1%E4%BB%B6%E6%9F%A5%E8%AF%A2%E3%80%81%E6%8E%92%E5%BA%8F%E4%B8%8E%E5%88%86%E7%BB%84%E7%BB%9F%E8%AE%A1/","keywords":"MySQL, SQL, DQL, 查询","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
 
@@ -92,7 +92,7 @@
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a>
 </div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-06-23">2024-06-23</time></span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-06-24">2024-06-24</time></span></div>
 </div></div>
     
     <div class="bottom only-title">
@@ -350,7 +350,7 @@
     <p class="meta-line">
       共发布 <strong>101</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>88,983</strong> 字
+      累计 <strong>88,989</strong> 字
     </p>
   </div>
 </footer>
@@ -393,7 +393,7 @@
     ctx.search = {};
     ctx.search.service = `local_search`;
     if (ctx.search.service == 'local_search') {
-      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":false,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
       ctx.search[ctx.search.service] = service_obj;
     }
   }
@@ -988,14 +988,6 @@
     utils.js('/js/search/local-search.js', { defer: true });
   });
 </script><script>
-  window.FPConfig = {
-    delay: 0,
-    ignoreKeywords: [],
-    maxRPS: 5,
-    hoverDelay: 25
-  };
-</script>
-<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
   ctx.fancybox = {
     selector: `.timenode p>img`,
     css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
@@ -1073,5 +1065,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
+<script src="/js/custom-effects.js" defer></script>
 </div></body></html>

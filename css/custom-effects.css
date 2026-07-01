@@ -1,9 +1,10 @@
 body {
   position: relative;
   background:
-    radial-gradient(circle at 14% 10%, rgba(196, 244, 205, 0.72), rgba(196, 244, 205, 0) 28%),
-    radial-gradient(circle at 86% 12%, rgba(223, 233, 249, 0.42), rgba(223, 233, 249, 0) 28%),
-    linear-gradient(100deg, hsl(90, 55%, 97%), hsl(150, 50%, 96%) 38%, hsl(220, 60%, 98%) 74%, hsl(280, 50%, 97%));
+    radial-gradient(circle at 12% 8%, rgba(185, 241, 202, 0.72), rgba(185, 241, 202, 0) 30%),
+    radial-gradient(circle at 74% 6%, rgba(246, 226, 164, 0.24), rgba(246, 226, 164, 0) 24%),
+    radial-gradient(circle at 92% 24%, rgba(190, 231, 238, 0.38), rgba(190, 231, 238, 0) 30%),
+    linear-gradient(108deg, hsl(92, 58%, 97%), hsl(150, 52%, 96%) 40%, hsl(188, 54%, 97%) 76%, hsl(46, 55%, 97%));
 }
 
 body > .sitebg {
@@ -12,17 +13,19 @@ body > .sitebg {
   background-position: center;
   background-repeat: no-repeat;
   background-image:
-    radial-gradient(circle at 14% 10%, rgba(196, 244, 205, 0.66), rgba(196, 244, 205, 0) 30%),
-    radial-gradient(circle at 86% 12%, rgba(223, 233, 249, 0.38), rgba(223, 233, 249, 0) 28%),
-    linear-gradient(100deg, hsl(90, 55%, 97%), hsl(150, 50%, 96%) 38%, hsl(220, 60%, 98%) 74%, hsl(280, 50%, 97%)) !important;
+    radial-gradient(circle at 12% 8%, rgba(185, 241, 202, 0.68), rgba(185, 241, 202, 0) 32%),
+    radial-gradient(circle at 74% 6%, rgba(246, 226, 164, 0.2), rgba(246, 226, 164, 0) 25%),
+    radial-gradient(circle at 92% 24%, rgba(190, 231, 238, 0.34), rgba(190, 231, 238, 0) 30%),
+    linear-gradient(108deg, hsl(92, 58%, 97%), hsl(150, 52%, 96%) 40%, hsl(188, 54%, 97%) 76%, hsl(46, 55%, 97%)) !important;
 }
 
 body > .sitebg .siteblur {
   --blur-px: 100px;
   --blur-sat: 300%;
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.06) 42%, rgba(255, 255, 255, 0) 72%),
-    linear-gradient(180deg, rgba(247, 252, 249, 0.1), rgba(242, 248, 245, 0.08));
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.26), rgba(255, 255, 255, 0.08) 42%, rgba(255, 255, 255, 0) 72%),
+    radial-gradient(circle at 72% 18%, rgba(255, 241, 190, 0.08), rgba(255, 241, 190, 0) 34%),
+    linear-gradient(180deg, rgba(247, 252, 249, 0.11), rgba(242, 248, 245, 0.08));
 }
 
 #codex-visual-effects {

@@ -28,8 +28,8 @@
 <meta property="og:description" content="Java笔记44-SpringMVC请求处理Spring MVC 解决的是表现层问题。它关注的不是“业务怎么做”，而是 HTTP 请求怎么进来、参数怎么绑定、结果怎么返回给页面或前端。  Spring MVC 的主线其实非常稳定：DispatcherServlet 接请求，Controller 处理请求，视图解析器或消息转换器决定结果怎么返回。   🧩 先把入口看清，Spring MVC 才不会">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
-<meta property="article:published_time" content="2024-07-15T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-07-15T11:00:00.000Z">
+<meta property="article:published_time" content="2024-07-16T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-07-16T00:00:00.000Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Spring MVC">
@@ -52,8 +52,8 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-07-15T19:00:00+08:00","dateModified":"2024-07-15T06:00:00-05:00","datePublished":"2024-07-15T19:00:00+08:00","description":"","headline":"Java笔记44","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/07/15/Java%E7%AC%94%E8%AE%B044-SpringMVC%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/07/15/Java%E7%AC%94%E8%AE%B044-SpringMVC%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86/","keywords":"Java, Spring MVC","image":[]}</script>
-  <link rel="stylesheet" href="/css/custom-effects.css"><link rel="stylesheet" href="/css/module-pages-v2.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-07-16T08:00:00+08:00","dateModified":"2024-07-15T19:00:00-05:00","datePublished":"2024-07-16T08:00:00+08:00","description":"","headline":"Java笔记44","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/07/15/Java%E7%AC%94%E8%AE%B044-SpringMVC%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/07/15/Java%E7%AC%94%E8%AE%B044-SpringMVC%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86/","keywords":"Java, Spring MVC","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
 
@@ -90,7 +90,7 @@
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a>
 </div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-07-15">2024-07-15</time></span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-07-16">2024-07-16</time></span></div>
 </div></div>
     
     <div class="bottom only-title">
@@ -334,7 +334,7 @@
     <p class="meta-line">
       共发布 <strong>101</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>88,983</strong> 字
+      累计 <strong>88,989</strong> 字
     </p>
   </div>
 </footer>
@@ -377,7 +377,7 @@
     ctx.search = {};
     ctx.search.service = `local_search`;
     if (ctx.search.service == 'local_search') {
-      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":false,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
       ctx.search[ctx.search.service] = service_obj;
     }
   }
@@ -972,14 +972,6 @@
     utils.js('/js/search/local-search.js', { defer: true });
   });
 </script><script>
-  window.FPConfig = {
-    delay: 0,
-    ignoreKeywords: [],
-    maxRPS: 5,
-    hoverDelay: 25
-  };
-</script>
-<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
   ctx.fancybox = {
     selector: `.timenode p>img`,
     css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
@@ -1057,5 +1049,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
+<script src="/js/custom-effects.js" defer></script>
 </div></body></html>

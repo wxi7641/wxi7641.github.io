@@ -28,8 +28,8 @@
 <meta property="og:description" content="Java笔记01-Java基础与运行机制Java 先要看懂的不是语法细节，而是它整套运行方式：语言本身、JVM、JRE、JDK 各自负责什么，程序又是怎样从源文件走到运行结果的。把这一层先理顺，后面再学类、方法、集合和线程时，会少很多重复理解成本。  先把一句话记住：Java 不是“写完就直接执行”的脚本语言，而是先编译成字节码，再交给 JVM 运行。   🧩 Java 为什么要分成语言、运行时">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
-<meta property="article:published_time" content="2024-05-05T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-05-05T11:00:00.000Z">
+<meta property="article:published_time" content="2024-05-06T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-05-06T00:00:00.000Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="基础语法">
 <meta property="article:tag" content="Java">
@@ -52,8 +52,8 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-05-05T19:00:00+08:00","dateModified":"2024-05-05T06:00:00-05:00","datePublished":"2024-05-05T19:00:00+08:00","description":"","headline":"Java笔记01","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/05/05/Java%E7%AC%94%E8%AE%B001/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/05/05/Java%E7%AC%94%E8%AE%B001/","keywords":"基础语法, Java","image":[]}</script>
-  <link rel="stylesheet" href="/css/custom-effects.css"><link rel="stylesheet" href="/css/module-pages-v2.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-05-06T08:00:00+08:00","dateModified":"2024-05-05T19:00:00-05:00","datePublished":"2024-05-06T08:00:00+08:00","description":"","headline":"Java笔记01","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/05/05/Java%E7%AC%94%E8%AE%B001/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/05/05/Java%E7%AC%94%E8%AE%B001/","keywords":"基础语法, Java","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
 
@@ -90,7 +90,7 @@
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a>
 </div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-05">2024-05-05</time></span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-05-06">2024-05-06</time></span></div>
 </div></div>
     
     <div class="bottom only-title">
@@ -256,7 +256,7 @@
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/05/07/Java%E7%AC%94%E8%AE%B025-Vector%E4%B8%8ELinkedList%E8%A1%A5%E5%85%85/">Java笔记25</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/05/Java%E7%AC%94%E8%AE%B002/">Java笔记02</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/05/07/Java%E7%AC%94%E8%AE%B025-Vector%E4%B8%8ELinkedList%E8%A1%A5%E5%85%85/">Java笔记25</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/05/05/Java%E7%AC%94%E8%AE%B004/">Java笔记04</a></div></section></div>
 
 
 
@@ -277,7 +277,7 @@
     <p class="meta-line">
       共发布 <strong>101</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>88,983</strong> 字
+      累计 <strong>88,989</strong> 字
     </p>
   </div>
 </footer>
@@ -320,7 +320,7 @@
     ctx.search = {};
     ctx.search.service = `local_search`;
     if (ctx.search.service == 'local_search') {
-      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":false,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
       ctx.search[ctx.search.service] = service_obj;
     }
   }
@@ -915,14 +915,6 @@
     utils.js('/js/search/local-search.js', { defer: true });
   });
 </script><script>
-  window.FPConfig = {
-    delay: 0,
-    ignoreKeywords: [],
-    maxRPS: 5,
-    hoverDelay: 25
-  };
-</script>
-<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
   ctx.fancybox = {
     selector: `.timenode p>img`,
     css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
@@ -1000,5 +992,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
+<script src="/js/custom-effects.js" defer></script>
 </div></body></html>

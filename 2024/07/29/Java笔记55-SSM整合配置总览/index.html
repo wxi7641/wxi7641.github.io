@@ -28,8 +28,8 @@
 <meta property="og:description" content="Java笔记55-SSM整合配置总览SSM 最容易让人混乱的地方，不是某个框架单独怎么写，而是三套配置怎样拼成一条完整运行链。把整合配置单独拎出来看，很多原本分散的知识点才会真正连起来。  SSM 的配置文件不是重复劳动，而是在描述容器分工、请求入口、数据接入和事务边界。  🧩 先把整合对象看成四个层次SSM 的配置如果只看文件名，很容易觉得只是 web.xml、applicationConte">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
-<meta property="article:published_time" content="2024-07-29T11:00:00.000Z">
-<meta property="article:modified_time" content="2024-07-29T11:00:00.000Z">
+<meta property="article:published_time" content="2024-07-30T00:00:00.000Z">
+<meta property="article:modified_time" content="2024-07-30T00:00:00.000Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="SSM">
@@ -52,8 +52,8 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-07-29T19:00:00+08:00","dateModified":"2024-07-29T06:00:00-05:00","datePublished":"2024-07-29T19:00:00+08:00","description":"","headline":"Java笔记55","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/07/29/Java%E7%AC%94%E8%AE%B055-SSM%E6%95%B4%E5%90%88%E9%85%8D%E7%BD%AE%E6%80%BB%E8%A7%88/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/07/29/Java%E7%AC%94%E8%AE%B055-SSM%E6%95%B4%E5%90%88%E9%85%8D%E7%BD%AE%E6%80%BB%E8%A7%88/","keywords":"Java, SSM","image":[]}</script>
-  <link rel="stylesheet" href="/css/custom-effects.css"><link rel="stylesheet" href="/css/module-pages-v2.css">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"dateCreated":"2024-07-30T08:00:00+08:00","dateModified":"2024-07-29T19:00:00-05:00","datePublished":"2024-07-30T08:00:00+08:00","description":"","headline":"Java笔记55","mainEntityOfPage":{"@type":"WebPage","@id":"https://wxi7641.github.io/2024/07/29/Java%E7%AC%94%E8%AE%B055-SSM%E6%95%B4%E5%90%88%E9%85%8D%E7%BD%AE%E6%80%BB%E8%A7%88/"},"publisher":{"@type":"Organization","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png","logo":{"@type":"ImageObject","url":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"}},"url":"https://wxi7641.github.io/2024/07/29/Java%E7%AC%94%E8%AE%B055-SSM%E6%95%B4%E5%90%88%E9%85%8D%E7%BD%AE%E6%80%BB%E8%A7%88/","keywords":"Java, SSM","image":[]}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
 
@@ -90,7 +90,7 @@
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" href="/">文章</a>
 </div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-07-29">2024-07-29</time></span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2024-07-30">2024-07-30</time></span></div>
 </div></div>
     
     <div class="bottom only-title">
@@ -255,7 +255,7 @@
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/07/29/Java%E7%AC%94%E8%AE%B046-SSM%E6%95%B4%E5%90%88%E9%A1%B9%E7%9B%AE/">Java笔记46</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/07/29/Java%E7%AC%94%E8%AE%B058-SSM%E8%AE%A2%E5%8D%95%E6%A8%A1%E5%9D%97%E4%B8%8E%E4%BA%8B%E5%8A%A1/">Java笔记58</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2024/07/29/Java%E7%AC%94%E8%AE%B046-SSM%E6%95%B4%E5%90%88%E9%A1%B9%E7%9B%AE/">Java笔记46</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2024/07/29/Java%E7%AC%94%E8%AE%B056-SSM%E7%94%A8%E6%88%B7%E7%99%BB%E5%BD%95%E4%B8%8E%E6%9D%83%E9%99%90%E6%8B%A6%E6%88%AA/">Java笔记56</a></div></section></div>
 
 
 
@@ -276,7 +276,7 @@
     <p class="meta-line">
       共发布 <strong>101</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>88,983</strong> 字
+      累计 <strong>88,989</strong> 字
     </p>
   </div>
 </footer>
@@ -319,7 +319,7 @@
     ctx.search = {};
     ctx.search.service = `local_search`;
     if (ctx.search.service == 'local_search') {
-      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":false,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
       ctx.search[ctx.search.service] = service_obj;
     }
   }
@@ -914,14 +914,6 @@
     utils.js('/js/search/local-search.js', { defer: true });
   });
 </script><script>
-  window.FPConfig = {
-    delay: 0,
-    ignoreKeywords: [],
-    maxRPS: 5,
-    hoverDelay: 25
-  };
-</script>
-<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
   ctx.fancybox = {
     selector: `.timenode p>img`,
     css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
@@ -999,5 +991,5 @@
 
 
 <!-- inject -->
-<script src="/js/custom-effects.js" defer></script><script src="/js/module-pages-v3.js" defer></script>
+<script src="/js/custom-effects.js" defer></script>
 </div></body></html>
