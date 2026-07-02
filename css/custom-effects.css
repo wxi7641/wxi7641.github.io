@@ -146,6 +146,14 @@ body > .sitebg .siteblur {
   line-height: 1.2;
 }
 
+.float-panel button.mobile-theme-toggle {
+  color: var(--theme);
+}
+
+.float-panel button.mobile-theme-toggle svg {
+  filter: drop-shadow(0 4px 10px rgba(69, 110, 81, 0.16));
+}
+
 .l_left .widget-wrapper.markdown {
   background: rgba(255, 255, 255, 0.58);
   border: 1px solid rgba(255, 255, 255, 0.42);
@@ -544,6 +552,10 @@ body > .sitebg .siteblur {
 :root[data-theme='dark'] .theme-switch-icon {
   color: var(--accent);
   background: linear-gradient(135deg, rgba(214, 191, 150, 0.12), rgba(164, 146, 203, 0.16));
+}
+
+:root[data-theme='dark'] .float-panel button.mobile-theme-toggle {
+  color: var(--accent);
 }
 
 :root[data-theme='dark'] .leftbar-container,
