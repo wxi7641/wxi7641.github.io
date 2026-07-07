@@ -1,5 +1,50 @@
 var searchCache = null;
-var searchCacheKey = 'search_cache_v1';
+var searchCachePromise = null;
+var searchCacheKey = 'search_cache_v2';
+
+function resolveSearchPath(path) {
+  if (path.startsWith('/')) {
+    path = path.substring(1);
+  }
+  return ctx.root + path;
+}
+
+function loadSearchData(path) {
+  if (searchCache) {
+    return Promise.resolve(searchCache);
+  }
+  if (searchCachePromise) {
+    return searchCachePromise;
+  }
+
+  var cacheKey = searchCacheKey + ':' + path;
+  try {
+    var cached = localStorage.getItem(cacheKey);
+    if (cached) {
+      searchCache = JSON.parse(cached);
+    }
+  } catch (e) {
+    console.warn('搜索缓存解析失败', e);
+  }
+
+  searchCachePromise = fetch(path)
+    .then(res => res.json())
+    .then(json => {
+      searchCache = json;
+      try {
+        localStorage.setItem(cacheKey, JSON.stringify(json));
+      } catch (e) {
+        console.warn('搜索缓存写入失败', e);
+      }
+      return searchCache;
+    })
+    .catch(e => {
+      console.warn('搜索索引加载失败', e);
+      return searchCache || [];
+    });
+
+  return searchCachePromise;
+}
 
 var searchFunc = function(path, filter, wrapperId, searchId, contentId) {
 
@@ -39,14 +84,16 @@ var searchFunc = function(path, filter, wrapperId, searchId, contentId) {
       $wrapper.setAttribute('searching', 'true');
 
       datas.forEach(function(data) {
-        if (!data.content?.trim().length) return;
         if (filter && !data.path.includes(filter)) return;
 
         var matches = 0;
         var dataTitle = data.title?.trim() || 'Untitled';
         var dataTitleLowerCase = dataTitle.toLowerCase();
-        var dataContent = data.content;
-        var dataContentLowerCase = dataContent.toLowerCase();
+        var dataContent = data.content || '';
+        var dataTags = Array.isArray(data.tags) ? data.tags.join(' ') : '';
+        var dataCategories = Array.isArray(data.categories) ? data.categories.join(' ') : '';
+        var dataMeta = [dataTags, dataCategories].filter(Boolean).join(' ');
+        var dataContentLowerCase = [dataContent, dataTags, dataCategories].join(' ').toLowerCase();
         var dataUrl = data.path.startsWith('//') ? data.path.slice(1) : data.path;
         dataUrl = dataUrl.replace(/\/?index\.html$/, '/'); // index.html → /
         dataUrl = dataUrl.replace(/\.html$/, '/'); // xxx.html → xxx/
@@ -76,10 +123,12 @@ var searchFunc = function(path, filter, wrapperId, searchId, contentId) {
           a.appendChild(titleSpan);
 
           if (firstOccur >= 0) {
-            var start = Math.max(0, firstOccur - 20);
-            var end = Math.min(dataContent.length, firstOccur + 80);
-            if (start === 0) end = 100;
-            var matchContent = dataContent.substring(start, end);
+            var snippetSource = dataContent.trim().length ? dataContent : dataMeta;
+            var snippetIndex = dataContent.trim().length ? firstOccur : 0;
+            var start = Math.max(0, snippetIndex - 20);
+            var end = Math.min(snippetSource.length, snippetIndex + 80);
+            if (start === 0) end = Math.min(snippetSource.length, 100);
+            var matchContent = snippetSource.substring(start, end);
 
             var regS = new RegExp(keywords.map(escapeRegExp).join("|"), "gi");
             matchContent = matchContent.replace(regS, function(keyword) {
@@ -128,46 +177,19 @@ var searchFunc = function(path, filter, wrapperId, searchId, contentId) {
 };
 
 utils.jq(() => {
-  (function preloadSearchData() {
-    var path = ctx.search.path;
-    if (path.startsWith('/')) {
-      path = path.substring(1);
-    }
-    path = ctx.root + path;
-
-    try {
-      var cached = localStorage.getItem(searchCacheKey);
-      if (cached) {
-        searchCache = JSON.parse(cached);
-      }
-    } catch (e) {
-      console.warn('搜索缓存解析失败', e);
-    }
-
-    fetch(path)
-      .then(res => res.json())
-      .then(json => {
-        searchCache = json;
-        try {
-          localStorage.setItem(searchCacheKey, JSON.stringify(json));
-        } catch (e) {
-          console.warn('搜索缓存写入失败', e);
-        }
-      });
-  })();
-
   var $inputArea = $("input#search-input");
   if ($inputArea.length == 0) return;
   var $resultArea = document.querySelector("div#search-result");
 
   $inputArea.focus(function() {
-    var path = ctx.search.path;
-    if (path.startsWith('/')) {
-      path = path.substring(1);
-    }
-    path = ctx.root + path;
+    var path = resolveSearchPath(ctx.search.path);
     const filter = $inputArea.attr('data-filter') || '';
-    searchFunc(path, filter, 'search-wrapper', 'search-input', 'search-result');
+    loadSearchData(path).then(function () {
+      searchFunc(path, filter, 'search-wrapper', 'search-input', 'search-result');
+      if ($inputArea.val().trim().length > 0) {
+        $inputArea[0].dispatchEvent(new Event('input'));
+      }
+    });
   });
 
   $inputArea.keydown(function(e) {
