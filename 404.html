@@ -742,6 +742,7 @@
 <script>
   function initInlineLocalSearch() {
     const searchPath = `/search.json`;
+    const searchDataScript = `/search-data.js`;
     if (typeof ctx !== 'undefined') {
       ctx.search = { path: searchPath };
     }
@@ -753,40 +754,29 @@
 
     let searchData = null;
     let loading = null;
-    window.__blogSearchDebug = { dataLength: 0, lastQuery: '', lastHits: 0, lastError: '' };
-
-    function resolveSearchPath(path) {
-      const root = typeof ctx !== 'undefined' && ctx.root ? ctx.root : '/';
-      return root + String(path || '/search.json').replace(/^\/+/, '');
-    }
 
     function loadSearchData() {
       if (searchData) return Promise.resolve(searchData);
       if (loading) return loading;
       loading = new Promise((resolve) => {
-        const xhr = new XMLHttpRequest();
-        xhr.open('GET', resolveSearchPath(searchPath), true);
-        xhr.onload = function() {
-          if (xhr.status >= 200 && xhr.status < 300) {
-            try {
-              searchData = JSON.parse(xhr.responseText);
-              window.__blogSearchDebug.dataLength = Array.isArray(searchData) ? searchData.length : 0;
-            } catch (error) {
-              searchData = [];
-              window.__blogSearchDebug.lastError = String(error);
-            }
-          } else {
-            searchData = [];
-            window.__blogSearchDebug.lastError = `HTTP ${xhr.status}`;
-          }
+        if (Array.isArray(window.__BLOG_SEARCH_DATA__)) {
+          searchData = window.__BLOG_SEARCH_DATA__;
+          resolve(searchData);
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = searchDataScript;
+        script.async = true;
+        script.onload = function() {
+          searchData = Array.isArray(window.__BLOG_SEARCH_DATA__) ? window.__BLOG_SEARCH_DATA__ : [];
           resolve(searchData);
         };
-        xhr.onerror = function() {
+        script.onerror = function() {
           searchData = [];
-          window.__blogSearchDebug.lastError = 'XHR error';
           resolve(searchData);
         };
-        xhr.send();
+        document.head.appendChild(script);
       });
       return loading;
     }
@@ -804,7 +794,6 @@
 
     function renderSearch(data) {
       const query = input.value.trim().toLowerCase();
-      window.__blogSearchDebug.lastQuery = query;
       result.innerHTML = '';
       if (!query) {
         wrapper.setAttribute('searching', 'false');
@@ -845,13 +834,11 @@
       });
 
       if (hits.length === 0) {
-        window.__blogSearchDebug.lastHits = 0;
         wrapper.classList.add('noresult');
         return;
       }
 
       hits.sort((a, b) => b.rank - a.rank);
-      window.__blogSearchDebug.lastHits = hits.length;
       const ul = document.createElement('ul');
       ul.className = 'search-result-list';
       hits.slice(0, 20).forEach((item) => {
