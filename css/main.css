@@ -952,8 +952,8 @@
   }
 }
 pre {
-  font-family: Menlo, Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif;
-  font-size: 0.8125rem;
+  font-family: "Cascadia Code", "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875rem;
   tab-size: 4;
   -moz-tab-size: 4;
   -o-tab-size: 4;
@@ -1509,7 +1509,7 @@ pre:not([class]):has(>code) {
   overflow: hidden;
   background: var(--block);
   line-height: 1.5;
-  font-family: Menlo, Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif;
+  font-family: "Cascadia Code", "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
   box-sizing: border-box;
 }
 @media screen and (min-width: 500px) {
@@ -1525,7 +1525,7 @@ pre:not([class]):has(>code) {
 }
 .md-text .highlight figcaption {
   color: var(--text-p2);
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   font-weight: 500;
   margin-left: 0.5rem;
   display: inline-block;
@@ -1621,7 +1621,7 @@ pre:not([class]):has(>code) {
 }
 .md-text .gist .blob-code-inner {
   color: var(--text-p1);
-  font-family: Menlo, Monaco, Consolas, system-ui, "Courier New", monospace, sans-serif;
+  font-family: "Cascadia Code", "JetBrains Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
 }
 .md-text .gist .gist-meta {
   background: var(--block);
@@ -7221,18 +7221,18 @@ details.toc[open] >div.body section .header+.doc_tree {
   right: var(--inset);
   border-radius: 16px;
   --saturate: 400%;
-  --blur-px: 100px;
+  --blur-px: 20px;
   --background-opacity: 1;
   background-position: center;
   background-size: cover;
   --inset: 32px;
-  --background-opacity: 0.8;
-  background-image: linear-gradient(to bottom, rgba(225,245,235,0.8), rgba(220,240,250,0.8));
+  --background-opacity: 0.94;
+  background-image: linear-gradient(165deg, rgba(158,229,205,0.97), rgba(168,220,235,0.95));
   filter: saturate(var(--saturate)) blur(var(--blur-px)) opacity(var(--background-opacity));
 }
 @media screen and (prefers-color-scheme: dark) {
   .l_left .sidebg {
-    --background-opacity: 0.6;
+    --background-opacity: 0.705;
   }
 }
 .l_left .leftbar-container {
@@ -9076,7 +9076,7 @@ body>.sitebg {
   right: 0;
   bottom: 0;
   background-size: cover;
-  background-image: linear-gradient(100deg, #f7fcf3, #f0faf5 38%, #f7f9fd 74%, #f9f4fb);
+  background-image: linear-gradient(135deg, #ccf0e3, #d9f2f0 55%, #e1f1f4);
 }
 body>.sitebg .siteblur {
   width: 100%;
@@ -9085,7 +9085,7 @@ body>.sitebg .siteblur {
   --blur-sat: 200%;
   background-color: var(--blur-bg);
   --blur-sat: 300%;
-  --blur-px: 100px;
+  --blur-px: 0px;
   --blur-bg: var(--bg-a75);
 }
 @supports ((-webkit-backdrop-filter: blur(var(--blur-px))) or (backdrop-filter: blur(var(--blur-px)))) {
