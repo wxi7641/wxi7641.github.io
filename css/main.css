@@ -9086,7 +9086,7 @@ body>.sitebg .siteblur {
   background-color: var(--blur-bg);
   --blur-sat: 300%;
   --blur-px: 0px;
-  --blur-bg: var(--bg-a75);
+  --blur-bg: transparent;
 }
 @supports ((-webkit-backdrop-filter: blur(var(--blur-px))) or (backdrop-filter: blur(var(--blur-px)))) {
   body>.sitebg .siteblur {
