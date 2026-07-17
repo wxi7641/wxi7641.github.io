@@ -17,19 +17,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>逆向工程：C++笔记06-编译器链接器与库简介 - Wxi's Blog</title>
+  <title>逆向工程：从源文件到可执行文件：预处理、编译与链接 - Wxi's Blog</title>
 
   
-    <meta name="description" content="C++ 从源代码到可执行文件，中间并不是一步完成的。编译器会先处理每个源文件，把它们转换成目标文件；链接器再把目标文件和库组合起来，生成最终可运行的程序。理解这条链，是后面排查编译错误和链接错误的基础。  编译器负责把单个源文件翻译成目标文件，链接器负责把多个目标文件和库连接成最终程序。   🧩 编译阶段处理的是每一个源文件C++ 编译器会依次处理程序中的每一个 .cpp 文件。编译阶段主要做两">
+    <meta name="description" content="梳理 C++ 翻译单元、目标文件、符号解析和库参与链接的过程。">
 <meta property="og:type" content="website">
-<meta property="og:title" content="C++笔记06-编译器链接器与库简介">
+<meta property="og:title" content="从源文件到可执行文件：预处理、编译与链接">
 <meta property="og:url" content="https://wxi7641.github.io/wiki/reverse/cpp-note-06/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="C++ 从源代码到可执行文件，中间并不是一步完成的。编译器会先处理每个源文件，把它们转换成目标文件；链接器再把目标文件和库组合起来，生成最终可运行的程序。理解这条链，是后面排查编译错误和链接错误的基础。  编译器负责把单个源文件翻译成目标文件，链接器负责把多个目标文件和库连接成最终程序。   🧩 编译阶段处理的是每一个源文件C++ 编译器会依次处理程序中的每一个 .cpp 文件。编译阶段主要做两">
+<meta property="og:description" content="梳理 C++ 翻译单元、目标文件、符号解析和库参与链接的过程。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
-<meta property="article:published_time" content="2023-09-15T11:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-15T11:00:00.000Z">
+<meta property="article:published_time" content="2023-09-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-07-15T16:00:00.000Z">
 <meta property="article:author" content="Wxi">
 <meta property="article:tag" content="C++">
 <meta property="article:tag" content="编译">
@@ -53,7 +53,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/reverse/cpp-note-06/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"C++笔记06-编译器链接器与库简介","description":"C++ 从源代码到可执行文件，中间并不是一步完成的。编译器会先处理每个源文件，把它们转换成目标文件；链接器再把目标文件和库组合起来，生成最终可运行的程序。理解这条链，是后面排查编译错误和链接错误的基础。\n\n编译器负责把单个源文件翻译成目标文件，链接器负责把多个目标文件和库连接成最终程序。\n\n\n🧩 编译阶段处理的是每一个源文件C++ 编译器会依次处理程序中的每一个 .cpp 文件。编译阶段主...","url":"https://wxi7641.github.io/wiki/reverse/cpp-note-06/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/reverse/cpp-note-06/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"从源文件到可执行文件：预处理、编译与链接","description":"梳理 C++ 翻译单元、目标文件、符号解析和库参与链接的过程。","url":"https://wxi7641.github.io/wiki/reverse/cpp-note-06/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
   <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
@@ -74,7 +74,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/reverse/#start"><span class="toc-text">逆向工程</span></a><a class="link" href="/wiki/reverse/cpp-note-01/"><span class="toc-text">C++笔记01-程序与编程语言</span></a><a class="link" href="/wiki/reverse/cpp-note-02/"><span class="toc-text">C++笔记02-C与C++语言简介</span></a><a class="link" href="/wiki/reverse/cpp-note-03/"><span class="toc-text">C++笔记03-C++开发入门</span></a><a class="link" href="/wiki/reverse/cpp-note-04/"><span class="toc-text">C++笔记04-安装集成开发环境IDE</span></a><a class="link" href="/wiki/reverse/cpp-note-05/"><span class="toc-text">C++笔记05-编写第一个程序</span></a><a class="link active" href="/wiki/reverse/cpp-note-06/"><span class="toc-text">C++笔记06-编译器链接器与库简介</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div></widget>
+<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/reverse/#start"><span class="toc-text">逆向工程</span></a><a class="link" href="/wiki/reverse/cpp-note-01/"><span class="toc-text">程序、编程语言与执行平台</span></a><a class="link" href="/wiki/reverse/cpp-note-02/"><span class="toc-text">C 与 C++ 的关系</span></a><a class="link" href="/wiki/reverse/cpp-note-03/"><span class="toc-text">C++ 项目的基本开发流程</span></a><a class="link" href="/wiki/reverse/cpp-note-04/"><span class="toc-text">C++ 开发工具链与 IDE</span></a><a class="link" href="/wiki/reverse/cpp-note-05/"><span class="toc-text">第一个 C++ 程序：入口、标准输出与构建</span></a><a class="link active" href="/wiki/reverse/cpp-note-06/"><span class="toc-text">从源文件到可执行文件：预处理、编译与链接</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a></div></widget>
 
 
 
@@ -95,69 +95,51 @@
   <div class="content">
     <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
 <span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">探索</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/reverse/">逆向工程</a></div>
-<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2023-09-15">2023-09-15</time></span></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2023-09-16">2023-09-16</time></span></div>
 </div></div>
     
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>C++笔记06-编译器链接器与库简介</span></h1>
+        <h1 class="text title"><span>从源文件到可执行文件：预处理、编译与链接</span></h1>
         
       </div>
     </div>
     
   </div>
   </div>
-<article class="md-text content"><p>C++ 从源代码到可执行文件，中间并不是一步完成的。编译器会先处理每个源文件，把它们转换成目标文件；链接器再把目标文件和库组合起来，生成最终可运行的程序。理解这条链，是后面排查编译错误和链接错误的基础。</p>
-<blockquote>
-<p><mark>编译器负责把单个源文件翻译成目标文件，链接器负责把多个目标文件和库连接成最终程序。</mark></p>
-</blockquote>
-<hr>
-<h2 id="🧩-编译阶段处理的是每一个源文件"><a href="#🧩-编译阶段处理的是每一个源文件" class="headerlink" title="🧩 编译阶段处理的是每一个源文件"></a>🧩 编译阶段处理的是每一个源文件</h2><p>C++ 编译器会依次处理程序中的每一个 <code>.cpp</code> 文件。编译阶段主要做两件事。</p>
-<p>第一件事是检查代码。编译器会分析语法、类型、名称是否可见、函数调用是否匹配等问题。如果发现错误，它会给出错误信息和行号，帮助定位问题。</p>
-<p>第二件事是翻译代码。编译器会把 C++ 源代码转换成机器语言相关的中间结果，并存储在目标文件中。目标文件通常以 <code>.o</code> 或 <code>.obj</code> 作为扩展名，文件名一般与对应的 <code>.cpp</code> 源文件相关。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">main.cpp</span><br><span class="line">-&gt; 编译器</span><br><span class="line">-&gt; main.obj / main.o</span><br></pre></td></tr></table></figure>
+<article class="md-text content"><p>C++ 构建由多个阶段组成。预处理器展开包含关系和条件编译，编译器处理翻译单元并生成目标文件，链接器解析跨文件符号并生成最终产物。</p>
+<h2 id="预处理与翻译单元"><a href="#预处理与翻译单元" class="headerlink" title="预处理与翻译单元"></a>预处理与翻译单元</h2><p>一个 <code>.cpp</code> 源文件经过预处理后形成翻译单元。预处理阶段会处理 <code>#include</code>、<code>#define</code>、<code>#if</code> 等指令，并移除注释。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">main.cpp</span><br><span class="line">+ main.cpp 包含的头文件</span><br><span class="line">+ 条件编译与宏展开结果</span><br><span class="line">-&gt; 翻译单元</span><br></pre></td></tr></table></figure>
 
-<p>如果项目里有多个源文件，每个源文件通常都会先独立编译成自己的目标文件。这个特点决定了 C++ 项目可以增量构建：没有修改过的源文件，很多时候不需要重新编译。</p>
-<h2 id="🔍-链接阶段处理的是跨文件关系"><a href="#🔍-链接阶段处理的是跨文件关系" class="headerlink" title="🔍 链接阶段处理的是跨文件关系"></a>🔍 链接阶段处理的是跨文件关系</h2><p>编译器一次通常只看一个源文件，而真实项目往往会把函数、类、变量拆到多个文件中。链接器的任务，就是把这些分散的目标文件连接起来，解决跨文件依赖，最终生成目标产物。</p>
-<p>链接器通常会做几件事：</p>
-<ul>
-<li>读取编译器生成的目标文件</li>
-<li>检查目标文件是否有效</li>
-<li>解析跨文件引用关系</li>
-<li>链接需要的库文件</li>
-<li>生成最终可执行文件</li>
-</ul>
-<p>例如，一个源文件里调用了另一个源文件中定义的函数。编译当前文件时，编译器只需要知道这个函数存在；真正把“调用位置”和“函数实现”对应起来，是链接阶段完成的。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">main.obj</span><br><span class="line">utils.obj</span><br><span class="line">标准库 / 第三方库</span><br><span class="line">-&gt; 链接器</span><br><span class="line">-&gt; 可执行文件</span><br></pre></td></tr></table></figure>
+<p><code>#include &lt;iostream&gt;</code> 的作用是把对应头文件内容纳入预处理过程，使编译器看到相关声明。它不等同于把标准库实现直接复制到最终程序，也不能替代链接配置。</p>
+<p>每个 <code>.cpp</code> 文件通常形成独立翻译单元。这种独立编译模型使大型项目可以增量构建，也要求跨文件声明保持一致。</p>
+<h2 id="编译与目标文件"><a href="#编译与目标文件" class="headerlink" title="编译与目标文件"></a>编译与目标文件</h2><p>编译器对翻译单元执行语法分析、名称查找、类型检查和代码生成。成功后得到 <code>.obj</code>（常见于 Windows）或 <code>.o</code>（常见于 Unix-like 系统）目标文件。</p>
+<p>目标文件不只是机器指令，还包含符号表、重定位信息和调试信息等供链接器或调试器使用的数据。它通常不能作为完整程序直接启动。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">main.cpp  -&gt; compiler -&gt; main.obj</span><br><span class="line">utils.cpp -&gt; compiler -&gt; utils.obj</span><br></pre></td></tr></table></figure>
 
-<p>这也解释了为什么 C++ 中会有“编译错误”和“链接错误”的区别。语法写错、类型不匹配通常是编译错误；函数声明存在但找不到定义、库没有正确链接，通常会表现为链接错误。</p>
-<h2 id="🔬-库让程序可以复用已经写好的能力"><a href="#🔬-库让程序可以复用已经写好的能力" class="headerlink" title="🔬 库让程序可以复用已经写好的能力"></a>🔬 库让程序可以复用已经写好的能力</h2><p>库可以理解为一组已经写好、可以被其他程序复用的代码。C++ 自带一个庞大的标准库，其中非常常用的一部分就是输入输出库，也就是 <code>iostream</code>。</p>
-<p>例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>语法错误、类型不匹配、访问控制错误和翻译单元内不可见的名称通常在这个阶段报告。</p>
+<h2 id="链接与符号解析"><a href="#链接与符号解析" class="headerlink" title="链接与符号解析"></a>链接与符号解析</h2><p>链接器读取目标文件和库，解析一个翻译单元对另一个翻译单元中符号的引用，并为代码和数据分配最终位置。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">main.obj</span><br><span class="line">utils.obj</span><br><span class="line">standard or third-party libraries</span><br><span class="line">-&gt; linker</span><br><span class="line">-&gt; executable file</span><br></pre></td></tr></table></figure>
 
-<p>这行代码让程序可以使用标准输入输出相关能力，例如：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">std::cout &lt;&lt; <span class="string">&quot;Hello World!\n&quot;</span>;</span><br></pre></td></tr></table></figure>
+<p>函数已有声明却没有任何定义、定义所在目标文件未加入构建、库搜索路径错误或同一符号被重复定义，都会导致链接错误。编译器允许调用一个只有声明的函数，因为它假设定义可以在其他翻译单元或库中提供；链接器负责验证这个假设。</p>
+<h2 id="静态库与动态库"><a href="#静态库与动态库" class="headerlink" title="静态库与动态库"></a>静态库与动态库</h2><p>静态库是目标文件的归档集合。链接静态库时，链接器把程序需要的部分纳入最终产物。动态库由独立文件提供实现，程序在装载或运行时解析相应依赖；Windows 常见 <code>.dll</code>，Linux 常见 <code>.so</code>。</p>
+<p>两种库都需要让编译器看到正确声明。动态库还涉及运行时搜索路径、导出符号和版本兼容，静态库则会影响最终文件大小和代码更新方式。具体行为受到平台 ABI 和工具链规则约束。</p>
+<h2 id="命令行中的分阶段构建"><a href="#命令行中的分阶段构建" class="headerlink" title="命令行中的分阶段构建"></a>命令行中的分阶段构建</h2><p>GCC 风格工具链可以显式分开编译和链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">g++ -std=c++20 -Wall -Wextra -c main.cpp -o main.o</span><br><span class="line">g++ -std=c++20 -Wall -Wextra -c utils.cpp -o utils.o</span><br><span class="line">g++ main.o utils.o -o app</span><br></pre></td></tr></table></figure>
 
-<p>这里要注意，<code>#include</code> 主要解决的是“声明可见”的问题，让编译器知道某些函数、类型或对象如何使用。真正把库实现连接进最终程序，仍然可能需要链接阶段参与。标准库通常由工具链自动处理，而第三方库经常需要额外配置链接路径和库名称。</p>
-<h2 id="💡-构建是编译和链接的整体过程"><a href="#💡-构建是编译和链接的整体过程" class="headerlink" title="💡 构建是编译和链接的整体过程"></a>💡 构建是编译和链接的整体过程</h2><p>实际开发中，经常用“构建”来指代从源代码生成可执行文件的整个过程。构建并不等于编译单个文件，它通常包含编译、链接，甚至还可能包含资源处理、代码生成、打包等步骤。</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">源代码</span><br><span class="line">-&gt; 编译</span><br><span class="line">-&gt; 目标文件</span><br><span class="line">-&gt; 链接库和目标文件</span><br><span class="line">-&gt; 可执行文件</span><br></pre></td></tr></table></figure>
+<p>MSVC 可以在 Developer Command Prompt 中使用 <code>/c</code> 只编译不链接：</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cl /std:c++<span class="number">20</span> /EHsc /c main.cpp utils.cpp</span><br><span class="line">link main.obj utils.obj /OUT:app.exe</span><br></pre></td></tr></table></figure>
 
-<p>构建得到的具体文件，比如 <code>.exe</code> 或其他平台上的可执行文件，可以称为构建产物。</p>
-<p>理解这个过程后，IDE 里的 Build、Compile、Rebuild 就不再只是按钮名称。Compile 偏向处理单个源文件；Build 偏向生成最终产物；Rebuild 则通常意味着清理旧产物后重新完整构建。</p>
-<h2 id="🔸-测试和调试是构建之后的反馈环节"><a href="#🔸-测试和调试是构建之后的反馈环节" class="headerlink" title="🔸 测试和调试是构建之后的反馈环节"></a>🔸 测试和调试是构建之后的反馈环节</h2><p>程序成功构建并不代表它一定正确。构建只能说明代码通过了编译和链接，能够生成可执行文件。程序运行结果是否符合预期，还需要测试。</p>
-<p>测试的目的是确认软件是否按预期工作。最基础的测试方式，是尝试不同输入组合，观察程序在正常输入、边界输入和异常输入下是否都能得到合理结果。</p>
-<p>如果程序没有按照预期运行，就需要调试。调试的目标是找出错误发生的位置和原因，再修复问题。C++ 调试时常用断点、单步执行、查看变量、观察调用栈等手段。</p>
-<h2 id="🧠-C-工具链要按阶段理解"><a href="#🧠-C-工具链要按阶段理解" class="headerlink" title="🧠 C++ 工具链要按阶段理解"></a>🧠 C++ 工具链要按阶段理解</h2><p>C++ 的构建过程可以收束成一条清晰链路：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.cpp 源文件</span><br><span class="line">-&gt; 编译器</span><br><span class="line">-&gt; .obj / .o 目标文件</span><br><span class="line">-&gt; 链接器</span><br><span class="line">-&gt; 库文件参与链接</span><br><span class="line">-&gt; 可执行文件</span><br><span class="line">-&gt; 测试与调试</span><br></pre></td></tr></table></figure>
-
-<p>这条链路是 C++ 工程化理解的基础。后面遇到头文件、多个源文件、静态库、动态库、第三方依赖、链接错误时，都可以先判断问题发生在哪个阶段。只要阶段分清，很多看起来复杂的构建问题都会变得更容易定位。</p>
+<p>构建系统会替项目生成并执行类似命令，同时追踪依赖、配置 Debug &#x2F; Release 参数并组织多个目标。IDE 的 Build 按钮通常只是这个过程的入口。</p>
+<h2 id="构建成功后的验证"><a href="#构建成功后的验证" class="headerlink" title="构建成功后的验证"></a>构建成功后的验证</h2><p>构建成功表示当前配置下通过了预处理、编译和链接，不表示程序逻辑正确。测试负责比较实际结果和预期结果，调试器负责观察一次运行中的状态，静态分析器和运行时检测工具则用于发现部分内存与未定义行为问题。</p>
+<p>出现错误时可以按阶段缩小范围：编译诊断先看当前翻译单元的语法和类型；链接诊断检查定义、目标文件与库；运行异常再结合输入、日志、测试和调试器分析。</p>
 </article>
 <div class="article-footer">
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/reverse/cpp-note-05/">C++笔记05-编写第一个程序</a></div><div class="item" id="next"></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/reverse/cpp-note-05/">第一个 C++ 程序：入口、标准输出与构建</a></div><div class="item" id="next"></div></section></div>
 
 
 
@@ -167,16 +149,16 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>902</strong> 天
+      运营 <strong>906</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
       
     </p>
     <p class="meta-line">
-      共发布 <strong>91</strong> 篇文章
+      共发布 <strong>98</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>87,944</strong> 字
+      累计 <strong>89,250</strong> 字
     </p>
   </div>
 </footer>
@@ -184,9 +166,9 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E7%BC%96%E8%AF%91%E9%98%B6%E6%AE%B5%E5%A4%84%E7%90%86%E7%9A%84%E6%98%AF%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%BA%90%E6%96%87%E4%BB%B6"><span class="toc-text">🧩 编译阶段处理的是每一个源文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E9%93%BE%E6%8E%A5%E9%98%B6%E6%AE%B5%E5%A4%84%E7%90%86%E7%9A%84%E6%98%AF%E8%B7%A8%E6%96%87%E4%BB%B6%E5%85%B3%E7%B3%BB"><span class="toc-text">🔍 链接阶段处理的是跨文件关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E5%BA%93%E8%AE%A9%E7%A8%8B%E5%BA%8F%E5%8F%AF%E4%BB%A5%E5%A4%8D%E7%94%A8%E5%B7%B2%E7%BB%8F%E5%86%99%E5%A5%BD%E7%9A%84%E8%83%BD%E5%8A%9B"><span class="toc-text">🔬 库让程序可以复用已经写好的能力</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E6%9E%84%E5%BB%BA%E6%98%AF%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E7%9A%84%E6%95%B4%E4%BD%93%E8%BF%87%E7%A8%8B"><span class="toc-text">💡 构建是编译和链接的整体过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%B8-%E6%B5%8B%E8%AF%95%E5%92%8C%E8%B0%83%E8%AF%95%E6%98%AF%E6%9E%84%E5%BB%BA%E4%B9%8B%E5%90%8E%E7%9A%84%E5%8F%8D%E9%A6%88%E7%8E%AF%E8%8A%82"><span class="toc-text">🔸 测试和调试是构建之后的反馈环节</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-C-%E5%B7%A5%E5%85%B7%E9%93%BE%E8%A6%81%E6%8C%89%E9%98%B6%E6%AE%B5%E7%90%86%E8%A7%A3"><span class="toc-text">🧠 C++ 工具链要按阶段理解</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%A2%84%E5%A4%84%E7%90%86%E4%B8%8E%E7%BF%BB%E8%AF%91%E5%8D%95%E5%85%83"><span class="toc-text">预处理与翻译单元</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E7%9B%AE%E6%A0%87%E6%96%87%E4%BB%B6"><span class="toc-text">编译与目标文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%93%BE%E6%8E%A5%E4%B8%8E%E7%AC%A6%E5%8F%B7%E8%A7%A3%E6%9E%90"><span class="toc-text">链接与符号解析</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%BA%93%E4%B8%8E%E5%8A%A8%E6%80%81%E5%BA%93"><span class="toc-text">静态库与动态库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%AD%E7%9A%84%E5%88%86%E9%98%B6%E6%AE%B5%E6%9E%84%E5%BB%BA"><span class="toc-text">命令行中的分阶段构建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%88%90%E5%8A%9F%E5%90%8E%E7%9A%84%E9%AA%8C%E8%AF%81"><span class="toc-text">构建成功后的验证</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
-<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 16.44px;" class="tag -6">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.78px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 15.56px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.67px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.78px;" class="tag -2">SQL</a> <a href="/tags/SSM/" style="font-size: 17.33px;" class="tag -7">SSM</a> <a href="/tags/Spring/" style="font-size: 15.56px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.33px;" class="tag -7">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 16.44px;" class="tag -6">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 19.11px;" class="tag -9">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.67px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.89px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 16.44px;" class="tag -6">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.89px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.67px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.67px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 18.22px;" class="tag -8">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 16.44px;" class="tag -6">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.78px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.67px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.78px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 16.44px;" class="tag -6">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 16.44px;" class="tag -6">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.78px;" class="tag -2">项目实践</a></div></widget>
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 16px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.6px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 15.2px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.4px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.6px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.8px;" class="tag -6">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.6px;" class="tag -7">SSM</a> <a href="/tags/Spring/" style="font-size: 15.2px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.6px;" class="tag -7">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.4px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 18.4px;" class="tag -8">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.4px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.8px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 16px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.8px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.4px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.4px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.2px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 16px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.6px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.4px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.6px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 16px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.4px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.6px;" class="tag -2">项目实践</a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
