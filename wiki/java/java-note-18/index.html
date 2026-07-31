@@ -17,15 +17,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Java学习：Java笔记18-第一个Java程序 - Wxi's Blog</title>
+  <title>Java学习：Java笔记18-Java程序的编译与启动 - Wxi's Blog</title>
 
   
-    <meta name="description" content="Hello World 看起来只是最简单的一行输出，真正需要先掌握的是 Java 程序的最小执行结构。类怎么声明、main 为什么固定、System.out.println() 到底是什么、注释为什么值得从第一天就养成习惯，这些内容会在后面的每一篇 Java 笔记里不断重复出现。  核心先记住一句话：main 是 JVM 默认寻找的入口方法，Java 代码并不是“写一行就能直接跑”，而是先组织成类">
+    <meta name="description" content="传统 Java 应用把代码组织在类中，通过 javac 编译为字节码，再由 java 启动器加载入口类并调用入口方法。 最小程序结构12345public class FirstProgram &#123;    public static void main(String[] args) &#123;        System.out.println(&quot;Hello, World!&amp;q">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Java笔记18-第一个Java程序">
+<meta property="og:title" content="Java笔记18-Java程序的编译与启动">
 <meta property="og:url" content="https://wxi7641.github.io/wiki/java/java-note-18/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="Hello World 看起来只是最简单的一行输出，真正需要先掌握的是 Java 程序的最小执行结构。类怎么声明、main 为什么固定、System.out.println() 到底是什么、注释为什么值得从第一天就养成习惯，这些内容会在后面的每一篇 Java 笔记里不断重复出现。  核心先记住一句话：main 是 JVM 默认寻找的入口方法，Java 代码并不是“写一行就能直接跑”，而是先组织成类">
+<meta property="og:description" content="传统 Java 应用把代码组织在类中，通过 javac 编译为字节码，再由 java 启动器加载入口类并调用入口方法。 最小程序结构12345public class FirstProgram &#123;    public static void main(String[] args) &#123;        System.out.println(&quot;Hello, World!&amp;q">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-04-17T00:00:00.000Z">
@@ -52,7 +52,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/java/java-note-18/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"Java笔记18-第一个Java程序","description":"Hello World 看起来只是最简单的一行输出，真正需要先掌握的是 Java 程序的最小执行结构。类怎么声明、main 为什么固定、System.out.println() 到底是什么、注释为什么值得从第一天就养成习惯，这些内容会在后面的每一篇 Java 笔记里不断重复出现。\n\n核心先记住一句话：main 是 JVM 默认寻找的入口方法，Java 代码并不是“写一行就能直接跑”，而是先组...","url":"https://wxi7641.github.io/wiki/java/java-note-18/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/java/java-note-18/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"Java笔记18-Java程序的编译与启动","description":"传统 Java 应用把代码组织在类中，通过 javac 编译为字节码，再由 java 启动器加载入口类并调用入口方法。\n最小程序结构12345public class FirstProgram &#123;    public static void main(String[] args) &#123;        System.out.println(&quot;Hello, World...","url":"https://wxi7641.github.io/wiki/java/java-note-18/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
   <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
@@ -73,7 +73,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/java/#start"><span class="toc-text">Java学习</span></a><a class="link active" href="/wiki/java/java-note-18/"><span class="toc-text">Java笔记18-第一个Java程序</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/java/java-note-19/"><span class="toc-text">Java笔记19-流程控制入门</span></a><a class="link" href="/wiki/java/java-note-20/"><span class="toc-text">Java笔记20-数组与排序</span></a><a class="link" href="/wiki/java/java-note-21/"><span class="toc-text">Java笔记21</span></a><a class="link" href="/wiki/java/java-note-22/"><span class="toc-text">Java笔记22-String与StringBuffer</span></a><a class="link" href="/wiki/java/java-note-23/"><span class="toc-text">Java笔记23-Date、Calendar与Math工具类</span></a><a class="link" href="/wiki/java/java-note-01/"><span class="toc-text">Java笔记01-Java基础与运行机制</span></a><a class="link" href="/wiki/java/java-note-02/"><span class="toc-text">Java笔记02-基本数据类型与变量边界</span></a><a class="link" href="/wiki/java/java-note-03/"><span class="toc-text">Java笔记03-标识符、关键字与运算符</span></a><a class="link" href="/wiki/java/java-note-04/"><span class="toc-text">Java笔记04-数组的本质与基本使用</span></a><a class="link" href="/wiki/java/java-note-05/"><span class="toc-text">Java笔记05-流程控制的主线</span></a><a class="link" href="/wiki/java/java-note-24/"><span class="toc-text">Java笔记24-Collection与List入门</span></a><a class="link" href="/wiki/java/java-note-25/"><span class="toc-text">Java笔记25-Vector与LinkedList补充</span></a><a class="link" href="/wiki/java/java-note-26/"><span class="toc-text">Java笔记26-三种List实现对比</span></a><a class="link" href="/wiki/java/java-note-27/"><span class="toc-text">Java笔记27-HashSet去重原理</span></a><a class="link" href="/wiki/java/java-note-28/"><span class="toc-text">Java笔记28-HashSet与Hashtable补充</span></a><a class="link" href="/wiki/java/java-note-29/"><span class="toc-text">Java笔记29-Map集合基础</span></a><a class="link" href="/wiki/java/java-note-15/"><span class="toc-text">Java笔记15</span></a><a class="link" href="/wiki/java/java-note-30/"><span class="toc-text">Java笔记30-枚举enum</span></a><a class="link" href="/wiki/java/java-note-16/"><span class="toc-text">Java笔记16</span></a><a class="link" href="/wiki/java/java-note-17/"><span class="toc-text">Java笔记17</span></a><a class="link" href="/wiki/java/java-note-31/"><span class="toc-text">Java笔记31-File类基础</span></a><a class="link" href="/wiki/java/java-note-32/"><span class="toc-text">Java笔记32-字节流与缓冲流</span></a><a class="link" href="/wiki/java/java-note-33/"><span class="toc-text">Java笔记33-字符流读写文件</span></a><a class="link" href="/wiki/java/java-note-34/"><span class="toc-text">Java笔记34-泛型入门</span></a><a class="link" href="/wiki/java/java-note-35/"><span class="toc-text">Java笔记35-线程创建方式</span></a><a class="link" href="/wiki/java/java-note-36/"><span class="toc-text">Java笔记36-线程常用方法与同步</span></a><a class="link" href="/wiki/java/java-note-37/"><span class="toc-text">Java笔记37-wait与notify</span></a><a class="link" href="/wiki/java/java-note-38/"><span class="toc-text">Java笔记38-Lock与线程池</span></a><a class="link" href="/wiki/java/java-note-39/"><span class="toc-text">Java笔记39-Bootstrap前端资源准备</span></a><a class="link" href="/wiki/java/java-note-59/"><span class="toc-text">Java笔记59-IntelliJIDEA常用操作</span></a><a class="link" href="/wiki/java/java-note-50/"><span class="toc-text">Java笔记50-JDBC分页与JSP展示</span></a><a class="link" href="/wiki/java/java-note-40/"><span class="toc-text">Java笔记40-Servlet与JDBC小项目</span></a><a class="link" href="/wiki/java/java-note-47/"><span class="toc-text">Java笔记47-JDBC连接与工具类封装</span></a><a class="link" href="/wiki/java/java-note-48/"><span class="toc-text">Java笔记48-JDBC品牌管理CRUD</span></a><a class="link" href="/wiki/java/java-note-49/"><span class="toc-text">Java笔记49-JDBC登录注册与过滤器</span></a><a class="link" href="/wiki/java/java-note-41/"><span class="toc-text">Java笔记41-MavenWeb工程</span></a><a class="link" href="/wiki/java/java-note-42/"><span class="toc-text">Java笔记42-MyBatis动态SQL</span></a><a class="link" href="/wiki/java/java-note-43/"><span class="toc-text">Java笔记43-Spring核心思想</span></a><a class="link" href="/wiki/java/java-note-51/"><span class="toc-text">Java笔记51-SpringIOC与DI</span></a><a class="link" href="/wiki/java/java-note-52/"><span class="toc-text">Java笔记52-Spring静态代理</span></a><a class="link" href="/wiki/java/java-note-53/"><span class="toc-text">Java笔记53-Spring动态代理与AOP通知</span></a><a class="link" href="/wiki/java/java-note-54/"><span class="toc-text">Java笔记54-Spring注解开发与组件扫描</span></a><a class="link" href="/wiki/java/java-note-44/"><span class="toc-text">Java笔记44-SpringMVC请求处理</span></a><a class="link" href="/wiki/java/java-note-45/"><span class="toc-text">Java笔记45-SpringBoot快速入门</span></a><a class="link" href="/wiki/java/java-note-46/"><span class="toc-text">Java笔记46-SSM整合项目</span></a><a class="link" href="/wiki/java/java-note-55/"><span class="toc-text">Java笔记55-SSM整合配置总览</span></a><a class="link" href="/wiki/java/java-note-56/"><span class="toc-text">Java笔记56-SSM用户登录与权限拦截</span></a><a class="link" href="/wiki/java/java-note-57/"><span class="toc-text">Java笔记57-SSM品牌模块</span></a><a class="link" href="/wiki/java/java-note-58/"><span class="toc-text">Java笔记58-SSM订单模块与事务</span></a><a class="link" href="/wiki/java/java-note-60/"><span class="toc-text">Java笔记60-SpringBoot启动类与自动配置</span></a><a class="link" href="/wiki/java/java-note-61/"><span class="toc-text">Java笔记61-SpringBoot配置文件与多环境思路</span></a><a class="link" href="/wiki/java/java-note-62/"><span class="toc-text">Java笔记62-SpringBoot整合MyBatis与分层调用</span></a><a class="link" href="/wiki/java/java-note-63/"><span class="toc-text">Java笔记63-SpringBoot返回JSON与参数绑定</span></a><a class="link" href="/wiki/java/java-note-64/"><span class="toc-text">Java笔记64-SpringBoot分页、多条件搜索与PageHelper</span></a><a class="link" href="/wiki/java/java-note-65/"><span class="toc-text">Java笔记65-SpringBoot文件上传与静态资源映射</span></a><a class="link" href="/wiki/java/java-note-66/"><span class="toc-text">Java笔记66-SpringBoot登录认证、拦截器与JWT</span></a><a class="link" href="/wiki/java/java-note-67/"><span class="toc-text">Java笔记67-SpringBoot整合MyBatis-Plus</span></a><a class="link" href="/wiki/java/java-note-68/"><span class="toc-text">Java笔记68-SSM容器启动与请求入口</span></a><a class="link" href="/wiki/java/java-note-69/"><span class="toc-text">Java笔记69-SSM数据源、MyBatis与Mapper扫描</span></a><a class="link" href="/wiki/java/java-note-70/"><span class="toc-text">Java笔记70-SSM事务管理与分页查询</span></a><a class="link" href="/wiki/java/java-note-71/"><span class="toc-text">Java笔记71-SSM登录拦截与Session校验</span></a></div></widget>
+<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/java/#start"><span class="toc-text">Java学习</span></a><a class="link active" href="/wiki/java/java-note-18/"><span class="toc-text">Java笔记18-Java程序的编译与启动</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/java/java-note-19/"><span class="toc-text">Java笔记19-分支判断、字符串比较与循环边界</span></a><a class="link" href="/wiki/java/java-note-20/"><span class="toc-text">Java笔记20-数组遍历与冒泡排序</span></a><a class="link" href="/wiki/java/java-note-21/"><span class="toc-text">Java笔记21-类、对象与面向对象特性</span></a><a class="link" href="/wiki/java/java-note-22/"><span class="toc-text">Java笔记22-String与可变字符串</span></a><a class="link" href="/wiki/java/java-note-23/"><span class="toc-text">Java笔记23-日期时间与Math工具类</span></a><a class="link" href="/wiki/java/java-note-01/"><span class="toc-text">Java笔记01-Java平台与运行机制</span></a><a class="link" href="/wiki/java/java-note-02/"><span class="toc-text">Java笔记02-基本类型、变量与类型转换</span></a><a class="link" href="/wiki/java/java-note-03/"><span class="toc-text">Java笔记03-标识符、关键字与运算符</span></a><a class="link" href="/wiki/java/java-note-04/"><span class="toc-text">Java笔记04-数组的创建、访问与复制</span></a><a class="link" href="/wiki/java/java-note-05/"><span class="toc-text">Java笔记05-条件分支与循环</span></a><a class="link" href="/wiki/java/java-note-24/"><span class="toc-text">Java笔记24-Collection、List与迭代器</span></a><a class="link" href="/wiki/java/java-note-25/"><span class="toc-text">Java笔记25-LinkedList与Vector</span></a><a class="link" href="/wiki/java/java-note-26/"><span class="toc-text">Java笔记26-ArrayList、LinkedList与Vector对比</span></a><a class="link" href="/wiki/java/java-note-27/"><span class="toc-text">Java笔记27-HashSet去重与相等性</span></a><a class="link" href="/wiki/java/java-note-28/"><span class="toc-text">Java笔记28-Hashtable与现代映射实现</span></a><a class="link" href="/wiki/java/java-note-29/"><span class="toc-text">Java笔记29-Map接口与遍历视图</span></a><a class="link" href="/wiki/java/java-note-15/"><span class="toc-text">Java笔记15-HashSet插入过程源码跟踪</span></a><a class="link" href="/wiki/java/java-note-30/"><span class="toc-text">Java笔记30-枚举类型</span></a><a class="link" href="/wiki/java/java-note-17/"><span class="toc-text">Java笔记17-线程学习实验记录</span></a><a class="link" href="/wiki/java/java-note-31/"><span class="toc-text">Java笔记31-File类基础</span></a><a class="link" href="/wiki/java/java-note-32/"><span class="toc-text">Java笔记32-字节流与缓冲流</span></a><a class="link" href="/wiki/java/java-note-33/"><span class="toc-text">Java笔记33-字符流读写文件</span></a><a class="link" href="/wiki/java/java-note-34/"><span class="toc-text">Java笔记34-泛型入门</span></a><a class="link" href="/wiki/java/java-note-35/"><span class="toc-text">Java笔记35-线程创建方式</span></a><a class="link" href="/wiki/java/java-note-36/"><span class="toc-text">Java笔记36-线程常用方法与同步</span></a><a class="link" href="/wiki/java/java-note-37/"><span class="toc-text">Java笔记37-wait与notify</span></a><a class="link" href="/wiki/java/java-note-38/"><span class="toc-text">Java笔记38-Lock与线程池</span></a><a class="link" href="/wiki/java/java-note-39/"><span class="toc-text">Java笔记39-Bootstrap前端资源准备</span></a><a class="link" href="/wiki/java/java-note-59/"><span class="toc-text">Java笔记59-IntelliJIDEA常用操作</span></a><a class="link" href="/wiki/java/java-note-50/"><span class="toc-text">Java笔记50-JDBC分页与JSP展示</span></a><a class="link" href="/wiki/java/java-note-40/"><span class="toc-text">Java笔记40-Servlet与JDBC小项目</span></a><a class="link" href="/wiki/java/java-note-47/"><span class="toc-text">Java笔记47-JDBC连接与工具类封装</span></a><a class="link" href="/wiki/java/java-note-48/"><span class="toc-text">Java笔记48-JDBC品牌管理CRUD</span></a><a class="link" href="/wiki/java/java-note-49/"><span class="toc-text">Java笔记49-JDBC登录注册与过滤器</span></a><a class="link" href="/wiki/java/java-note-41/"><span class="toc-text">Java笔记41-MavenWeb工程</span></a><a class="link" href="/wiki/java/java-note-42/"><span class="toc-text">Java笔记42-MyBatis动态SQL</span></a><a class="link" href="/wiki/java/java-note-43/"><span class="toc-text">Java笔记43-Spring核心思想</span></a><a class="link" href="/wiki/java/java-note-51/"><span class="toc-text">Java笔记51-SpringIOC与DI</span></a><a class="link" href="/wiki/java/java-note-52/"><span class="toc-text">Java笔记52-Spring静态代理</span></a><a class="link" href="/wiki/java/java-note-53/"><span class="toc-text">Java笔记53-Spring动态代理与AOP通知</span></a><a class="link" href="/wiki/java/java-note-54/"><span class="toc-text">Java笔记54-Spring注解开发与组件扫描</span></a><a class="link" href="/wiki/java/java-note-44/"><span class="toc-text">Java笔记44-SpringMVC请求处理</span></a><a class="link" href="/wiki/java/java-note-45/"><span class="toc-text">Java笔记45-SpringBoot快速入门</span></a><a class="link" href="/wiki/java/java-note-46/"><span class="toc-text">Java笔记46-SSM整合项目</span></a><a class="link" href="/wiki/java/java-note-55/"><span class="toc-text">Java笔记55-SSM整合配置总览</span></a><a class="link" href="/wiki/java/java-note-56/"><span class="toc-text">Java笔记56-SSM用户登录与权限拦截</span></a><a class="link" href="/wiki/java/java-note-57/"><span class="toc-text">Java笔记57-SSM品牌模块</span></a><a class="link" href="/wiki/java/java-note-58/"><span class="toc-text">Java笔记58-SSM订单模块与事务</span></a><a class="link" href="/wiki/java/java-note-60/"><span class="toc-text">Java笔记60-SpringBoot启动类与自动配置</span></a><a class="link" href="/wiki/java/java-note-61/"><span class="toc-text">Java笔记61-SpringBoot配置文件与多环境思路</span></a><a class="link" href="/wiki/java/java-note-62/"><span class="toc-text">Java笔记62-SpringBoot整合MyBatis与分层调用</span></a><a class="link" href="/wiki/java/java-note-63/"><span class="toc-text">Java笔记63-SpringBoot返回JSON与参数绑定</span></a><a class="link" href="/wiki/java/java-note-64/"><span class="toc-text">Java笔记64-SpringBoot分页、多条件搜索与PageHelper</span></a><a class="link" href="/wiki/java/java-note-65/"><span class="toc-text">Java笔记65-SpringBoot文件上传与静态资源映射</span></a><a class="link" href="/wiki/java/java-note-66/"><span class="toc-text">Java笔记66-SpringBoot登录认证、拦截器与JWT</span></a><a class="link" href="/wiki/java/java-note-67/"><span class="toc-text">Java笔记67-SpringBoot整合MyBatis-Plus</span></a><a class="link" href="/wiki/java/java-note-68/"><span class="toc-text">Java笔记68-SSM容器启动与请求入口</span></a><a class="link" href="/wiki/java/java-note-69/"><span class="toc-text">Java笔记69-SSM数据源、MyBatis与Mapper扫描</span></a><a class="link" href="/wiki/java/java-note-70/"><span class="toc-text">Java笔记70-SSM事务管理与分页查询</span></a><a class="link" href="/wiki/java/java-note-71/"><span class="toc-text">Java笔记71-SSM登录拦截与Session校验</span></a></div><div class="widget-header dis-select"><span class="name">...</span></div><div class="widget-body fs14"><a class="link" href="/wiki/java/java-note-16/"><span class="toc-text">Java笔记16-枚举</span></a></div></widget>
 
 
 </div>
@@ -94,206 +94,71 @@
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>Java笔记18-第一个Java程序</span></h1>
+        <h1 class="text title"><span>Java笔记18-Java程序的编译与启动</span></h1>
         
       </div>
     </div>
     
   </div>
   </div>
-<article class="md-text content"><p>Hello World 看起来只是最简单的一行输出，真正需要先掌握的是 <strong>Java 程序的最小执行结构</strong>。类怎么声明、<code>main</code> 为什么固定、<code>System.out.println()</code> 到底是什么、注释为什么值得从第一天就养成习惯，这些内容会在后面的每一篇 Java 笔记里不断重复出现。</p>
-<blockquote>
-<p><strong>核心先记住一句话：</strong><mark><code>main</code> 是 JVM 默认寻找的入口方法</mark>，Java 代码并不是“写一行就能直接跑”，而是先组织成类，再由 JVM 从入口方法开始执行。</p>
-</blockquote>
-<hr>
-<h2 id="🧩Java-程序的最小结构"><a href="#🧩Java-程序的最小结构" class="headerlink" title="🧩Java 程序的最小结构"></a>🧩Java 程序的最小结构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FirstProgram</span> &#123;</span><br><span class="line">    <span class="comment">// At here we creat our first program - Hello World</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello,World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<article class="md-text content"><p>传统 Java 应用把代码组织在类中，通过 <code>javac</code> 编译为字节码，再由 <code>java</code> 启动器加载入口类并调用入口方法。</p>
+<h2 id="最小程序结构"><a href="#最小程序结构" class="headerlink" title="最小程序结构"></a>最小程序结构</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">FirstProgram</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello, World!&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>这段代码虽然短，但已经具备一个完整 Java 程序所需的最小结构。</p>
-<ul>
-<li><strong>类声明</strong>：<code>public class FirstProgram</code> 表示这个源文件里定义了一个公开类，Java 程序通常以类为基本组织单位。</li>
-<li><strong>入口方法</strong>：<code>public static void main(String[] args)</code> 是约定俗成的程序入口，JVM 会优先寻找这一签名的方法。</li>
-<li><strong>输出语句</strong>：<code>System.out.println()</code> 不是关键字，而是 <code>System</code> 类里标准输出流对象 <code>out</code> 的方法调用。</li>
-<li><strong>语句结束符</strong>：Java 每条完整语句后面都要用英文分号结尾，这一点在入门阶段最容易因为粗心报错。</li>
-</ul>
-<p>如果把 <code>System.out.println(&quot;Hello,World!&quot;);</code> 再拆开，会更容易理解输出到底发生了什么：</p>
 <table>
 <thead>
 <tr>
-<th>代码片段</th>
+<th>代码</th>
 <th>作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>System</code></td>
-<td>JDK 提供的系统类</td>
+<td><code>public class FirstProgram</code></td>
+<td>声明公开类，文件名应为 <code>FirstProgram.java</code></td>
 </tr>
 <tr>
-<td><code>out</code></td>
-<td>标准输出流对象</td>
+<td><code>public static void main(String[] args)</code></td>
+<td>传统类式应用的入口方法</td>
 </tr>
 <tr>
-<td><code>println()</code></td>
-<td>打印并自动换行</td>
-</tr>
-<tr>
-<td><code>&quot;Hello,World!&quot;</code></td>
-<td>传入的字符串内容</td>
+<td><code>System.out.println(...)</code></td>
+<td>向标准输出写入文本并换行</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="🔍-最小结构的逐层拆解"><a href="#🔍-最小结构的逐层拆解" class="headerlink" title="🔍 最小结构的逐层拆解"></a>🔍 最小结构的逐层拆解</h2><h3 id="▍-类（class）：程序的基本单位"><a href="#▍-类（class）：程序的基本单位" class="headerlink" title="▍ 类（class）：程序的基本单位"></a>▍ 类（class）：程序的基本单位</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public class FirstProgram</span><br></pre></td></tr></table></figure>
+<p><code>main</code> 声明为 <code>static</code>，启动器可以在不创建 <code>FirstProgram</code> 对象的情况下调用它。<code>String[] args</code> 保存命令行参数，<code>String... args</code> 经过编译后使用相同的数组形式。</p>
+<p><strong>标准输出与错误输出。</strong></p>
+<p><code>System.out</code> 和 <code>System.err</code> 都是 <code>PrintStream</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(<span class="string">&quot;normal message&quot;</span>);</span><br><span class="line">System.err.println(<span class="string">&quot;error message&quot;</span>);</span><br></pre></td></tr></table></figure>
 
-<p>在 Java 中：</p>
-<ul>
-<li>代码必须写在类中</li>
-<li>程序以类为单位组织</li>
-<li>JVM 也是以类为单位加载代码</li>
-</ul>
-<p>这也是为什么 Java 程序不会像脚本语言那样“写一行执行一行”。</p>
-<h3 id="▍-main-方法：程序的入口"><a href="#▍-main-方法：程序的入口" class="headerlink" title="▍ main 方法：程序的入口"></a>▍ main 方法：程序的入口</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String[] args)</span><br></pre></td></tr></table></figure>
+<p>两者在终端中可能显示在同一位置，但属于不同输出流，可以分别重定向。<code>println()</code> 会追加平台换行符，<code>print()</code> 不会自动换行，<code>printf()</code> 支持格式化输出。</p>
+<h2 id="编译与启动过程"><a href="#编译与启动过程" class="headerlink" title="编译与启动过程"></a>编译与启动过程</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javac FirstProgram.java</span><br><span class="line">java FirstProgram</span><br></pre></td></tr></table></figure>
 
-<h4 id="🔸-各部分含义"><a href="#🔸-各部分含义" class="headerlink" title="🔸 各部分含义"></a>🔸 各部分含义</h4><table>
+<p><code>javac</code> 读取源文件并生成 <code>FirstProgram.class</code>。<code>java FirstProgram</code> 接收的是类名而不是文件名，启动器随后创建 JVM、加载类并调用入口方法。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">FirstProgram.java</span><br><span class="line">        ↓ javac</span><br><span class="line">FirstProgram.class</span><br><span class="line">        ↓ java FirstProgram</span><br><span class="line">类加载 → 字节码验证 → main 方法</span><br></pre></td></tr></table></figure>
+
+<p>HotSpot 通常先解释部分字节码，再把热点方法即时编译为机器码。具体优化策略属于 JVM 实现，不影响 <code>.class</code> 字节码的跨平台格式。</p>
+<p><strong>语句与代码块。</strong></p>
+<p>Java 语句通常以分号结束，类和方法体使用花括号界定范围：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">count</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="keyword">if</span> (count &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    System.out.println(count);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类声明、方法声明和控制结构本身不在右花括号后添加分号。空语句 <code>;</code> 虽然合法，但误写在 <code>if</code> 或循环条件后可能改变控制流。</p>
+<p><strong>注释与文档注释。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单行注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * 多行注释</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 文档注释，可由 javadoc 处理。</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>注释适合记录设计原因、边界条件和非直观约束。能够直接从代码读出的操作无需逐行复述；公开 API 的参数、返回值和异常约定则适合写入文档注释。</p>
+<h2 id="IntelliJ-IDEA-常用操作"><a href="#IntelliJ-IDEA-常用操作" class="headerlink" title="IntelliJ IDEA 常用操作"></a>IntelliJ IDEA 常用操作</h2><table>
 <thead>
 <tr>
-<th>关键字</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>public</code></td>
-<td>保证方法可以被外部访问</td>
-</tr>
-<tr>
-<td><code>static</code></td>
-<td>不依赖对象即可调用</td>
-</tr>
-<tr>
-<td><code>void</code></td>
-<td>不返回结果</td>
-</tr>
-<tr>
-<td><code>String[] args</code></td>
-<td>用于接收外部传入参数</td>
-</tr>
-</tbody></table>
-<h4 id="💡-一个小细节"><a href="#💡-一个小细节" class="headerlink" title="💡 一个小细节"></a>💡 一个小细节</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">public static void main(String... args)</span><br></pre></td></tr></table></figure>
-
-<p>这种写法同样是合法的，本质仍然是数组。</p>
-<h3 id="▍-println——输出是如何发生的"><a href="#▍-println——输出是如何发生的" class="headerlink" title="▍ println——输出是如何发生的"></a>▍ println——输出是如何发生的</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(&quot;Hello, World!&quot;);</span><br></pre></td></tr></table></figure>
-
-<p>这并不是语言关键字，而是一段完整的方法调用链。</p>
-<h4 id="🔍-拆解结构"><a href="#🔍-拆解结构" class="headerlink" title="🔍 拆解结构"></a>🔍 拆解结构</h4><table>
-<thead>
-<tr>
-<th>代码部分</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>System</code></td>
-<td>Java 提供的系统类</td>
-</tr>
-<tr>
-<td><code>out</code></td>
-<td>标准输出流对象</td>
-</tr>
-<tr>
-<td><code>println()</code></td>
-<td>输出并换行的方法</td>
-</tr>
-</tbody></table>
-<h4 id="🔬-本质过程"><a href="#🔬-本质过程" class="headerlink" title="🔬 本质过程"></a>🔬 本质过程</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">System.out.println()</span><br><span class="line">→ PrintStream.println()</span><br><span class="line">→ 底层输出到控制台</span><br></pre></td></tr></table></figure>
-
-<h4 id="🔸-扩展：另一种输出"><a href="#🔸-扩展：另一种输出" class="headerlink" title="🔸 扩展：另一种输出"></a>🔸 扩展：另一种输出</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.err.println(&quot;error&quot;);</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><code>out</code>：标准输出</li>
-<li><code>err</code>：错误输出</li>
-</ul>
-<p>两者在控制台中可能表现相同，但在重定向或日志处理中会有区别。</p>
-<h3 id="▍-分号（-）：语句结束符"><a href="#▍-分号（-）：语句结束符" class="headerlink" title="▍ 分号（;）：语句结束符"></a>▍ 分号（;）：语句结束符</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;</span><br></pre></td></tr></table></figure>
-
-<p>Java 中每一条完整语句必须以分号结束。</p>
-<p>这与一些不依赖分号的语言（如 Python）不同，是语法层面的强约束。</p>
-<hr>
-<h2 id="🤔-从-java-到运行结果，中间发生了什么"><a href="#🤔-从-java-到运行结果，中间发生了什么" class="headerlink" title="🤔 从 .java 到运行结果，中间发生了什么"></a>🤔 从 <code>.java</code> 到运行结果，中间发生了什么</h2><p>Java 程序从源代码到运行，大体上会经过下面三个步骤：</p>
-<ol>
-<li>编写 <code>.java</code> 源文件。</li>
-<li>用 <code>javac</code> 编译成 <code>.class</code> 字节码文件。</li>
-<li>用 <code>java</code> 启动 JVM，加载字节码并执行 <code>main</code> 方法。</li>
-</ol>
-<p>命令行里最基础的过程就是：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">javac FirstProgram.java</span><br><span class="line">java FirstProgram</span><br></pre></td></tr></table></figure>
-
-<h3 id="🔍-执行流程"><a href="#🔍-执行流程" class="headerlink" title="🔍 执行流程"></a>🔍 执行流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">.java 源文件</span><br><span class="line">   ↓ 编译（javac）</span><br><span class="line">.class 字节码</span><br><span class="line">   ↓ JVM加载</span><br><span class="line">程序运行</span><br></pre></td></tr></table></figure>
-
-<h3 id="🔬-补充：执行方式"><a href="#🔬-补充：执行方式" class="headerlink" title="🔬 补充：执行方式"></a>🔬 补充：执行方式</h3><p>JVM 在执行字节码时，通常会结合两种方式：</p>
-<table>
-<thead>
-<tr>
-<th>方式</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>解释执行</td>
-<td>按顺序逐条执行字节码</td>
-</tr>
-<tr>
-<td>编译执行</td>
-<td>将热点代码编译为机器码</td>
-</tr>
-</tbody></table>
-<p>这种机制让程序在运行过程中逐步优化性能。</p>
-<h3 id="💡-一个常见特点"><a href="#💡-一个常见特点" class="headerlink" title="💡 一个常见特点"></a>💡 一个常见特点</h3><p>Java 程序之所以可以在不同系统上运行，是因为：</p>
-<blockquote>
-<p><code>.class</code> 文件是统一的字节码格式，由不同平台的 JVM 负责执行</p>
-</blockquote>
-<hr>
-<h2 id="🧵注释不是装饰，而是理解代码的一部分"><a href="#🧵注释不是装饰，而是理解代码的一部分" class="headerlink" title="🧵注释不是装饰，而是理解代码的一部分"></a>🧵注释不是装饰，而是理解代码的一部分</h2><p>Java 里常见的注释一共有三种：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 单行注释</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">多行注释</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 文档注释</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
-
-<table>
-<thead>
-<tr>
-<th>写法</th>
-<th>典型用途</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>//</code></td>
-<td>临时说明、快速标注一行逻辑</td>
-</tr>
-<tr>
-<td><code>/* ... */</code></td>
-<td>一段多行解释</td>
-</tr>
-<tr>
-<td><code>/** ... */</code></td>
-<td>类、方法、接口的说明文档</td>
-</tr>
-</tbody></table>
-<p>真正写代码时，注释最有价值的地方不是“解释显而易见的语句”，而是记录 <strong>设计意图、边界条件、特殊写法和调试结论</strong>。</p>
-<hr>
-<h2 id="📌-开发工具中的高频操作"><a href="#📌-开发工具中的高频操作" class="headerlink" title="📌 开发工具中的高频操作"></a>📌 开发工具中的高频操作</h2><p>在实际开发中，一些快捷操作可以显著提高效率：</p>
-<table>
-<thead>
-<tr>
-<th>IDEA 操作</th>
+<th>操作</th>
 <th>作用</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>psvm</code> &#x2F; <code>main</code></td>
-<td>快速生成 <code>main</code> 方法模板</td>
+<td><code>main</code></td>
+<td>生成入口方法模板</td>
 </tr>
 <tr>
-<td><code>Ctrl + D</code></td>
-<td>复制当前行</td>
-</tr>
-<tr>
-<td><code>Ctrl + X</code></td>
-<td>剪切当前行</td>
+<td><code>sout</code></td>
+<td>生成标准输出语句</td>
 </tr>
 <tr>
 <td><code>Ctrl + Alt + L</code></td>
@@ -301,28 +166,20 @@
 </tr>
 <tr>
 <td><code>Shift + F10</code></td>
-<td>运行当前程序</td>
+<td>运行当前配置</td>
 </tr>
 <tr>
 <td><code>Alt + Enter</code></td>
-<td>自动导包、修复常见提示</td>
+<td>查看快速修复建议</td>
 </tr>
 </tbody></table>
-<hr>
-<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>这一节虽然从最简单的程序开始，但已经可以看到 Java 的几个基础特征：</p>
-<ul>
-<li>程序以类为组织单位</li>
-<li>从固定入口方法开始执行</li>
-<li>通过 JVM 运行字节码</li>
-<li>输出是通过对象方法完成的</li>
-<li>注释用于表达设计意图，而不仅是解释代码</li>
-</ul>
+<p>快捷模板取决于 IDE 和键位方案，不属于 Java 语言语法。</p>
 </article>
 <div class="article-footer">
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/java/">Java学习</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/java/java-note-19/">Java笔记19-流程控制入门</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/java/">Java学习</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/java/java-note-19/">Java笔记19-分支判断、字符串比较与循环边界</a></div></section></div>
 
 
 
@@ -332,16 +189,16 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>909</strong> 天
+      运营 <strong>920</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
       
     </p>
     <p class="meta-line">
-      共发布 <strong>98</strong> 篇文章
+      共发布 <strong>99</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>90,599</strong> 字
+      累计 <strong>90,914</strong> 字
     </p>
   </div>
 </footer>
@@ -349,9 +206,9 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9Java-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%80%E5%B0%8F%E7%BB%93%E6%9E%84"><span class="toc-text">🧩Java 程序的最小结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E6%9C%80%E5%B0%8F%E7%BB%93%E6%9E%84%E7%9A%84%E9%80%90%E5%B1%82%E6%8B%86%E8%A7%A3"><span class="toc-text">🔍 最小结构的逐层拆解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-%E7%B1%BB%EF%BC%88class%EF%BC%89%EF%BC%9A%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8D%95%E4%BD%8D"><span class="toc-text">▍ 类（class）：程序的基本单位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-main-%E6%96%B9%E6%B3%95%EF%BC%9A%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%85%A5%E5%8F%A3"><span class="toc-text">▍ main 方法：程序的入口</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B8-%E5%90%84%E9%83%A8%E5%88%86%E5%90%AB%E4%B9%89"><span class="toc-text">🔸 各部分含义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%80%E4%B8%AA%E5%B0%8F%E7%BB%86%E8%8A%82"><span class="toc-text">💡 一个小细节</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-println%E2%80%94%E2%80%94%E8%BE%93%E5%87%BA%E6%98%AF%E5%A6%82%E4%BD%95%E5%8F%91%E7%94%9F%E7%9A%84"><span class="toc-text">▍ println——输出是如何发生的</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%8D-%E6%8B%86%E8%A7%A3%E7%BB%93%E6%9E%84"><span class="toc-text">🔍 拆解结构</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%AC-%E6%9C%AC%E8%B4%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">🔬 本质过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%F0%9F%94%B8-%E6%89%A9%E5%B1%95%EF%BC%9A%E5%8F%A6%E4%B8%80%E7%A7%8D%E8%BE%93%E5%87%BA"><span class="toc-text">🔸 扩展：另一种输出</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D-%E5%88%86%E5%8F%B7%EF%BC%88-%EF%BC%89%EF%BC%9A%E8%AF%AD%E5%8F%A5%E7%BB%93%E6%9D%9F%E7%AC%A6"><span class="toc-text">▍ 分号（;）：语句结束符</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A4%94-%E4%BB%8E-java-%E5%88%B0%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C%EF%BC%8C%E4%B8%AD%E9%97%B4%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-text">🤔 从 .java 到运行结果，中间发生了什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%8D-%E6%89%A7%E8%A1%8C%E6%B5%81%E7%A8%8B"><span class="toc-text">🔍 执行流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%AC-%E8%A1%A5%E5%85%85%EF%BC%9A%E6%89%A7%E8%A1%8C%E6%96%B9%E5%BC%8F"><span class="toc-text">🔬 补充：执行方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%80%E4%B8%AA%E5%B8%B8%E8%A7%81%E7%89%B9%E7%82%B9"><span class="toc-text">💡 一个常见特点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%B5%E6%B3%A8%E9%87%8A%E4%B8%8D%E6%98%AF%E8%A3%85%E9%A5%B0%EF%BC%8C%E8%80%8C%E6%98%AF%E7%90%86%E8%A7%A3%E4%BB%A3%E7%A0%81%E7%9A%84%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-text">🧵注释不是装饰，而是理解代码的一部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8C-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7%E4%B8%AD%E7%9A%84%E9%AB%98%E9%A2%91%E6%93%8D%E4%BD%9C"><span class="toc-text">📌 开发工具中的高频操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84"><span class="toc-text">最小程序结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%AF%91%E4%B8%8E%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="toc-text">编译与启动过程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#IntelliJ-IDEA-%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="toc-text">IntelliJ IDEA 常用操作</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
-<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 16px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.6px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 15.2px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.4px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.6px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.8px;" class="tag -6">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.6px;" class="tag -7">SSM</a> <a href="/tags/Spring/" style="font-size: 15.2px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.6px;" class="tag -7">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.4px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 18.4px;" class="tag -8">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.4px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.8px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 16px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.8px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.4px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.4px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.2px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 16px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.6px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.4px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.6px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 16px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.4px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.6px;" class="tag -2">项目实践</a></div></widget>
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 15.64px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.45px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 14.91px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.18px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.45px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.36px;" class="tag -5">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.09px;" class="tag -6">SSM</a> <a href="/tags/Spring/" style="font-size: 14.91px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.09px;" class="tag -6">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.55px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 17.82px;" class="tag -7">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.18px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.73px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15.64px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.73px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.18px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.18px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.27px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 15.64px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.45px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.18px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.45px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 15.64px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.55px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.45px;" class="tag -2">项目实践</a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

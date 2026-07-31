@@ -20,12 +20,12 @@
   <title>Java学习：Java笔记03-标识符、关键字与运算符 - Wxi's Blog</title>
 
   
-    <meta name="description" content="这部分看起来像“语法细节”，但它其实决定了代码能不能被正确理解。标识符管命名，关键字管语法边界，运算符管表达式计算。三者放在一起，才是 Java 入门里真正的基础骨架。  先把一句话记住：命名要清晰，关键字不能乱用，运算符要看清优先级和结果类型。   🧩 标识符是命名，关键字是保留字标识符就是程序员自己起的名字，例如类名、变量名、方法名。它们可以自定义，但必须符合命名规则。 常见规则可以直接收敛">
+    <meta name="description" content="标识符为类、方法和变量命名，关键字参与语法结构，运算符构成表达式。编译器会同时检查命名是否合法、表达式类型是否匹配以及结果能否赋给目标变量。 标识符与命名约定Java 标识符不能以数字开头，也不能使用关键字。语言允许符合 Unicode 标识符规则的字符；工程代码通常优先采用便于跨工具识别的英文字母、数字和下划线。    对象 常见写法 示例    类、接口、枚举 UpperCamelCase O">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Java笔记03-标识符、关键字与运算符">
 <meta property="og:url" content="https://wxi7641.github.io/wiki/java/java-note-03/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="这部分看起来像“语法细节”，但它其实决定了代码能不能被正确理解。标识符管命名，关键字管语法边界，运算符管表达式计算。三者放在一起，才是 Java 入门里真正的基础骨架。  先把一句话记住：命名要清晰，关键字不能乱用，运算符要看清优先级和结果类型。   🧩 标识符是命名，关键字是保留字标识符就是程序员自己起的名字，例如类名、变量名、方法名。它们可以自定义，但必须符合命名规则。 常见规则可以直接收敛">
+<meta property="og:description" content="标识符为类、方法和变量命名，关键字参与语法结构，运算符构成表达式。编译器会同时检查命名是否合法、表达式类型是否匹配以及结果能否赋给目标变量。 标识符与命名约定Java 标识符不能以数字开头，也不能使用关键字。语言允许符合 Unicode 标识符规则的字符；工程代码通常优先采用便于跨工具识别的英文字母、数字和下划线。    对象 常见写法 示例    类、接口、枚举 UpperCamelCase O">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-05-06T00:00:00.000Z">
@@ -52,7 +52,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/java/java-note-03/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"Java笔记03-标识符、关键字与运算符","description":"这部分看起来像“语法细节”，但它其实决定了代码能不能被正确理解。标识符管命名，关键字管语法边界，运算符管表达式计算。三者放在一起，才是 Java 入门里真正的基础骨架。\n\n先把一句话记住：命名要清晰，关键字不能乱用，运算符要看清优先级和结果类型。\n\n\n🧩 标识符是命名，关键字是保留字标识符就是程序员自己起的名字，例如类名、变量名、方法名。它们可以自定义，但必须符合命名规则。\n常见规则可以直...","url":"https://wxi7641.github.io/wiki/java/java-note-03/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/java/java-note-03/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"Java笔记03-标识符、关键字与运算符","description":"标识符为类、方法和变量命名，关键字参与语法结构，运算符构成表达式。编译器会同时检查命名是否合法、表达式类型是否匹配以及结果能否赋给目标变量。\n标识符与命名约定Java 标识符不能以数字开头，也不能使用关键字。语言允许符合 Unicode 标识符规则的字符；工程代码通常优先采用便于跨工具识别的英文字母、数字和下划线。\n\n\n\n对象\n常见写法\n示例\n\n\n\n类、接口、枚举\nUpperCamelCas...","url":"https://wxi7641.github.io/wiki/java/java-note-03/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
   <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
@@ -73,7 +73,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/java/#start"><span class="toc-text">Java学习</span></a><a class="link" href="/wiki/java/java-note-18/"><span class="toc-text">Java笔记18-第一个Java程序</span></a><a class="link" href="/wiki/java/java-note-19/"><span class="toc-text">Java笔记19-流程控制入门</span></a><a class="link" href="/wiki/java/java-note-20/"><span class="toc-text">Java笔记20-数组与排序</span></a><a class="link" href="/wiki/java/java-note-21/"><span class="toc-text">Java笔记21</span></a><a class="link" href="/wiki/java/java-note-22/"><span class="toc-text">Java笔记22-String与StringBuffer</span></a><a class="link" href="/wiki/java/java-note-23/"><span class="toc-text">Java笔记23-Date、Calendar与Math工具类</span></a><a class="link" href="/wiki/java/java-note-01/"><span class="toc-text">Java笔记01-Java基础与运行机制</span></a><a class="link" href="/wiki/java/java-note-02/"><span class="toc-text">Java笔记02-基本数据类型与变量边界</span></a><a class="link active" href="/wiki/java/java-note-03/"><span class="toc-text">Java笔记03-标识符、关键字与运算符</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/java/java-note-04/"><span class="toc-text">Java笔记04-数组的本质与基本使用</span></a><a class="link" href="/wiki/java/java-note-05/"><span class="toc-text">Java笔记05-流程控制的主线</span></a><a class="link" href="/wiki/java/java-note-24/"><span class="toc-text">Java笔记24-Collection与List入门</span></a><a class="link" href="/wiki/java/java-note-25/"><span class="toc-text">Java笔记25-Vector与LinkedList补充</span></a><a class="link" href="/wiki/java/java-note-26/"><span class="toc-text">Java笔记26-三种List实现对比</span></a><a class="link" href="/wiki/java/java-note-27/"><span class="toc-text">Java笔记27-HashSet去重原理</span></a><a class="link" href="/wiki/java/java-note-28/"><span class="toc-text">Java笔记28-HashSet与Hashtable补充</span></a><a class="link" href="/wiki/java/java-note-29/"><span class="toc-text">Java笔记29-Map集合基础</span></a><a class="link" href="/wiki/java/java-note-15/"><span class="toc-text">Java笔记15</span></a><a class="link" href="/wiki/java/java-note-30/"><span class="toc-text">Java笔记30-枚举enum</span></a><a class="link" href="/wiki/java/java-note-16/"><span class="toc-text">Java笔记16</span></a><a class="link" href="/wiki/java/java-note-17/"><span class="toc-text">Java笔记17</span></a><a class="link" href="/wiki/java/java-note-31/"><span class="toc-text">Java笔记31-File类基础</span></a><a class="link" href="/wiki/java/java-note-32/"><span class="toc-text">Java笔记32-字节流与缓冲流</span></a><a class="link" href="/wiki/java/java-note-33/"><span class="toc-text">Java笔记33-字符流读写文件</span></a><a class="link" href="/wiki/java/java-note-34/"><span class="toc-text">Java笔记34-泛型入门</span></a><a class="link" href="/wiki/java/java-note-35/"><span class="toc-text">Java笔记35-线程创建方式</span></a><a class="link" href="/wiki/java/java-note-36/"><span class="toc-text">Java笔记36-线程常用方法与同步</span></a><a class="link" href="/wiki/java/java-note-37/"><span class="toc-text">Java笔记37-wait与notify</span></a><a class="link" href="/wiki/java/java-note-38/"><span class="toc-text">Java笔记38-Lock与线程池</span></a><a class="link" href="/wiki/java/java-note-39/"><span class="toc-text">Java笔记39-Bootstrap前端资源准备</span></a><a class="link" href="/wiki/java/java-note-59/"><span class="toc-text">Java笔记59-IntelliJIDEA常用操作</span></a><a class="link" href="/wiki/java/java-note-50/"><span class="toc-text">Java笔记50-JDBC分页与JSP展示</span></a><a class="link" href="/wiki/java/java-note-40/"><span class="toc-text">Java笔记40-Servlet与JDBC小项目</span></a><a class="link" href="/wiki/java/java-note-47/"><span class="toc-text">Java笔记47-JDBC连接与工具类封装</span></a><a class="link" href="/wiki/java/java-note-48/"><span class="toc-text">Java笔记48-JDBC品牌管理CRUD</span></a><a class="link" href="/wiki/java/java-note-49/"><span class="toc-text">Java笔记49-JDBC登录注册与过滤器</span></a><a class="link" href="/wiki/java/java-note-41/"><span class="toc-text">Java笔记41-MavenWeb工程</span></a><a class="link" href="/wiki/java/java-note-42/"><span class="toc-text">Java笔记42-MyBatis动态SQL</span></a><a class="link" href="/wiki/java/java-note-43/"><span class="toc-text">Java笔记43-Spring核心思想</span></a><a class="link" href="/wiki/java/java-note-51/"><span class="toc-text">Java笔记51-SpringIOC与DI</span></a><a class="link" href="/wiki/java/java-note-52/"><span class="toc-text">Java笔记52-Spring静态代理</span></a><a class="link" href="/wiki/java/java-note-53/"><span class="toc-text">Java笔记53-Spring动态代理与AOP通知</span></a><a class="link" href="/wiki/java/java-note-54/"><span class="toc-text">Java笔记54-Spring注解开发与组件扫描</span></a><a class="link" href="/wiki/java/java-note-44/"><span class="toc-text">Java笔记44-SpringMVC请求处理</span></a><a class="link" href="/wiki/java/java-note-45/"><span class="toc-text">Java笔记45-SpringBoot快速入门</span></a><a class="link" href="/wiki/java/java-note-46/"><span class="toc-text">Java笔记46-SSM整合项目</span></a><a class="link" href="/wiki/java/java-note-55/"><span class="toc-text">Java笔记55-SSM整合配置总览</span></a><a class="link" href="/wiki/java/java-note-56/"><span class="toc-text">Java笔记56-SSM用户登录与权限拦截</span></a><a class="link" href="/wiki/java/java-note-57/"><span class="toc-text">Java笔记57-SSM品牌模块</span></a><a class="link" href="/wiki/java/java-note-58/"><span class="toc-text">Java笔记58-SSM订单模块与事务</span></a><a class="link" href="/wiki/java/java-note-60/"><span class="toc-text">Java笔记60-SpringBoot启动类与自动配置</span></a><a class="link" href="/wiki/java/java-note-61/"><span class="toc-text">Java笔记61-SpringBoot配置文件与多环境思路</span></a><a class="link" href="/wiki/java/java-note-62/"><span class="toc-text">Java笔记62-SpringBoot整合MyBatis与分层调用</span></a><a class="link" href="/wiki/java/java-note-63/"><span class="toc-text">Java笔记63-SpringBoot返回JSON与参数绑定</span></a><a class="link" href="/wiki/java/java-note-64/"><span class="toc-text">Java笔记64-SpringBoot分页、多条件搜索与PageHelper</span></a><a class="link" href="/wiki/java/java-note-65/"><span class="toc-text">Java笔记65-SpringBoot文件上传与静态资源映射</span></a><a class="link" href="/wiki/java/java-note-66/"><span class="toc-text">Java笔记66-SpringBoot登录认证、拦截器与JWT</span></a><a class="link" href="/wiki/java/java-note-67/"><span class="toc-text">Java笔记67-SpringBoot整合MyBatis-Plus</span></a><a class="link" href="/wiki/java/java-note-68/"><span class="toc-text">Java笔记68-SSM容器启动与请求入口</span></a><a class="link" href="/wiki/java/java-note-69/"><span class="toc-text">Java笔记69-SSM数据源、MyBatis与Mapper扫描</span></a><a class="link" href="/wiki/java/java-note-70/"><span class="toc-text">Java笔记70-SSM事务管理与分页查询</span></a><a class="link" href="/wiki/java/java-note-71/"><span class="toc-text">Java笔记71-SSM登录拦截与Session校验</span></a></div></widget>
+<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/java/#start"><span class="toc-text">Java学习</span></a><a class="link" href="/wiki/java/java-note-18/"><span class="toc-text">Java笔记18-Java程序的编译与启动</span></a><a class="link" href="/wiki/java/java-note-19/"><span class="toc-text">Java笔记19-分支判断、字符串比较与循环边界</span></a><a class="link" href="/wiki/java/java-note-20/"><span class="toc-text">Java笔记20-数组遍历与冒泡排序</span></a><a class="link" href="/wiki/java/java-note-21/"><span class="toc-text">Java笔记21-类、对象与面向对象特性</span></a><a class="link" href="/wiki/java/java-note-22/"><span class="toc-text">Java笔记22-String与可变字符串</span></a><a class="link" href="/wiki/java/java-note-23/"><span class="toc-text">Java笔记23-日期时间与Math工具类</span></a><a class="link" href="/wiki/java/java-note-01/"><span class="toc-text">Java笔记01-Java平台与运行机制</span></a><a class="link" href="/wiki/java/java-note-02/"><span class="toc-text">Java笔记02-基本类型、变量与类型转换</span></a><a class="link active" href="/wiki/java/java-note-03/"><span class="toc-text">Java笔记03-标识符、关键字与运算符</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/java/java-note-04/"><span class="toc-text">Java笔记04-数组的创建、访问与复制</span></a><a class="link" href="/wiki/java/java-note-05/"><span class="toc-text">Java笔记05-条件分支与循环</span></a><a class="link" href="/wiki/java/java-note-24/"><span class="toc-text">Java笔记24-Collection、List与迭代器</span></a><a class="link" href="/wiki/java/java-note-25/"><span class="toc-text">Java笔记25-LinkedList与Vector</span></a><a class="link" href="/wiki/java/java-note-26/"><span class="toc-text">Java笔记26-ArrayList、LinkedList与Vector对比</span></a><a class="link" href="/wiki/java/java-note-27/"><span class="toc-text">Java笔记27-HashSet去重与相等性</span></a><a class="link" href="/wiki/java/java-note-28/"><span class="toc-text">Java笔记28-Hashtable与现代映射实现</span></a><a class="link" href="/wiki/java/java-note-29/"><span class="toc-text">Java笔记29-Map接口与遍历视图</span></a><a class="link" href="/wiki/java/java-note-15/"><span class="toc-text">Java笔记15-HashSet插入过程源码跟踪</span></a><a class="link" href="/wiki/java/java-note-30/"><span class="toc-text">Java笔记30-枚举类型</span></a><a class="link" href="/wiki/java/java-note-17/"><span class="toc-text">Java笔记17-线程学习实验记录</span></a><a class="link" href="/wiki/java/java-note-31/"><span class="toc-text">Java笔记31-File类基础</span></a><a class="link" href="/wiki/java/java-note-32/"><span class="toc-text">Java笔记32-字节流与缓冲流</span></a><a class="link" href="/wiki/java/java-note-33/"><span class="toc-text">Java笔记33-字符流读写文件</span></a><a class="link" href="/wiki/java/java-note-34/"><span class="toc-text">Java笔记34-泛型入门</span></a><a class="link" href="/wiki/java/java-note-35/"><span class="toc-text">Java笔记35-线程创建方式</span></a><a class="link" href="/wiki/java/java-note-36/"><span class="toc-text">Java笔记36-线程常用方法与同步</span></a><a class="link" href="/wiki/java/java-note-37/"><span class="toc-text">Java笔记37-wait与notify</span></a><a class="link" href="/wiki/java/java-note-38/"><span class="toc-text">Java笔记38-Lock与线程池</span></a><a class="link" href="/wiki/java/java-note-39/"><span class="toc-text">Java笔记39-Bootstrap前端资源准备</span></a><a class="link" href="/wiki/java/java-note-59/"><span class="toc-text">Java笔记59-IntelliJIDEA常用操作</span></a><a class="link" href="/wiki/java/java-note-50/"><span class="toc-text">Java笔记50-JDBC分页与JSP展示</span></a><a class="link" href="/wiki/java/java-note-40/"><span class="toc-text">Java笔记40-Servlet与JDBC小项目</span></a><a class="link" href="/wiki/java/java-note-47/"><span class="toc-text">Java笔记47-JDBC连接与工具类封装</span></a><a class="link" href="/wiki/java/java-note-48/"><span class="toc-text">Java笔记48-JDBC品牌管理CRUD</span></a><a class="link" href="/wiki/java/java-note-49/"><span class="toc-text">Java笔记49-JDBC登录注册与过滤器</span></a><a class="link" href="/wiki/java/java-note-41/"><span class="toc-text">Java笔记41-MavenWeb工程</span></a><a class="link" href="/wiki/java/java-note-42/"><span class="toc-text">Java笔记42-MyBatis动态SQL</span></a><a class="link" href="/wiki/java/java-note-43/"><span class="toc-text">Java笔记43-Spring核心思想</span></a><a class="link" href="/wiki/java/java-note-51/"><span class="toc-text">Java笔记51-SpringIOC与DI</span></a><a class="link" href="/wiki/java/java-note-52/"><span class="toc-text">Java笔记52-Spring静态代理</span></a><a class="link" href="/wiki/java/java-note-53/"><span class="toc-text">Java笔记53-Spring动态代理与AOP通知</span></a><a class="link" href="/wiki/java/java-note-54/"><span class="toc-text">Java笔记54-Spring注解开发与组件扫描</span></a><a class="link" href="/wiki/java/java-note-44/"><span class="toc-text">Java笔记44-SpringMVC请求处理</span></a><a class="link" href="/wiki/java/java-note-45/"><span class="toc-text">Java笔记45-SpringBoot快速入门</span></a><a class="link" href="/wiki/java/java-note-46/"><span class="toc-text">Java笔记46-SSM整合项目</span></a><a class="link" href="/wiki/java/java-note-55/"><span class="toc-text">Java笔记55-SSM整合配置总览</span></a><a class="link" href="/wiki/java/java-note-56/"><span class="toc-text">Java笔记56-SSM用户登录与权限拦截</span></a><a class="link" href="/wiki/java/java-note-57/"><span class="toc-text">Java笔记57-SSM品牌模块</span></a><a class="link" href="/wiki/java/java-note-58/"><span class="toc-text">Java笔记58-SSM订单模块与事务</span></a><a class="link" href="/wiki/java/java-note-60/"><span class="toc-text">Java笔记60-SpringBoot启动类与自动配置</span></a><a class="link" href="/wiki/java/java-note-61/"><span class="toc-text">Java笔记61-SpringBoot配置文件与多环境思路</span></a><a class="link" href="/wiki/java/java-note-62/"><span class="toc-text">Java笔记62-SpringBoot整合MyBatis与分层调用</span></a><a class="link" href="/wiki/java/java-note-63/"><span class="toc-text">Java笔记63-SpringBoot返回JSON与参数绑定</span></a><a class="link" href="/wiki/java/java-note-64/"><span class="toc-text">Java笔记64-SpringBoot分页、多条件搜索与PageHelper</span></a><a class="link" href="/wiki/java/java-note-65/"><span class="toc-text">Java笔记65-SpringBoot文件上传与静态资源映射</span></a><a class="link" href="/wiki/java/java-note-66/"><span class="toc-text">Java笔记66-SpringBoot登录认证、拦截器与JWT</span></a><a class="link" href="/wiki/java/java-note-67/"><span class="toc-text">Java笔记67-SpringBoot整合MyBatis-Plus</span></a><a class="link" href="/wiki/java/java-note-68/"><span class="toc-text">Java笔记68-SSM容器启动与请求入口</span></a><a class="link" href="/wiki/java/java-note-69/"><span class="toc-text">Java笔记69-SSM数据源、MyBatis与Mapper扫描</span></a><a class="link" href="/wiki/java/java-note-70/"><span class="toc-text">Java笔记70-SSM事务管理与分页查询</span></a><a class="link" href="/wiki/java/java-note-71/"><span class="toc-text">Java笔记71-SSM登录拦截与Session校验</span></a></div><div class="widget-header dis-select"><span class="name">...</span></div><div class="widget-body fs14"><a class="link" href="/wiki/java/java-note-16/"><span class="toc-text">Java笔记16-枚举</span></a></div></widget>
 
 
 </div>
@@ -101,135 +101,93 @@
     
   </div>
   </div>
-<article class="md-text content"><p>这部分看起来像“语法细节”，但它其实决定了代码能不能被正确理解。标识符管命名，关键字管语法边界，运算符管表达式计算。三者放在一起，才是 Java 入门里真正的基础骨架。</p>
-<blockquote>
-<p><strong>先把一句话记住：</strong><mark>命名要清晰，关键字不能乱用，运算符要看清优先级和结果类型。</mark></p>
-</blockquote>
-<hr>
-<h2 id="🧩-标识符是命名，关键字是保留字"><a href="#🧩-标识符是命名，关键字是保留字" class="headerlink" title="🧩 标识符是命名，关键字是保留字"></a>🧩 标识符是命名，关键字是保留字</h2><p>标识符就是程序员自己起的名字，例如类名、变量名、方法名。它们可以自定义，但必须符合命名规则。</p>
-<p>常见规则可以直接收敛成几条：</p>
-<ul>
-<li>只能由字母、数字、下划线、美元符号组成。</li>
-<li>不能以数字开头。</li>
-<li>不能直接使用 Java 关键字。</li>
-<li>尽量做到语义明确。</li>
-</ul>
-<p>关键字则不同。关键字是 Java 语言预留出来的特殊单词，不能拿来随便当变量名。</p>
+<article class="md-text content"><p>标识符为类、方法和变量命名，关键字参与语法结构，运算符构成表达式。编译器会同时检查命名是否合法、表达式类型是否匹配以及结果能否赋给目标变量。</p>
+<h2 id="标识符与命名约定"><a href="#标识符与命名约定" class="headerlink" title="标识符与命名约定"></a>标识符与命名约定</h2><p>Java 标识符不能以数字开头，也不能使用关键字。语言允许符合 Unicode 标识符规则的字符；工程代码通常优先采用便于跨工具识别的英文字母、数字和下划线。</p>
 <table>
 <thead>
 <tr>
-<th>分类</th>
-<th>典型关键字</th>
+<th>对象</th>
+<th>常见写法</th>
+<th>示例</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>访问控制</td>
-<td><code>public</code>、<code>private</code>、<code>protected</code></td>
+<td>类、接口、枚举</td>
+<td>UpperCamelCase</td>
+<td><code>OrderService</code></td>
 </tr>
 <tr>
-<td>类与继承</td>
-<td><code>class</code>、<code>extends</code>、<code>implements</code>、<code>interface</code></td>
+<td>方法、变量</td>
+<td>lowerCamelCase</td>
+<td><code>findOrder</code></td>
 </tr>
 <tr>
-<td>程序控制</td>
-<td><code>if</code>、<code>else</code>、<code>switch</code>、<code>case</code>、<code>for</code>、<code>while</code>、<code>break</code>、<code>continue</code>、<code>return</code></td>
+<td>常量</td>
+<td>UPPER_SNAKE_CASE</td>
+<td><code>MAX_RETRY_COUNT</code></td>
 </tr>
 <tr>
-<td>异常处理</td>
-<td><code>try</code>、<code>catch</code>、<code>throw</code>、<code>throws</code>、<code>finally</code></td>
-</tr>
-<tr>
-<td>其他常见</td>
-<td><code>new</code>、<code>static</code>、<code>final</code>、<code>this</code>、<code>super</code>、<code>void</code></td>
+<td>包名</td>
+<td>小写分段</td>
+<td><code>com.example.order</code></td>
 </tr>
 </tbody></table>
-<p>原始笔记里有几个拼写需要顺手修正：</p>
-<ul>
-<li><code>defalut</code> 应写成 <code>default</code></li>
-<li><code>implement</code> 应写成 <code>implements</code></li>
-<li><code>shot</code> 应写成 <code>short</code></li>
-</ul>
-<p>这些看似是小问题，但在基础阶段特别容易影响记忆准确性。</p>
-<hr>
-<h2 id="🔍-运算符的重点，不只是“会算”，而是“算出来什么”"><a href="#🔍-运算符的重点，不只是“会算”，而是“算出来什么”" class="headerlink" title="🔍 运算符的重点，不只是“会算”，而是“算出来什么”"></a>🔍 运算符的重点，不只是“会算”，而是“算出来什么”</h2><p>Java 里的运算符可以按用途分成几组：</p>
+<p><code>Character.isJavaIdentifierStart()</code> 和 <code>Character.isJavaIdentifierPart()</code> 可以用于判断字符是否满足 Java 标识符规则。</p>
+<h2 id="关键字与上下文关键字"><a href="#关键字与上下文关键字" class="headerlink" title="关键字与上下文关键字"></a>关键字与上下文关键字</h2><p><code>class</code>、<code>if</code>、<code>return</code> 等关键字不能作为标识符。随着 Java 语言演进，还出现了只在特定语法位置具有特殊含义的上下文关键字，例如 <code>record</code>、<code>sealed</code>、<code>permits</code> 和 <code>yield</code>。它们与始终保留的关键字并不完全相同。</p>
+<h2 id="算术、比较与逻辑运算"><a href="#算术、比较与逻辑运算" class="headerlink" title="算术、比较与逻辑运算"></a>算术、比较与逻辑运算</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">sum</span> <span class="operator">=</span> a + b;</span><br><span class="line"><span class="type">boolean</span> <span class="variable">valid</span> <span class="operator">=</span> a &gt; b &amp;&amp; b &gt; <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
 <table>
 <thead>
 <tr>
 <th>类型</th>
-<th>代表运算符</th>
-<th>作用</th>
+<th>运算符</th>
+<th>说明</th>
 </tr>
 </thead>
 <tbody><tr>
-<td>算术运算</td>
-<td><code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code></td>
-<td>基础计算</td>
+<td>算术</td>
+<td><code>+ - * / %</code></td>
+<td>数值计算，整数除法丢弃小数部分</td>
 </tr>
 <tr>
-<td>自增自减</td>
-<td><code>++</code> <code>--</code></td>
-<td>改变变量自身数值</td>
+<td>关系</td>
+<td><code>&gt; &lt; &gt;= &lt;= == !=</code></td>
+<td>结果为 <code>boolean</code></td>
 </tr>
 <tr>
-<td>赋值运算</td>
-<td><code>=</code> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code></td>
-<td>把结果重新写回变量</td>
-</tr>
-<tr>
-<td>关系运算</td>
-<td><code>&gt;</code> <code>&lt;</code> <code>&gt;=</code> <code>&lt;=</code> <code>==</code> <code>!=</code></td>
-<td>比较大小或是否相等</td>
-</tr>
-<tr>
-<td>逻辑运算</td>
-<td><code>&amp;&amp;</code> &#96;</td>
+<td>逻辑</td>
+<td>&#96;&amp;&amp;</td>
 <td></td>
 </tr>
 <tr>
 <td>位运算</td>
-<td><code>&lt;&lt;</code> <code>&gt;&gt;</code> <code>&gt;&gt;&gt;</code></td>
-<td>按位处理整数</td>
+<td>&#96;&amp;</td>
+<td>^ ~ &lt;&lt; &gt;&gt; &gt;&gt;&gt;&#96;</td>
+</tr>
+<tr>
+<td>赋值</td>
+<td><code>= += -= *= /=</code></td>
+<td>将结果写回变量</td>
 </tr>
 </tbody></table>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">c</span> <span class="operator">=</span> a + b;</span><br><span class="line"><span class="type">boolean</span> <span class="variable">ok</span> <span class="operator">=</span> a &gt; b &amp;&amp; b &gt; <span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+<p><code>&amp;&amp;</code> 和 <code>||</code> 会短路求值；结果确定后，右侧表达式不再执行。<code>&amp;</code> 和 <code>|</code> 用于布尔值时会计算两侧，用于整数时执行位运算。</p>
+<h2 id="自增、优先级与求值顺序"><a href="#自增、优先级与求值顺序" class="headerlink" title="自增、优先级与求值顺序"></a>自增、优先级与求值顺序</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">before</span> <span class="operator">=</span> i++;</span><br><span class="line"><span class="type">int</span> <span class="variable">after</span> <span class="operator">=</span> ++i;</span><br></pre></td></tr></table></figure>
 
-<p>真正需要注意的，是表达式的结果类型和计算顺序。比如：</p>
-<ul>
-<li><code>i++</code> 和 <code>++i</code> 的执行时机不同。</li>
-<li>整数除法会直接丢掉小数部分。</li>
-<li>混合运算时，类型会先做提升，再参与计算。</li>
-</ul>
-<hr>
-<h2 id="🔬-优先级和溢出，比“会写公式”更容易出问题"><a href="#🔬-优先级和溢出，比“会写公式”更容易出问题" class="headerlink" title="🔬 优先级和溢出，比“会写公式”更容易出问题"></a>🔬 优先级和溢出，比“会写公式”更容易出问题</h2><p>很多初学者以为运算符难在公式，其实真正容易出错的是两个地方：优先级和溢出。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">y</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line">System.out.println(x + y * <span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>后缀自增先产生旧值再更新变量，前缀自增先更新变量再产生新值。复杂表达式中混用自增会降低可读性，拆成独立语句通常更容易验证。</p>
+<p>运算符优先级决定表达式如何分组，括号可以显式表达顺序：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">result</span> <span class="operator">=</span> (<span class="number">10</span> + <span class="number">3</span>) * <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 
-<p>这类表达式里，乘法会先算，再算加法。如果顺序写错，结果就会完全不同。</p>
-<p>整数溢出也经常被忽略。比如一个 <code>int</code> 的值如果超出了自身范围，结果不会自动报错，而是回绕成一个看起来“很奇怪”的数。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line">System.out.println(max + <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>Java 规定操作数从左到右求值，但这不等同于所有运算符具有相同优先级。</p>
+<h2 id="整数溢出与对象比较"><a href="#整数溢出与对象比较" class="headerlink" title="整数溢出与对象比较"></a>整数溢出与对象比较</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> Integer.MAX_VALUE;</span><br><span class="line"><span class="type">int</span> <span class="variable">wrapped</span> <span class="operator">=</span> max + <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
 
-<p>所以运算符这一节，真正该掌握的是：</p>
-<blockquote>
-<p>代码写出来只是第一步，关键是要知道表达式最终会算成什么。</p>
-</blockquote>
-<hr>
-<h2 id="💡-一个好习惯：命名和表达式都尽量“读得出来”"><a href="#💡-一个好习惯：命名和表达式都尽量“读得出来”" class="headerlink" title="💡 一个好习惯：命名和表达式都尽量“读得出来”"></a>💡 一个好习惯：命名和表达式都尽量“读得出来”</h2><p>命名清楚、表达式简单，会让代码的可读性直接上一个台阶。比如：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">studentCount</span> <span class="operator">=</span> <span class="number">30</span>;</span><br><span class="line"><span class="type">boolean</span> <span class="variable">hasLogin</span> <span class="operator">=</span> <span class="literal">true</span>;</span><br></pre></td></tr></table></figure>
-
-<p>比起模糊的变量名，语义明确的名字更容易维护，也更容易和后面的条件判断、循环控制接上。</p>
-<hr>
-<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>这一节的核心其实很集中：</p>
-<ul>
-<li>标识符负责“怎么命名”。</li>
-<li>关键字负责“哪些词不能乱用”。</li>
-<li>运算符负责“表达式怎么计算”。</li>
-</ul>
-<p>把这三层规则看清，后面写条件判断、循环和方法时，代码会更稳定，也更不容易出低级错误。</p>
+<p>整数溢出按固定位宽回绕。需要把溢出作为错误处理时，可以调用 <code>Math.addExact()</code> 等方法。</p>
+<p>基本类型使用 <code>==</code> 比较值。对象引用使用 <code>==</code> 判断是否指向同一对象，内容相等通常由类型的 <code>equals()</code> 实现；数组内容比较可使用 <code>Arrays.equals()</code> 或 <code>Arrays.deepEquals()</code>。</p>
 </article>
 <div class="article-footer">
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/java/java-note-02/">Java笔记02-基本数据类型与变量边界</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/java/java-note-04/">Java笔记04-数组的本质与基本使用</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/java/java-note-02/">Java笔记02-基本类型、变量与类型转换</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/java/java-note-04/">Java笔记04-数组的创建、访问与复制</a></div></section></div>
 
 
 
@@ -239,16 +197,16 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>909</strong> 天
+      运营 <strong>920</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
       
     </p>
     <p class="meta-line">
-      共发布 <strong>98</strong> 篇文章
+      共发布 <strong>99</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>90,599</strong> 字
+      累计 <strong>90,914</strong> 字
     </p>
   </div>
 </footer>
@@ -256,9 +214,9 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-%E6%A0%87%E8%AF%86%E7%AC%A6%E6%98%AF%E5%91%BD%E5%90%8D%EF%BC%8C%E5%85%B3%E9%94%AE%E5%AD%97%E6%98%AF%E4%BF%9D%E7%95%99%E5%AD%97"><span class="toc-text">🧩 标识符是命名，关键字是保留字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-%E8%BF%90%E7%AE%97%E7%AC%A6%E7%9A%84%E9%87%8D%E7%82%B9%EF%BC%8C%E4%B8%8D%E5%8F%AA%E6%98%AF%E2%80%9C%E4%BC%9A%E7%AE%97%E2%80%9D%EF%BC%8C%E8%80%8C%E6%98%AF%E2%80%9C%E7%AE%97%E5%87%BA%E6%9D%A5%E4%BB%80%E4%B9%88%E2%80%9D"><span class="toc-text">🔍 运算符的重点，不只是“会算”，而是“算出来什么”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%AC-%E4%BC%98%E5%85%88%E7%BA%A7%E5%92%8C%E6%BA%A2%E5%87%BA%EF%BC%8C%E6%AF%94%E2%80%9C%E4%BC%9A%E5%86%99%E5%85%AC%E5%BC%8F%E2%80%9D%E6%9B%B4%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98"><span class="toc-text">🔬 优先级和溢出，比“会写公式”更容易出问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-%E4%B8%80%E4%B8%AA%E5%A5%BD%E4%B9%A0%E6%83%AF%EF%BC%9A%E5%91%BD%E5%90%8D%E5%92%8C%E8%A1%A8%E8%BE%BE%E5%BC%8F%E9%83%BD%E5%B0%BD%E9%87%8F%E2%80%9C%E8%AF%BB%E5%BE%97%E5%87%BA%E6%9D%A5%E2%80%9D"><span class="toc-text">💡 一个好习惯：命名和表达式都尽量“读得出来”</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A0%87%E8%AF%86%E7%AC%A6%E4%B8%8E%E5%91%BD%E5%90%8D%E7%BA%A6%E5%AE%9A"><span class="toc-text">标识符与命名约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E5%AD%97%E4%B8%8E%E4%B8%8A%E4%B8%8B%E6%96%87%E5%85%B3%E9%94%AE%E5%AD%97"><span class="toc-text">关键字与上下文关键字</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%9C%AF%E3%80%81%E6%AF%94%E8%BE%83%E4%B8%8E%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="toc-text">算术、比较与逻辑运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%A2%9E%E3%80%81%E4%BC%98%E5%85%88%E7%BA%A7%E4%B8%8E%E6%B1%82%E5%80%BC%E9%A1%BA%E5%BA%8F"><span class="toc-text">自增、优先级与求值顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E6%95%B0%E6%BA%A2%E5%87%BA%E4%B8%8E%E5%AF%B9%E8%B1%A1%E6%AF%94%E8%BE%83"><span class="toc-text">整数溢出与对象比较</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
-<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 16px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.6px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 15.2px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.4px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.6px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.8px;" class="tag -6">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.6px;" class="tag -7">SSM</a> <a href="/tags/Spring/" style="font-size: 15.2px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.6px;" class="tag -7">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.4px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 18.4px;" class="tag -8">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.4px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.8px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 16px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.8px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.4px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.4px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.2px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 16px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.6px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.4px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.6px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 16px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.4px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.6px;" class="tag -2">项目实践</a></div></widget>
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 15.64px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.45px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 14.91px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.18px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.45px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.36px;" class="tag -5">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.09px;" class="tag -6">SSM</a> <a href="/tags/Spring/" style="font-size: 14.91px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.09px;" class="tag -6">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.55px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 17.82px;" class="tag -7">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.18px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.73px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15.64px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.73px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.18px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.18px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.27px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 15.64px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.45px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.18px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.45px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 15.64px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.55px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.45px;" class="tag -2">项目实践</a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>

@@ -17,15 +17,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
   <meta name="theme-color" content="#f9fafb">
-  <title>Java学习：Java笔记23-Date、Calendar与Math工具类 - Wxi's Blog</title>
+  <title>Java学习：Java笔记23-日期时间与Math工具类 - Wxi's Blog</title>
 
   
-    <meta name="description" content="时间类和数学工具类虽然看起来分散，但在日常代码里出现频率都很高。它们不像集合和线程那样有强烈的结构感，却经常承担“把业务细节补完整”的工作。  先把一句话记住：这类工具类的价值不在于会背方法名，而在于知道什么时候该拿出来用。   🧩 Date 的重点，是“时间对象”和“时间戳”之间的来回转换DateDemo 里已经把最常用的几种写法放在一起了： 12345678910111213141516Da">
+    <meta name="description" content="Date、Calendar 和 SimpleDateFormat 常见于旧代码。Java 8 引入的 java.time API 对日期、时间、时区和格式化进行了更清晰的类型划分，新项目通常优先使用新 API。 Date、Calendar 与 java.timeDate 内部表示从 Unix Epoch 开始计算的毫秒值： 123Date now &#x3D; new Date();long epochMi">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Java笔记23-Date、Calendar与Math工具类">
+<meta property="og:title" content="Java笔记23-日期时间与Math工具类">
 <meta property="og:url" content="https://wxi7641.github.io/wiki/java/java-note-23/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="时间类和数学工具类虽然看起来分散，但在日常代码里出现频率都很高。它们不像集合和线程那样有强烈的结构感，却经常承担“把业务细节补完整”的工作。  先把一句话记住：这类工具类的价值不在于会背方法名，而在于知道什么时候该拿出来用。   🧩 Date 的重点，是“时间对象”和“时间戳”之间的来回转换DateDemo 里已经把最常用的几种写法放在一起了： 12345678910111213141516Da">
+<meta property="og:description" content="Date、Calendar 和 SimpleDateFormat 常见于旧代码。Java 8 引入的 java.time API 对日期、时间、时区和格式化进行了更清晰的类型划分，新项目通常优先使用新 API。 Date、Calendar 与 java.timeDate 内部表示从 Unix Epoch 开始计算的毫秒值： 123Date now &#x3D; new Date();long epochMi">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-04-28T00:00:00.000Z">
@@ -52,7 +52,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/java/java-note-23/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"Java笔记23-Date、Calendar与Math工具类","description":"时间类和数学工具类虽然看起来分散，但在日常代码里出现频率都很高。它们不像集合和线程那样有强烈的结构感，却经常承担“把业务细节补完整”的工作。\n\n先把一句话记住：这类工具类的价值不在于会背方法名，而在于知道什么时候该拿出来用。\n\n\n🧩 Date 的重点，是“时间对象”和“时间戳”之间的来回转换DateDemo 里已经把最常用的几种写法放在一起了：\n1234567891011121314151...","url":"https://wxi7641.github.io/wiki/java/java-note-23/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/java/java-note-23/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"Java笔记23-日期时间与Math工具类","description":"Date、Calendar 和 SimpleDateFormat 常见于旧代码。Java 8 引入的 java.time API 对日期、时间、时区和格式化进行了更清晰的类型划分，新项目通常优先使用新 API。\nDate、Calendar 与 java.timeDate 内部表示从 Unix Epoch 开始计算的毫秒值：\n123Date now = new Date();long epoc...","url":"https://wxi7641.github.io/wiki/java/java-note-23/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
   <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
@@ -73,7 +73,7 @@
 </div>
 <div class="widgets">
 
-<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/java/#start"><span class="toc-text">Java学习</span></a><a class="link" href="/wiki/java/java-note-18/"><span class="toc-text">Java笔记18-第一个Java程序</span></a><a class="link" href="/wiki/java/java-note-19/"><span class="toc-text">Java笔记19-流程控制入门</span></a><a class="link" href="/wiki/java/java-note-20/"><span class="toc-text">Java笔记20-数组与排序</span></a><a class="link" href="/wiki/java/java-note-21/"><span class="toc-text">Java笔记21</span></a><a class="link" href="/wiki/java/java-note-22/"><span class="toc-text">Java笔记22-String与StringBuffer</span></a><a class="link active" href="/wiki/java/java-note-23/"><span class="toc-text">Java笔记23-Date、Calendar与Math工具类</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/java/java-note-01/"><span class="toc-text">Java笔记01-Java基础与运行机制</span></a><a class="link" href="/wiki/java/java-note-02/"><span class="toc-text">Java笔记02-基本数据类型与变量边界</span></a><a class="link" href="/wiki/java/java-note-03/"><span class="toc-text">Java笔记03-标识符、关键字与运算符</span></a><a class="link" href="/wiki/java/java-note-04/"><span class="toc-text">Java笔记04-数组的本质与基本使用</span></a><a class="link" href="/wiki/java/java-note-05/"><span class="toc-text">Java笔记05-流程控制的主线</span></a><a class="link" href="/wiki/java/java-note-24/"><span class="toc-text">Java笔记24-Collection与List入门</span></a><a class="link" href="/wiki/java/java-note-25/"><span class="toc-text">Java笔记25-Vector与LinkedList补充</span></a><a class="link" href="/wiki/java/java-note-26/"><span class="toc-text">Java笔记26-三种List实现对比</span></a><a class="link" href="/wiki/java/java-note-27/"><span class="toc-text">Java笔记27-HashSet去重原理</span></a><a class="link" href="/wiki/java/java-note-28/"><span class="toc-text">Java笔记28-HashSet与Hashtable补充</span></a><a class="link" href="/wiki/java/java-note-29/"><span class="toc-text">Java笔记29-Map集合基础</span></a><a class="link" href="/wiki/java/java-note-15/"><span class="toc-text">Java笔记15</span></a><a class="link" href="/wiki/java/java-note-30/"><span class="toc-text">Java笔记30-枚举enum</span></a><a class="link" href="/wiki/java/java-note-16/"><span class="toc-text">Java笔记16</span></a><a class="link" href="/wiki/java/java-note-17/"><span class="toc-text">Java笔记17</span></a><a class="link" href="/wiki/java/java-note-31/"><span class="toc-text">Java笔记31-File类基础</span></a><a class="link" href="/wiki/java/java-note-32/"><span class="toc-text">Java笔记32-字节流与缓冲流</span></a><a class="link" href="/wiki/java/java-note-33/"><span class="toc-text">Java笔记33-字符流读写文件</span></a><a class="link" href="/wiki/java/java-note-34/"><span class="toc-text">Java笔记34-泛型入门</span></a><a class="link" href="/wiki/java/java-note-35/"><span class="toc-text">Java笔记35-线程创建方式</span></a><a class="link" href="/wiki/java/java-note-36/"><span class="toc-text">Java笔记36-线程常用方法与同步</span></a><a class="link" href="/wiki/java/java-note-37/"><span class="toc-text">Java笔记37-wait与notify</span></a><a class="link" href="/wiki/java/java-note-38/"><span class="toc-text">Java笔记38-Lock与线程池</span></a><a class="link" href="/wiki/java/java-note-39/"><span class="toc-text">Java笔记39-Bootstrap前端资源准备</span></a><a class="link" href="/wiki/java/java-note-59/"><span class="toc-text">Java笔记59-IntelliJIDEA常用操作</span></a><a class="link" href="/wiki/java/java-note-50/"><span class="toc-text">Java笔记50-JDBC分页与JSP展示</span></a><a class="link" href="/wiki/java/java-note-40/"><span class="toc-text">Java笔记40-Servlet与JDBC小项目</span></a><a class="link" href="/wiki/java/java-note-47/"><span class="toc-text">Java笔记47-JDBC连接与工具类封装</span></a><a class="link" href="/wiki/java/java-note-48/"><span class="toc-text">Java笔记48-JDBC品牌管理CRUD</span></a><a class="link" href="/wiki/java/java-note-49/"><span class="toc-text">Java笔记49-JDBC登录注册与过滤器</span></a><a class="link" href="/wiki/java/java-note-41/"><span class="toc-text">Java笔记41-MavenWeb工程</span></a><a class="link" href="/wiki/java/java-note-42/"><span class="toc-text">Java笔记42-MyBatis动态SQL</span></a><a class="link" href="/wiki/java/java-note-43/"><span class="toc-text">Java笔记43-Spring核心思想</span></a><a class="link" href="/wiki/java/java-note-51/"><span class="toc-text">Java笔记51-SpringIOC与DI</span></a><a class="link" href="/wiki/java/java-note-52/"><span class="toc-text">Java笔记52-Spring静态代理</span></a><a class="link" href="/wiki/java/java-note-53/"><span class="toc-text">Java笔记53-Spring动态代理与AOP通知</span></a><a class="link" href="/wiki/java/java-note-54/"><span class="toc-text">Java笔记54-Spring注解开发与组件扫描</span></a><a class="link" href="/wiki/java/java-note-44/"><span class="toc-text">Java笔记44-SpringMVC请求处理</span></a><a class="link" href="/wiki/java/java-note-45/"><span class="toc-text">Java笔记45-SpringBoot快速入门</span></a><a class="link" href="/wiki/java/java-note-46/"><span class="toc-text">Java笔记46-SSM整合项目</span></a><a class="link" href="/wiki/java/java-note-55/"><span class="toc-text">Java笔记55-SSM整合配置总览</span></a><a class="link" href="/wiki/java/java-note-56/"><span class="toc-text">Java笔记56-SSM用户登录与权限拦截</span></a><a class="link" href="/wiki/java/java-note-57/"><span class="toc-text">Java笔记57-SSM品牌模块</span></a><a class="link" href="/wiki/java/java-note-58/"><span class="toc-text">Java笔记58-SSM订单模块与事务</span></a><a class="link" href="/wiki/java/java-note-60/"><span class="toc-text">Java笔记60-SpringBoot启动类与自动配置</span></a><a class="link" href="/wiki/java/java-note-61/"><span class="toc-text">Java笔记61-SpringBoot配置文件与多环境思路</span></a><a class="link" href="/wiki/java/java-note-62/"><span class="toc-text">Java笔记62-SpringBoot整合MyBatis与分层调用</span></a><a class="link" href="/wiki/java/java-note-63/"><span class="toc-text">Java笔记63-SpringBoot返回JSON与参数绑定</span></a><a class="link" href="/wiki/java/java-note-64/"><span class="toc-text">Java笔记64-SpringBoot分页、多条件搜索与PageHelper</span></a><a class="link" href="/wiki/java/java-note-65/"><span class="toc-text">Java笔记65-SpringBoot文件上传与静态资源映射</span></a><a class="link" href="/wiki/java/java-note-66/"><span class="toc-text">Java笔记66-SpringBoot登录认证、拦截器与JWT</span></a><a class="link" href="/wiki/java/java-note-67/"><span class="toc-text">Java笔记67-SpringBoot整合MyBatis-Plus</span></a><a class="link" href="/wiki/java/java-note-68/"><span class="toc-text">Java笔记68-SSM容器启动与请求入口</span></a><a class="link" href="/wiki/java/java-note-69/"><span class="toc-text">Java笔记69-SSM数据源、MyBatis与Mapper扫描</span></a><a class="link" href="/wiki/java/java-note-70/"><span class="toc-text">Java笔记70-SSM事务管理与分页查询</span></a><a class="link" href="/wiki/java/java-note-71/"><span class="toc-text">Java笔记71-SSM登录拦截与Session校验</span></a></div></widget>
+<widget class="widget-wrapper doc-tree post-list"><div class="widget-body fs14"><a class="link" href="/wiki/java/#start"><span class="toc-text">Java学习</span></a><a class="link" href="/wiki/java/java-note-18/"><span class="toc-text">Java笔记18-Java程序的编译与启动</span></a><a class="link" href="/wiki/java/java-note-19/"><span class="toc-text">Java笔记19-分支判断、字符串比较与循环边界</span></a><a class="link" href="/wiki/java/java-note-20/"><span class="toc-text">Java笔记20-数组遍历与冒泡排序</span></a><a class="link" href="/wiki/java/java-note-21/"><span class="toc-text">Java笔记21-类、对象与面向对象特性</span></a><a class="link" href="/wiki/java/java-note-22/"><span class="toc-text">Java笔记22-String与可变字符串</span></a><a class="link active" href="/wiki/java/java-note-23/"><span class="toc-text">Java笔记23-日期时间与Math工具类</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/java/java-note-01/"><span class="toc-text">Java笔记01-Java平台与运行机制</span></a><a class="link" href="/wiki/java/java-note-02/"><span class="toc-text">Java笔记02-基本类型、变量与类型转换</span></a><a class="link" href="/wiki/java/java-note-03/"><span class="toc-text">Java笔记03-标识符、关键字与运算符</span></a><a class="link" href="/wiki/java/java-note-04/"><span class="toc-text">Java笔记04-数组的创建、访问与复制</span></a><a class="link" href="/wiki/java/java-note-05/"><span class="toc-text">Java笔记05-条件分支与循环</span></a><a class="link" href="/wiki/java/java-note-24/"><span class="toc-text">Java笔记24-Collection、List与迭代器</span></a><a class="link" href="/wiki/java/java-note-25/"><span class="toc-text">Java笔记25-LinkedList与Vector</span></a><a class="link" href="/wiki/java/java-note-26/"><span class="toc-text">Java笔记26-ArrayList、LinkedList与Vector对比</span></a><a class="link" href="/wiki/java/java-note-27/"><span class="toc-text">Java笔记27-HashSet去重与相等性</span></a><a class="link" href="/wiki/java/java-note-28/"><span class="toc-text">Java笔记28-Hashtable与现代映射实现</span></a><a class="link" href="/wiki/java/java-note-29/"><span class="toc-text">Java笔记29-Map接口与遍历视图</span></a><a class="link" href="/wiki/java/java-note-15/"><span class="toc-text">Java笔记15-HashSet插入过程源码跟踪</span></a><a class="link" href="/wiki/java/java-note-30/"><span class="toc-text">Java笔记30-枚举类型</span></a><a class="link" href="/wiki/java/java-note-17/"><span class="toc-text">Java笔记17-线程学习实验记录</span></a><a class="link" href="/wiki/java/java-note-31/"><span class="toc-text">Java笔记31-File类基础</span></a><a class="link" href="/wiki/java/java-note-32/"><span class="toc-text">Java笔记32-字节流与缓冲流</span></a><a class="link" href="/wiki/java/java-note-33/"><span class="toc-text">Java笔记33-字符流读写文件</span></a><a class="link" href="/wiki/java/java-note-34/"><span class="toc-text">Java笔记34-泛型入门</span></a><a class="link" href="/wiki/java/java-note-35/"><span class="toc-text">Java笔记35-线程创建方式</span></a><a class="link" href="/wiki/java/java-note-36/"><span class="toc-text">Java笔记36-线程常用方法与同步</span></a><a class="link" href="/wiki/java/java-note-37/"><span class="toc-text">Java笔记37-wait与notify</span></a><a class="link" href="/wiki/java/java-note-38/"><span class="toc-text">Java笔记38-Lock与线程池</span></a><a class="link" href="/wiki/java/java-note-39/"><span class="toc-text">Java笔记39-Bootstrap前端资源准备</span></a><a class="link" href="/wiki/java/java-note-59/"><span class="toc-text">Java笔记59-IntelliJIDEA常用操作</span></a><a class="link" href="/wiki/java/java-note-50/"><span class="toc-text">Java笔记50-JDBC分页与JSP展示</span></a><a class="link" href="/wiki/java/java-note-40/"><span class="toc-text">Java笔记40-Servlet与JDBC小项目</span></a><a class="link" href="/wiki/java/java-note-47/"><span class="toc-text">Java笔记47-JDBC连接与工具类封装</span></a><a class="link" href="/wiki/java/java-note-48/"><span class="toc-text">Java笔记48-JDBC品牌管理CRUD</span></a><a class="link" href="/wiki/java/java-note-49/"><span class="toc-text">Java笔记49-JDBC登录注册与过滤器</span></a><a class="link" href="/wiki/java/java-note-41/"><span class="toc-text">Java笔记41-MavenWeb工程</span></a><a class="link" href="/wiki/java/java-note-42/"><span class="toc-text">Java笔记42-MyBatis动态SQL</span></a><a class="link" href="/wiki/java/java-note-43/"><span class="toc-text">Java笔记43-Spring核心思想</span></a><a class="link" href="/wiki/java/java-note-51/"><span class="toc-text">Java笔记51-SpringIOC与DI</span></a><a class="link" href="/wiki/java/java-note-52/"><span class="toc-text">Java笔记52-Spring静态代理</span></a><a class="link" href="/wiki/java/java-note-53/"><span class="toc-text">Java笔记53-Spring动态代理与AOP通知</span></a><a class="link" href="/wiki/java/java-note-54/"><span class="toc-text">Java笔记54-Spring注解开发与组件扫描</span></a><a class="link" href="/wiki/java/java-note-44/"><span class="toc-text">Java笔记44-SpringMVC请求处理</span></a><a class="link" href="/wiki/java/java-note-45/"><span class="toc-text">Java笔记45-SpringBoot快速入门</span></a><a class="link" href="/wiki/java/java-note-46/"><span class="toc-text">Java笔记46-SSM整合项目</span></a><a class="link" href="/wiki/java/java-note-55/"><span class="toc-text">Java笔记55-SSM整合配置总览</span></a><a class="link" href="/wiki/java/java-note-56/"><span class="toc-text">Java笔记56-SSM用户登录与权限拦截</span></a><a class="link" href="/wiki/java/java-note-57/"><span class="toc-text">Java笔记57-SSM品牌模块</span></a><a class="link" href="/wiki/java/java-note-58/"><span class="toc-text">Java笔记58-SSM订单模块与事务</span></a><a class="link" href="/wiki/java/java-note-60/"><span class="toc-text">Java笔记60-SpringBoot启动类与自动配置</span></a><a class="link" href="/wiki/java/java-note-61/"><span class="toc-text">Java笔记61-SpringBoot配置文件与多环境思路</span></a><a class="link" href="/wiki/java/java-note-62/"><span class="toc-text">Java笔记62-SpringBoot整合MyBatis与分层调用</span></a><a class="link" href="/wiki/java/java-note-63/"><span class="toc-text">Java笔记63-SpringBoot返回JSON与参数绑定</span></a><a class="link" href="/wiki/java/java-note-64/"><span class="toc-text">Java笔记64-SpringBoot分页、多条件搜索与PageHelper</span></a><a class="link" href="/wiki/java/java-note-65/"><span class="toc-text">Java笔记65-SpringBoot文件上传与静态资源映射</span></a><a class="link" href="/wiki/java/java-note-66/"><span class="toc-text">Java笔记66-SpringBoot登录认证、拦截器与JWT</span></a><a class="link" href="/wiki/java/java-note-67/"><span class="toc-text">Java笔记67-SpringBoot整合MyBatis-Plus</span></a><a class="link" href="/wiki/java/java-note-68/"><span class="toc-text">Java笔记68-SSM容器启动与请求入口</span></a><a class="link" href="/wiki/java/java-note-69/"><span class="toc-text">Java笔记69-SSM数据源、MyBatis与Mapper扫描</span></a><a class="link" href="/wiki/java/java-note-70/"><span class="toc-text">Java笔记70-SSM事务管理与分页查询</span></a><a class="link" href="/wiki/java/java-note-71/"><span class="toc-text">Java笔记71-SSM登录拦截与Session校验</span></a></div><div class="widget-header dis-select"><span class="name">...</span></div><div class="widget-body fs14"><a class="link" href="/wiki/java/java-note-16/"><span class="toc-text">Java笔记16-枚举</span></a></div></widget>
 
 
 </div>
@@ -94,134 +94,60 @@
     <div class="bottom only-title">
       
       <div class="text-area">
-        <h1 class="text title"><span>Java笔记23-Date、Calendar与Math工具类</span></h1>
+        <h1 class="text title"><span>Java笔记23-日期时间与Math工具类</span></h1>
         
       </div>
     </div>
     
   </div>
   </div>
-<article class="md-text content"><p>时间类和数学工具类虽然看起来分散，但在日常代码里出现频率都很高。它们不像集合和线程那样有强烈的结构感，却经常承担“把业务细节补完整”的工作。</p>
-<blockquote>
-<p><strong>先把一句话记住：</strong><mark>这类工具类的价值不在于会背方法名，而在于知道什么时候该拿出来用。</mark></p>
-</blockquote>
-<hr>
-<h2 id="🧩-Date-的重点，是“时间对象”和“时间戳”之间的来回转换"><a href="#🧩-Date-的重点，是“时间对象”和“时间戳”之间的来回转换" class="headerlink" title="🧩 Date 的重点，是“时间对象”和“时间戳”之间的来回转换"></a>🧩 <code>Date</code> 的重点，是“时间对象”和“时间戳”之间的来回转换</h2><p><code>DateDemo</code> 里已经把最常用的几种写法放在一起了：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line">System.out.println(date);</span><br><span class="line"></span><br><span class="line"><span class="type">Date</span> <span class="variable">date1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(<span class="number">1000</span>);</span><br><span class="line">System.out.println(date1);</span><br><span class="line"></span><br><span class="line">System.out.println(date.before(date1));</span><br><span class="line">System.out.println(date.after(date1));</span><br><span class="line">System.out.println(date.compareTo(date1));</span><br><span class="line">System.out.println(date.equals(date1));</span><br><span class="line"></span><br><span class="line">System.out.println(date.getTime());</span><br><span class="line">System.out.println(<span class="keyword">new</span> <span class="title class_">Date</span>(<span class="number">1745838019613L</span>));</span><br><span class="line"></span><br><span class="line">date.setTime(<span class="number">1681814479507L</span>);</span><br><span class="line">System.out.println(date);</span><br></pre></td></tr></table></figure>
+<article class="md-text content"><p><code>Date</code>、<code>Calendar</code> 和 <code>SimpleDateFormat</code> 常见于旧代码。Java 8 引入的 <code>java.time</code> API 对日期、时间、时区和格式化进行了更清晰的类型划分，新项目通常优先使用新 API。</p>
+<h2 id="Date、Calendar-与-java-time"><a href="#Date、Calendar-与-java-time" class="headerlink" title="Date、Calendar 与 java.time"></a><code>Date</code>、<code>Calendar</code> 与 <code>java.time</code></h2><p><code>Date</code> 内部表示从 Unix Epoch 开始计算的毫秒值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Date</span> <span class="variable">now</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="type">long</span> <span class="variable">epochMillis</span> <span class="operator">=</span> now.getTime();</span><br><span class="line"><span class="type">Date</span> <span class="variable">restored</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>(epochMillis);</span><br></pre></td></tr></table></figure>
 
-<p>这段代码最值得拆开的其实是三条线：</p>
-<h3 id="▍创建时间对象"><a href="#▍创建时间对象" class="headerlink" title="▍创建时间对象"></a>▍创建时间对象</h3><ul>
-<li><code>new Date()</code>：当前系统时间</li>
-<li><code>new Date(1000)</code>：传入毫秒值创建时间对象</li>
-</ul>
-<h3 id="▍时间比较"><a href="#▍时间比较" class="headerlink" title="▍时间比较"></a>▍时间比较</h3><table>
-<thead>
-<tr>
-<th>方法</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>before()</code></td>
-<td>判断是否早于另一个时间</td>
-</tr>
-<tr>
-<td><code>after()</code></td>
-<td>判断是否晚于另一个时间</td>
-</tr>
-<tr>
-<td><code>compareTo()</code></td>
-<td>返回时间先后比较结果</td>
-</tr>
-<tr>
-<td><code>equals()</code></td>
-<td>判断两个时间对象是否表示同一时刻</td>
-</tr>
-</tbody></table>
-<h3 id="▍时间戳转换"><a href="#▍时间戳转换" class="headerlink" title="▍时间戳转换"></a>▍时间戳转换</h3><ul>
-<li><code>getTime()</code>：从时间对象取出毫秒值</li>
-<li><code>setTime()</code>：把某个毫秒值重新设回当前 <code>Date</code> 对象</li>
-</ul>
-<p>很多旧代码里看到的“毫秒值转时间”“时间转毫秒值”，本质上都绕不开这条线。</p>
-<h2 id="🔍-Calendar-的重点，是把一个时间拆成年月日时分秒"><a href="#🔍-Calendar-的重点，是把一个时间拆成年月日时分秒" class="headerlink" title="🔍 Calendar 的重点，是把一个时间拆成年月日时分秒"></a>🔍 <code>Calendar</code> 的重点，是把一个时间拆成年月日时分秒</h2><p><code>CalendarDemo</code> 更像“时间字段拆解器”：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Calendar</span> <span class="variable">instance</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line">System.out.println(instance.getTime());</span><br><span class="line">System.out.println(instance.get(Calendar.DAY_OF_WEEK) - <span class="number">1</span>);</span><br><span class="line">System.out.println(instance.get(Calendar.YEAR));</span><br><span class="line">System.out.println(instance.get(Calendar.MONTH) + <span class="number">1</span>);</span><br><span class="line">System.out.println(instance.get(Calendar.DAY_OF_MONTH));</span><br><span class="line">System.out.println(instance.get(Calendar.HOUR));</span><br><span class="line">System.out.println(instance.get(Calendar.MINUTE));</span><br><span class="line">System.out.println(instance.get(Calendar.SECOND));</span><br></pre></td></tr></table></figure>
+<p><code>before()</code>、<code>after()</code> 和 <code>compareTo()</code> 比较时间先后。<code>Date.toString()</code> 会使用默认时区生成文本，但时区不是 <code>Date</code> 对象自身的一部分。</p>
+<p><strong><code>Calendar</code> 字段规则。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Calendar</span> <span class="variable">calendar</span> <span class="operator">=</span> Calendar.getInstance();</span><br><span class="line"><span class="type">int</span> <span class="variable">year</span> <span class="operator">=</span> calendar.get(Calendar.YEAR);</span><br><span class="line"><span class="type">int</span> <span class="variable">month</span> <span class="operator">=</span> calendar.get(Calendar.MONTH) + <span class="number">1</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">day</span> <span class="operator">=</span> calendar.get(Calendar.DAY_OF_MONTH);</span><br><span class="line"><span class="type">int</span> <span class="variable">hour</span> <span class="operator">=</span> calendar.get(Calendar.HOUR_OF_DAY);</span><br></pre></td></tr></table></figure>
 
-<p>这段代码可以顺便帮助理清两个经典细节：</p>
+<p><code>MONTH</code> 从 <code>0</code> 开始。<code>DAY_OF_WEEK</code> 的常量范围是 <code>SUNDAY</code> 到 <code>SATURDAY</code>，其数值为 1 到 7；直接减一会得到 0 到 6，但不等同于所有地区使用的周序规则。需要 ISO 周序时应使用 <code>java.time.DayOfWeek</code>。</p>
+<p><code>Calendar.HOUR</code> 表示 12 小时制小时，24 小时制应读取 <code>HOUR_OF_DAY</code>。</p>
+<p><strong><code>SimpleDateFormat</code>。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">format</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy/MM/dd HH:mm:ss&quot;</span>);</span><br><span class="line"><span class="type">Date</span> <span class="variable">parsed</span> <span class="operator">=</span> format.parse(<span class="string">&quot;2025/04/28 19:19:10&quot;</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">output</span> <span class="operator">=</span> format.format(parsed);</span><br></pre></td></tr></table></figure>
+
+<p><code>SimpleDateFormat</code> 是可变且非线程安全的对象，不应作为共享单例供多个线程同时使用。严格校验输入时还需设置非宽松解析，避免无效日期被自动归一化。</p>
+<p><strong><code>java.time</code> API。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">LocalDate</span> <span class="variable">date</span> <span class="operator">=</span> LocalDate.of(<span class="number">2025</span>, <span class="number">4</span>, <span class="number">28</span>);</span><br><span class="line"><span class="type">LocalDateTime</span> <span class="variable">dateTime</span> <span class="operator">=</span> LocalDateTime.now();</span><br><span class="line"><span class="type">Instant</span> <span class="variable">instant</span> <span class="operator">=</span> Instant.now();</span><br><span class="line"></span><br><span class="line"><span class="type">DateTimeFormatter</span> <span class="variable">formatter</span> <span class="operator">=</span></span><br><span class="line">        DateTimeFormatter.ofPattern(<span class="string">&quot;yyyy/MM/dd HH:mm:ss&quot;</span>);</span><br><span class="line"><span class="type">String</span> <span class="variable">text</span> <span class="operator">=</span> dateTime.format(formatter);</span><br></pre></td></tr></table></figure>
+
 <table>
 <thead>
 <tr>
-<th>字段</th>
-<th>容易踩坑的点</th>
+<th>类型</th>
+<th>用途</th>
 </tr>
 </thead>
 <tbody><tr>
-<td><code>MONTH</code></td>
-<td>从 <code>0</code> 开始，所以示例里要 <code>+1</code></td>
+<td><code>LocalDate</code></td>
+<td>不含时间和时区的日期</td>
 </tr>
 <tr>
-<td><code>DAY_OF_WEEK</code></td>
-<td>周日通常被视为一周第一天，所以示例里做了 <code>-1</code></td>
+<td><code>LocalDateTime</code></td>
+<td>不含时区的日期时间</td>
+</tr>
+<tr>
+<td><code>Instant</code></td>
+<td>UTC 时间线上的瞬时点</td>
+</tr>
+<tr>
+<td><code>ZonedDateTime</code></td>
+<td>带时区规则的日期时间</td>
+</tr>
+<tr>
+<td><code>Duration</code>、<code>Period</code></td>
+<td>时间量与日期量</td>
 </tr>
 </tbody></table>
-<p>也就是说，<code>Calendar</code> 的问题往往不是“不会取值”，而是<strong>字段规则和日常直觉不完全一样</strong>。</p>
-<h2 id="🔍-SimpleDateFormat-把“时间对象”和“展示格式”接了起来"><a href="#🔍-SimpleDateFormat-把“时间对象”和“展示格式”接了起来" class="headerlink" title="🔍 SimpleDateFormat 把“时间对象”和“展示格式”接了起来"></a>🔍 <code>SimpleDateFormat</code> 把“时间对象”和“展示格式”接了起来</h2><p><code>SimpleDateFormatDemo</code> 里既有格式定义，也有字符串解析：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Date</span> <span class="variable">date</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Date</span>();</span><br><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">sdf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy/MM/dd HH:mm:ss&quot;</span>);</span><br><span class="line"><span class="type">SimpleDateFormat</span> <span class="variable">sdf1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy年MM月dd日&quot;</span>);</span><br><span class="line"></span><br><span class="line">System.out.println(sdf.parse(<span class="string">&quot;2025/04/28 19:19:10&quot;</span>));</span><br></pre></td></tr></table></figure>
-
-<p>如果把被注释掉的格式化代码一起看，这个类主要做两件事：</p>
-<table>
-<thead>
-<tr>
-<th>动作</th>
-<th>典型写法</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>格式化时间</td>
-<td><code>sdf.format(date)</code></td>
-</tr>
-<tr>
-<td>解析字符串</td>
-<td><code>sdf.parse(&quot;2025/04/28 19:19:10&quot;)</code></td>
-</tr>
-</tbody></table>
-<p>模式字符串里最常见的占位符也值得单独记一下：</p>
-<table>
-<thead>
-<tr>
-<th>模式</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>yyyy</code></td>
-<td>年</td>
-</tr>
-<tr>
-<td><code>MM</code></td>
-<td>月</td>
-</tr>
-<tr>
-<td><code>dd</code></td>
-<td>日</td>
-</tr>
-<tr>
-<td><code>HH</code></td>
-<td>24 小时制小时</td>
-</tr>
-<tr>
-<td><code>mm</code></td>
-<td>分钟</td>
-</tr>
-<tr>
-<td><code>ss</code></td>
-<td>秒</td>
-</tr>
-</tbody></table>
-<h2 id="🔍-Math-这一组方法，真正常用的其实非常固定"><a href="#🔍-Math-这一组方法，真正常用的其实非常固定" class="headerlink" title="🔍 Math 这一组方法，真正常用的其实非常固定"></a>🔍 <code>Math</code> 这一组方法，真正常用的其实非常固定</h2><p><code>MathDemo</code> 里几乎把基础常用方法都过了一遍：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Math.abs(a));</span><br><span class="line">System.out.println(Math.max(<span class="number">100</span>, <span class="number">1</span>));</span><br><span class="line">System.out.println(Math.min(<span class="number">100</span>, <span class="number">1</span>));</span><br><span class="line">System.out.println(Math.pow(<span class="number">2</span>, <span class="number">10</span>));</span><br><span class="line">System.out.println(Math.sin(pi / <span class="number">2</span>));</span><br><span class="line">System.out.println(Math.sqrt(<span class="number">3.0</span>));</span><br><span class="line">System.out.println(Math.ceil(<span class="number">3.14</span>));</span><br><span class="line">System.out.println(Math.floor(-<span class="number">3.14</span>));</span><br><span class="line">System.out.println(Math.round(<span class="number">3.94</span>));</span><br></pre></td></tr></table></figure>
-
-<p>可以直接整理成速查表：</p>
-<table>
+<p><code>java.time</code> 的核心类型大多不可变，<code>DateTimeFormatter</code> 也可安全共享。</p>
+<h2 id="Math-与随机数"><a href="#Math-与随机数" class="headerlink" title="Math 与随机数"></a><code>Math</code> 与随机数</h2><table>
 <thead>
 <tr>
 <th>方法</th>
@@ -233,16 +159,12 @@
 <td>绝对值</td>
 </tr>
 <tr>
-<td><code>max()</code> &#x2F; <code>min()</code></td>
-<td>最大值 &#x2F; 最小值</td>
+<td><code>max()</code>、<code>min()</code></td>
+<td>最大值与最小值</td>
 </tr>
 <tr>
 <td><code>pow()</code></td>
 <td>幂运算</td>
-</tr>
-<tr>
-<td><code>sin()</code></td>
-<td>三角函数</td>
 </tr>
 <tr>
 <td><code>sqrt()</code></td>
@@ -250,42 +172,28 @@
 </tr>
 <tr>
 <td><code>ceil()</code></td>
-<td>向上取整</td>
+<td>向正无穷方向取整</td>
 </tr>
 <tr>
 <td><code>floor()</code></td>
-<td>向下取整</td>
+<td>向负无穷方向取整</td>
 </tr>
 <tr>
 <td><code>round()</code></td>
-<td>四舍五入</td>
+<td>返回最接近的整数值</td>
 </tr>
 </tbody></table>
-<p><code>ceil(-3.14)</code> 和 <code>floor(-3.14)</code> 这类负数结果值得单独留意，因为它们很容易和直觉混淆。</p>
-<h2 id="💡-Math-random-最容易出问题的不是范围，而是运算顺序"><a href="#💡-Math-random-最容易出问题的不是范围，而是运算顺序" class="headerlink" title="💡 Math.random() 最容易出问题的不是范围，而是运算顺序"></a>💡 <code>Math.random()</code> 最容易出问题的不是范围，而是运算顺序</h2><p><code>MathDemo02</code> 里有三种随机数写法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Math.random()); <span class="comment">//0-1</span></span><br><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * <span class="number">100</span>)); <span class="comment">//0-100</span></span><br><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * <span class="number">100</span>) + <span class="number">100</span>); <span class="comment">//100-200</span></span><br></pre></td></tr></table></figure>
+<p>负数的 <code>ceil()</code> 和 <code>floor()</code> 方向不同，例如 <code>Math.ceil(-3.14)</code> 为 <code>-3.0</code>，<code>Math.floor(-3.14)</code> 为 <code>-4.0</code>。</p>
+<p><strong>随机数区间。</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">value</span> <span class="operator">=</span> (<span class="type">int</span>) (Math.random() * <span class="number">100</span>); <span class="comment">// 0 到 99</span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> <span class="number">1000</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">ranged</span> <span class="operator">=</span> (<span class="type">int</span>) (Math.random() * (max - min)) + min;</span><br></pre></td></tr></table></figure>
 
-<p>前两种都比较直观，但最后这段最值得单独指出：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="variable">min</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line"><span class="type">int</span> <span class="variable">max</span> <span class="operator">=</span> <span class="number">1000</span>;</span><br><span class="line">System.out.println((<span class="type">int</span>)Math.random() * (max - min) + min);</span><br></pre></td></tr></table></figure>
-
-<p>这段写法表面上是在生成 <code>[min, max)</code> 范围随机数，实际上因为强制类型转换位置太靠前，<code>(int)Math.random()</code> 会先变成 <code>0</code>，结果整个表达式几乎只会输出 <code>min</code>。</p>
-<p>正确的写法应该是：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.out.println((<span class="type">int</span>)(Math.random() * (max - min)) + min);</span><br></pre></td></tr></table></figure>
-
-<p>这类细节值得放在工具类章节里重点提醒，因为它说明：<strong>工具方法本身不难，真正难的是表达式和边界是否写对。</strong></p>
-<h2 id="🧠-小结"><a href="#🧠-小结" class="headerlink" title="🧠 小结"></a>🧠 小结</h2><p>今天如果是新项目，日期时间处理通常更推荐：</p>
-<ul>
-<li><code>LocalDate</code></li>
-<li><code>LocalDateTime</code></li>
-<li><code>DateTimeFormatter</code></li>
-</ul>
-<p>但 <code>Date</code>、<code>Calendar</code>、<code>SimpleDateFormat</code> 仍然值得整理，因为大量旧代码、教材代码和工具代码依然在使用它们。把这一组类看顺，不只是为了会写，更是为了看到旧项目代码时能立刻知道它在做什么。</p>
+<p><code>Math.random()</code> 返回 <code>[0.0, 1.0)</code>。强制转换必须放在乘法之后；若先执行 <code>(int) Math.random()</code>，结果始终为零。需要明确上下界的整数随机数时，<code>ThreadLocalRandom.current().nextInt(min, max)</code> 表达得更直接。</p>
 </article>
 <div class="article-footer">
 
 </div>
 
-<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/java/java-note-22/">Java笔记22-String与StringBuffer</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/java/java-note-01/">Java笔记01-Java基础与运行机制</a></div></section></div>
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/java/java-note-22/">Java笔记22-String与可变字符串</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/java/java-note-01/">Java笔记01-Java平台与运行机制</a></div></section></div>
 
 
 
@@ -295,16 +203,16 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>909</strong> 天
+      运营 <strong>920</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
       
     </p>
     <p class="meta-line">
-      共发布 <strong>98</strong> 篇文章
+      共发布 <strong>99</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>90,599</strong> 字
+      累计 <strong>90,914</strong> 字
     </p>
   </div>
 </footer>
@@ -312,9 +220,9 @@
 <div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
 <div class="widgets">
 
-<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A9-Date-%E7%9A%84%E9%87%8D%E7%82%B9%EF%BC%8C%E6%98%AF%E2%80%9C%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E2%80%9D%E5%92%8C%E2%80%9C%E6%97%B6%E9%97%B4%E6%88%B3%E2%80%9D%E4%B9%8B%E9%97%B4%E7%9A%84%E6%9D%A5%E5%9B%9E%E8%BD%AC%E6%8D%A2"><span class="toc-text">🧩 Date 的重点，是“时间对象”和“时间戳”之间的来回转换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E5%88%9B%E5%BB%BA%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1"><span class="toc-text">▍创建时间对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E6%97%B6%E9%97%B4%E6%AF%94%E8%BE%83"><span class="toc-text">▍时间比较</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%96%8D%E6%97%B6%E9%97%B4%E6%88%B3%E8%BD%AC%E6%8D%A2"><span class="toc-text">▍时间戳转换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-Calendar-%E7%9A%84%E9%87%8D%E7%82%B9%EF%BC%8C%E6%98%AF%E6%8A%8A%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E6%8B%86%E6%88%90%E5%B9%B4%E6%9C%88%E6%97%A5%E6%97%B6%E5%88%86%E7%A7%92"><span class="toc-text">🔍 Calendar 的重点，是把一个时间拆成年月日时分秒</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-SimpleDateFormat-%E6%8A%8A%E2%80%9C%E6%97%B6%E9%97%B4%E5%AF%B9%E8%B1%A1%E2%80%9D%E5%92%8C%E2%80%9C%E5%B1%95%E7%A4%BA%E6%A0%BC%E5%BC%8F%E2%80%9D%E6%8E%A5%E4%BA%86%E8%B5%B7%E6%9D%A5"><span class="toc-text">🔍 SimpleDateFormat 把“时间对象”和“展示格式”接了起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%94%8D-Math-%E8%BF%99%E4%B8%80%E7%BB%84%E6%96%B9%E6%B3%95%EF%BC%8C%E7%9C%9F%E6%AD%A3%E5%B8%B8%E7%94%A8%E7%9A%84%E5%85%B6%E5%AE%9E%E9%9D%9E%E5%B8%B8%E5%9B%BA%E5%AE%9A"><span class="toc-text">🔍 Math 这一组方法，真正常用的其实非常固定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%92%A1-Math-random-%E6%9C%80%E5%AE%B9%E6%98%93%E5%87%BA%E9%97%AE%E9%A2%98%E7%9A%84%E4%B8%8D%E6%98%AF%E8%8C%83%E5%9B%B4%EF%BC%8C%E8%80%8C%E6%98%AF%E8%BF%90%E7%AE%97%E9%A1%BA%E5%BA%8F"><span class="toc-text">💡 Math.random() 最容易出问题的不是范围，而是运算顺序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%B0%8F%E7%BB%93"><span class="toc-text">🧠 小结</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Date%E3%80%81Calendar-%E4%B8%8E-java-time"><span class="toc-text">Date、Calendar 与 java.time</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Math-%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%95%B0"><span class="toc-text">Math 与随机数</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
 
-<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 16px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.6px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 15.2px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.4px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.6px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.8px;" class="tag -6">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.6px;" class="tag -7">SSM</a> <a href="/tags/Spring/" style="font-size: 15.2px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.6px;" class="tag -7">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.4px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 18.4px;" class="tag -8">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.4px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.8px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 16px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.8px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.4px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.4px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.2px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 16px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.6px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.4px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.6px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 16px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.4px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.6px;" class="tag -2">项目实践</a></div></widget>
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 15.64px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.45px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 14.91px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.18px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.45px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.36px;" class="tag -5">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.09px;" class="tag -6">SSM</a> <a href="/tags/Spring/" style="font-size: 14.91px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.09px;" class="tag -6">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.55px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 17.82px;" class="tag -7">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.18px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.73px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15.64px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.73px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.18px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.18px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.27px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 15.64px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.45px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.18px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.45px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 15.64px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.55px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.45px;" class="tag -2">项目实践</a></div></widget>
 </div>
 </aside><div class='float-panel'>
   <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
