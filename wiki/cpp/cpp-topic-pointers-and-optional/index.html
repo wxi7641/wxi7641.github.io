@@ -1,0 +1,1074 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  <link rel="canonical" href="https://wxi7641.github.io/wiki/cpp/cpp-topic-pointers-and-optional/">
+  
+  <meta name="generator" content="Hexo 7.1.1">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel="preconnect" href="https://gcore.jsdelivr.net" crossorigin><link rel="preconnect" href="https://unpkg.com" crossorigin><link rel="preconnect" href="https://basis-4317.oss-cn-beijing.aliyuncs.com" crossorigin><link rel="preconnect" href="https://api.iconify.design" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>C++/Cpp基础：指针、引用返回与 std::optional - Wxi's Blog</title>
+
+  
+    <meta name="description" content="指针可以表达可空借用和地址运算，引用适合保证存在的别名，optional 表达可能缺少的值。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="指针、引用返回与 std::optional">
+<meta property="og:url" content="https://wxi7641.github.io/wiki/cpp/cpp-topic-pointers-and-optional/">
+<meta property="og:site_name" content="Wxi&#39;s Blog">
+<meta property="og:description" content="指针可以表达可空借用和地址运算，引用适合保证存在的别名，optional 表达可能缺少的值。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
+<meta property="article:published_time" content="2023-10-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2026-08-14T16:00:00.000Z">
+<meta property="article:author" content="Wxi">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="学习记录">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
+  
+  
+  
+  <meta name="keywords" content=",">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/cpp/cpp-topic-pointers-and-optional/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"指针、引用返回与 std::optional","description":"指针可以表达可空借用和地址运算，引用适合保证存在的别名，optional 表达可能缺少的值。","url":"https://wxi7641.github.io/wiki/cpp/cpp-topic-pointers-and-optional/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
+  <link rel="stylesheet" href="/css/custom-effects.css">
+</head>
+<body><div class="sitebg"><div class="siteblur"></div></div>
+
+
+
+<div class="l_body content" id="start" layout="page" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><div class="icon"><img no-lazy class="icon" src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2779789.png" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></div><a class="title" href="/wiki/cpp/"><div class="main">C++/Cpp基础</div></a></div></header>
+
+
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item" title="主页" href="/" style="color:hsl(145, 45%, 48%)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M5.879 2.879C5 3.757 5 5.172 5 8v8c0 2.828 0 4.243.879 5.121C6.757 22 8.172 22 11 22h2c2.828 0 4.243 0 5.121-.879C19 20.243 19 18.828 19 16V8c0-2.828 0-4.243-.879-5.121C17.243 2 15.828 2 13 2h-2c-2.828 0-4.243 0-5.121.879M8.25 17a.75.75 0 0 1 .75-.75h3a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75M9 12.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5zM8.25 9A.75.75 0 0 1 9 8.25h6a.75.75 0 0 1 0 1.5H9A.75.75 0 0 1 8.25 9" clip-rule="evenodd"/><path fill="currentColor" d="M5.235 4.058C5 4.941 5 6.177 5 8v8c0 1.823 0 3.058.235 3.942L5 19.924c-.975-.096-1.631-.313-2.121-.803C2 18.243 2 16.828 2 14v-4c0-2.829 0-4.243.879-5.121c.49-.49 1.146-.707 2.121-.803zm13.53 15.884C19 19.058 19 17.822 19 16V8c0-1.823 0-3.059-.235-3.942l.235.018c.975.096 1.631.313 2.121.803C22 5.757 22 7.17 22 9.999v4c0 2.83 0 4.243-.879 5.122c-.49.49-1.146.707-2.121.803z" opacity=".5"/></svg></a><a class="nav-item active" title="探索" href="/wiki/" style="color:hsl(190, 42%, 42%)"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 12a8 8 0 1 1-16 0a8 8 0 0 1 16 0" opacity=".5"/><path fill="currentColor" d="M17.712 5.453c1.047-.193 2.006-.259 2.797-.152c.77.103 1.536.393 1.956 1.064c.446.714.312 1.542-.012 2.258c-.33.728-.918 1.499-1.672 2.268c-1.516 1.547-3.836 3.226-6.597 4.697c-2.763 1.472-5.495 2.484-7.694 2.92c-1.095.217-2.098.299-2.923.201c-.8-.095-1.6-.383-2.032-1.075c-.47-.752-.296-1.63.07-2.379c.375-.768 1.032-1.586 1.872-2.403L4 12.416c0 .219.083.71.168 1.146c.045.23.09.444.123.596c-.652.666-1.098 1.263-1.339 1.756c-.277.567-.208.825-.145.925c.072.116.305.305.937.38c.609.073 1.44.018 2.455-.183c2.02-.4 4.613-1.351 7.28-2.772c2.667-1.42 4.85-3.015 6.23-4.423c.694-.707 1.15-1.334 1.377-1.836c.233-.515.167-.75.107-.844c-.07-.112-.289-.294-.883-.374c-.542-.072-1.272-.041-2.163.112L16.87 5.656c.338-.101.658-.17.842-.203"/></svg></a></nav>
+</div>
+<div class="widgets">
+
+<widget class="widget-wrapper doc-tree post-list"><div class="widget-header dis-select"><span class="name">专栏首页</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/#start"><span class="toc-text">C++/Cpp基础</span></a></div><div class="widget-header dis-select"><span class="name">开发环境与构建</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-note-01/"><span class="toc-text">程序、编程语言与执行平台</span></a><a class="link" href="/wiki/cpp/cpp-note-02/"><span class="toc-text">C 与 C++ 的关系</span></a><a class="link" href="/wiki/cpp/cpp-note-03/"><span class="toc-text">C++ 项目的基本开发流程</span></a><a class="link" href="/wiki/cpp/cpp-note-04/"><span class="toc-text">C++ 开发工具链与 IDE</span></a><a class="link" href="/wiki/cpp/cpp-note-05/"><span class="toc-text">第一个 C++ 程序：入口、标准输出与构建</span></a><a class="link" href="/wiki/cpp/cpp-note-06/"><span class="toc-text">从源文件到可执行文件：预处理、编译与链接</span></a><a class="link" href="/wiki/cpp/cpp-note-07/"><span class="toc-text">C++ 编译配置：Debug、Release、标准一致性与诊断</span></a><a class="link" href="/wiki/cpp/cpp-note-08/"><span class="toc-text">Visual Studio C++ 常见编译与链接问题</span></a><a class="link" href="/wiki/cpp/cpp-note-09/"><span class="toc-text">C++ 语言标准的选择、配置与检测</span></a></div><div class="widget-header dis-select"><span class="name">程序、函数与调试</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-topic-program-elements/"><span class="toc-text">语句、变量、输入输出与表达式</span></a><a class="link" href="/wiki/cpp/cpp-topic-function-design/"><span class="toc-text">函数接口与程序拆分</span></a><a class="link" href="/wiki/cpp/cpp-topic-translation-units/"><span class="toc-text">多文件程序、头文件与预处理边界</span></a><a class="link" href="/wiki/cpp/cpp-topic-diagnosing-programs/"><span class="toc-text">从编译诊断到可复现的程序缺陷</span></a><a class="link" href="/wiki/cpp/cpp-topic-integrated-debugger/"><span class="toc-text">集成调试器：断点、单步、监视与调用栈</span></a></div><div class="widget-header dis-select"><span class="name">类型、表达式与控制流</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-topic-integer-types/"><span class="toc-text">对象表示、整数范围与 size_t</span></a><a class="link" href="/wiki/cpp/cpp-topic-floating-bool-char/"><span class="toc-text">浮点数、布尔值、字符与显式转换</span></a><a class="link" href="/wiki/cpp/cpp-topic-constants/"><span class="toc-text">常量、字面量与编译期求值</span></a><a class="link" href="/wiki/cpp/cpp-topic-strings-and-views/"><span class="toc-text">std::string、std::string_view 与文本生命周期</span></a><a class="link" href="/wiki/cpp/cpp-topic-arithmetic-expressions/"><span class="toc-text">算术表达式、求值顺序与副作用</span></a><a class="link" href="/wiki/cpp/cpp-topic-conditions-and-branches/"><span class="toc-text">条件表达式、短路求值与分支结构</span></a><a class="link" href="/wiki/cpp/cpp-topic-scope-and-lifetime/"><span class="toc-text">作用域、存储期与共享状态</span></a><a class="link" href="/wiki/cpp/cpp-topic-namespaces-and-linkage/"><span class="toc-text">命名空间、链接性与单一定义规则</span></a><a class="link" href="/wiki/cpp/cpp-topic-switch-and-loops/"><span class="toc-text">switch、循环与控制流转移</span></a><a class="link" href="/wiki/cpp/cpp-topic-random-numbers/"><span class="toc-text">随机引擎、分布与可复现序列</span></a><a class="link" href="/wiki/cpp/cpp-topic-testing-and-assertions/"><span class="toc-text">测试、覆盖率与断言边界</span></a><a class="link" href="/wiki/cpp/cpp-topic-error-and-input/"><span class="toc-text">错误传播与控制台输入校验</span></a><a class="link" href="/wiki/cpp/cpp-topic-numeric-conversions/"><span class="toc-text">隐式转换、数值提升与窄化检查</span></a><a class="link" href="/wiki/cpp/cpp-topic-aliases-and-deduction/"><span class="toc-text">类型别名、auto 与返回类型推导</span></a></div><div class="widget-header dis-select"><span class="name">接口、引用与自定义类型</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-topic-function-overloading/"><span class="toc-text">函数重载、默认实参与歧义消解</span></a><a class="link" href="/wiki/cpp/cpp-topic-function-templates/"><span class="toc-text">函数模板、实例化与非类型参数</span></a><a class="link" href="/wiki/cpp/cpp-topic-values-and-references/"><span class="toc-text">值类别、左值引用与参数借用</span></a><a class="link active" href="/wiki/cpp/cpp-topic-pointers-and-optional/"><span class="toc-text">指针、引用返回与 std::optional</span><svg class="active-icon" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M21 11.098v4.993c0 3.096 0 4.645-.734 5.321c-.35.323-.792.526-1.263.58c-.987.113-2.14-.907-4.445-2.946c-1.02-.901-1.529-1.352-2.118-1.47a2.225 2.225 0 0 0-.88 0c-.59.118-1.099.569-2.118 1.47c-2.305 2.039-3.458 3.059-4.445 2.945a2.238 2.238 0 0 1-1.263-.579C3 20.736 3 19.188 3 16.091v-4.994C3 6.81 3 4.666 4.318 3.333C5.636 2 7.758 2 12 2c4.243 0 6.364 0 7.682 1.332C21 4.665 21 6.81 21 11.098" opacity=".5"/><path fill="currentColor" d="M9 5.25a.75.75 0 0 0 0 1.5h6a.75.75 0 0 0 0-1.5z"/></svg></a><a class="link" href="/wiki/cpp/cpp-topic-enumerations/"><span class="toc-text">枚举类型、整数边界与字符串映射</span></a><a class="link" href="/wiki/cpp/cpp-topic-structures/"><span class="toc-text">结构体、聚合初始化与成员访问</span></a><a class="link" href="/wiki/cpp/cpp-topic-first-class-templates/"><span class="toc-text">类模板、实参推导与类型别名模板</span></a></div><div class="widget-header dis-select"><span class="name">类与对象生命周期</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-topic-class-encapsulation/"><span class="toc-text">类接口、const 成员与封装边界</span></a><a class="link" href="/wiki/cpp/cpp-topic-constructors-and-copy/"><span class="toc-text">构造、复制、转换与复制消除</span></a><a class="link" href="/wiki/cpp/cpp-topic-class-interfaces/"><span class="toc-text">this、类文件组织与友元边界</span></a><a class="link" href="/wiki/cpp/cpp-topic-class-lifetime-static/"><span class="toc-text">析构函数、类模板成员与静态成员</span></a></div><div class="widget-header dis-select"><span class="name">容器、算法与内存</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-topic-vector-model/"><span class="toc-text">std::vector 的所有权、构造与接口传递</span></a><a class="link" href="/wiki/cpp/cpp-topic-vector-iteration/"><span class="toc-text">数组遍历、范围 for 与枚举索引</span></a><a class="link" href="/wiki/cpp/cpp-topic-vector-storage/"><span class="toc-text">vector 的容量、迭代器失效与特殊表示</span></a><a class="link" href="/wiki/cpp/cpp-topic-std-array/"><span class="toc-text">std::array、固定长度与引用数组</span></a><a class="link" href="/wiki/cpp/cpp-topic-c-arrays/"><span class="toc-text">C 风格数组、退化与多维存储</span></a><a class="link" href="/wiki/cpp/cpp-topic-iterators-and-algorithms/"><span class="toc-text">迭代器、标准算法与测量边界</span></a><a class="link" href="/wiki/cpp/cpp-topic-dynamic-memory/"><span class="toc-text">栈、堆、动态内存与 RAII</span></a><a class="link" href="/wiki/cpp/cpp-topic-callables-and-lambdas/"><span class="toc-text">函数指针、递归、可变参数与 Lambda</span></a><a class="link" href="/wiki/cpp/cpp-topic-command-line/"><span class="toc-text">命令行参数、完整解析与退出状态</span></a></div><div class="widget-header dis-select"><span class="name">运算符、所有权与对象关系</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-topic-operator-algebra/"><span class="toc-text">算术、比较与递增运算符重载</span></a><a class="link" href="/wiki/cpp/cpp-topic-operator-interfaces/"><span class="toc-text">下标、调用、转换与赋值运算符</span></a><a class="link" href="/wiki/cpp/cpp-topic-move-semantics/"><span class="toc-text">右值引用、移动构造与 std::move</span></a><a class="link" href="/wiki/cpp/cpp-topic-smart-pointers/"><span class="toc-text">unique_ptr、shared_ptr 与 weak_ptr</span></a><a class="link" href="/wiki/cpp/cpp-topic-object-relationships/"><span class="toc-text">组合、聚合、关联与依赖关系</span></a></div><div class="widget-header dis-select"><span class="name">继承、泛型与错误处理</span></div><div class="widget-body fs14"><a class="link" href="/wiki/cpp/cpp-topic-inheritance/"><span class="toc-text">继承、构造顺序与访问控制</span></a><a class="link" href="/wiki/cpp/cpp-topic-multiple-inheritance/"><span class="toc-text">多重继承、菱形结构与虚基类</span></a><a class="link" href="/wiki/cpp/cpp-topic-virtual-dispatch/"><span class="toc-text">虚函数、动态分派与虚表模型</span></a><a class="link" href="/wiki/cpp/cpp-topic-polymorphic-design/"><span class="toc-text">抽象接口、对象切片与安全向下转换</span></a><a class="link" href="/wiki/cpp/cpp-topic-template-specialization/"><span class="toc-text">类模板与模板特化</span></a><a class="link" href="/wiki/cpp/cpp-topic-exceptions/"><span class="toc-text">异常传播、栈展开与重新抛出</span></a><a class="link" href="/wiki/cpp/cpp-topic-exception-safety/"><span class="toc-text">异常安全、noexcept 与移动回退</span></a><a class="link" href="/wiki/cpp/cpp-topic-streams/"><span class="toc-text">输入输出流、格式状态与字符串流</span></a><a class="link" href="/wiki/cpp/cpp-topic-stream-state-and-files/"><span class="toc-text">流状态恢复、文件 I/O 与随机访问</span></a></div></widget>
+
+
+
+<widget class="widget-wrapper markdown"><div class="widget-header dis-select"><span class="name">安全研究说明</span></div><div class="widget-body fs14"><div class="sidebar-legal">
+  <p>本专题仅记录合法、授权、隔离环境中的安全研究与实验。</p>
+  <p>请勿用于未经授权的测试或攻击；具体行为以适用法律、授权范围和官方文档为准。</p>
+</div>
+</div></widget>
+</div>
+<footer class="footer dis-select"><div class="social-wrap"><a class="social" title="GitHub" href="https://github.com/wxi7641" target="_blank" rel="external nofollow noopener noreferrer"><svg aria-hidden="true" role="img" class="color-icon-primary" viewBox="0 0 16 16" width="1em" height="1em" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a><a class="social" title="切换浅色、深色或跟随系统主题" onclick="switchTheme()"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg></a></div></footer>
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" id="menu" href="/wiki/">探索</a><span class="sep"></span><a class="cap breadcrumb" id="proj" href="/wiki/cpp/">C++/Cpp基础</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2023-10-13">2023-10-13</time></span></div>
+</div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>指针、引用返回与 std::optional</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div>
+<article class="md-text content"><p>指针、引用和 <code>std::optional</code> 都能参与“结果可能不存在”的接口设计，但表达的契约不同。指针携带地址并可为空，引用必须绑定对象，<code>optional&lt;T&gt;</code> 直接拥有一个可能存在的 <code>T</code>。返回这些类型时，还要确认被引用对象的生命周期能够覆盖调用方使用期。</p>
+<h2 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h2><p>指针保存对象或函数地址，可以为空、重新指向其他目标并参与有限的指针运算。</p>
+<p>裸指针本身不表达所有权；接口需要通过类型和文档区分观察、可空与拥有关系。</p>
+<p>指针保存对象或函数地址，可以为空、复制和改指向；解引用前必须确保非空、对齐正确且目标仍在生命周期内。指针本身不说明拥有权。现代接口通常用智能指针表达所有者，用裸指针表达可空借用，用引用表达必需借用。</p>
+<p><strong>指针表达可选对象</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> value&#123;<span class="number">5</span>&#125;;</span><br><span class="line">    <span class="type">int</span>* pointer&#123;&amp;value&#125;;</span><br><span class="line">    <span class="keyword">if</span> (pointer != <span class="literal">nullptr</span>)</span><br><span class="line">        *pointer += <span class="number">1</span>;</span><br><span class="line">    std::cout &lt;&lt; value &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指针可以为空并可重新指向；解引用前必须满足非空和生命周期有效两个条件。</p>
+<h2 id="空指针"><a href="#空指针" class="headerlink" title="空指针"></a>空指针</h2><p>nullptr 是 std::nullptr_t 类型的空指针字面量，能避免整数 0 在重载解析中的歧义。</p>
+<p>解引用空指针是未定义行为，使用前必须通过控制流、契约或非空包装类型建立保证。</p>
+<p><code>nullptr</code> 的类型是 <code>std::nullptr_t</code>，能够转换为任意指针类型，却不会像整数 0 那样参与普通整型重载。它消除了 <code>NULL</code> 可能被定义为整数带来的歧义。空指针只能比较、赋值或传递，任何解引用都没有定义。</p>
+<p><strong>用 nullptr 表达空指针</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">print</span><span class="params">(<span class="type">const</span> <span class="type">int</span>* value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value == <span class="literal">nullptr</span>) &#123; std::cout &lt;&lt; <span class="string">&quot;empty\n&quot;</span>; <span class="keyword">return</span>; &#125;</span><br><span class="line">    std::cout &lt;&lt; *value &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="literal">nullptr</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>nullptr 的类型是 std::nullptr_t，能避免整数 0 参与指针重载时的歧义。</p>
+<h2 id="指针与-const"><a href="#指针与-const" class="headerlink" title="指针与 const"></a>指针与 const</h2><p>顶层 const 限制指针自身重新赋值，底层 const 限制通过指针修改目标。</p>
+<p>const T<em>、T</em> const 和 const T* const 表达不同约束，阅读时从标识符向外分析。</p>
+<p><code>const int*</code> 是指向只读 int 的可改指针，<code>int* const</code> 是不可改指向的可写指针，二者可以组合。const 从右向左阅读有助于区分约束落在哪一层。底层 const 不能被安全移除后修改原本 const 对象。</p>
+<p><strong>分别表达指向 const 和 const 指针</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> first&#123;<span class="number">1</span>&#125;;</span><br><span class="line">    <span class="type">int</span> second&#123;<span class="number">2</span>&#125;;</span><br><span class="line">    <span class="type">int</span>* <span class="type">const</span> fixed&#123;&amp;first&#125;;</span><br><span class="line">    *fixed = <span class="number">3</span>;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span>* movable&#123;&amp;first&#125;;</span><br><span class="line">    movable = &amp;second;</span><br><span class="line">    std::cout &lt;&lt; *fixed &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; *movable &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>const int* 限制通过指针修改对象，int* const 限制指针本身改指向；两种约束可组合。</p>
+<h2 id="按地址传参"><a href="#按地址传参" class="headerlink" title="按地址传参"></a>按地址传参</h2><p>指针参数适合表达可空借用或与 C API 交互，调用方传入对象地址。</p>
+<p>不能为空的单对象参数通常用引用更直接；连续范围应使用 span 或迭代器对而非裸指针加隐含长度。</p>
+<p>指针形参适合表达可空借用或与 C API 交互。函数要么检查 <code>nullptr</code>，要么在更强边界保证非空并记录前置条件。只需一个必需对象时引用更直接；需要所有权转移时使用智能指针而不是裸地址。</p>
+<p><strong>指针参数表达可空输出</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">try_parse</span><span class="params">(<span class="type">int</span> input, <span class="type">int</span>* output)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (output == <span class="literal">nullptr</span> || input &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    *output = input;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> result&#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">try_parse</span>(<span class="number">7</span>, &amp;result)) std::cout &lt;&lt; result &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>指针参数同时表达可空性和写入位置；optional 或结构化结果通常更容易维护。</p>
+<h2 id="按地址传参的边界"><a href="#按地址传参的边界" class="headerlink" title="按地址传参的边界"></a>按地址传参的边界</h2><p>指针形参按值复制，因此改变指针指向不会修改调用方指针，除非传入指针的引用或二级指针。</p>
+<p>输出缓冲区接口必须同时携带容量，并对重叠、终止符和写入数量建立契约。</p>
+<p>指针形参把可空性带进每个调用点，因此函数要么检查空值，要么把非空前置条件写清楚并在更强类型边界保证。连续序列不能只传首地址，还要携带长度；C++20 的 <code>span</code> 能把这两个值绑定在同一借用对象中。</p>
+<p><strong>地址参数必须说明所有权</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">observe</span><span class="params">(<span class="type">const</span> <span class="type">int</span>* value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value != <span class="literal">nullptr</span>) std::cout &lt;&lt; *value &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">const</span> <span class="type">int</span> value&#123;<span class="number">8</span>&#125;;</span><br><span class="line">    <span class="built_in">observe</span>(&amp;value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的指针只是借用，不负责 delete；所有权应通过 unique_ptr 等类型表达。</p>
+<h2 id="按引用与地址返回"><a href="#按引用与地址返回" class="headerlink" title="按引用与地址返回"></a>按引用与地址返回</h2><p>返回引用或指针可以避免复制并保留对象身份，但返回目标必须比调用方使用结果活得更久。</p>
+<p>不得返回局部自动对象地址；容器重分配和对象移动也可能使先前返回的引用失效。</p>
+<p>返回引用不会延长局部对象生命周期。只有被引用对象由调用方、静态存储期对象或其他足够长寿的所有者维护时，返回借用才成立。接口还应避免让调用方在一次完整表达式之后继续持有指向临时结果内部的引用。</p>
+<p><strong>只返回仍然存活对象的引用</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;vector&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span>&amp; <span class="title">first</span><span class="params">(std::vector&lt;<span class="type">int</span>&gt;&amp; values)</span> </span>&#123; <span class="keyword">return</span> values.<span class="built_in">front</span>(); &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    std::vector values&#123;<span class="number">1</span>, <span class="number">2</span>&#125;;</span><br><span class="line">    <span class="built_in">first</span>(values) = <span class="number">9</span>;</span><br><span class="line">    std::cout &lt;&lt; values.<span class="built_in">front</span>() &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回引用绑定到 vector 元素；不能返回局部变量的引用，也要注意容器重分配导致的失效。</p>
+<p><strong>只返回生命周期足够长的对象</strong></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">const</span> std::string&amp; <span class="title">name</span><span class="params">(<span class="type">const</span> User&amp; user)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> user.<span class="built_in">name</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回引用借用 user 内部状态，调用方必须保证 user 和对应成员仍然有效。</p>
+<h2 id="输入参数与输出参数"><a href="#输入参数与输出参数" class="headerlink" title="输入参数与输出参数"></a>输入参数与输出参数</h2><p>输入参数向函数提供数据，输出参数让函数修改调用方对象，输入输出参数同时承担两种角色。</p>
+<p>优先用返回值表达主要结果；多结果可使用结构体，只有需要原地复用或接口约束时使用输出参数。</p>
+<p>参数方向应从类型和名称可见：按值或 const 引用通常是输入，可写引用是输入输出。多个输出参数会把一次结果拆散，容易出现部分更新；结构化返回值可以一次性表达多个成功结果，失败状态再由结果类型或异常承载。</p>
+<p><strong>把输入和输出参数分开表达</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">split</span><span class="params">(<span class="type">int</span> value, <span class="type">int</span>&amp; quotient, <span class="type">int</span>&amp; remainder)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    quotient = value / <span class="number">10</span>;</span><br><span class="line">    remainder = value % <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> quotient&#123;&#125;, remainder&#123;&#125;;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">split</span>(<span class="number">27</span>, quotient, remainder))</span><br><span class="line">        std::cout &lt;&lt; quotient &lt;&lt; <span class="string">&#x27; &#x27;</span> &lt;&lt; remainder &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>非 const 引用参数是输出位置；返回结构体或 tuple 也可以把多个结果组合成一个值。</p>
+<h2 id="指针、引用与-const-的类型推导"><a href="#指针、引用与-const-的类型推导" class="headerlink" title="指针、引用与 const 的类型推导"></a>指针、引用与 const 的类型推导</h2><p>auto 默认按值推导并去除引用和顶层 const，auto&amp;、const auto&amp; 与 auto* 保留不同关系。</p>
+<p>decltype 保留表达式相关规则，decltype(auto) 可用于精确传播返回类型，但也更容易意外返回引用。</p>
+<p>模板与 auto 推导会根据值传递、引用和转发引用采用不同规则。按值通常丢弃顶层 const 与引用，<code>auto&amp;</code> 保留所绑定对象的 const，<code>auto&amp;&amp;</code> 则依初始化器值类别折叠。调试复杂声明时可用 <code>decltype</code> 和静态断言验证推导结果。</p>
+<p><strong>用 decltype 检查推导出的引用类型</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;type_traits&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> value&#123;&#125;;</span><br><span class="line">    <span class="keyword">auto</span>&amp; reference&#123;value&#125;;</span><br><span class="line">    <span class="built_in">static_assert</span>(std::is_lvalue_reference_v&lt;<span class="keyword">decltype</span>(reference)&gt;);</span><br><span class="line">    std::cout &lt;&lt; reference &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>auto、auto&amp; 和 auto&amp;&amp; 的推导规则不同；需要保留顶层 const 或值类别时必须选择正确声明形式。</p>
+<h2 id="std-optional"><a href="#std-optional" class="headerlink" title="std::optional"></a>std::optional</h2><p>std::optional<T> 表示一个 T 值可能存在或缺失，自 C++17 可用。</p>
+<p>它不携带失败原因；需要错误信息时可使用结构化结果或 C++23 std::expected。</p>
+<p><code>std::optional&lt;T&gt;</code> 表示一个值可能存在，但不说明缺失原因。只有成功值和“没有值”两种状态时，它比哨兵值更准确；调用方必须检查后才能解引用。错误类别或诊断信息也是接口的一部分时，C++23 的 <code>std::expected&lt;T, E&gt;</code> 能把成功与失败都编码进返回类型。</p>
+<p><strong>用 optional 表示可能没有结果</strong></p>
+<!-- compile: c++20 -->
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;optional&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">std::optional&lt;<span class="type">int</span>&gt; <span class="title">parse_positive</span><span class="params">(<span class="type">int</span> value)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (value &lt;= <span class="number">0</span>) <span class="keyword">return</span> std::<span class="literal">nullopt</span>;</span><br><span class="line">    <span class="keyword">return</span> value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="type">const</span> <span class="keyword">auto</span> result&#123;<span class="built_in">parse_positive</span>(<span class="number">7</span>)&#125;)</span><br><span class="line">        std::cout &lt;&lt; *result &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>optional 明确表示“有值或没有值”；C++23 的 expected 适合同时携带错误信息的结果。</p>
+<p><code>std::optional</code> 自 C++17 可用；需要返回错误值时可在 C++23 使用 <code>std::expected</code>。本文示例仍保持 C++20 可编译。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/introduction-to-pointers/">LearnCpp 12.7：指针</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/null-pointers/">LearnCpp 12.8：空指针</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/pointers-and-const/">LearnCpp 12.9：指针与 const</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/pass-by-address/">LearnCpp 12.10：按地址传参</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/pass-by-address-part-2/">LearnCpp 12.11：按地址传参的边界</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/return-by-reference-and-return-by-address/">LearnCpp 12.12：按引用与地址返回</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/in-and-out-parameters/">LearnCpp 12.13：输入参数与输出参数</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/type-deduction-with-pointers-references-and-const/">LearnCpp 12.14：指针、引用与 const 的类型推导</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.learncpp.com/cpp-tutorial/stdoptional/">LearnCpp 12.15：std::optional</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.cppreference.com/w/cpp/language/reference">cppreference：复合类型：引用与指针相关条目</a></li>
+</ul>
+</article>
+<div class="article-footer">
+
+</div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">回顾上一篇</div><a href="/wiki/cpp/cpp-topic-values-and-references/">值类别、左值引用与参数借用</a></div><div class="item" id="next"><div class="note">接下来阅读</div><a href="/wiki/cpp/cpp-topic-enumerations/">枚举类型、整数边界与字符串映射</a></div></section></div>
+
+
+
+
+<footer class="page-footer site-public-stats footnote">
+  <hr>
+  <div class="site-public-stats__inner">
+    <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
+    <p class="meta-line meta-line--accent">
+      运营 <strong>935</strong> 天
+      
+        <span class="sep">·</span>
+        始于 2024-01-24
+      
+    </p>
+    <p class="meta-line">
+      共发布 <strong>99</strong> 篇文章
+      <span class="sep">·</span>
+      累计 <strong>90,914</strong> 字
+    </p>
+  </div>
+</footer>
+
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88"><span class="toc-text">指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A9%BA%E6%8C%87%E9%92%88"><span class="toc-text">空指针</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E4%B8%8E-const"><span class="toc-text">指针与 const</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E5%9C%B0%E5%9D%80%E4%BC%A0%E5%8F%82"><span class="toc-text">按地址传参</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E5%9C%B0%E5%9D%80%E4%BC%A0%E5%8F%82%E7%9A%84%E8%BE%B9%E7%95%8C"><span class="toc-text">按地址传参的边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%89%E5%BC%95%E7%94%A8%E4%B8%8E%E5%9C%B0%E5%9D%80%E8%BF%94%E5%9B%9E"><span class="toc-text">按引用与地址返回</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0%E4%B8%8E%E8%BE%93%E5%87%BA%E5%8F%82%E6%95%B0"><span class="toc-text">输入参数与输出参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8C%87%E9%92%88%E3%80%81%E5%BC%95%E7%94%A8%E4%B8%8E-const-%E7%9A%84%E7%B1%BB%E5%9E%8B%E6%8E%A8%E5%AF%BC"><span class="toc-text">指针、引用与 const 的类型推导</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#std-optional"><span class="toc-text">std::optional</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a></div></widget>
+
+<widget class="widget-wrapper tagcloud"><div class="widget-header dis-select"><span class="name">标签索引</span></div><div class="widget-body fs14"><a href="/tags/C/" style="font-size: 15.64px;" class="tag -5">C++</a> <a href="/tags/C%E8%AF%AD%E8%A8%80/" style="font-size: 12px;" class="tag -0">C语言</a> <a href="/tags/DDL/" style="font-size: 12px;" class="tag -0">DDL</a> <a href="/tags/DML/" style="font-size: 12px;" class="tag -0">DML</a> <a href="/tags/DQL/" style="font-size: 12px;" class="tag -0">DQL</a> <a href="/tags/IDE/" style="font-size: 12px;" class="tag -0">IDE</a> <a href="/tags/IDEA/" style="font-size: 12px;" class="tag -0">IDEA</a> <a href="/tags/IO/" style="font-size: 13.45px;" class="tag -2">IO</a> <a href="/tags/JDBC/" style="font-size: 14.91px;" class="tag -4">JDBC</a> <a href="/tags/Java/" style="font-size: 20px;" class="tag -10">Java</a> <a href="/tags/Maven/" style="font-size: 12px;" class="tag -0">Maven</a> <a href="/tags/MyBatis/" style="font-size: 12px;" class="tag -0">MyBatis</a> <a href="/tags/MyBatis-Plus/" style="font-size: 12px;" class="tag -0">MyBatis-Plus</a> <a href="/tags/MySQL/" style="font-size: 14.18px;" class="tag -3">MySQL</a> <a href="/tags/SQL/" style="font-size: 13.45px;" class="tag -2">SQL</a> <a href="/tags/SQL%E6%B3%A8%E5%85%A5/" style="font-size: 16.36px;" class="tag -5">SQL注入</a> <a href="/tags/SSM/" style="font-size: 17.09px;" class="tag -6">SSM</a> <a href="/tags/Spring/" style="font-size: 14.91px;" class="tag -4">Spring</a> <a href="/tags/Spring-Boot/" style="font-size: 17.09px;" class="tag -6">Spring Boot</a> <a href="/tags/Spring-MVC/" style="font-size: 12px;" class="tag -0">Spring MVC</a> <a href="/tags/Visual-Studio/" style="font-size: 12px;" class="tag -0">Visual Studio</a> <a href="/tags/portswigger/" style="font-size: 18.55px;" class="tag -8">portswigger</a> <a href="/tags/%E5%86%85%E5%AD%98%E4%B8%8E%E7%BC%93%E5%AD%98/" style="font-size: 12px;" class="tag -0">内存与缓存</a> <a href="/tags/%E5%88%97%E8%A1%A8/" style="font-size: 12px;" class="tag -0">列表</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 12px;" class="tag -0">前端</a> <a href="/tags/%E5%8A%A8%E6%80%81%E6%95%B0%E7%BB%84/" style="font-size: 12px;" class="tag -0">动态数组</a> <a href="/tags/%E5%8D%95%E5%90%91%E9%93%BE%E8%A1%A8/" style="font-size: 12px;" class="tag -0">单向链表</a> <a href="/tags/%E5%8F%8C%E7%AB%AF%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">双端队列</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E6%8A%80%E6%9C%AF/" style="font-size: 12px;" class="tag -0">基础技术</a> <a href="/tags/%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95/" style="font-size: 17.82px;" class="tag -7">基础语法</a> <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/" style="font-size: 14.18px;" class="tag -3">多线程</a> <a href="/tags/%E5%A4%9A%E8%A1%A8%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">多表查询</a> <a href="/tags/%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">字符编码</a> <a href="/tags/%E5%B8%B8%E7%94%A8%E7%B1%BB/" style="font-size: 12.73px;" class="tag -1">常用类</a> <a href="/tags/%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7/" style="font-size: 12px;" class="tag -0">开发工具</a> <a href="/tags/%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B/" style="font-size: 12px;" class="tag -0">开发流程</a> <a href="/tags/%E6%95%B0%E5%AD%97%E7%BC%96%E7%A0%81/" style="font-size: 12px;" class="tag -0">数字编码</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" style="font-size: 15.64px;" class="tag -5">数据结构</a> <a href="/tags/%E6%95%B0%E7%BB%84/" style="font-size: 12.73px;" class="tag -1">数组</a> <a href="/tags/%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">查询</a> <a href="/tags/%E6%A0%88/" style="font-size: 12px;" class="tag -0">栈</a> <a href="/tags/%E6%B3%9B%E5%9E%8B/" style="font-size: 12px;" class="tag -0">泛型</a> <a href="/tags/%E7%94%9F%E6%B4%BB%E7%82%B9%E6%BB%B4/" style="font-size: 14.18px;" class="tag -3">生活点滴</a> <a href="/tags/%E7%BB%93%E6%9E%84%E5%AF%B9%E6%AF%94/" style="font-size: 12px;" class="tag -0">结构对比</a> <a href="/tags/%E7%BC%96%E7%A8%8B%E5%9F%BA%E7%A1%80/" style="font-size: 12px;" class="tag -0">编程基础</a> <a href="/tags/%E7%BC%96%E8%AF%91/" style="font-size: 12px;" class="tag -0">编译</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/" style="font-size: 14.18px;" class="tag -3">网络基础</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/" style="font-size: 19.27px;" class="tag -9">网络安全</a> <a href="/tags/%E7%BD%91%E7%BB%9C%E7%BC%93%E5%AD%98%E6%AC%BA%E9%AA%97/" style="font-size: 15.64px;" class="tag -5">网络缓存欺骗</a> <a href="/tags/%E8%BF%9E%E6%8E%A5%E6%9F%A5%E8%AF%A2/" style="font-size: 12px;" class="tag -0">连接查询</a> <a href="/tags/%E9%93%BE%E6%8E%A5/" style="font-size: 12px;" class="tag -0">链接</a> <a href="/tags/%E9%93%BE%E8%A1%A8/" style="font-size: 13.45px;" class="tag -2">链表</a> <a href="/tags/%E9%93%BE%E8%A1%A8%E6%93%8D%E4%BD%9C/" style="font-size: 12px;" class="tag -0">链表操作</a> <a href="/tags/%E9%98%85%E8%AF%BB%E9%9A%8F%E7%AC%94/" style="font-size: 14.18px;" class="tag -3">阅读随笔</a> <a href="/tags/%E9%98%9F%E5%88%97/" style="font-size: 12px;" class="tag -0">队列</a> <a href="/tags/%E9%9A%8F%E7%AC%94/" style="font-size: 13.45px;" class="tag -2">随笔</a> <a href="/tags/%E9%9B%86%E5%90%88/" style="font-size: 15.64px;" class="tag -5">集合</a> <a href="/tags/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1/" style="font-size: 12px;" class="tag -0">面向对象</a> <a href="/tags/%E9%9D%B6%E5%9C%BA%E5%AE%9E%E9%AA%8C%E7%BB%83%E4%B9%A0/" style="font-size: 18.55px;" class="tag -8">靶场实验练习</a> <a href="/tags/%E9%A1%B9%E7%9B%AE%E5%AE%9E%E8%B7%B5/" style="font-size: 13.45px;" class="tag -2">项目实践</a></div></widget>
+</div>
+</aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only mobile-theme-toggle mobile' aria-label='切换浅色、深色或跟随系统主题' title='切换浅色、深色或跟随系统主题' onclick='switchTheme()'>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="currentColor" fill-rule="evenodd" d="M582.4 326.4c-140.8 0-256 115.2-256 256s115.2 256 256 256 256-115.2 256-256-115.2-256-256-256z m0 448c-70.4 0-131.2-36.8-164.8-92.8 12.8 3.2 27.2 4.8 40 4.8 121.6 0 219.2-99.2 219.2-219.2 0-17.6-1.6-35.2-6.4-52.8 60.8 32 102.4 96 102.4 169.6 1.6 104-84.8 190.4-190.4 190.4zM582.4 262.4c17.6 0 32-14.4 32-32v-128c0-17.6-14.4-32-32-32s-32 14.4-32 32v128c0 17.6 14.4 32 32 32zM262.4 582.4c0-17.6-14.4-32-32-32h-128c-17.6 0-32 14.4-32 32s14.4 32 32 32h128c17.6 0 32-14.4 32-32zM310.4 356.8c6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6 12.8-12.8 12.8-32 0-44.8l-91.2-91.2c-12.8-12.8-32-12.8-44.8 0-12.8 12.8-12.8 32 0 44.8l91.2 91.2zM944 220.8c-12.8-12.8-32-12.8-44.8 0l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-33.6 0-44.8zM310.4 808l-91.2 91.2c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 14.4 9.6 22.4 9.6 8 0 16-3.2 22.4-9.6l91.2-91.2c12.8-12.8 12.8-32 0-44.8-11.2-11.2-32-11.2-44.8 0z"></path></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":"wxi7641.github.io","officialHosts":["localhost","wxi7641.github.io"],"encoded":"d3hpNzY0MS5naXRodWIuaW8="};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":["404.html"],"codeblock":false,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  function initInlineLocalSearch() {
+    const searchPath = `/search.json`;
+    const searchDataScript = `/search-data.js`;
+    if (typeof ctx !== 'undefined') {
+      ctx.search = { path: searchPath };
+    }
+
+    const input = document.getElementById('search-input');
+    const wrapper = document.getElementById('search-wrapper');
+    const result = document.getElementById('search-result');
+    if (!input || !wrapper || !result) return;
+
+    let searchData = null;
+    let loading = null;
+
+    function loadSearchData() {
+      if (searchData) return Promise.resolve(searchData);
+      if (loading) return loading;
+      loading = new Promise((resolve) => {
+        if (Array.isArray(window.__BLOG_SEARCH_DATA__)) {
+          searchData = window.__BLOG_SEARCH_DATA__;
+          resolve(searchData);
+          return;
+        }
+
+        const script = document.createElement('script');
+        script.src = searchDataScript;
+        script.async = true;
+        script.onload = function() {
+          searchData = Array.isArray(window.__BLOG_SEARCH_DATA__) ? window.__BLOG_SEARCH_DATA__ : [];
+          resolve(searchData);
+        };
+        script.onerror = function() {
+          searchData = [];
+          resolve(searchData);
+        };
+        document.head.appendChild(script);
+      });
+      return loading;
+    }
+
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }
+
+    function normalizePath(path) {
+      return String(path || '')
+        .replace(/^\/\//, '/')
+        .replace(/\/?index\.html$/, '/')
+        .replace(/\.html$/, '/');
+    }
+
+    function renderSearch(data) {
+      const query = input.value.trim().toLowerCase();
+      result.innerHTML = '';
+      if (!query) {
+        wrapper.setAttribute('searching', 'false');
+        wrapper.classList.remove('noresult');
+        return;
+      }
+
+      wrapper.setAttribute('searching', 'true');
+      const filter = input.getAttribute('data-filter') || '';
+      const keywords = query.split(/\s+/).filter(Boolean);
+      const hits = [];
+
+      data.forEach((item) => {
+        const itemPath = normalizePath(item.path);
+        if (filter && !itemPath.includes(filter)) return;
+
+        const title = (item.title || 'Untitled').trim();
+        const content = item.content || '';
+        const tags = Array.isArray(item.tags) ? item.tags.join(' ') : '';
+        const categories = Array.isArray(item.categories) ? item.categories.join(' ') : '';
+        const haystack = `${title} ${content} ${tags} ${categories}`.toLowerCase();
+
+        let rank = 0;
+        keywords.forEach((keyword) => {
+          if (haystack.includes(keyword)) rank += title.toLowerCase().includes(keyword) ? 3 : 1;
+        });
+        if (rank <= 0) return;
+
+        const lowerContent = content.toLowerCase();
+        let firstOccur = keywords.map(k => lowerContent.indexOf(k)).filter(i => i >= 0).sort((a, b) => a - b)[0] ?? 0;
+        const start = Math.max(0, firstOccur - 20);
+        const end = Math.min(content.length, firstOccur + 90);
+        let snippet = content.substring(start, end) || [tags, categories].filter(Boolean).join(' ');
+        const reg = new RegExp(keywords.map(escapeRegExp).join('|'), 'gi');
+        snippet = snippet.replace(reg, match => `<span class="search-keyword">${match}</span>`);
+
+        hits.push({ rank, title, path: itemPath, snippet });
+      });
+
+      if (hits.length === 0) {
+        wrapper.classList.add('noresult');
+        return;
+      }
+
+      hits.sort((a, b) => b.rank - a.rank);
+      const ul = document.createElement('ul');
+      ul.className = 'search-result-list';
+      hits.slice(0, 20).forEach((item) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = item.path;
+        const title = document.createElement('span');
+        title.className = 'search-result-title';
+        title.textContent = item.title;
+        const p = document.createElement('p');
+        p.className = 'search-result-content';
+        p.innerHTML = item.snippet + '...';
+        a.appendChild(title);
+        a.appendChild(p);
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      wrapper.classList.remove('noresult');
+      result.appendChild(ul);
+    }
+
+    function updateSearch() {
+      loadSearchData().then(renderSearch);
+    }
+
+    input.addEventListener('focus', updateSearch);
+    input.addEventListener('input', updateSearch);
+    input.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') event.preventDefault();
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    window.addEventListener('DOMContentLoaded', initInlineLocalSearch);
+  } else {
+    initInlineLocalSearch();
+  }
+</script>
+<script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+<script src="/js/site-experience.js" defer></script>
+</div></body></html>
