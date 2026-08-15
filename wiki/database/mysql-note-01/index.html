@@ -20,12 +20,12 @@
   <title>数据库：MySQL笔记01 - Wxi's Blog</title>
 
   
-    <meta name="description" content="MySQL 入门阶段最重要的，不是先记住多少条命令，而是先把“数据库、表、记录、字段”这四层结构建立起来。结构感一旦清楚，后面的增删改查、条件查询、多表连接，都会顺很多。  数据库负责组织数据，表负责承载结构，记录负责保存一行数据，SQL 负责和这些对象打交道。  一、先看清 SQL 的四类常见操作结合这一组练习 SQL，看 MySQL 最合适的切入方式仍然是分类。    分类 全称 常见命令 主">
+    <meta name="description" content="MySQL 使用“数据库、表、记录、字段”四层结构组织数据。增删改查、条件查询和多表连接都建立在这些对象及其关系之上。  数据库负责组织数据，表负责承载结构，记录负责保存一行数据，SQL 负责和这些对象打交道。  一、先看清 SQL 的四类常见操作结合这一组练习 SQL，看 MySQL 最合适的切入方式仍然是分类。    分类 全称 常见命令 主要作用    DDL Data Definition">
 <meta property="og:type" content="website">
 <meta property="og:title" content="MySQL笔记01">
 <meta property="og:url" content="https://wxi7641.github.io/wiki/database/mysql-note-01/">
 <meta property="og:site_name" content="Wxi&#39;s Blog">
-<meta property="og:description" content="MySQL 入门阶段最重要的，不是先记住多少条命令，而是先把“数据库、表、记录、字段”这四层结构建立起来。结构感一旦清楚，后面的增删改查、条件查询、多表连接，都会顺很多。  数据库负责组织数据，表负责承载结构，记录负责保存一行数据，SQL 负责和这些对象打交道。  一、先看清 SQL 的四类常见操作结合这一组练习 SQL，看 MySQL 最合适的切入方式仍然是分类。    分类 全称 常见命令 主">
+<meta property="og:description" content="MySQL 使用“数据库、表、记录、字段”四层结构组织数据。增删改查、条件查询和多表连接都建立在这些对象及其关系之上。  数据库负责组织数据，表负责承载结构，记录负责保存一行数据，SQL 负责和这些对象打交道。  一、先看清 SQL 的四类常见操作结合这一组练习 SQL，看 MySQL 最合适的切入方式仍然是分类。    分类 全称 常见命令 主要作用    DDL Data Definition">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png">
 <meta property="article:published_time" content="2024-06-23T00:00:00.000Z">
@@ -54,7 +54,7 @@
 
   
 
-  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/database/mysql-note-01/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"MySQL笔记01","description":"MySQL 入门阶段最重要的，不是先记住多少条命令，而是先把“数据库、表、记录、字段”这四层结构建立起来。结构感一旦清楚，后面的增删改查、条件查询、多表连接，都会顺很多。\n\n数据库负责组织数据，表负责承载结构，记录负责保存一行数据，SQL 负责和这些对象打交道。\n\n一、先看清 SQL 的四类常见操作结合这一组练习 SQL，看 MySQL 最合适的切入方式仍然是分类。\n\n\n\n分类\n全称\n常见命...","url":"https://wxi7641.github.io/wiki/database/mysql-note-01/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"Website","@id":"https://wxi7641.github.io/wiki/database/mysql-note-01/","author":{"@type":"Person","name":"Wxi","sameAs":["https://wxi7641.github.io/","https://github.com/wxi7641"],"image":"https://basis-4317.oss-cn-beijing.aliyuncs.com/new/sleep.png"},"name":"MySQL笔记01","description":"MySQL 使用“数据库、表、记录、字段”四层结构组织数据。增删改查、条件查询和多表连接都建立在这些对象及其关系之上。\n\n数据库负责组织数据，表负责承载结构，记录负责保存一行数据，SQL 负责和这些对象打交道。\n\n一、先看清 SQL 的四类常见操作结合这一组练习 SQL，看 MySQL 最合适的切入方式仍然是分类。\n\n\n\n分类\n全称\n常见命令\n主要作用\n\n\n\nDDL\nData Definit...","url":"https://wxi7641.github.io/wiki/database/mysql-note-01/","keywords":["技术笔记","Java","MySQL","Networking","网络安全","阅读随笔"]}</script>
   <link rel="stylesheet" href="/css/custom-effects.css">
 </head>
 <body><div class="sitebg"><div class="siteblur"></div></div>
@@ -103,7 +103,7 @@
     
   </div>
   </div>
-<article class="md-text content"><p>MySQL 入门阶段最重要的，不是先记住多少条命令，而是先把“数据库、表、记录、字段”这四层结构建立起来。结构感一旦清楚，后面的增删改查、条件查询、多表连接，都会顺很多。</p>
+<article class="md-text content"><p>MySQL 使用“数据库、表、记录、字段”四层结构组织数据。增删改查、条件查询和多表连接都建立在这些对象及其关系之上。</p>
 <blockquote>
 <p><mark>数据库负责组织数据，表负责承载结构，记录负责保存一行数据，SQL 负责和这些对象打交道。</mark></p>
 </blockquote>
@@ -334,7 +334,7 @@
     <p class="meta-line">
       共发布 <strong>99</strong> 篇文章
       <span class="sep">·</span>
-      累计 <strong>90,914</strong> 字
+      累计 <strong>90,712</strong> 字
     </p>
   </div>
 </footer>
