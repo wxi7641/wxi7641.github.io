@@ -265,8 +265,32 @@
         });
       }
 
+      function revealActiveLink() {
+        var active = tree.querySelector('.link.active');
+        var scroller = tree.closest('.widgets');
+        if (!active || !scroller || scroller.scrollHeight <= scroller.clientHeight) {
+          return;
+        }
+
+        var activeRect = active.getBoundingClientRect();
+        var scrollerRect = scroller.getBoundingClientRect();
+        var padding = 24;
+        var visibleTop = scrollerRect.top + padding;
+        var visibleBottom = scrollerRect.bottom - padding;
+
+        if (activeRect.top < visibleTop) {
+          scroller.scrollTop -= visibleTop - activeRect.top;
+        } else if (activeRect.bottom > visibleBottom) {
+          scroller.scrollTop += activeRect.bottom - visibleBottom;
+        }
+      }
+
       updatePath();
-      window.addEventListener('load', updatePath, { once: true });
+      revealActiveLink();
+      window.addEventListener('load', function () {
+        updatePath();
+        revealActiveLink();
+      }, { once: true });
       window.addEventListener('resize', updatePath, { passive: true });
     }
 

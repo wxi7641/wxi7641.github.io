@@ -127,7 +127,7 @@
 <p><code>std::string_view</code> 自 C++17 可用；C++20 增加了更多 <code>constexpr</code> 能力，但所有权规则没有变化。</p>
 <h2 id="std-string-view-的生命周期与转换"><a href="#std-string-view-的生命周期与转换" class="headerlink" title="std::string_view 的生命周期与转换"></a>std::string_view 的生命周期与转换</h2><p>string_view 的 remove_prefix 和 remove_suffix 只移动视图边界，不修改底层字符。</p>
 <p>需要所有权、空终止保证或跨越来源生命周期保存文本时，应转换为 std::string。</p>
-<p>视图切片不会修改来源，只会改变视图保存的起点和长度。需要调用只接受 C 字符串的接口时，不能假设任意子视图以 <code> </code> 结尾；需要跨作用域保存、修改文本或保证空终止时，应显式构造 <code>std::string</code>。</p>
+<p>视图切片不会修改来源，只会改变视图保存的起点和长度。需要调用只接受 C 字符串的接口时，不能假设任意子视图以 <code>\0</code> 结尾；需要跨作用域保存、修改文本或保证空终止时，应显式构造 <code>std::string</code>。</p>
 <p><strong>视图切片与所有权转换</strong></p>
 <!-- compile: c++20 -->
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string_view&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">const</span> std::string source&#123;<span class="string">&quot;key=value&quot;</span>&#125;;</span><br><span class="line">    std::string_view view&#123;source&#125;;</span><br><span class="line">    view.<span class="built_in">remove_suffix</span>(<span class="number">5</span>);</span><br><span class="line">    <span class="type">const</span> std::string owned&#123;view&#125;;</span><br><span class="line">    std::cout &lt;&lt; owned &lt;&lt; <span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -159,7 +159,7 @@
   <div class="site-public-stats__inner">
     <p class="meta-line">© 2026 Wxi · 使用 Stellar 构建</p>
     <p class="meta-line meta-line--accent">
-      运营 <strong>935</strong> 天
+      运营 <strong>951</strong> 天
       
         <span class="sep">·</span>
         始于 2024-01-24
