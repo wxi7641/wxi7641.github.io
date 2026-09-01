@@ -274,15 +274,34 @@
 
         var activeRect = active.getBoundingClientRect();
         var scrollerRect = scroller.getBoundingClientRect();
-        var padding = 24;
-        var visibleTop = scrollerRect.top + padding;
-        var visibleBottom = scrollerRect.bottom - padding;
+        var treeRect = tree.getBoundingClientRect();
+        var viewportHeight = scroller.clientHeight;
+        var currentScroll = scroller.scrollTop;
+        var topPadding = 16;
+        var bottomPadding = 24;
 
-        if (activeRect.top < visibleTop) {
-          scroller.scrollTop -= visibleTop - activeRect.top;
-        } else if (activeRect.bottom > visibleBottom) {
-          scroller.scrollTop += activeRect.bottom - visibleBottom;
+        var treeTop = currentScroll + treeRect.top - scrollerRect.top;
+        var treeBottom = currentScroll + treeRect.bottom - scrollerRect.top;
+        var activeCenter = currentScroll + activeRect.top - scrollerRect.top + activeRect.height / 2;
+        var desiredScroll = activeCenter - viewportHeight * 0.3;
+
+        var activeBody = active.closest('.widget-body');
+        var sectionHeader = activeBody && activeBody.previousElementSibling;
+        if (sectionHeader && sectionHeader.classList.contains('widget-header')) {
+          var headerRect = sectionHeader.getBoundingClientRect();
+          var headerDistance = activeRect.top - headerRect.bottom;
+          if (headerDistance <= activeRect.height * 2.2) {
+            var headerTop = currentScroll + headerRect.top - scrollerRect.top;
+            desiredScroll = Math.min(desiredScroll, headerTop - topPadding);
+          }
         }
+
+        var minimumScroll = Math.max(0, treeTop - topPadding);
+        var treeEndScroll = Math.max(minimumScroll, treeBottom - viewportHeight + bottomPadding);
+        var maximumScroll = Math.max(0, scroller.scrollHeight - viewportHeight);
+        var targetScroll = clamp(desiredScroll, minimumScroll, treeEndScroll);
+
+        scroller.scrollTop = Math.round(clamp(targetScroll, 0, maximumScroll));
       }
 
       updatePath();
